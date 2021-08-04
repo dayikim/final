@@ -53,6 +53,13 @@
 			<artifactId>mybatis</artifactId>
 			<version>3.5.7</version>
 		</dependency>
+		
+		<!-- File -->
+		<dependency>
+		    <groupId>commons-fileupload</groupId>
+		    <artifactId>commons-fileupload</artifactId>
+		    <version>1.4</version>
+		</dependency>
 
 		<!--Mybatis Spring -->
 		<dependency>
