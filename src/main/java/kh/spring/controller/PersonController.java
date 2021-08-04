@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kh.spring.config.SHA256;
 import kh.spring.dto.PersonDTO;
 import kh.spring.service.PersonService;
 import kh.spring.service.certificationService;
@@ -49,6 +50,8 @@ public class PersonController {
 	
 	@RequestMapping("/joinProc")
 	public String joinProc(PersonDTO dto) throws Exception{	
+		String shaPass = SHA256.getSHA512(dto.getPw());
+		dto.setPw(shaPass);
 		service.insert(dto);
 		return "redirect:/";
 	}
