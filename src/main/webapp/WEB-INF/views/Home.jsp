@@ -102,8 +102,8 @@ img{
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav ml-auto">
                         <input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
-                        <a href="#" class="nav-item nav-link active">Login</a>
-                        <a href="#" class="nav-item nav-link">Sign Up</a>
+                        <a href="#" class="nav-item nav-link active">Login</a> <!-- Login Page 이동 -->
+                        <a href="#" class="nav-item nav-link">Sign Up</a>  <!-- SignUp Page 이동 -->
                     </div>
                 </div>
 
