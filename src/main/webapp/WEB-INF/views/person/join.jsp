@@ -17,7 +17,10 @@
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 <script>
 	$(function(){
+		let count = 0;
+		
 		$('#sendphoneNumber').click(function(){
+			count ++;
 			let phoneNumberRegex = /^010\d{3,4}\d{4}$/;
 			let phoneNumber = phoneNumberRegex.test($("#phone").val());
 			if($("#phone").val() == ""){
@@ -172,6 +175,10 @@
 			let color = $(".next_box").css("color");
 			if(color == "rgb(255, 0, 0)"){
 				alert("가입시 형식에 맞게 기입하셨는지 확인해주세요.");
+				return false;
+			}
+			if(count <= 0){
+				alert("핸드폰인증을 진행해주세요.")
 				return false;
 			}
 		})
