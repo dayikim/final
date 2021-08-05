@@ -105,8 +105,12 @@
 				$("#val").text("비밀번호가 일치합니다.");
 			}
 		})
+		let isYear = false; 
+		let isMonth = false; 
+		let isDay = false; 
 		
-		$("#signup-birth-yy").blur(function(){
+		
+		/* $("#signup-birth-yy").on("blur",function(){
 			let yearRegex = /[0-9]{4}/g;
 			let year = yearRegex.test($("#signup-birth-yy").val());
 			if(year){
@@ -117,30 +121,33 @@
 					$("#birthday").css("color","red");
 					$("#birthday").text("미래에서 오셨군요!");
 				}else{
-					$("#birthday").css("display","none");
+					isYear = true; 
 				}
 			}else{
 				$("#birthday").css("color","red");
 				$("#birthday").text("태어난 년도 4자리를 정확하게 입력하세요.");
 			}			
-		})
-		
-		$("#signup-birth-mm").blur(function(){
+		}) 
+			
+		$("#signup-birth-mm").on("blur",function(){
 			console.log($("#signup-birth-mm").val())
 			if($("#signup-birth-mm").val() == "month"){
 				$("#birthday").css("color","red");
 				$("#birthday").text("태어난 월을 선택하세요.");
+			}else{
+				isMonth =true; 
 			}
 		})
 		
-		$("#signup-birth-dd").blur(function(){
+		$("#signup-birth-dd").on("blur",function(){
 			if( $("#signup-birth-dd").val()<1 || $("#signup-birth-dd").val()>31) {
+				$("#birthday").css("display","block");
 				$("#birthday").css("color","red");
-				$("#birthday").text("생년월일을 다시 확인해주세요.");
+				$("#birthday").text("날짜를 잘못 입력하셨네요!");
 		    }else{
-		    	$("#birthday").css("display","none");
+		    	isDay = true;
 		    }
-		})
+		}) */
 		
 		 $(".birth").on("change", function(){
 	          for(let i=0; i<$(".birth").length; i++){
@@ -152,6 +159,43 @@
 	                $("#birth").val($("#signup-birth-yy").val()+$("#signup-birth-mm").val()+birth_day);
 	            }
 	          }
+	        })
+	        
+	        $(".birth").on("blur", function(){
+	        	 for(let i=0; i<$(".birth").length; i++){
+	        		 if($($(".birth")[i]).val() != null){
+	        			 $("#birthday").css("display","block");
+	        			 if($("#signup-birth-yy").val() < 1920){
+	        				 isYear = false; 
+	     					$("#birthday").css("color","red");
+	     					$("#birthday").text("정말이세요?");
+	     				}else if($("#signup-birth-yy").val() > 2021){
+	     					isYear = false;
+	     					$("#birthday").css("color","red");
+	     					$("#birthday").text("미래에서 오셨군요!");
+	     				}else{
+	     					 isYear = true; 
+	     				}
+	        			 if( $("#signup-birth-dd").val()<1 || $("#signup-birth-dd").val()>31) {
+	        				 	isDay =false;
+	        					$("#birthday").css("color","red");
+	        					$("#birthday").text("날짜를 잘못 입력하셨네요!");
+	        			    }else{
+	        			    	isDay = true;
+	        			    }
+	        			 if($("#signup-birth-mm").val() == "month"){
+	        					 isMonth =false; 
+	        					$("#birthday").css("color","red");
+	        					$("#birthday").text("태어난 월을 선택하세요.");
+	        	 			}else{
+	        					isMonth =true; 
+	        				}
+	        			 if(isYear && isMonth && isDay){
+	        				 $("#birthday").css("display","none");
+	        				 console.log("여기 들어오면 안됌")
+	        			 }
+	        	 }
+	        	 }
 	        })
 		
 		document.getElementById("search").onclick = function() {
@@ -177,10 +221,10 @@
 				alert("가입시 형식에 맞게 기입하셨는지 확인해주세요.");
 				return false;
 			}
-			if(count <= 0){
+			/*if(count <= 0){
 				alert("핸드폰인증을 진행해주세요.")
 				return false;
-			}
+			}*/
 		})
 		 
 	})
