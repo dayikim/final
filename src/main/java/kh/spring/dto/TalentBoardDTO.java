@@ -1,22 +1,22 @@
 package kh.spring.dto;
 
-public class ReviewDTO {
+import java.sql.Date;
+
+public class TalentBoardDTO {
    private int seq;
    private String id;
-   private String reviewID;
    private String contents;
+   private Date regDate;
    
-public ReviewDTO() {
+public TalentBoardDTO() {
 	super();
-	// TODO Auto-generated constructor stub
 }
-
-public ReviewDTO(int seq, String id, String reviewID, String contents) {
+public TalentBoardDTO(int seq, String id, String contents, Date regDate) {
 	super();
 	this.seq = seq;
 	this.id = id;
-	this.reviewID = reviewID;
 	this.contents = contents;
+	this.regDate = regDate;
 }
 public int getSeq() {
 	return seq;
@@ -30,16 +30,16 @@ public String getId() {
 public void setId(String id) {
 	this.id = id;
 }
-public String getReviewID() {
-	return reviewID;
-}
-public void setReviewID(String reviewID) {
-	this.reviewID = reviewID;
-}
 public String getContents() {
 	return contents;
 }
 public void setContents(String contents) {
 	this.contents = contents;
+}
+public Date getRegDate() {
+	return regDate;
+}
+public void setRegDate(Date regDate) {
+	this.regDate = regDate;
 }
 }
