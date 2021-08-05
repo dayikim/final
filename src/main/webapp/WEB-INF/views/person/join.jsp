@@ -16,90 +16,128 @@
 <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 <script>
-	window.onload = function(){
-		let email = $("#email")
-		let ch1 = $("#ch")
-		let phoneNumber1 = $("#phoneNumber")
-		
-		let id = document.getElementById("email");  
-        let ch2 = document.getElementById("ch");
-		let phoneNumber = document.getElementById("phoneNumber");
-		let val = document.getElementById("val");
-		
-		let idRegex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-		let pwRegex = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
-		let phoneNumberRegex = /^010\d{3,4}\d{4}$/;
-		
-		document.getElementById("ch").oninput = function(){
-			let pw = document.getElementById("pw").value;
-	        let ch = document.getElementById("ch").value;
-            if(pw != ch){
-                val.innerHTML = "패스워드가 일치하지 않습니다.."
-            }else{
-             	val.innerHTML = "패스워드가 일치합니다." 
-            }
-        }	
-				
-		ch1.blur(function(){
-	        let resultpw = pwRegex.test(ch2.value);
-            if(resultpw){
-                return;
-            }else{
-                alert("비밀번호 형식을 확인하세요.")
-    			document.getElementById("pw").value = "";
-    	        document.getElementById("ch").value = "";
-            }
-		})
-		
-		phoneNumber1.blur(function(){
-			let resultphoneNumber = phoneNumberRegex.test(phoneNumber.value);
-			if(resultphoneNumber){
-				return;
-			}else{
-				alert("핸드폰 형식을 확인하세요.")
-				document.getElementById("phoneNumber").value="";
-			}
-		})
-	}
 	$(function(){
 		$('#sendphoneNumber').click(function(){
-            let phone = $('#phone').val();
-            alert('인증번호 발송 완료!')
+			let phoneNumberRegex = /^010\d{3,4}\d{4}$/;
+			let phoneNumber = phoneNumberRegex.test($("#phone").val());
+			if($("#phone").val() == ""){
+        		alert("핸드폰번호 입력후 진행해주세요.");
+        	}else{
+        		if(phoneNumber){
+    				let phone = $('#phone').val();
+    	            alert('인증번호 발송 완료!')
 
-            $.ajax({
-                type: "GET",
-                url: "/person/send",
-                data: {"phone" : phone},
-                success: function(res){
-                    $('#checkBtn').click(function(){
-                        if($.trim(res) ==$('#inputCertifiedNumber').val()){
-                            alert(
-                                '인증성공!',
-                                '휴대폰 인증이 정상적으로 완료되었습니다.',
-                                'success'
-                            )
-                        }else{
-                            alert('인증번호를 다시 확인해주세요')
-                        }
-                    })
-
-
-                }
-            })
+    	            $.ajax({
+    	                type: "GET",
+    	                url: "/person/send",
+    	                data: {"phone" : phone},
+    	                success: function(res){
+    	                    $('#checkBtn').click(function(){
+    	                    	if($("#inputCertifiedNumber").val()==""){
+    	                    		alert("인증번호를 입력해주세요.")
+    	                    	}else{
+    	                    		if($.trim(res) ==$('#inputCertifiedNumber').val()){
+        	                            alert(
+        	                                '인증성공!',
+        	                                '휴대폰 인증이 정상적으로 완료되었습니다.',
+        	                                'success'
+        	                            )
+        	                        }else{
+        	                            alert('인증번호를 다시 확인해주세요')
+        	                            $('#inputCertifiedNumber').val("");
+        	                        }
+    	                    	}
+    	                    })
+    	                }
+    	            })
+    			}else{
+    				alert("핸드폰 형식을 확인 후 다시 인증을 시도해주세요.")
+    				$("#phone").val("");
+    			}
+        	}
         });
 		
-		$("#duplCheck").on("click",function(){
-			$.ajax({
-				url:"/person/duplCheck",
-				data:{id:$("#id").val()}
-			}).done(function(resp){
-				if(resp=="1"){
-					alert("이미 사용중인 ID입니다.")
+		$("#id").blur(function(){
+			let idRegex = /^[a-z]+[a-z0-9]{5,19}$/g;
+			let id = idRegex.test($("#id").val());
+			if(id){
+				$.ajax({
+					url:"/person/duplCheck",
+					data:{id:$("#id").val()}
+				}).done(function(resp){
+					if(resp=="1"){
+						$("#idcheck").css("color","red");
+						$('#idcheck').text("이미사용중인 아이디입니다.");
+					}else{
+						$("#idcheck").css("color","blue");
+						$('#idcheck').text("사용가능한 아이디입니다.");
+					}
+				})
+			}else{
+				$("#idcheck").css("color","red");
+				$("#idcheck").text("아이디는 영문자로 시작하는 6~20자 영문자 또는 숫자이어야 합니다.");
+			}
+		})
+		
+		$("#pw").blur(function(){
+			let pwRegex = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[~!@#$%*\(\)^&+=\-_?]).*$/g;
+			let pw = pwRegex.test($("#pw").val());
+			if(pw){
+				$("#regexPw").css("color","blue");
+				$("#regexPw").text("사용가능한 비밀번호입니다.");
+			}else{
+				$("#regexPw").css("color","red");
+				$("#regexPw").text("8~15자리 영문 소문자, 숫자, 특수문자를 사용하세요.");
+			}
+		})
+		
+		$("#ch").blur(function(){
+			let pw = $("#pw").val();
+			let ch = $("#ch").val();
+			if(pw != ch){
+				$("#val").css("color","red");
+				$("#val").text("비밀번호가 일치하지 않습니다.");
+			}else{
+				$("#val").css("color","blue");
+				$("#val").text("비밀번호가 일치합니다.");
+			}
+		})
+		
+		$("#signup-birth-yy").blur(function(){
+			let yearRegex = /[0-9]{4}/g;
+			let year = yearRegex.test($("#signup-birth-yy").val());
+			if(year){
+				if($("#signup-birth-yy").val() < 1920){
+					$("#birthday").css("color","red");
+					$("#birthday").text("정말이세요?");
+				}else if($("#signup-birth-yy").val() > 2021){
+					$("#birthday").css("color","red");
+					$("#birthday").text("미래에서 오셨군요!");
 				}else{
-					alert("사용가능한 ID입니다.");
+					$("#birthday").css("display","none");
 				}
-			})
-		}) 
+			}else{
+				$("#birthday").css("color","red");
+				$("#birthday").text("태어난 년도 4자리를 정확하게 입력하세요.");
+			}			
+		})
+		
+		$("#signup-birth-mm").blur(function(){
+			console.log($("#signup-birth-mm").val())
+			if($("#signup-birth-mm").val() == "month"){
+				$("#birthday").css("color","red");
+				$("#birthday").text("태어난 월을 선택하세요.");
+			}
+		})
+		
+		$("#signup-birth-dd").blur(function(){
+			if( $("#signup-birth-dd").val()<1 || $("#signup-birth-dd").val()>31) {
+				$("#birthday").css("color","red");
+				$("#birthday").text("생년월일을 다시 확인해주세요.");
+		    }else{
+		    	$("#birthday").css("display","none");
+		    }
+		})
 		
 		 $(".birth").on("change", function(){
 	          for(let i=0; i<$(".birth").length; i++){
@@ -124,6 +162,19 @@
                 }
             }).open();
         }
+		
+		$("#signup-btn").on("click",function(){
+			if($("#id").val() == "" || $("#pw").val() == "" || $("#ch").val() == "" || $("#name").val() == "" || $("#signup-birth-yy").val() =="" || $("#signup-birth-dd").val() =="" || $("#signup-birth-mm").val() ==""
+					|| $("#email").val() == "" || $("#phone").val() == "" || $("#inputCertifiedNumber").val()=="" || $("#postcode").val() == "" || $("#address1").val() == ""){
+				alert("입력하지 않은 항목이 있는지 확인해주세요.")
+				return false;
+			}
+			let color = $(".next_box").css("color");
+			if(color == "rgb(255, 0, 0)"){
+				alert("가입시 형식에 맞게 기입하셨는지 확인해주세요.");
+				return false;
+			}
+		})
 		 
 	})
 </script>
@@ -248,6 +299,18 @@ p{
     font-size: 50px;
     font-family: 'Gugi', cursive;
 }
+input:-webkit-autofill {
+	 -webkit-box-shadow: 0 0 0 30px #fff inset ; 
+	 -webkit-text-fill-color: #000; 
+} 
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active {
+	 transition: background-color 5000s ease-in-out 0s; 
+}
+.next_box {
+    margin-top: 9px;
+    font-size: 12px;   
+}
+
 </style>
 </head>
 <body>
@@ -270,23 +333,22 @@ p{
                 <h3>아이디</h3>
                 <div style="display: flex;">
                     <span class="signup-input" style="width:100%; margin: 10px 0px 0px 0px">
-                        <input id="id" name=id type="text"></input>
-                    </span>
-                    <span class="cnum-btn-wrap">
-                        <button type=button id=duplCheck class="cnum-btn">ID중복확인</button>
+                        <input id="id" name=id type="text" ></input>
                     </span>
                 </div>
+                <span class="next_box" id="idcheck" aria-live="assertive"></span>
 
                 <h3>비밀번호</h3>
                 <span class="signup-input">
                     <input id="pw" name=pw type="password"></input>
                 </span>
+                <span class="next_box" id=regexPw aria-live="assertive"></span>
 
                 <h3>비밀번호 재확인</h3>
                 <span class="signup-input">
                     <input id="ch" type="password"></input>
                 </span>
-                <div id=val></div>
+                <span class="next_box" id=val aria-live="assertive"></span>
 
             </div>
 
@@ -324,7 +386,7 @@ p{
                     </span>
                     <input type = "hidden" name = birth id = birth>
                 </span>
-                
+                <span class="next_box" id=birthday aria-live="assertive"></span>
 
                 <span class="choice">
                     <h3>이메일</h3>
@@ -340,7 +402,7 @@ p{
                 <h3>휴대전화</h3>
                 <div style="display: flex;">
                     <span class="signup-input" style="width:100%; margin: 10px 0px 0px 0px">
-                        <input id="phone" name=phone type="text" placeholder="전화번호 입력"></input>
+                        <input id="phone" name=phone type="text" placeholder="전화번호 입력 '-' 제외"></input>
                     </span>
                     <span class="cnum-btn-wrap">
                         <button type=button id=sendphoneNumber class="cnum-btn">인증번호 받기</button>
