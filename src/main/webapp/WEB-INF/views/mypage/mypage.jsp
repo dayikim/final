@@ -207,7 +207,9 @@
     </style>
     <script>
     	$(function(){
-    		
+    		$("#updateMyInfoBtn").on("click",function(){
+    			location.href="";
+    		})
     	})
     </script>
 </head>
