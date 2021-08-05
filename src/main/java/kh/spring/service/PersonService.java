@@ -19,5 +19,13 @@ public class PersonService {
 	public int idDuplCheck(String id) {
 		return dao.idDuplCheck(id);
 	}
+	
+	public int login(PersonDTO dto) {
+		return dao.login(dto);
+	}
+	
+	public String findid(PersonDTO dto) {
+		return dao.findid(dto);
+	}
 
 }

@@ -11,4 +11,11 @@
 		select count(*) from person where id=#{value}
 	</select>
 	
+	<select id="login" resultType="int">
+		select count(*) from person where id=#{id}and pw=#{pw}
+	</select>
+	
+	<select id="findid" resultType="String">
+		select id from person where phone=#{phone} and name=#{name}
+	</select>
 </mapper>
