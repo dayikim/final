@@ -19,5 +19,13 @@ public class PersonDAO {
 	public int idDuplCheck(String id) {
 		return mybatis.selectOne("Person.idDuplCheck",id);
 	}
+	
+	public int login(PersonDTO dto) {
+		return mybatis.selectOne("Person.login",dto);
+	}
+	
+	public String findid(PersonDTO dto) {
+		return mybatis.selectOne("Person.findid",dto);
+	}
 
 }

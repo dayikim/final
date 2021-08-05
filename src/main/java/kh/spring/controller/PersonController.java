@@ -2,6 +2,8 @@ package kh.spring.controller;
 
 import java.util.Random;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,8 @@ public class PersonController {
 	
 	@Autowired
 	private PersonService service;
+	@Autowired
+	private HttpSession session;
 	
 	@RequestMapping("/join")
 	public String join() {
@@ -54,5 +58,34 @@ public class PersonController {
 		dto.setPw(shaPass);
 		service.insert(dto);
 		return "redirect:/";
+	}
+	
+	@RequestMapping("/login")
+	public String login() {
+		return "person/login";
+	}
+	
+	@RequestMapping("/loginProc")
+	public String loginProc(PersonDTO dto) {
+		String shaPass = SHA256.getSHA512(dto.getPw());
+		dto.setPw(shaPass);
+		int result = service.login(dto);
+		if(result > 0) {
+			session.setAttribute("loginID",dto.getId());
+			}
+		
+		return "redirect:/";
+	}
+	
+	@RequestMapping("/findId")
+	public String findId() {
+		return "person/findId";
+	}
+	
+	@RequestMapping("/findIdProc")
+	@ResponseBody
+	public String findIdProc(PersonDTO dto) {
+		String id = service.findid(dto);
+		return id;
 	}
 }
