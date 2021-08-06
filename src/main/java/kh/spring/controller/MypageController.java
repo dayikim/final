@@ -1,17 +1,53 @@
 package kh.spring.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import kh.spring.config.SHA256;
+import kh.spring.dto.PersonDTO;
+import kh.spring.service.MypageService;
+import kh.spring.service.PersonService;
 
 @Controller
 @RequestMapping("/my")
 public class MypageController {
+	
+	@Autowired
+	private MypageService service;
+	@Autowired
+	private HttpSession session;
 	
 	// 마이페이지로 이전
 	@RequestMapping("/mypage")
 	public String mypage() {
 		return "mypage/mypage";
 	}
+	
+	//마이페이지 확인&수정화면
+	@RequestMapping("/modify")
+	public String modify(Model model) {
+		String id = (String)session.getAttribute("loginID");
+		System.out.println(id);
+		List<PersonDTO>list = service.modify(id);
+		model.addAttribute("list", list);
+		return "mypage/modify";
+	}
+	
+	//정보수정
+	@RequestMapping("/modifyProc")
+	public String modifyProc(PersonDTO dto) {
+		String shaPass = SHA256.getSHA512(dto.getPw());
+		dto.setPw(shaPass);
+		String result = service.modifyProc(dto);
+		return "redirect:/";
+	}
+	
 	
 	// 프로필 사진 업데이트
 	
