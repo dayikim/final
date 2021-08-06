@@ -15,6 +15,7 @@ public class TalentBoardDAO {
 	public int insert(TalentBoardDTO dto) {
 		return mybatis.insert("TBoard.insert",dto);
 	}
-	
-
+	public TalentBoardDTO detailView(int seq) {
+		return  mybatis.selectOne("TBoard.detailView",seq);
+	}
 }

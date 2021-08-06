@@ -12,8 +12,14 @@ public class TalentBoardService {
 	@Autowired
 	private TalentBoardDAO dao;
 	
+
 	public void insert(TalentBoardDTO dto) throws Exception{
 		dao.insert(dto);
 	}
+	
+	public TalentBoardDTO detailView(int seq) {
+		return dao.detailView(seq);
+	}
+	
    
 }
