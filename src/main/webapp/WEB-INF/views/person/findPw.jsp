@@ -13,7 +13,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Nunito:600,700,900" rel="stylesheet">
 
-<title>findID</title>
+<title>findpw</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <style>
 #body {
@@ -68,20 +68,16 @@
 <script>
 $(function(){
 	$('#checkID').click(function(){
-		if($("#name").val()=="" || $("#phone").val()==""){
+		if($("#id").val()=="" || $("#phone").val()==""){
 			alert("정보를 입력해주세요.")
 		}else{
 			$.ajax({
 				type : "GET",
-				url : "/person/findIdProc",
-				data : {"name":$("#name").val(),"phone":$("#phone").val()},
+				url : "/person/checkInfo",
+				data : {"id":$("#id").val(),"phone":$("#phone").val()},
 				dataType:"TEXT"
 			}).done(function(res){
-				$("#id").val(res);
-				if($("#id").val() == ""){
-					alert("가입된정보가 없습니다. 회원가입을 진행해주세요.")
-					$("#f").hide();
-				}else{
+				if(res == 1){
 					alert('인증번호 발송 완료!')
 					$("#f").show();
 					$.ajax({
@@ -96,52 +92,31 @@ $(function(){
 			                                 '휴대폰 인증이 정상적으로 완료되었습니다.',
 			                                 'success'
 			                             )
-			                             location.href="${pageContext.request.contextPath}/person/checkId?id="+$("#id").val();
+			                             location.href="${pageContext.request.contextPath}/person/updatePw?id="+$("#id").val();
 			            		}else{
 			                    	 alert('인증번호를 다시 확인해주세요')
 			                    }
 			            	})
 			             }
 			        })
-					
+				}else{
+					alert("가입된정보가 없습니다. 회원가입을 진행해주세요.")
+					$("#f").hide();					
 				}
 			});
 		}		
 	});
-	
-	/*$("#sendphoneNumber").click(function(){
-		alert('인증번호 발송 완료!')
-		$.ajax({
-            type: "GET",
-            url: "/person/send",
-            data: {"phone" : $("#phone").val()},
-            success: function(res){
-            	$('#checkBtn').on("click",function(){
-            		if($.trim(res) ==$('#inputCertifiedNumber').val()){
-            			 alert(
-                                 '인증성공!',
-                                 '휴대폰 인증이 정상적으로 완료되었습니다.',
-                                 'success'
-                             )
-                             location.href="${pageContext.request.contextPath}/person/checkId?id="+$("#id").val();
-            		}else{
-                    	 alert('인증번호를 다시 확인해주세요')
-                    }
-            	})
-             }
-        })
-    });*/
 });
 </script>
 </head>
 <body id="body">
 <div id="login-card" class="card">
 <div class="card-body">
-  <h2 class="text-center">아이디찾기</h2>
+  <h2 class="text-center">계정확인</h2>
   <br>
 
    	<div class="form-group">
-      <input type="text" class="form-control" id="name" placeholder="이름입력" name="name">
+      <input type="text" class="form-control" id="id" placeholder="ID입력" name="id">
     </div>
     <div class="form-group">
       <input type="text" class="form-control" id="phone" placeholder="핸드폰입력" name="phone">
@@ -154,14 +129,6 @@ $(function(){
       <input type="text" class="form-control" id="inputCertifiedNumber" placeholder="인증번호입력" name="pw">
     </div>
     <button type="button" id="checkBtn" class="btn btn-primary deep-purple btn-block ">인증번호확인</button><br>
-    <span class="next_box" id=val aria-live="assertive"></span>
-    </div>
-    
-    <!-- 아이디 확인 hidden -->
-    <div id=f1>
-    <div class="form-group">
-      <input type="password" class="form-control" id="id" name="id" readonly>
-    </div>
     </div>
     
 </div>

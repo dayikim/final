@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -31,6 +32,7 @@ public class PersonController {
 	@RequestMapping(value = "send",  produces = "application/String; charset=utf-8")
 	@ResponseBody
 	public String send(String phone) {
+		System.out.println(phone);
 		Random rand  = new Random();
         String numStr = "";
         for(int i=0; i<4; i++) {
@@ -77,6 +79,12 @@ public class PersonController {
 		return "redirect:/";
 	}
 	
+	@RequestMapping("/logout")
+	public String logout() {
+		session.invalidate();
+		return "redirect:/";
+	}
+	
 	@RequestMapping("/findId")
 	public String findId() {
 		return "person/findId";
@@ -87,5 +95,41 @@ public class PersonController {
 	public String findIdProc(PersonDTO dto) {
 		String id = service.findid(dto);
 		return id;
+	}
+	
+	@RequestMapping("/checkId")
+	public String checkId(String id,Model model) {
+		String cid = id;
+		model.addAttribute("id", cid);
+		return "person/checkId";
+		
+	}
+	
+	@RequestMapping("/findPw")
+	public String findPw() {
+		return "person/findPw";
+	}
+	
+	@RequestMapping("/checkInfo")
+	@ResponseBody
+	public String checkInfo(PersonDTO dto) {
+		String info = service.checkInfo(dto);
+		System.out.println(info);
+		return info;
+	}
+	
+	@RequestMapping("/updatePw")
+	public String updatePw(String id,Model model) {
+		String pid = id;
+		model.addAttribute("id", pid);
+		return "person/updatePw";
+	}
+	
+	@RequestMapping("/pwProc")
+	public String pwProc(PersonDTO dto) {
+		String shaPass = SHA256.getSHA512(dto.getPw());
+		dto.setPw(shaPass);
+		service.pswd(dto);
+		return "redirect:/";
 	}
 }
