@@ -27,5 +27,13 @@ public class PersonService {
 	public String findid(PersonDTO dto) {
 		return dao.findid(dto);
 	}
+	
+	public String checkInfo(PersonDTO dto) {
+		return dao.checkInfo(dto);
+	}
+	
+	public String pswd(PersonDTO dto) {
+		return dao.pswd(dto);
+	}
 
 }

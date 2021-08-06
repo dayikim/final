@@ -27,5 +27,13 @@ public class PersonDAO {
 	public String findid(PersonDTO dto) {
 		return mybatis.selectOne("Person.findid",dto);
 	}
+	
+	public String checkInfo(PersonDTO dto) {
+		return mybatis.selectOne("Person.checkInfo",dto);
+	}
+	
+	public String pswd(PersonDTO dto) {
+		return mybatis.selectOne("Person.pswd",dto);
+	}
 
 }

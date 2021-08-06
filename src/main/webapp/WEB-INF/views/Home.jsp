@@ -99,13 +99,26 @@ img{
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                    <div class="navbar-nav ml-auto">
-                        <input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
-                        <a href="/person/login" class="nav-item nav-link active">Login</a> <!-- Login Page 이동 -->
-                        <a href="/person/join" class="nav-item nav-link">Sign Up</a>  <!-- SignUp Page 이동 -->
-                    </div>
-                </div>
+                <c:choose>
+                	<c:when test="${loginID == null }">
+                		<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    	<div class="navbar-nav ml-auto">
+                        	<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
+                        	<a href="/person/login" class="nav-item nav-link active">Login</a> <!-- Login Page 이동 -->
+                        	<a href="/person/join" class="nav-item nav-link">Sign Up</a>  <!-- SignUp Page 이동 -->
+                    	</div>
+                		</div>
+                	</c:when>
+                	<c:otherwise>
+                		<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    		<div class="navbar-nav ml-auto">
+                        		<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
+                        		<a href="/person/logout" class="nav-item nav-link active">Logout</a> <!-- Logout -->
+                        		<a href="#" class="nav-item nav-link">MyPage</a>  <!-- My Page 이동 -->
+                    		</div>
+                		</div>
+                	</c:otherwise>
+                </c:choose>
 
             </div>
         </div>
