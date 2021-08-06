@@ -4,6 +4,6 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="TBoard">
 	<insert id="insert">
-		insert into talentboard values(talentboard_seq.nextval,#{id},#{title},#{contents},sysdate)
+		insert into TalentBoard values(talentboard_seq.nextval,#{id},#{title},#{category},#{contents} #{price},sysdate)
 	</insert>
 	</mapper>

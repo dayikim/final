@@ -5,19 +5,56 @@ import java.sql.Date;
 public class TalentBoardDTO {
    private int seq;
    private String id;
+   private String title;
+   private String category;
    private String contents;
+   private int price;
    private Date regDate;
    
-public TalentBoardDTO() {
-	super();
-}
-public TalentBoardDTO(int seq, String id, String contents, Date regDate) {
+   
+public TalentBoardDTO(int seq, String id, String title, String category, String contents, int price, Date regDate) {
 	super();
 	this.seq = seq;
 	this.id = id;
+	this.title = title;
+	this.category = category;
 	this.contents = contents;
+	this.price = price;
 	this.regDate = regDate;
 }
+
+
+public TalentBoardDTO() {
+	super();
+}
+
+
+public String getTitle() {
+	return title;
+}
+
+
+public void setTitle(String title) {
+	this.title = title;
+}
+
+public String getCategory() {
+	return category;
+}
+
+
+public void setCategory(String category) {
+	this.category = category;
+}
+
+public int getPrice() {
+	return price;
+}
+
+public void setPrice(int price) {
+	this.price = price;
+}
+
 public int getSeq() {
 	return seq;
 }
