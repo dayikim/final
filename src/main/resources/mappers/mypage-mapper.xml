@@ -5,6 +5,11 @@
   
 <mapper namespace="MyPage">
 
+	<!-- 마이페이지 출력 -->
+	<select id="mypageList" resultType="kh.spring.dto.PersonDTO">
+		select * from person where id=#{sessionID}
+	</select>
+
 	<!-- 마이페이지 정보불러옴 -->
 	<select id="modify" resultType="kh.spring.dto.PersonDTO">
 		select * from person where id=#{id}

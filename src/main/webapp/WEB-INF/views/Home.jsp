@@ -114,7 +114,7 @@ img{
                     		<div class="navbar-nav ml-auto">
                         		<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
                         		<a href="/person/logout" class="nav-item nav-link active">Logout</a> <!-- Logout -->
-                        		<a href="/my/mypage" class="nav-item nav-link">MyPage</a>  <!-- My Page 이동 -->
+                        		<a href="/my/mypageProc" class="nav-item nav-link">MyPage</a>  <!-- My Page 이동 -->
                     		</div>
                 		</div>
                 	</c:otherwise>
