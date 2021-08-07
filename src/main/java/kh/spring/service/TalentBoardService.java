@@ -13,8 +13,8 @@ public class TalentBoardService {
 	private TalentBoardDAO dao;
 	
 
-	public void insert(TalentBoardDTO dto) throws Exception{
-		dao.insert(dto);
+	public int boardWrite(TalentBoardDTO dto) throws Exception{
+		return dao.boardWrite(dto);
 	}
 	
 	public TalentBoardDTO detailView(int seq) {

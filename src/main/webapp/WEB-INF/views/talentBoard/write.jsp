@@ -78,11 +78,15 @@ img {
 }
 
 /* 글쓰기 폼 */
-section{
-    background-color: #f5f6f7;
-    padding-top:30px;
-    padding-bottom: 30px;
+body {
+	background-color: #f5f6f7;
 }
+
+section {
+	padding-top: 80px;
+	padding-bottom: 30px;
+}
+
 .title {
 	overflow: hidden;
 	padding-top: 10px;
@@ -109,7 +113,7 @@ section{
 	margin-top: 20px;
 }
 
-#input1 {
+#title_input {
 	margin-top: 20px;
 }
 
@@ -117,96 +121,159 @@ strong {
 	color: red;
 }
 /* 이미지 파일 미리보기 */
-#preview{
- width: 600px;
- margin-top:20px;
+#preview {
+	width: 600px;
+	margin-top: 20px;
 }
-#preview img{
- max-width: 200px;
- margin-right: 10px;
- margin-bottom: 10px;
+
+#preview img {
+	max-width: 200px;
+	margin-right: 10px;
+	margin-bottom: 10px;
 }
 /* footer */
-footer{
-    margin-top: 20px;
+footer {
+	margin-top: 20px;
 }
 </style>
 <script>
-    //이미지 담을 배열
- let preview_files =[];
- $(function(){
-    $("#file").on("change",preview)
+	//이미지 담을 배열
+	 let preview_files = [];
 
- });
+	$(function() {
+		
+		let title = $("#title_input");
+		let contents = $("#contents");
+		let category = $("#category");
+		let price = $("#price");
+		let priceReg =  /\d/g ;
+		
+		$("#submit").on("click", function() { //글 작성 전 제목 내용 입력여부 확인
+			
+			let resultprice = priceReg.test(price.val());
 
- function filesUpload(){
-     console.log("fileupload");
-     $("#file").trigger('click');
- }
+			if (title.val() == "") {
+				alert("상품명을 입력해주세요.");
+				title.focus();
+				return false;
 
- function preview(e){
+			} else if (category.val() == "0") {
+				alert("카테고리를 선택해주세요.");
+				category.focus();
+				return false;
 
-     //이미지 정보들 초기화
-     preview_files =[];
-     $("#file").empty();
+			} else if (price.val() == "") {
+				alert("가격을 입력해주세요.");
+				price.focus();
+				return false;
 
-     let files = e.target.files;
-     let filesArr = Array.prototype.slice.call(files);
-     
-     let index=0;
-     filesArr.forEach(function(f) {
-         if(!f.type.match("image.*")){
-             alert("확장자는 이미지 확장자만 가능합니다.");
-             return;
-         }
-         preview_files.push(f);
-         
-         let reader = new FileReader();
-         reader.onload = function(e){
-            let html = "<a href=\"javascript:void(0);\" onclick=\"deleteImage("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='Click to remove'></a>";
+			} else if (contents.val() == "") {
+				alert("세부내용을 입력해주세요.");
+				contents.focus();
+				return false;
 
-             $("#preview").append(html);
-             index++;
-            //  let img_html = "<img src=\"" +e.target.result + "\" />";
-            //  $("#preview").append(img_html);
+			} else if (resultprice) {
+				if (price.val() < 100) {
+					alert("최소금액은 100원입니다. 가격을 다시 입력해주세요.");
+					price.val("");
+					price.focus();
+					return false;
+				} else {
+					alert("상품등록")
+					$("#writeform").submit();
 
-         }
-         reader.readAsDataURL(f);
-     });
- }
+				}
+			} else {
+				alert("숫자만 입력해주세요.")
+				price.val("");
+				price.focus();
+				return false;
 
- function deleteImage(index) {            
-            console.log("index : "+index);
-            preview_files.splice(index, 1);
- 
-            let img_id = "#img_id_"+index;
-            $(img_id).remove();
- 
-            console.log(preview_files);
-        }
-        function submit() {            
-            let data = new FormData();
- 
-            for(let i=0, len=preview_files.length; i<len; i++) {
-                let name = "image_"+i;
-                data.append(name, preview_files[i]);
-            }
-            data.append("image_count", preview_files.length);
-           
- 
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST","./Tboard/write");
-            xhr.onload = function(e) {
-                if(this.status == 200) {
-                    console.log("Result : "+e.currentTarget.responseText);
-                }
-            }
- 
-            xhr.send(data);
- 
-        }
+			}
+			
+		});
 
+		/* $("#file").on("change", preview) */
+	});
 
+	/* function inNumber(){
+	    if(event.keyCode<48 || event.keyCode>57){
+	       event.returnValue=false;
+	       alert("숫자만 입력해주세요.")
+	    } */
+
+	function filesUpload() {
+		console.log("fileupload");
+		$("#file").trigger('click');
+	}
+
+	function preview(e) {
+
+		//이미지 정보들 초기화
+		preview_files = [];
+		$("#file").empty();
+
+		let files = e.target.files;
+		let filesArr = Array.prototype.slice.call(files);
+
+		let index = 0;
+		filesArr
+				.forEach(function(f) {
+					if (!f.type.match("image.*")) {
+						alert("확장자는 이미지 확장자만 가능합니다.");
+						return;
+					}
+					preview_files.push(f);
+
+					let reader = new FileReader();
+					reader.onload = function(e) {
+						let html = "<a href=\"javascript:void(0);\" onclick=\"deleteImage("
+								+ index
+								+ ")\" id=\"img_id_"
+								+ index
+								+ "\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='Click to remove'></a>";
+
+						$("#preview").append(html);
+						index++;
+						//  let img_html = "<img src=\"" +e.target.result + "\" />";
+						//  $("#preview").append(img_html);
+
+					}
+					reader.readAsDataURL(f);
+				});
+	}
+
+	function deleteImage(index) {
+		console.log("index : " + index);
+		preview_files.splice(index, 1);
+
+		let img_id = "#img_id_" + index;
+		$(img_id).remove();
+
+		console.log(preview_files);
+	}
+	/* function submit() {            
+	    let data = new FormData();
+	    if(data<0){
+	    	
+	    }
+	    for(let i=0, len=preview_files.length; i<len; i++) {
+	        let name = "image_"+i;
+	        data.append(name, preview_files[i]);
+	    }
+	    data.append("image_count", preview_files.length);
+	   
+	
+	    var xhr = new XMLHttpRequest();
+	    xhr.open("POST","./Tboard/write");
+	    xhr.onload = function(e) {
+	        if(this.status == 200) {
+	            console.log("Result : "+e.currentTarget.responseText);
+	        }
+	    }
+	
+	    xhr.send(data);
+	} */
 </script>
 </head>
 <body>
@@ -243,9 +310,9 @@ footer{
 	<div class="navbar navbar-expand-lg bg-dark navbar-dark">
 		<div class="container-fluid">
 			<a href="index.html" class="navbar-brand">
-				<p id=titlename>돈-다
+				<p id=titlename>돈-다</p>
 			</a>
-			</p>
+
 			<button type="button" class="navbar-toggler" data-toggle="collapse"
 				data-target="#navbarCollapse">
 				<span class="navbar-toggler-icon"></span>
@@ -268,134 +335,164 @@ footer{
 
 	<section>
 		<div class="container">
-			<form action="" method="">
-			<div class="form-control wrapper ">
-				<div class="title">
-					<h2><b>상품등록</b></h2>
+			<form action="/tBoard/boardWrite" method="post" id="writeform">
+				<div class="form-control wrapper ">
+					<div class="title">
+						<h2>
+							<b>상품등록</b>
+						</h2>
 
-				</div>
-				<div class="input-group mb-3 col-md-12 ">
-					<label class="input-group-text input" for="inputGroupSelect02">상품명<strong>＊</strong></label>
-					<input type="text" class="form-control" id="input1" name="title"
-						placeholder="상품명을 입력하세요" required>
-				</div>
-
-				<div class="input-group mb-3 col-md-12">
-					<label class="input-group-text" for="inputGroupSelect02">카테고리<strong>＊</strong></label>
-					<select class="custom-select" id="inputGroupSelect02" name="category">
-						<option selected>카테고리 선택해주세요.</option>
-						<option value="1">생활/가공식품</option>
-						<option value="2">디지털기기</option>
-						<option value="3">잡화,의류</option>
-                        <option value="4">뷰티,미용</option>
-                        <option value="5">도서/티켓/음반</option>
-                        <option value="6">식품</option>
-                        <option value="7">기타</option>
-					</select>
-				</div>
-
-
-				<div class="input-group mb-3 col-md-12">
-                    <h4><b>이미지 미리 보기</b></h4>
-					<div class="input-group mb-3 col-md-12 " id="preview">
-                        <!-- <img id="img"/> -->
-                    </div>
-					<div class="custom-file" >
-					<!-- <form action="fileForm" name="frm" method="post" id="fileForm"> -->
-						<input type="file" class="custom-file-input" id="file" multiple required>
-						<label class="custom-file-label" for="inputGroupFile04"></label>
 					</div>
-					<div class="input-group-append">
-						<button class="btn btn-outline-secondary" type="button"
-                        onclick="filesUpload();" class="uploadBtn">이미지 업로드</button>
+					<div class="input-group mb-3 col-md-12 ">
+						<label class="input-group-text input" for="inputGroupSelect02">상품명<strong>＊</strong></label>
+						<input type="text" class="form-control" id="title_input"
+							name="title" placeholder="상품명을 입력하세요" required>
 					</div>
-					<!-- </form> -->
-				</div>
 
-				<div class="input-group mb-3 col-md-12">
-					<label class="input-group-text">가격<strong>＊</strong></label> <input
-						type="text" class="form-control" placeholder="가격 (ex: 100 상추)" name="price">
-				</div>
+					<div class="input-group mb-3 col-md-12">
+						<label class="input-group-text" for="inputGroupSelect02">카테고리<strong>＊</strong></label>
+						<select class="custom-select" id="category" name="category">
+							<option value="0" selected>카테고리 선택해주세요.</option>
+							<option value="생활/가공식품">생활/가공식품</option>
+							<option value="디지털기기">디지털기기</option>
+							<option value="잡화,의류">잡화,의류</option>
+							<option value="뷰티,미용">뷰티,미용</option>
+							<option value="도서/티켓/음반">도서/티켓/음반</option>
+							<option value="식품">식품</option>
+							<option value="기타">기타</option>
+						</select>
+					</div>
 
-				<div class="input-group mb-3 col-md-12">
-					<input type="text" class="form-control" id="Input3"
-						placeholder="위치" readonly>
-				</div>
-				<div class="input-group mb-3 col-md-12">
-					<textarea class="form-control" aria-label="With textarea"
-						placeholder="세부 설명을 입력해주세요" rows="10" required name="contents"></textarea>
-				</div>
-				<div class="btn_wrap text-right footer">
-					<button type="button" class="btn btn-primary" id="modifyBtn" onclick="submit();">등록</button>
-					<button type="reset" id="deleteBtn" class="btn btn-dark">취소</button>
 
+					<div class="input-group mb-3 col-md-12">
+						<h4>
+							<b>이미지 미리 보기</b>
+						</h4>
+						<div class="input-group mb-3 col-md-12 " id="preview">
+							<!-- <img id="img"/> -->
+						</div>
+						<div class="custom-file">
+							<!-- <form action="fileForm" name="frm" method="post" id="fileForm"> -->
+							<input type="file" class="custom-file-input" id="file" multiple>
+							<label class="custom-file-label" for="inputGroupFile04"></label>
+						</div>
+						<div class="input-group-append">
+							<button class="btn btn-outline-secondary" type="button"
+								onclick="filesUpload();" class="uploadBtn">이미지 업로드</button>
+						</div>
+						<!-- </form> -->
+					</div>
+
+					<div class="input-group mb-3 col-md-12">
+						<label class="input-group-text">가격<strong>＊</strong></label>
+						<!-- <input
+							type="text" class="form-control" placeholder="가격 (ex: 100 상추/최소 금액은 100원)"
+							id="price" name="price" required onkeypress="inNumber();" /> -->
+						<input type="text" class="form-control"
+							placeholder="(ex: 100 상추/최소 금액은 100 상추)" id="price" name="price"
+							required onKeyup="this.value=this.value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');" />
+
+					</div>
+
+					<div class="input-group mb-3 col-md-12">
+						<input type="text" class="form-control" id="Input3"
+							placeholder="위치" readonly>
+					</div>
+					<div class="input-group mb-3 col-md-12">
+						<textarea class="form-control" aria-label="With textarea"
+							placeholder="세부 설명을 입력해주세요" rows="10" id="contents"
+							name="contents" required></textarea>
+					</div>
+					<div class="btn_wrap text-right">
+						<button type="submit" class="btn btn-primary" id="submit">등록</button>
+						<button type="reset" id="cancel" class="btn btn-dark">취소</button>
+
+					</div>
+				</div>
+			</form>
+		</div>
+
+	</section>
+
+	<!-- Footer Start -->
+	<div class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="row">
+						<div class="col-12">
+							<div class="footer-contact">
+								<p>
+									<i class="fa fa-map-marker-alt"></i>서울특별시 강남대로 123로
+								</p>
+								<p>
+									<i class="fa fa-phone-alt"></i>02-123-4567
+								</p>
+								<p>
+									<i class="fa fa-envelope"></i>DonDa@example.com
+								</p>
+								<div class="footer-social">
+									<a href=""><i class="fab fa-twitter"></i></a> <a href=""><i
+										class="fab fa-facebook-f"></i></a> <a href=""><i
+										class="fab fa-youtube"></i></a> <a href=""><i
+										class="fab fa-instagram"></i></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="row">
+						<div class="col-6">
+							<div class="footer-contact">
+								<p>
+									<i class="far fa-building"></i>회사소개
+								</p>
+								<p>
+									<i class="far fa-user-circle"></i>채용
+								</p>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="footer-contact">
+								<p>
+									<i class="fas fa-info"></i>이용약관
+								</p>
+								<p>
+									<i class="far fa-id-badge"></i>개인정보처리방침
+								</p>
+								<p>
+									<i class="fas fa-map-pin"></i>위치기반서비스 이용약관
+								</p>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-	</form>
+		</div>
+		<div class="container copyright">
+			<div class="row">
+				<div class="col-12" style="text-align: center;">
+					<p id=titlename>
+						&copy; <a href="#">돈-다</a>, All Right Reserved.
+					</p>
+				</div>
+			</div>
+		</div>
 	</div>
+	<!-- Footer End -->
 
-</section>
-<footer>
-  <!-- Footer Start -->
-  <div class="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="footer-contact">
-                            <p><i class="fa fa-map-marker-alt"></i>서울특별시 강남대로 123로</p>
-                            <p><i class="fa fa-phone-alt"></i>02-123-4567</p>
-                            <p><i class="fa fa-envelope"></i>DonDa@example.com</p>
-                            <div class="footer-social">
-                                <a href=""><i class="fab fa-twitter"></i></a>
-                                <a href=""><i class="fab fa-facebook-f"></i></a>
-                                <a href=""><i class="fab fa-youtube"></i></a>
-                                <a href=""><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="footer-contact">
-                            <p><i class="far fa-building"></i>회사소개</p>
-                            <p><i class="far fa-user-circle"></i>채용</p>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="footer-contact">
-                            <p><i class="fas fa-info"></i>이용약관</p>
-                            <p><i class="far fa-id-badge"></i>개인정보처리방침</p>
-                            <p><i class="fas fa-map-pin"></i>위치기반서비스 이용약관</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container copyright">
-        <div class="row">
-            <div class="col-12" style="text-align: center;">
-                <p id=titlename>&copy; <a href="#">돈-다</a>, All Right Reserved.</p>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Footer End -->
+	<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
-<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+	<!-- JavaScript Libraries -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+	<script src="/lib/easing/easing.min.js"></script>
 
-<!-- JavaScript Libraries -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-<script src="/lib/easing/easing.min.js"></script>
+	<!-- Template Javascript -->
+	<script src="/js/main.js"></script>
 
-<!-- Template Javascript -->
-<script src="/js/main.js"></script>
-</footer>
 </body>
 
 </html>

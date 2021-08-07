@@ -12,7 +12,7 @@ public class TalentBoardDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 	
-	public int insert(TalentBoardDTO dto) {
+	public int boardWrite(TalentBoardDTO dto) {
 		return mybatis.insert("TBoard.insert",dto);
 	}
 	public TalentBoardDTO detailView(int seq) {

@@ -15,11 +15,11 @@ import kh.spring.dto.TalentBoardDTO;
 import kh.spring.service.TalentBoardService;
 
 @Controller
-@RequestMapping("/TBoard")
+@RequestMapping("/tBoard")
 public class TalentBoardController {
 	
 	@Autowired
-	private TalentBoardService B_Service;
+	private TalentBoardService TBoardService;
 	
 //	@Autowired
 //	private TalentFileService F_Service;	
@@ -28,14 +28,24 @@ public class TalentBoardController {
 	 private HttpSession session;
 	
 	
-	@RequestMapping("write")
+	@RequestMapping("Towrite")
 	public String write() {
-		return "/talentboard/write";
+		return "/talentBoard/write";
 	}
+	
+	@RequestMapping("boardWrite")
+	public String boardWrite(TalentBoardDTO dto) throws Exception {
+		         	
+		String id = (String) session.getAttribute("loginID");
+		dto.setId(id);
+		TBoardService.boardWrite(dto);
+			return "redirect:/";
+		}
+
 	@RequestMapping("detailView")
 	public String post(int seq,Model model) throws Exception {
 		System.out.println(seq);
-		TalentBoardDTO dto = B_Service.detailView(seq);
+		TalentBoardDTO dto = TBoardService.detailView(seq);
 		model.addAttribute("post",dto);
 		
 ////		List<TalentFilesDTO> fileList = F_Service.selectAll(seq); //첨부파일 목록 출력   

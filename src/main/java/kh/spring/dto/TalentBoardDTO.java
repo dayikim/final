@@ -8,11 +8,11 @@ public class TalentBoardDTO {
    private String title;
    private String category;
    private String contents;
-   private int price;
+   private String price;
    private Date regDate;
    
    
-public TalentBoardDTO(int seq, String id, String title, String category, String contents, int price, Date regDate) {
+public TalentBoardDTO(int seq, String id, String title, String category, String contents, String price, Date regDate) {
 	super();
 	this.seq = seq;
 	this.id = id;
@@ -42,16 +42,15 @@ public String getCategory() {
 	return category;
 }
 
-
 public void setCategory(String category) {
 	this.category = category;
 }
 
-public int getPrice() {
+public String getPrice() {
 	return price;
 }
 
-public void setPrice(int price) {
+public void setPrice(String price) {
 	this.price = price;
 }
 
