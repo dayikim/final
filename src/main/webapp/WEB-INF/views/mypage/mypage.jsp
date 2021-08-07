@@ -203,7 +203,7 @@
 .list {
 	border-radius: 20px;
 	height: 250px;
-	margin-bottom: 20px;
+	margin-bottom: 40px;
 	border: 1px solid rgb(158, 157, 157);
 }
 
@@ -428,7 +428,7 @@
 				</div>
 				
 				<!-- 내가 쓴 대여글 확인 -->
-				<div class="col-12 list">
+				<div class="col-12 list2">
 					<div class="row go">
 						<div class="col-10 titleDiv">
 							<div class="title">
@@ -446,24 +446,7 @@
 					</div>
 				</div>
 				
-				<!-- 나의 후기글 모음 -->
-				<div class="col-12 list2">
-					<div class="row go">
-						<div class="col-10 titleDiv">
-							<div class="title">
-								<h3>
-									<b>나의 후기 글</b>
-								</h3>
-							</div>
-							<div class="stitle">
-								<b>거래 완료 후, 구매자 혹 판매자에 대한 후기 작성 목록 확인</b>
-							</div>
-						</div>
-						<div class="col-2 buttonDiv">
-							<button type=button class="okBtn">확인</button>
-						</div>
-					</div>
-				</div>
+				
 			</div>
 		</div>
 
