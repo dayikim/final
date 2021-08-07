@@ -23,9 +23,13 @@ public class MypageController {
 	@Autowired
 	private HttpSession session;
 	
-	// 마이페이지로 이전
-	@RequestMapping("/mypage")
-	public String mypage() {
+	// 마이페이지 정보 출력
+	@RequestMapping(value="/mypageProc", produces="text/html;charset=utf8")
+	public String mypageProc() {
+		String sessionID = (String) session.getAttribute("loginID");
+		PersonDTO dto = service.mypageList(sessionID);
+		session.setAttribute("myInfo", dto);
+		
 		return "mypage/mypage";
 	}
 	
@@ -45,7 +49,7 @@ public class MypageController {
 		String shaPass = SHA256.getSHA512(dto.getPw());
 		dto.setPw(shaPass);
 		String result = service.modifyProc(dto);
-		return "redirect:/";
+		return "redirect:/my/mypageProc";
 	}
 	
 	

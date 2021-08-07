@@ -14,6 +14,11 @@ public class MypageDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 	
+	// 마이페이지 정보 출력
+	public PersonDTO mypageList(String sessionID){
+		return mybatis.selectOne("MyPage.mypageList",sessionID);
+	}
+	
 	//마이페이지정보확인
 	public List<PersonDTO> modify(String id){
 		return mybatis.selectList("MyPage.modify", id);

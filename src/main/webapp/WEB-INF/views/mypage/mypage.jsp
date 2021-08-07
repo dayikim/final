@@ -257,7 +257,7 @@
 	$(function(){
 		// 내 정보 수정
 		$("#updateMyInfoBtn").on("click",function(){
-			
+			location.href="/my/modify";
 		})
 		
 		// 프로필 사진 업로드
@@ -272,7 +272,7 @@
 	<!-- 맨 윗 상단 -->
 	<div class="row container-fulid">
 		<div class="col-4" align=center>
-			<a href="index.html" class="navbar-brand">
+			<a href="/" class="navbar-brand">
 				<p id=titlename>돈-다</p>
 			</a> <b id=titleNextName>마이페이지</b>
 		</div>
@@ -306,10 +306,10 @@
 			<!-- 내 정보 출력 -->
 			<div class="myInfo">
 				<div class="name">
-					<b>ooo</b>님
+					<b>${myInfo.name}</b>님
 				</div>
 				<br>
-				<div class="add">서울특별시 동대문구</div>
+				<div class="add">${myInfo.address1 }</div>
 			</div>
 			<hr>
 	
