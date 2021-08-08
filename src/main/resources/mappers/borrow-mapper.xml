@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="Borrow">
+
+	<!-- 검색 지역 & 타이틀 -->
+	<select id="toSearch" resultType="kh.spring.dto.borrowDTO">
+		select * from borrowboard where address1=#{value} or title=#{value} order by regdate desc
+	</select>
+	
+	<!-- 검색 타이틀 -->
+	<select id="toTitle" resultType="kh.spring.dto.borrowDTO">
+		select * from borrowboard where title=#{value}
+	</select>
+	
+	<!-- 검색이 null일 경우 전체목록 나오게 -->
+	<select id="toList" resultType="kh.spring.dto.borrowDTO">
+		select * from borrowboard order by regdate desc
+	</select>
+	
+	<!-- 검색 지역 & 타이틀 카운트 -->
+	<select id="numSearch" resultType="int">
+		select count(*) from borrowboard where address1=#{value} or title=#{value}
+	</select>
+	
+	<!-- 검색 타이틀 카운트 -->
+<!-- 	<select id="numAddress1" resultType="int"> -->
+<!-- 		select count(*) from borrowboard where title=#{value} -->
+<!-- 	</select> -->
+	
+	<!-- 전체 카운트 -->
+	<select id="numAddress1" resultType="int">
+		select count(*) from borrowboard
+	</select>
+	
+</mapper>
