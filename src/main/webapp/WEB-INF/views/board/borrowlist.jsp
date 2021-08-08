@@ -25,6 +25,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
 
         <!-- Template Stylesheet -->
+        
         <link href="/css/style.css" rel="stylesheet">
         <style>
 #titlename{
@@ -34,9 +35,9 @@
     font-family: 'Gugi', cursive;
     color:white;
 }
-img{
-    width: 100%;
-}
+/* img{ */
+/*     width: 100%; */
+/* } */
 #search{
     width: 500px;
     position: relative;
@@ -60,32 +61,130 @@ img{
 .Main{
     margin-top: 5%;
 }
+
+*{box-sizing: inherit;}
+    div{display: block;}
+    .minicontainer{margin: auto; overflow: hidden;text-align: center; padding: 150px 80px;}
+    .minibody{padding:0 8px; overflow: hidden;}
+    img{border-radius: 20px;}
+    h3{font-size: 1rem;}
+    p{font-size: 1.1rem;}
+    
+    .dropbtn {background-color: #acafac; color: white;padding: 10px; font-size: 13px; border: none; cursor: pointer;border-radius: 3px;}
+    .dropdown {position: relative; display: inline-block;margin-bottom: 20px;}
+    .dropdown-content {display: none; position: absolute; background-color: #f9f9f9; min-width: 160px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 1;}
+    .dropdown-content a {color: black; padding: 12px 16px; text-decoration: none; display: block;}
+    .dropdown-content a:hover {background-color: #f1f1f1}
+    .dropdown:hover .dropdown-content {display: block;}
+    .dropdown:hover .dropbtn {background-color: #acafac}
+
+    .minibody{text-align: center;}
+    .reservation{overflow: hidden; font-size: 0.5rem; position: absolute;  transform: translate( 5%, -10%);}
+    .borrow-board{width: 25%;overflow: hidden; display:inline-block; margin-right:30px; margin-bottom: 56px;}
+    .borrow-board img{width: 100%; height: 70%;} 
+    .minibody a{color: black; cursor: pointer; text-decoration: none;}
+    .minibody a:hover{color: black; text-decoration: none;}
+
+
     </style>
     
     <script>
-   
-   $(function(){
+    $(document).ready(function(){
+    	GetList(1);
    	 $("#search").keyup(function(e){
    		 if(e.keyCode == 13){
-   			 const GetList = function(currentPage){ 
-   				 console.log(currentPage);
+   			 const GetList = function(currentPage){   				 
         		$.ajax({
         			url:"/borrow/list",
         			data:"pageNum="+currentPage+"&search="+$("#search").val()
         		}).done(function(resp){
         			
-        		}) 		
+        		})
         	}
-   			 $(document).ready(function(){
-   		        GetList(1);
-   		    })
    		 }
    	 }) 
     })
+    $(function(){
+        let reservation = $("#reservation").text();
+        
+        let reservations = new Array();
+
+        for(var i=0; i<reservation.length; i++){
+            reservations.push(reservation[i]);
+        }
+
+        console.log(reservations);
+
+        if($("#reservation").text()=="미예약"){
+            $("#reservation").css("color","blue");
+        }
+        if($("#reservation").text()=="대여중"){
+            $("#reservation").css("color","red");
+        }
+        if($("#reservation").text()=="완료"){
+            $("#reservation").css("color","gray");
+        }
+                
+        //페이지가 처음 로딩될 때 1page를 보여주기 때문에 초기값을 1로 지정한다.
+        let currentPage=1;
+        //현재 페이지가 로딩중인지 여부를 저장할 변수이다.
+        let isLoading=false;
+        
+        $(document).ready(function(){
+        	GetList(1);
+        })
+        
+        //웹브라우저의 창을 스크롤 할 때 마다 호출되는 함수 등록 
+        $(window).on("scroll",function(){
+        	//위로 스크롤도니 길이
+        	let scrollTop=$(window).scrollTop();
+  			//웹브라우저의 창의 높이
+  			let windowHeight=$(window).height();
+  			//문저 전체의 높이
+  			let documentHeight=$(document).height();
+  			//바닥까지 스크롤 되었는 지 여부를 알아낸다.
+  			let isBottom=scrollTop+windowHeight + 10 >= documentHeight;
+  			
+  			if(isBottom){
+  				//만일 현재 마지막 페이지라면
+  				if(currentPage == ${totalPageCount} || isLoading){
+  					return; //함수를 여기서 끝낸다
+  				}
+  				//현재 로딩중이라고 표시한다.
+  				isLoading=true;
+  				//요청할 페이지 번호를 1증가시킨다.
+  				currentPage++;
+  				//추가로 받아올 페이지를 서버에 ajax 요청을 한다
+  				console.log("inscroll" + currentPage);
+  				GetList(currentPage);
+  			}
+        	
+        })
+        
+		const GetList = function(currentPage){
+        	console.log("inGetList"+currentPage);
+        	
+        	//무한스크롤
+        	$.ajax({
+        		url:/borrow/ ,
+        		method:"GET",
+        		//검색기능이 있는 경우 search를 한께 넘겨준다
+        		data:"pageNum"=currentPage+"&search=${search}"
+        	}).done(function(resp)){
+        		console.log(resp);
+        		
+        		$(".borrow-board").append(resp);
+        		//로딩중이 아니라고 표시한다.
+        		isLoading=false;
+        	}
+        }
+        
+        
+    })
     
-    </script>
-    
-    
+   
+
+	</script>
     </head>
 
     <body>
@@ -127,7 +226,7 @@ img{
                 </button>
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav ml-auto">
-                        <input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id=search name=search  aria-label="Search">
+                        <input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id=search name=search aria-label="Search">
                         <a href="#" class="nav-item nav-link active">Login</a> <!-- Login Page 이동 -->
                         <a href="/person/join" class="nav-item nav-link">Sign Up</a>  <!-- SignUp Page 이동 -->
                     </div>
@@ -136,58 +235,42 @@ img{
             </div>
         </div>
         <!-- Nav Bar End -->
-        <div class="container-fluid">
-            <div class = "row Main">
-                <div class="col-6" id ="Main-1">
-                    <img src="/imgs/Main-1.jpg">
-                </div>
-                <div class="col-6 Main-text first">
-                    <div class="Explanation">
-                        <div class = "subject">돈-다에서는 물건에 대한 새로운 방식을 제시합니다!</div>
-                        <div class = "contents">가까운 이웃에게 물건을 빌리고, 빌려주세요!</div>
-                    </div>
-                    </div>
-                </div>
-            <div class = "row Main">
-                <div class="col-6">
-                    <img src="/imgs/Main-2.png">
-                </div>
-                <div class="col-6 Main-text second">
-                    <div class="Explanation">
-                        <div class = "subject">새로운 즐거움을 나눠봐요!</div>
-                        <div class = "contents">새로운 이웃을 만나고,</div>
-                        <div class = "contents">그들과 경험을 공유하세요!</div>
-                    </div>
-                </div>
-            </div>
-            <div class = "row Main">
-                <div class="col-6">
-                    <img src="/imgs/Main-3.jpg">
-                </div>
-                <div class="col-6 Main-text third">
-                    <div class="Explanation">
-                        <div class = "subject">경제적이고, 합리적인 선택이 됩니다!</div>
-                        <div class = "contents">경제적이고,합리적인 소비를 통해</div>
-                        <div class = "contents">똑똑한 소비자가 돼 보아요!</div>
-                    </div>
-                </div>
-            </div>
-            <div class = "row Main">
-                <div class="col-6">
-                    <img src="/imgs/Main-4.jpg">
-                </div>
-                <div class="col-6 Main-text third">
-                    <div class="Explanation">
-                        <div class = "subject">주변과의 새로운 연결 고리가 됩니다!</div>
-                        <div class = "contents">단순히 물건을 주고 받는게 아닌</div>
-                        <div class = "contents">서로와 서로를 연결해봐요!</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+	<div class="minicontainer">
+		<div class="miniheader">
+			<div class="dropdown">
+				<button class="dropbtn">Dropdown</button>
+				<div class="dropdown-content">
+					<a href="#">Link 1</a> <a href="#">Link 2</a>
+				</div>
+			</div>
+			<div class="dropdown">
+				<button class="dropbtn">Dropdown</button>
+				<div class="dropdown-content">
+					<a href="#">Link 1</a> <a href="#">Link 2</a>
+				</div>
+			</div>
+			<div class="dropdown">
+				<button class="dropbtn">Dropdown</button>
+				<div class="dropdown-content">
+					<a href="#">Link 1</a> <a href="#">Link 2</a>
+				</div>
+			</div>
+		</div>
+		<div class="minibody">
+			<div class="borrow-board">
+				<a href="">
+					<div class="reservation" id="reservation">미예약</div> <img
+					src="ittaketwo.jpg" alt="#">
+					<h3>title</h3>
+					<p>위치</p>
+				</a>
+			</div>
+		</div>
+	</div>
 
 
-        <!-- Footer Start -->
+	<!-- Footer Start -->
         <div class="footer">
             <div class="container">
                 <div class="row">
