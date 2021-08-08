@@ -27,7 +27,7 @@ public class BorrowController {
 		String strPageNum = request.getParameter("pageNum");
 		System.out.println(strPageNum);
 		
-		service.getPage(search,strPageNum);
+//		service.getPage(search,strPageNum);
 		return "board/borrowlist";
 	}
 
