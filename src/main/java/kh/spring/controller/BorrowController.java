@@ -27,10 +27,12 @@ public class BorrowController {
 		String strPageNum = request.getParameter("pageNum");
 		System.out.println(strPageNum);
 		
+
 		service.getPageCount(search,strPageNum);
 		service.getPageList(search);
 		
 		return "borrowBoard/borrowlist";
+
 	}
 
 }

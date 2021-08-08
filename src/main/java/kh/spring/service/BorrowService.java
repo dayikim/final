@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kh.spring.dao.BorrowDAO;
+
 import kh.spring.dto.BorrowDTO;
 
 @Service
@@ -17,6 +18,7 @@ public class BorrowService {
 	@Autowired
 	private BorrowDAO dao;
 	
+
 	public int getPageCount(String search, String strPageNum){
 		
 		String ecdsearch = "";
@@ -53,4 +55,5 @@ public class BorrowService {
 		
 		return dao.getPageList(ecdsearch);
 	}
+
 }
