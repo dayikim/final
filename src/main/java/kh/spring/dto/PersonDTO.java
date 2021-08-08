@@ -15,9 +15,10 @@ public class PersonDTO {
 	private String address2;
 	private int chargingMoney;
 	private Date regDate;
+	private int loginFailCount;
 	
 	public PersonDTO() {}
-	public PersonDTO(int seq, String id, String pw, String name, String phone, String email,String birth, String postcode, String address1, String address2, int chargingMoney,Date regDate) {
+	public PersonDTO(int seq, String id, String pw, String name, String phone, String email,String birth, String postcode, String address1, String address2, int chargingMoney,Date regDate,int loginFailCount) {
 		this.seq = seq;
 		this.id = id;
 		this.pw = pw;
@@ -30,6 +31,13 @@ public class PersonDTO {
 		this.address2 = address2;
 		this.chargingMoney = chargingMoney;
 		this.regDate = regDate;
+		this.loginFailCount = loginFailCount;
+	}
+	public int getLoginFailCount() {
+		return loginFailCount;
+	}
+	public int setLoginFailCount(int loginFailCount) {
+		return this.loginFailCount = loginFailCount;
 	}
 	public int getSeq() {
 		return seq;
@@ -46,6 +54,7 @@ public class PersonDTO {
 	public String getPw() {
 		return pw;
 	}
+
 	public void setPw(String pw) {
 		this.pw = pw;
 	}
