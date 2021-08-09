@@ -262,7 +262,8 @@
 		
 		// 프로필 사진 업로드
 		$("#updateMyProfile").on("click",function(){
-			
+			let origin_picture = $("#profile").attr("src");
+			let popup = window.open('/my/picture_change?origin='+origin_picture,'change','width=500px,height=460px,scrollbars=no,resizable=no');
 		})
 	})
 </script>
@@ -296,13 +297,20 @@
 					<button type=button id=updateMyProfile class="cnum-btn2">프로필</button>
 				</div>
 			</div>
+			
 			<!-- 나의 프로필 -->
-			<!-- choose 쓸 예정 -->
 			<div class="profile" align=center>
-				<img src="/imgs/mypage/nomalProfile.jpg">
+				<c:choose>
+					<c:when test="${profile != null}">
+						<img src="/imgs/mypage/${profile.sysName }" id=profile>
+					</c:when>
+					<c:otherwise>
+						<img src="/imgs/nomalProfile.jpg" id=profile>
+					</c:otherwise>
+				</c:choose>
 			</div>
 			<br>
-			
+
 			<!-- 내 정보 출력 -->
 			<div class="myInfo">
 				<div class="name">
@@ -312,7 +320,7 @@
 				<div class="add">${myInfo.address1 }</div>
 			</div>
 			<hr>
-	
+
 			<!-- 나의 포인트 -->
 			<div class="point">
 				<div class="pointIntro">
@@ -335,7 +343,7 @@
 				</div>
 			</div>
 			<hr>
-			
+
 			<!-- 현재 빌린 상품 -->
 			<div class="borrow">
 				<div class="row borrowIntro">
@@ -350,14 +358,14 @@
 				</div>
 				<div class="row borrowList">
 					<!-- forEach 쓸 예정 -->
-						<div class="product">
-							<a href="#">현재 내가 빌려준 상품 목록 미리보기</a>
-						</div>
-					
+					<div class="product">
+						<a href="#">현재 내가 빌려준 상품 목록 미리보기</a>
+					</div>
+
 				</div>
 			</div>
 			<hr>
-			
+
 			<!-- 현재 빌려준 상품 -->
 			<div class="lend">
 				<div class="row lendIntro">
@@ -372,10 +380,10 @@
 				</div>
 				<div class="row lendList">
 					<!-- forEach 쓸 예정 -->
-						<div class="product">
-							<a href="#">현재 내가 빌린 상품 목록 미리보기</a>
-						</div>
-					
+					<div class="product">
+						<a href="#">현재 내가 빌린 상품 목록 미리보기</a>
+					</div>
+
 
 				</div>
 			</div>
@@ -387,7 +395,7 @@
 		<!-- 오른쪽 레이아웃 -->
 		<div class="col-12 col-sm-12 col-md-7 right">
 			<div class="row">
-			
+
 				<!-- 거래 완료 목록 -->
 				<div class="col-12 list">
 					<div class="row go">
@@ -406,8 +414,8 @@
 						</div>
 					</div>
 				</div>
-				
-				
+
+
 				<!-- 나의 커뮤니티 -->
 				<div class="col-12 list">
 					<div class="row go">
@@ -426,7 +434,7 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<!-- 내가 쓴 대여글 확인 -->
 				<div class="col-12 list2">
 					<div class="row go">
@@ -445,8 +453,8 @@
 						</div>
 					</div>
 				</div>
-				
-				
+
+
 			</div>
 		</div>
 
