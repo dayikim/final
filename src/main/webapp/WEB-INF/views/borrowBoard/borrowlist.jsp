@@ -88,99 +88,68 @@
 
     </style>
     
-    <script>
-    $(document).ready(function(){
-    	GetList(1);
-   	 $("#search").keyup(function(e){
-   		 if(e.keyCode == 13){
-   			 const GetList = function(currentPage){   				 
-        		$.ajax({
-        			url:"/borrow/list",
-        			data:"pageNum="+currentPage+"&search="+$("#search").val()
-        		}).done(function(resp){
-        			
-        		})
-        	}
-   		 }
-   	 }) 
-    })
+    <script>  
+    
     $(function(){
-        let reservation = $("#reservation").text();
-        
-        let reservations = new Array();
-
-        for(var i=0; i<reservation.length; i++){
-            reservations.push(reservation[i]);
-        }
-
-        console.log(reservations);
-
-        if($("#reservation").text()=="미예약"){
-            $("#reservation").css("color","blue");
-        }
-        if($("#reservation").text()=="대여중"){
-            $("#reservation").css("color","red");
-        }
-        if($("#reservation").text()=="완료"){
-            $("#reservation").css("color","gray");
-        }
-                
-        //페이지가 처음 로딩될 때 1page를 보여주기 때문에 초기값을 1로 지정한다.
-        let currentPage=1;
-        //현재 페이지가 로딩중인지 여부를 저장할 변수이다.
-        let isLoading=false;
-        
-        $(document).ready(function(){
-        	GetList(1);
-        })
-        
-        //웹브라우저의 창을 스크롤 할 때 마다 호출되는 함수 등록 
+    	$("#search").keyup(function(e){
+   		    if(e.keyCode == 13){
+      			 const GetList = function(currentPage){
+      				location.href="/borrow/firstlist?&search="+$("#search").val()+"&pageNum="+currentPage;
+           		  }	
+      			$(document).ready(function(){
+       		        GetList(1);
+       		    })
+      		 } 
+      	 })
+      	 
+      	
+    })
+    //웹브라우저의 창을 스크롤 할 때 마다 호출되는 함수 등록 
         $(window).on("scroll",function(){
+        	//페이지가 처음 로딩될 때 1page를 보여주기 때문에 초기값을 1로 지정한다.
+            let currentPage=1;
+            //현재 페이지가 로딩중인지 여부를 저장할 변수이다.
+            let isLoading=false;
+            
         	//위로 스크롤도니 길이
         	let scrollTop=$(window).scrollTop();
+        	
   			//웹브라우저의 창의 높이
   			let windowHeight=$(window).height();
-  			//문저 전체의 높이
-  			let documentHeight=$(document).height();
-  			//바닥까지 스크롤 되었는 지 여부를 알아낸다.
-  			let isBottom=scrollTop+windowHeight + 10 >= documentHeight;
   			
-  			if(isBottom){
+  			//문저 전체의 높이
+  			let documentHeight=($(document).height())-703;
+  			
+  			//바닥까지 스크롤 되었는 지 여부를 알아낸다.  			
+  			if((scrollTop+windowHeight + 10) >= documentHeight){
   				//만일 현재 마지막 페이지라면
   				if(currentPage == ${totalPageCount} || isLoading){
   					return; //함수를 여기서 끝낸다
   				}
+  				
   				//현재 로딩중이라고 표시한다.
   				isLoading=true;
   				//요청할 페이지 번호를 1증가시킨다.
   				currentPage++;
-  				//추가로 받아올 페이지를 서버에 ajax 요청을 한다
-  				console.log("inscroll" + currentPage);
-  				GetList(currentPage);
-  			}
-        	
+  				//무한스크롤
+  	  			$.ajax({
+  	  				url:"/borrow/list",
+  	  				data:{"search":$("#search2").val(),"pageNum":currentPage,"lastseq":$("#seq:last").val()}, 
+  	  				datatype:"json"
+  	  			}).done(function(data){
+  	  				console.log(data.list);
+  	  				var list = data.list;
+  	  				console.log(list);
+  	  				for(var i=0; i<list.length;i++){
+  	  					console.log(list[i]);
+  	  					$("#seq").attr("value",list[i].seq);
+  	  					$("#title").text(list[i].title);
+  	  					$("#address1").text(list[i].address1);        					
+  	  				}
+  	  				
+  	  			})
+  	  		}
         })
-        
-		const GetList = function(currentPage){
-        	console.log("inGetList"+currentPage);
-        	
-        	//무한스크롤
-        	$.ajax({
-        		url:/borrow/ ,
-        		method:"GET",
-        		//검색기능이 있는 경우 search를 한께 넘겨준다
-        		data:"pageNum"=currentPage+"&search=${search}"
-        	}).done(function(resp)){
-        		console.log(resp);
-        		
-        		$(".borrow-board").append(resp);
-        		//로딩중이 아니라고 표시한다.
-        		isLoading=false;
-        	}
-        }
-        
-        
-    })
     
    
 
@@ -271,15 +240,17 @@
 			</div>
 		</div>
 		<div class="minibody">
+		<c:forEach var="i" items="${list}">
 			<div class="borrow-board">
-				<a href="">
-					<div class="reservation" id="reservation">미예약</div> 
+				<input type="hidden" value="${search}" id=search2 name="search2">
+					<div class="reservation" id="reservation" name="reservation">미예약</div>
 					<img src="ittaketwo.jpg" alt="#">
-					<input type="hidden" value=>
-					<h3 id=title name=title>title</h3>
-					<p id=address1 name=address1>위치</p>
-				</a>
+					<input type="hidden" value="${i.seq}" id="seq" name="seq">
+					<h3 id="title" name="title">${i.title}</h3>
+					<p id="address1" name="address1">${i.address1}</p>
+				
 			</div>
+			</c:forEach>
 		</div>
 	</div>
 
@@ -337,7 +308,7 @@
         <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
         <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<!--         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
         <script src="/lib/easing/easing.min.js"></script>
         

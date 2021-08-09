@@ -1,7 +1,5 @@
 package kh.spring.service;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,47 +11,21 @@ import kh.spring.dto.BorrowDTO;
 
 @Service
 public class BorrowService {
-	
-	
+
 	@Autowired
 	private BorrowDAO dao;
-	
 
-	public int getPageCount(String search, String strPageNum){
+	public int getPageCount(String search) {
 		
-		String ecdsearch = "";
-		try {
-			ecdsearch = URLEncoder.encode(search, java.nio.charset.StandardCharsets.UTF_8.toString());
-		} catch (UnsupportedEncodingException e) {
-			
-			e.printStackTrace();
-		}
-		
-		//보여줄 페이지의 번호를 일단 1이라고 초기값 지정
-		int pageNum = 1;
-		
-		if(strPageNum != null) {
-			pageNum = Integer.parseInt(strPageNum);
-		}
-		
-		System.out.println(ecdsearch + strPageNum);
-		
-		return dao.getPageCount(ecdsearch,pageNum);
-	}
-	
-		public List<BorrowDTO> getPageList(String search){
-		
-		String ecdsearch = "";
-		try {
-			ecdsearch = URLEncoder.encode(search, java.nio.charset.StandardCharsets.UTF_8.toString());
-		} catch (UnsupportedEncodingException e) {
-			
-			e.printStackTrace();
-		}
-				
-		System.out.println(ecdsearch);
-		
-		return dao.getPageList(ecdsearch);
+		System.out.println("서비스에서 총갯수 search 값 : " + search);
+
+		return dao.getPageCount(search);
 	}
 
+	public List<BorrowDTO> getPageList(String search, int pageNum) {
+		
+		System.out.println("서비스에서 search 값 : " + search);
+
+		return dao.getPageList(search,pageNum);
+	}
 }

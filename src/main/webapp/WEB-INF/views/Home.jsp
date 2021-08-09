@@ -68,15 +68,9 @@ img{
    	 $("#search").keyup(function(e){
    		 if(e.keyCode == 13){
    			 const GetList = function(currentPage){ 
-   				 console.log(currentPage);
-        		$.ajax({
-        			url:"/borrow/list",
-        			data:"pageNum="+currentPage+"&search="+$("#search").val()
-        		}).done(function(resp){
-        			
-        		}) 		
+   				location.href="/borrow/firstlist?&search="+$("#search").val()+"&pageNum="+currentPage;
         	}
-   			 $(document).ready(function(){
+   			$(document).ready(function(){
    		        GetList(1);
    		    })
    		 }
