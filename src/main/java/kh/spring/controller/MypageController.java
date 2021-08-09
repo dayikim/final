@@ -44,7 +44,6 @@ public class MypageController {
 	@RequestMapping("/modify")
 	public String modify(Model model) {
 		String id = (String)session.getAttribute("loginID");
-		System.out.println(id);
 		List<PersonDTO>list = service.modify(id);
 		model.addAttribute("list", list);
 		return "mypage/modify";
