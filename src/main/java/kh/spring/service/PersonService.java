@@ -1,6 +1,8 @@
 package kh.spring.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,5 +46,12 @@ public class PersonService {
 	
 	public String pwCheck(PersonDTO dto) {
 		return dao.pwCheck(dto);
+	}
+	
+	public int loginFail(String id, String count) {
+		HashMap<String,String>param = new HashMap();
+		param.put("id", id);
+		param.put("count", count);
+		return dao.loginFail(param);
 	}
 }

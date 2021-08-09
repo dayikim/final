@@ -78,13 +78,17 @@ public class PersonController {
 	@ResponseBody
 	public int pwCheck(PersonDTO dto) {
 		int count = 0;
+		String id = dto.getId();
+		System.out.println(dto.getLoginFailCount());
 		String result = service.pwCheck(dto);
 		String pw = dto.getPw();
 		if(pw != result) {
-			count ++;
+			count ++;			
 		}
 		System.out.println(count);
-		return dto.setLoginFailCount(count);
+		int fcount = service.loginFail(id,(String.valueOf(count)));
+		System.out.println(fcount);
+		return fcount;
 	}
 	
 	@RequestMapping("/login")

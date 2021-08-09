@@ -34,4 +34,8 @@
 	<update id="pswd">
 		update person set pw = #{pw} where id = #{id}
 	</update>
+	
+	<update id="loginFail">
+	 	update person set loginFailCount=#{count} where id=#{id}
+	</update>
 </mapper>

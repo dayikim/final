@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Sns">
+	<insert id="insert">
+		insert into snsBoard values(snsboard_seq.nextval,#{id},#{contents},#{category},#{region},sysdate,#{love})
+	</insert>
+	
+	<select id="selectAll" resultType="kh.spring.dto.SnsDTO">
+		select * from snsBoard order by 1 desc
+	</select>
+	
+	<select id="getLove" resultType="int">
+		select love from snsBoard where seq=#{seq}
+	</select>
+	
+	<update id="like">
+		update snsBoard set love=#{love} where seq=#{seq}
+	</update>
+	
+	<delete id="delete">
+		delete from snsBoard where seq=#{value}
+	</delete>
+	
+	<select id="region" resultType="String">
+		select SUBSTR(address1,1,2) from person where id=#{id}
+	</select>
+	
+	<select id="select" resultType="String">
+		select contents from snsBoard where seq=#{seq}
+	</select>
+	
+	<update id="modify">
+		update snsBoard set contents=#{contents} where seq=#{seq}
+	</update>
+</mapper>

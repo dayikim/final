@@ -1,6 +1,7 @@
 package kh.spring.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,10 @@ public class PersonDAO {
 	
 	public String pwCheck(PersonDTO dto) {
 		return mybatis.selectOne("Person.pwCheck", dto);
+	}
+	
+	public int loginFail(Map<String,String> param){	
+		return mybatis.update("Person.loginFail", param);
 	}
 
 }
