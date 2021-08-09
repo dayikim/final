@@ -292,7 +292,7 @@
 					</h3>
 				</div>
 				<div class="col-6" align=right>
-					<button type=button id=updateMyInfoBtn class="cnum-btn1">수정</button>
+					<a href="/my/modify"><button type=button id=updateMyInfoBtn class="cnum-btn1">수정</button></a>
 					<button type=button id=updateMyProfile class="cnum-btn2">프로필</button>
 				</div>
 			</div>

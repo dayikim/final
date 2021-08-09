@@ -1,5 +1,7 @@
 package kh.spring.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +22,7 @@ public class PersonService {
 		return dao.idDuplCheck(id);
 	}
 	
-	public int login(PersonDTO dto) {
+	public List<PersonDTO> login(PersonDTO dto) {
 		return dao.login(dto);
 	}
 	
@@ -36,4 +38,11 @@ public class PersonService {
 		return dao.pswd(dto);
 	}
 
+	public String loginCheck(String id) {
+		return dao.loginCheck(id);
+	}
+	
+	public String pwCheck(PersonDTO dto) {
+		return dao.pwCheck(dto);
+	}
 }
