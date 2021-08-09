@@ -1,5 +1,8 @@
 package kh.spring.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,8 +23,8 @@ public class PersonDAO {
 		return mybatis.selectOne("Person.idDuplCheck",id);
 	}
 	
-	public int login(PersonDTO dto) {
-		return mybatis.selectOne("Person.login",dto);
+	public List<PersonDTO> login(PersonDTO dto) {
+		return mybatis.selectList("Person.login",dto);
 	}
 	
 	public String findid(PersonDTO dto) {
@@ -34,6 +37,18 @@ public class PersonDAO {
 	
 	public String pswd(PersonDTO dto) {
 		return mybatis.selectOne("Person.pswd",dto);
+	}
+	
+	public String loginCheck(String id) {
+		return mybatis.selectOne("Person.loginCheck", id);
+	}
+	
+	public String pwCheck(PersonDTO dto) {
+		return mybatis.selectOne("Person.pwCheck", dto);
+	}
+	
+	public int loginFail(Map<String,String> param){	
+		return mybatis.update("Person.loginFail", param);
 	}
 
 }

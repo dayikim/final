@@ -11,8 +11,8 @@
 		select count(*) from person where id=#{value}
 	</select>
 	
-	<select id="login" resultType="int">
-		select count(*) from person where id=#{id}and pw=#{pw}
+	<select id="login" resultType="kh.spring.dto.PersonDTO">
+		select * from person where id=#{id}and pw=#{pw}
 	</select>
 	
 	<select id="findid" resultType="String">
@@ -23,7 +23,19 @@
 		select count(*) from person where id=#{id}and phone=#{phone}
 	</select>
 	
+	<select id="pwCheck" resultType="String">
+		select pw from person where pw=#{pw} and id=#{id}
+	</select>
+	
+	<select id="loginCheck" resultType="String">
+		select count(*) from person where id=#{value}
+	</select>
+	
 	<update id="pswd">
 		update person set pw = #{pw} where id = #{id}
+	</update>
+	
+	<update id="loginFail">
+	 	update person set loginFailCount=#{count} where id=#{id}
 	</update>
 </mapper>

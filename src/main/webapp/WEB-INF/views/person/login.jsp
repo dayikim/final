@@ -12,6 +12,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Nunito:600,700,900" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src='https://www.google.com/recaptcha/api.js'></script>
 
 <title>login</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
@@ -68,7 +70,61 @@
 #f{
 	text-align: center;
 }
+
+#recaptcha{
+	display : none;
+}
 </style>
+<script>
+	$(function(){
+		$("#button").on("click",function(){
+			$.ajax({
+				url : "/person/loginCheck",
+				data :{id:$("#id").val()}
+			}).done(function(res){
+				if(res == 0 ){
+					alert("가입된 정보가 없습니다. 회원가입을 진행해주세요")
+				}else{
+					$.ajax({
+						url : "/person/pwCheck",
+						data : {id:$("#id").val(),pw:$("#pw").val()},
+					}).done(function(res){
+						if(res > 3){
+							$("#hidden").show();
+						}
+					})
+				}
+			})
+		});
+		
+		
+		$(document).ready(function() {
+            $("#button_1").click(function() {
+                $.ajax({
+                    url: '/person/VerifyRecaptcha',
+                    type: 'post',
+                    data: {recaptcha: $("#g-recaptcha-response").val()},
+                    success: function(data) {
+                        switch (data) {
+                            case 0:
+                                alert("자동 가입 방지 봇 통과");
+                                break;
+ 
+                            case 1:
+                                alert("자동 가입 방지 봇을 확인 한뒤 진행 해 주세요.");
+                                break;
+ 
+                            default:
+                                alert("자동 가입 방지 봇을 실행 하던 중 오류가 발생 했습니다. [Error bot Code : " + Number(data) + "]");
+                                break;
+                        }
+                    }
+                });
+            });
+        });
+		
+	})
+</script>
 </head>
 <body id="body">
 <div id="login-card" class="card">
@@ -82,6 +138,7 @@
     <div class="form-group">
       <input type="password" class="form-control" id="pw" placeholder="Enter password" name="pw">
     </div>
+    <div class="g-recaptcha" data-sitekey="6Ldka9IbAAAAAGr2VBj7DtFK-OErvhtHh5MWRris" id=recaptcha></div>
     <button type="submit" id="button" class="btn btn-primary deep-purple btn-block ">Login</button><br>
   </form>
 	<div id=f>
