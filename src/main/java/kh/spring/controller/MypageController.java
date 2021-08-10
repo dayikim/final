@@ -83,16 +83,49 @@ public class MypageController {
 		return "/mypage/profileView";
 	}
 	
-	// 포인트 내역 확인 출력(하)
+	// 현재 나의 포인트 출력(미완)
 	
-	// 현재 빌린 상품 출력(상)
+	// 포인트 충전내역 확인(미완)
+	@RequestMapping(value="/pointChargeList", produces="text/html;charset=utf8")
+	public String pointChargeList() {
+		return "/mypage/pointCharge";
+	}
 	
-	// 현재 빌려준 상품 출력(상)
+	// 포인트 사용내역 확인(미완)
+	@RequestMapping(value="/pointUseList", produces="text/html;charset=utf8")
+	public String pointUseList() {
+		return "/mypage/pointUse";
+	}
 	
-	// 거래 완료 목록 출력(상)
+	// 현재 빌린 상품 출력(미완)
+	@RequestMapping(value="/borrowProduct", produces="text/html;charset=utf8")
+	public String borrowProduct() {
+		return "/mypage/nowBorrowProduct";
+	}
 	
-	// 나의 커뮤니티 목록 출력(하)
+	// 현재 빌려준 상품 출력(미완)
+	@RequestMapping(value="/lendProduct", produces="text/html;charset=utf8")
+	public String lendProduct() {
+		return "/mypage/nowLendProduct";
+	}
 	
-	// 내가 쓴 대여 글 목록 출력(하)
+	// 거래 완료 목록 출력(미완)
+	@RequestMapping(value="/dealEndList", produces="text/html;charset=utf8")
+	public String dealEndList() {
+		return "/mypage/dealEndList";
+	}
+	// 나의 커뮤니티 목록 출력(예정)
+	@RequestMapping(value="/selectMySns", produces="text/html;charset=utf8")
+	public String selectMySns() {
+//		String sessionID = (String) session.getAttribute("loginID");
+//		service.selectMySns(sessionID);
+		return "/mypage/mySnsPage";
+	}
+	
+	// 내가 쓴 대여 글 목록 출력(미완)
+	@RequestMapping(value="/myBoardList", produces="text/html;charset=utf8")
+	public String myBoardList() {
+		return "/mypage/myBoardList";
+	}
 }
 

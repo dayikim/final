@@ -18,6 +18,14 @@
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
+<!-- Favicon -->
+<link href="img/favicon.ico" rel="icon">
+
+<!-- Google Font -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"
+	rel="stylesheet">
+
 <!-- CSS Libraries -->
 <link
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -29,6 +37,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap"
 	rel="stylesheet">
+
+<!-- Template Stylesheet -->
+<link href="/css/style.css" rel="stylesheet">
 
 
 
@@ -128,6 +139,9 @@
 .myInfo {
 	text-align: center;
 }
+.name>b{
+	font-size:20px;
+}
 
 /* 나의 포인트 */
 .myPoint {
@@ -200,16 +214,26 @@
 /*오른쪽*/
 
 /* 마이페이지 목차 */
-.list {
+
+.list1 {
 	border-radius: 20px;
-	height: 250px;
-	margin-bottom: 40px;
+	height: 310px;
+	margin-bottom: 20px;
 	border: 1px solid rgb(158, 157, 157);
 }
 
 .list2 {
 	border-radius: 20px;
-	height: 250px;
+	height: 310px;
+	margin-top:20px;
+	margin-bottom: 20px;
+	border: 1px solid rgb(158, 157, 157);
+}
+
+.list3 {
+	margin-top:20px;
+	border-radius: 20px;
+	height: 310px;
 	border: 1px solid rgb(158, 157, 157);
 }
 
@@ -228,23 +252,23 @@
 
 /* 큰 제목 */
 .title>h3>b {
-	line-height: 200px;
+	line-height: 250px;
 	color: gray;
-	margin-left: 10px;
+	margin-left: 20px;
 }
 
 /* 부 제목 */
 .stitle>b {
-	margin-left: 10px;
+	margin-left: 20px;
 }
 
 /* 확인 버튼 */
 .okBtn {
 	border-radius: 5px;
-	width: 60px;
-	height: 30px;
-	margin-top: 100px;
-	margin-left: 10px;
+	width: 70px;
+	height: 50px;
+	margin-top: 120px;
+	margin-left: 5px;
 	background-color: #334257;
 	border: none;
 	color: #fff;
@@ -254,12 +278,7 @@
 }
 </style>
 <script>
-	$(function(){
-		// 내 정보 수정
-		$("#updateMyInfoBtn").on("click",function(){
-			location.href="/my/modify";
-		})
-		
+	$(function(){		
 		// 프로필 사진 업로드
 		$("#updateMyProfile").on("click",function(){
 			let origin_picture = $("#profile").attr("src");
@@ -293,11 +312,12 @@
 					</h3>
 				</div>
 				<div class="col-6" align=right>
-					<a href="/my/modify"><button type=button id=updateMyInfoBtn class="cnum-btn1">수정</button></a>
+					<a href="/my/modify"><button type=button id=updateMyInfoBtn
+							class="cnum-btn1">수정</button></a>
 					<button type=button id=updateMyProfile class="cnum-btn2">프로필</button>
 				</div>
 			</div>
-			
+
 			<!-- 나의 프로필 -->
 			<div class="profile" align=center>
 				<c:choose>
@@ -339,7 +359,7 @@
 				</div>
 
 				<div class="charge">
-					<a href="#">충전하기</a> <span>ㅣ</span> <a href="#">포인트 내역 확인</a>
+					<a href="#">충전하기</a> <span>ㅣ</span> <a href="/my/pointChargeList" onclick="window.open(this.href,'','width=550,height=600');return false">포인트 내역 확인</a>
 				</div>
 			</div>
 			<hr>
@@ -353,7 +373,7 @@
 						</h5>
 					</div>
 					<div class="col-6" align=right>
-						<a href="#">더보기</a>
+						<a href="/my/borrowProduct" onclick="window.open(this.href,'','width=550,height=600');return false">더보기</a>
 					</div>
 				</div>
 				<div class="row borrowList">
@@ -375,7 +395,7 @@
 						</h5>
 					</div>
 					<div class="col-5" align=right>
-						<a href="#">더보기</a>
+						<a href="/my/lendProduct" onclick="window.open(this.href,'','width=550,height=600');return false">더보기</a>
 					</div>
 				</div>
 				<div class="row lendList">
@@ -397,7 +417,7 @@
 			<div class="row">
 
 				<!-- 거래 완료 목록 -->
-				<div class="col-12 list">
+				<div class="col-12 list1">
 					<div class="row go">
 						<div class="col-10 titleDiv">
 							<div class="title">
@@ -410,14 +430,14 @@
 							</div>
 						</div>
 						<div class="col-2 buttonDiv">
-							<button type=button class="okBtn">확인</button>
+							<a href="/my/dealEndList"><button type=button class="okBtn">확인</button></a>
 						</div>
 					</div>
 				</div>
 
 
 				<!-- 나의 커뮤니티 -->
-				<div class="col-12 list">
+				<div class="col-12 list2">
 					<div class="row go">
 						<div class="col-10 titleDiv">
 							<div class="title">
@@ -430,13 +450,13 @@
 							</div>
 						</div>
 						<div class="col-2 buttonDiv">
-							<button type=button class="okBtn">확인</button>
+							<a href="/my/selectMySns"><button type=button class="okBtn">확인</button></a>
 						</div>
 					</div>
 				</div>
 
 				<!-- 내가 쓴 대여글 확인 -->
-				<div class="col-12 list2">
+				<div class="col-12 list3">
 					<div class="row go">
 						<div class="col-10 titleDiv">
 							<div class="title">
@@ -449,7 +469,7 @@
 							</div>
 						</div>
 						<div class="col-2 buttonDiv">
-							<button type=button class="okBtn">확인</button>
+							<a href="/my/myBoardList"><button type=button class="okBtn">확인</button></a>
 						</div>
 					</div>
 				</div>
@@ -459,6 +479,85 @@
 		</div>
 
 	</div>
+
+	<!-- Footer Start -->
+	<div class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="row">
+						<div class="col-12">
+							<div class="footer-contact">
+								<p>
+									<i class="fa fa-map-marker-alt"></i>서울특별시 강남대로 123로
+								</p>
+								<p>
+									<i class="fa fa-phone-alt"></i>02-123-4567
+								</p>
+								<p>
+									<i class="fa fa-envelope"></i>DonDa@example.com
+								</p>
+								<div class="footer-social">
+									<a href=""><i class="fab fa-twitter"></i></a> <a href=""><i
+										class="fab fa-facebook-f"></i></a> <a href=""><i
+										class="fab fa-youtube"></i></a> <a href=""><i
+										class="fab fa-instagram"></i></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="row">
+						<div class="col-6">
+							<div class="footer-contact">
+								<p>
+									<i class="far fa-building"></i>회사소개
+								</p>
+								<p>
+									<i class="far fa-user-circle"></i>채용
+								</p>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="footer-contact">
+								<p>
+									<i class="fas fa-info"></i>이용약관
+								</p>
+								<p>
+									<i class="far fa-id-badge"></i>개인정보처리방침
+								</p>
+								<p>
+									<i class="fas fa-map-pin"></i>위치기반서비스 이용약관
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container copyright">
+			<div class="row">
+				<div class="col-12" style="text-align: center;">
+					<p id=titlename>
+						&copy; <a href="#">돈-다</a>, All Right Reserved.
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Footer End -->
+
+	<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+	<!-- JavaScript Libraries -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+	<script src="/lib/easing/easing.min.js"></script>
+
+	<!-- Template Javascript -->
+	<script src="/js/main.js"></script>
 </body>
 
 </html>
