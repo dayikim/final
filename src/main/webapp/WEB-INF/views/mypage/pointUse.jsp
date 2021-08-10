@@ -123,10 +123,10 @@
 
     <div class="navi">
         <div class="pointCharge">
-            <a href="#"><b>포인트충전</b></a>
+            <a href="/my/pointChargeList"><b>포인트충전</b></a>
         </div>
         <div class="pointUse">
-            <a href="#"><b>포인트사용</b></a>
+            <a href="/my/pointUseList"><b>포인트사용</b></a>
         </div>
     </div>
 

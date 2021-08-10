@@ -65,5 +65,10 @@ public class MypageService {
 	public int delete(String sessionID) {
 		return pdao.delete(sessionID);
 	}
+	
+	// 나의 커뮤니티 목록 출력
+	public String selectMySns(String sessionID) {
+		return "";
+	}
 
 }
