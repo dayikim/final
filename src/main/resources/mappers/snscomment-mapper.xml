@@ -19,4 +19,8 @@
 		select contents from snsBoardComment where seq= #{value} 
 	</select>
 	
+	<update id="modify">
+		update snsBoardComment set contents =#{contents} where seq = #{seq}
+	</update>
+	
 </mapper>

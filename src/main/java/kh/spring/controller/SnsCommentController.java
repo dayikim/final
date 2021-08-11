@@ -52,6 +52,14 @@ public class SnsCommentController {
 		Gson gs = new Gson();
 		return gs.toJson(list);
 	}
+	
+	@RequestMapping("/modify")
+	@ResponseBody
+	public String modify(int seq, String contents) {
+		System.out.println(seq);
+		System.out.println(contents);
+		service.modify(seq, contents);
+		return service.modify(seq, contents)>0 ? "success":"false";
+	}
 
 }
-//post.board?post="+parent

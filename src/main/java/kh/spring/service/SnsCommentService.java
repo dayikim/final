@@ -32,4 +32,11 @@ public class SnsCommentService {
 		return dao.getComment(seq);
 	}
 	
+	public int modify(int seq, String contents) {
+		Map<String,Object> param = new HashMap();
+		param.put("seq", seq);
+		param.put("contents", contents);
+		return dao.modify(param);
+	}
+	
 }
