@@ -50,5 +50,12 @@ public class SnsService {
 	public int modify(SnsDTO dto) {
 		return dao.modify(dto);
 	}
+	
+	public int love(int seq, int love) {
+		Map<String,Integer>param = new HashMap();
+		param.put("seq", seq);
+		param.put("love", love);
+		return dao.love(param);
+	}
 
 }

@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link
 	href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
 	rel="stylesheet" id="bootstrap-css">
@@ -18,18 +19,13 @@
 	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
 	integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
 	crossorigin="anonymous" />
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-	crossorigin="anonymous"></script>
+
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
 	integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
 	crossorigin="anonymous"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-	integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-	crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
+
 <style>
 style>body {
 	background-color: #eeeeee;
@@ -52,23 +48,178 @@ style>body {
 		margin-bottom: 2.77rem;
 	}
 }
-
 /**Reset Bootstrap*/
 .dropdown-toggle::after {
 	content: none;
 	display: none;
 }
 
-/*#hidden {
+#commenticon, #top, #love {
+	cursor: pointer;
+}
+
+#commenticon {
+	color: #AA96DA;
+}
+#love{
+	color : #FFBCBC;
+}
+
+#del, #modi, #delcomm, #modicomm {
+	font-size: 3px;
+}
+
+#top {
+	position: fixed;
+	bottom: 5%;
+	right: 16%;
+	width: 35px;
 	display: none;
-}*/
-#del,#modi{color:black}
+	font-size: 50px;
+}
 </style>
 <script>
-	$(function() {
-		$("#like").on("click", function() {
-				$("#like").css("color", "red");
+	$(function() {	
+		//댓글버튼눌렀을때
+		$(document).on("click","#commenticon",function(){
+			let hidden_comment = $(this).parent().siblings("#hiddencomment");
+			if($(this).parent().siblings("#hiddencomment").css("display")=="none"){
+				$(this).parent().siblings("#hiddencomment").show();
+				$.ajax({
+					url : "/snscomm/replyList",
+					type : "POST",
+					data : {"parentSeq":$(this).parent().siblings("#hiddencomment").children(".input-group").children("#hidden").val()},
+					dataType:"JSON",
+				}).done(function(resp){
+					console.log(resp[0])
+					console.log(resp[1])
+					console.log(resp.length)
+					console.log(resp[0].id)
+					for(var i = 0; i < resp.length; i++){
+						
+						let ul = $("<ul>")
+						ul.attr("class","comment-list");
+						ul.attr("id", "commentList");
+						
+						let body_div = $("<div>");
+						body_div.attr("class","comment-body");
+						
+						let comment_head = $("<div>");
+						comment_head.attr("class","comment-heading");
+						
+						
+						let comment_writer = $("<h6>");
+						comment_writer.text(resp[i].id);
+						
+						let delete_tag = $("<a>");
+						delete_tag.attr("href","/snscomm/delete?seq="+resp[i].seq);
+						delete_tag.attr("id","delcomm");
+						delete_tag.text("삭제");
+						
+						let modify_tag = $("<a>");
+						modify_tag.attr("href","/snscomm/modify?seq="+resp[i].seq);
+						modify_tag.attr("id","modicomm");
+						modify_tag.text("수정");
+						
+						
+						let input = $("<input type=hidden id=commentseq>");
+						
+						let comment = $("<p>");
+						comment.text(resp[i].contents);
+						
+						if(resp[i].id == $("#session").val()){
+							comment_writer.append(delete_tag);
+							comment_writer.append(modify_tag);
+						}
+						
+						comment_head.append(comment_writer);
+						comment_head.append(input);
+						
+						
+						body_div.append(comment_head);
+						body_div.append(comment);
+						
+						
+						
+						ul.append(body_div);
+						console.log("Asdasdsadsa");
+						
+						$(hidden_comment).append(ul);
+						
+					}
+					
+				})
+			}else{
+				$(this).parent().siblings("#hiddencomment").hide();
+				let delete_ul = $(hidden_comment).children(".comment-list");
+				for(let i =0; i<delete_ul.length; i++){
+					$(delete_ul[i]).remove();
+				}
+				
+			}
 		})
+		
+		//댓글뿌리기
+//		$(document).on("click","#commenticon",function(){
+//			$(document).on("click","#commenticon",function(){
+//				$.ajax({
+//					url : "/snscomm/replyList",
+//					type : "POST",
+//					data : {"parentSeq":$(this).parent().siblings("#hiddencomment").children(".input-group").children("#hidden").val()}
+//				}).done(function(resp){
+//					list = resp;
+//					for(var i = 0; i < list.length; i++){
+//						console.log(list);
+//					}
+//					
+//				})
+//			})
+//		})
+		
+		//댓글작성
+		$(document).on("click","#sendcomment",function(){	
+			if(${loginID == null}){
+	            alert('로그인 후 이용해주세요')
+	         }else{
+	            $.ajax({
+	               url : "/snscomm/write",
+	               type : "GET",
+	               data : {"contents":$(this).parent().siblings("#comment").val(),"seq":$(this).parent().siblings("#hidden").val()}               
+	            }).done(function(resp){
+	               if(resp == 1){
+	                  alert('댓글작성완료!')
+	                  $("#comment").val("")	                  
+	               }else{
+	                  alert('작성실패')
+	               }
+	            })	            
+	         }
+		})
+		
+		$(document).on("click","#love",function(){
+			if(${loginID == null}){
+	            alert('로그인 후 이용해주세요')
+	         }else{
+	        	 $.ajax({
+	        		 url : "/sns/love",
+	        		 type : "POST",
+	        		 data : {"seq":$(this).parent().siblings("#hiddencomment").children(".input-group").children("#hidden").val(),
+	        			 "love":$(this).parent().siblings("#hiddencomment").children(".input-group").children("#lovecount").val()}
+	        	 })
+	         }
+		})
+
+    	$( window ).scroll( function() {
+    		if ( $( this ).scrollTop() > 200 ) {
+    			$( '#top' ).fadeIn();
+    		} else {
+    			$( '#top' ).fadeOut();
+    		}
+    	} );
+    	$( '#top' ).click( function() {
+    		$( 'html, body' ).animate( { scrollTop : 0 }, 400 );
+    		return false;
+    	} );
 	})
 </script>
 </head>
@@ -146,15 +297,20 @@ style>body {
 											src="https://picsum.photos/50/50" alt="">
 									</div>
 									<div class="ml-2">
-										<div class="h5 m-0">${item.id}</div>
+										<div class="h5 m-0">
+											${item.id}
+											<c:choose>
+												<c:when test="${loginID == item.id }">
+													<a
+														href="${pageContext.request.contextPath}/sns/delete?seq=${item.seq }"
+														id=del>삭제</a>
+													<a
+														href="${pageContext.request.contextPath}/sns/modify?seq=${item.seq }"
+														id=modi>수정</a>
+												</c:when>
+											</c:choose>
+										</div>
 										<div class="h7 text-muted">${item.region}</div>
-										<c:choose>
-											<c:when test="${loginID == item.id }">
-												<a href="${pageContext.request.contextPath}/sns/delete?seq=${item.seq }" id=del><i class="fas fa-trash-alt"></i></a>
-												<a href="${pageContext.request.contextPath}/sns/modify?seq=${item.seq }" id=modi><i class="fas fa-exchange-alt"></i></a>
-											</c:when>
-										</c:choose>
-										<%-- <input type=text value=${item.seq } id=hidden name=seq> --%>
 									</div>
 								</div>
 								<div></div>
@@ -167,15 +323,57 @@ style>body {
 							<p class="card-text">${item.contents }</p>
 						</div>
 						<div class="card-footer">
-							<a href="${pageContext.request.contextPath}/sns/like?seq=${item.seq }" class="card-link" id=like><i class="fab fa-gratipay"></i>${itme.love }Like</a>
-							<a href="#" class="card-link"><i class="fa fa-comment"></i>Comment</a>
+							<a class="card-link" id=love><i class="far fa-heart"></i>${item.love }</a>
+							<a class="card-link" id=commenticon><i class="fas fa-comment-dots"></i>Comment</a>
+						</div>
+
+						<!-- 댓글작성 -->
+						<div id=hiddencomment style="display: none;">
+							<div class="input-group mb-3">
+								<input type="text" class="form-control" id=comment
+									placeholder="댓글을 작성해주세요" aria-label="Recipient's username"
+									aria-describedby="button-addon2">
+								<div class="input-group-append">
+									<button class="btn btn-outline-secondary" type="button"
+										id="sendcomment">
+										<i class="fas fa-pen"></i>
+									</button>
+								</div>
+								<input type=hidden id=hidden value=${item.seq }>
+								<input type=hidden id=lovecount value=${item.love }>
+							</div>
+
+							<!-- 댓글리스트 -->
+							<%-- 	<ul class="comments-list" id=commentList>
+									<div class="comment-body">
+										<div class="comment-heading">
+											<h6>list.id
+												<c:choose>
+													<c:when test="${loginID == comment.id }">
+														<a
+															href="${pageContext.request.contextPath}/snscomm/delete?seq=${comment.seq }"
+															id=delcomm>삭제</a>
+														<a
+															href="${pageContext.request.contextPath}/snscomm/modify?seq=${comment.seq }"
+															id=modicomm>수정</a>
+													</c:when>
+												</c:choose>
+											</h5>
+											<div type=hidden value=${comment.seq } id=commentseq></div>
+										</div>
+										<p>list.contents</p>
+									</div>
+								</ul> --%>
 						</div>
 					</div>
 				</c:forEach>
 			</div>
+			<div class="col-md-3">
+				<i class="fas fa-arrow-up" id=top></i>
+			</div>
 		</div>
 	</div>
 	</div>
-
+	<input type = hidden id = session value = ${loginID }>
 </body>
 </html>

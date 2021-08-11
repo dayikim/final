@@ -46,4 +46,8 @@ public class SnsDAO {
 	public int modify(SnsDTO dto) {
 		return mybatis.update("Sns.modify", dto);
 	}
+	
+	public int love(Map<String,Integer>param) {
+		return mybatis.update("Sns.love", param);
+	}
 }

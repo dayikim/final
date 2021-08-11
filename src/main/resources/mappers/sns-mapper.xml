@@ -11,14 +11,6 @@
 		select * from snsBoard order by 1 desc
 	</select>
 	
-	<select id="getLove" resultType="int">
-		select love from snsBoard where seq=#{seq}
-	</select>
-	
-	<update id="like">
-		update snsBoard set love=#{love} where seq=#{seq}
-	</update>
-	
 	<delete id="delete">
 		delete from snsBoard where seq=#{value}
 	</delete>
@@ -33,5 +25,9 @@
 	
 	<update id="modify">
 		update snsBoard set contents=#{contents} where seq=#{seq}
+	</update>
+	
+	<update id="love">
+		update snsBoard set love=#{love} +1 where seq =#{seq}
 	</update>
 </mapper>

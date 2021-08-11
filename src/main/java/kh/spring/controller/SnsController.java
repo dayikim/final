@@ -10,7 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kh.spring.dto.LoveDTO;
+import kh.spring.dto.SnsCommentDTO;
 import kh.spring.dto.SnsDTO;
+import kh.spring.service.SnsCommentService;
 import kh.spring.service.SnsService;
 
 @Controller
@@ -20,12 +23,17 @@ public class SnsController {
 	@Autowired
 	private SnsService service;
 	@Autowired
+	private SnsCommentService scservice;
+	@Autowired
 	private HttpSession session;
 	
 	@RequestMapping("/main")
 	public String main(Model model) {
 		List<SnsDTO>list = service.selectAll();
 		model.addAttribute("list", list);
+		
+//		List<SnsCommentDTO>comment = scservice.selectAll();
+//		model.addAttribute("comment", comment);
 		return "sns/main";
 	}
 	
@@ -40,20 +48,7 @@ public class SnsController {
 		
 		return "redirect:/sns/main";
 	}
-	
-	@RequestMapping("/like")
-	public String like(int seq) {
-		System.out.println(seq);
-		int love1 = service.getLove(seq);
-		System.out.println(love1);
-		
-		int love = love1+1;		
-		System.out.println(love);
-		
-		int count = service.like(seq, love);
-		return "redirect:/sns/main";
-		
-	}
+
 	
 	@RequestMapping("/delete")
 	public String delete(int seq) {
@@ -77,6 +72,13 @@ public class SnsController {
 		int seq = dto.getSeq();
 		String contents = dto.getContents();
 		service.modify(dto);
+		return "redirect:/sns/main";
+	}
+	
+	@RequestMapping("love")
+	@ResponseBody
+	public String love(int seq,int love) {
+		service.love(seq, love);		
 		return "redirect:/sns/main";
 	}
 
