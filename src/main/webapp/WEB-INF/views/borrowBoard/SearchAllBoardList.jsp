@@ -27,57 +27,32 @@
         <!-- Template Stylesheet -->
         
         <link href="/css/style.css" rel="stylesheet">
-        <style>
-#titlename{
-    margin-top: 1%;
-    margin-bottom: 0;
-    font-size: 30px;
-    font-family: 'Gugi', cursive;
-    color:white;
-}
+   <style>
+	#titlename{margin-top: 1%; margin-bottom: 0; font-size: 30px; font-family: 'Gugi', cursive; color:white;}
 /* img{ */
 /*     width: 100%; */
 /* } */
-#search{
-    width: 500px;
-    position: relative;
-}
-.Explanation{
-    position: relative;
-    top: 30%;
-}
-.subject{
-    color: #1d2434;
-    text-align: center;
-    font-size: 40px;
-    font-weight: 800;
-}
-.contents{
-    margin-top: 5%;
-    text-align: center;
-    font-size: 25px;
-    font-weight: bold;
-}
-.Main{
-    margin-top: 5%;
-}
+	#search{width: 500px; position: relative;}
+	.Explanation{position: relative; top: 30%;}
+	.subject{color: #1d2434; text-align: center; font-size: 40px; font-weight: 800;}
+	.contents{margin-top: 5%; text-align: center; font-size: 25px; font-weight: bold;}
+	.Main{margin-top: 5%;}
 
-*{box-sizing: inherit;}
+	*{box-sizing: inherit;}
    *{box-sizing: inherit;}
     div{display: block;}
-    .minicontainer{margin: auto; overflow: hidden;text-align: center;}
+    .minicontainer{margin: auto; overflow: hidden;text-align: center; margin-top:120px;}
     .minibody{padding:0 8px; overflow: hidden;}
     img{border-radius: 20px;}
     a{color: black; cursor: pointer; text-decoration: none;}
     p{font-size: 1.1rem;}
     
-    .dropbtn {background-color: #acafac; color: white;padding: 10px; font-size: 13px; border: none; cursor: pointer;border-radius: 3px;}
+    .dropbtn {background-color: #1d2434; color: white;padding: 10px; font-size: 13px; border: none; cursor: pointer;border-radius: 3px;}
     .dropdown {position: relative; display: inline-block;margin-bottom: 20px;}
-    a:hover {background-color: #f1f1f1}
-    .dropdown:hover .dropbtn {background-color: #acafac}
+    .dropbtn:hover {background-color: skyblue}
 
     .count {overflow: hidden; }
-    .count p{width: 6%; display: inline-block;}
+    .count p{width: 3%; display: inline-block;text-align: end;}
     .minibody{text-align: center;}
     .reservation{overflow: hidden; font-size: 0.5rem; position: absolute;  transform: translate( 5%, -10%);}
     .board{width: 25%;height: 300px; overflow: hidden; float: left; margin-right:30px; margin-bottom: 56px;}
@@ -91,12 +66,29 @@
     <script>  
     
     $(function(){
-      	 $("#search").keyup(function(e){
-      		 if(e.keyCode == 13){
-      			location.href="/AllBoardList/allList?&search="+$("#search").val();
+       $("#search").keyup(function(e){
+      		if(e.keyCode == 13){
+      			location.href="/AllBoardList/allList?search="+$("#search").val();
            	}
-      	 }) 
-       })
+      	})
+	})
+	
+	$(function(){
+	 	$("#lendBtn").on("click",function(){
+	    	location.href="/lend/listAll";
+	    })
+	       
+	    $("#borrowBtn").on("click",function(){
+	    	location.href="/borrow/listAll";
+	    })
+	       
+	    $("#talentBtn").on("click",function(){
+	    	location.href="/tBoard/listAll";
+	    })
+	      	  
+	})
+       
+       
     
    
 
@@ -141,7 +133,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <c:choose>
-                	<c:when test="${loginID == null }">
+                	<c:when test="${loginID == null}">
                 		<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     	<div class="navbar-nav ml-auto">
                         	<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
@@ -164,55 +156,67 @@
             </div>
         </div>
         <!-- Nav Bar End -->
-
+        
+	<!-- Search All List Start -->
 	 <div class="minicontainer">
         <div class="miniheader">
             <div class="dropdown">
-                <button class="dropbtn"><a href="#">대여하기</a></button>
+                <button class="dropbtn" id="lendBtn">대여하기</button>
             </div>
             <div class="dropdown">
-                <button class="dropbtn"><a href="#">대여요청하기</a></button>
+                <button class="dropbtn" id="borrowBtn">대여요청하기</button>
             </div>
             <div class="dropdown">
-                <button class="dropbtn"><a href="#">재능기부</a></button>
+                <button class="dropbtn" id="talentBtn">재능기부</button>
             </div>
         </div>
        <div class="minibody">
-            <div id="count" class="count">대여하기 총 <p>${ldCount}</p> 개</div> 
+       		<input type="hidden" id="search2" name="search2" value="${search}">
+            <div id="count" class="count">대여하기 총<p>${ldCount}</p>개</div> 
 			<c:forEach var="ld" items="${ldList}">
 				<div class="borrow-board">
 					<div id="ldseq" class="seq" name="ldseq" >${ld.seq}</div>
-					<a id="ldtitle" class="title" name="title">${ld.title}</a>
+					<a href="/lend/detailView?seq=${ld.seq}" id="ldtitle" class="title" name="title">${ld.title}</a>
 					<p id="ldregdate" class="regdate" name="address1">${ld.regdate}</p>
 				</div>
 			</c:forEach>
+			<c:if test="${ldCount == 0}">
+				<p>검색 결과가 없습니다</p>
+			</c:if>
             <br>
-            <a href="/lend/list?&search=${search}">나머지 확인하기</a>
+            <a href="/lend/list?search=${search}">나머지 확인하기</a>
             <hr>
-            <div id="count" class="count">대여가기 총 <p>${bwCount}</p> 개</div>
+            <div id="count" class="count">대여요청 총<p>${bwCount}</p>개</div>
 			<c:forEach var="bw" items="${bwList}">
 				<div class="borrow-board">
 					<div id="bwseq" class="seq" name="bwsleq" >${bw.seq}</div>
-					<a id="bwtitle" class="title" name="bwtitle">${bw.title}</a>
+					<a href="/borrow/detailView?seq=${bw.seq}" id="bwtitle" class="title" name="bwtitle">${bw.title}</a>
 					<p id="bwregdate" class="regdate" name="bwregdate">${bw.regdate}</p>
 				</div>
 			</c:forEach>
+			<c:if test="${bwCount == 0}">
+				<p>검색 결과가 없습니다</p>
+			</c:if>
             <br>
-            <a href="/borrow/list?&search=${search}">나머지 확인하기</a>
+            <a href="/borrow/list?search=${search}">나머지 확인하기</a>
             <hr>
-            <div id="count" class="count">대여가기 총 <p>${tlCount}</p> 개</div>
+            <div id="count" class="count">재능기부 총<p>${tlCount}</p>개</div>
 			<c:forEach var="tl" items="${tlList}">
 				<div class="borrow-board">
 					<div id="tlseq" class="seq" name="tltlseq" >${tl.seq}</div>
-					<a id="tltitle" class="title" name="tltitle">${tl.title}</a>
-					<p id="tlregdate" class="regdate" name="tlregdate">${tl.regdate}</p>
+					<a href="/tBoard/detailView?seq=${tl.seq}" id="tltitle" class="title" name="tltitle">${tl.title}</a>
+					<p id="tlregdate" class="regdate" name="tlregdate">${tl.regDate}</p>
 				</div>
 			</c:forEach>
+			<c:if test="${tlCount == 0}">
+				<p>검색 결과가 없습니다</p>
+			</c:if>
             <br>
-            <a href="/tBoard/list?&search=${search}">나머지 확인하기</a>
+            <a href="/tBoard/list?search=${search}">나머지 확인하기</a>
             <hr>
 		</div>
 		</div>
+		<!-- Search All List End -->
 
 
 	<!-- Footer Start -->

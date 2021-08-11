@@ -92,7 +92,7 @@ public class AllSearchDAO {
 		int count = 0;
 		
 		if(search != "") {
-			count = mybatis.selectOne("AllList.numLend", search);
+			count = mybatis.selectOne("AllList.numBorrow", search);
 		}else {
 			count = 0;
 		}
@@ -108,7 +108,7 @@ public class AllSearchDAO {
 		int count = 0;
 		
 		if(search != "") {
-			count = mybatis.selectOne("AllList.numLend", search);
+			count = mybatis.selectOne("AllList.numTalent", search);
 		}else {
 			count = 0;
 		}

@@ -30,15 +30,15 @@ public class AllSearchController {
 		int bwcount = service.borrowCount(search);
 		int tlcount = service.talentCount(search);
 		
-		model.addAttribute("ldlist", ldlist);
-		model.addAttribute("bwlist", bwlist);
-		model.addAttribute("tllist", tllist);
-		model.addAttribute("ldcount", ldcount);
-		model.addAttribute("bwcount", bwcount);
-		model.addAttribute("tlcount", tlcount);
+		model.addAttribute("ldList", ldlist);
+		model.addAttribute("bwList", bwlist);
+		model.addAttribute("tlList", tllist);
+		model.addAttribute("ldCount", ldcount);
+		model.addAttribute("bwCount", bwcount);
+		model.addAttribute("tlCount", tlcount);
 		model.addAttribute("search", search);
 		
-		return "borrowBoard/SearchAllBoardlist";
+		return "borrowBoard/SearchAllBoardList";
 		 
 	}
 
