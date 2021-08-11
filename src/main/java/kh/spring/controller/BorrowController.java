@@ -23,75 +23,26 @@ public class BorrowController {
 	@Autowired
 	private BorrowService service;
 	
-	
-	@RequestMapping(value="/firstlist")	
-	public String firstList(String search, String pageNum, Model model) {
-		
-		List<BorrowDTO> firstlist = null;
-		int strpageNum = 1;
-		
-		if (pageNum != null) {
-			strpageNum = Integer.parseInt(pageNum);
-			firstlist = service.getPageList(search,strpageNum);
-		}else if (pageNum == null) {
-			
-			firstlist = service.getPageList(search,strpageNum);
-		}
 
+	@RequestMapping("/list")	
+	public String firstList(String search, Model model) {
+		
+		List<BorrowDTO> list = null;
+		
 		int totalRow = service.getPageCount(search);
-		
-		// 한페이지에 보여줄 게시글 수
-		final int PAGE_ROW_COUNT = 9;
-
-		
-		// 전체 페이지의 갯수 구하기
-		int totalPageCount = (int) Math.ceil(totalRow / (double) PAGE_ROW_COUNT);
-		
-		model.addAttribute("list",firstlist);
+			
+		model.addAttribute("list",list);
 		model.addAttribute("totalPageCount", totalPageCount);
 		model.addAttribute("search", search);
 		model.addAttribute("totalRow", totalRow);
 		model.addAttribute("pageNum",strpageNum);
 		
 		return "borrowBoard/borrowlist";
+		
+		
 		 
 	}
 	
-	@RequestMapping(value="/list",produces="text/html;charset=utf-8")
-	@ResponseBody
-	public String join(String search, String pageNum, HttpSession session) {
-				
-		//글의 개수		
-		int totalRow = service.getPageCount(search);
-		
-		// 한페이지에 보여줄 게시글 수
-		final int PAGE_ROW_COUNT = 9;
-
-		// 전체 페이지의 갯수 구하기
-		int totalPageCount = (int) Math.ceil(totalRow / (double) PAGE_ROW_COUNT);
-		
-		List<BorrowDTO> list = null;
-		int strpageNum =1;
-		//페이지 번호가 파라미터로 전달되는지 읽어와 본다.
-		if (pageNum != null) {
-			strpageNum = Integer.parseInt(pageNum);
-			list = service.getPageList(search,strpageNum);
-		}else if (pageNum == null) {			
-			list = service.getPageList(search,strpageNum);
-		}
-		
-		HashMap<String, Object> result = new HashMap<String, Object>();
-		
-		result.put("list", list);
-		result.put("totalPageCount", totalPageCount);
-		result.put("search",search);
-		result.put("totalRow", totalPageCount);
-		result.put("pageNum",strpageNum);
-		
-		Gson gs = new Gson(); 
-		
-		return gs.toJson(result);
-
-	}
+	
 
 }
