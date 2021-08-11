@@ -90,11 +90,8 @@ style>body {
 					type : "POST",
 					data : {"parentSeq":$(this).parent().siblings("#hiddencomment").children(".input-group").children("#hidden").val()},
 					dataType:"JSON",
-				}).done(function(resp){
-					console.log(resp[0])
-					console.log(resp[1])
-					console.log(resp.length)
-					console.log(resp[0].id)
+				}).done(function(resp){ 
+					//댓글뿌리기
 					for(var i = 0; i < resp.length; i++){
 						
 						let ul = $("<ul>")
@@ -117,14 +114,15 @@ style>body {
 						delete_tag.text("삭제");
 						
 						let modify_tag = $("<a>");
-						modify_tag.attr("href","/snscomm/modify?seq="+resp[i].seq);
+						//modify_tag.attr("href","/snscomm/modify?seq="+resp[i].seq);
 						modify_tag.attr("id","modicomm");
 						modify_tag.text("수정");
-						
-						
+											
 						let input = $("<input type=hidden id=commentseq>");
+						input.text(resp[i].seq);
 						
-						let comment = $("<p>");
+						let comment = $("<div>");
+						comment.attr("id","comment");
 						comment.text(resp[i].contents);
 						
 						if(resp[i].id == $("#session").val()){
@@ -134,50 +132,48 @@ style>body {
 						
 						comment_head.append(comment_writer);
 						comment_head.append(input);
-						
-						
+												
 						body_div.append(comment_head);
-						body_div.append(comment);
-						
-						
-						
-						ul.append(body_div);
-						console.log("Asdasdsadsa");
-						
-						$(hidden_comment).append(ul);
-						
-					}
-					
+						body_div.append(comment);						
+												
+						ul.append(body_div);						
+						$(hidden_comment).append(ul);						
+					}					
 				})
 			}else{
 				$(this).parent().siblings("#hiddencomment").hide();
 				let delete_ul = $(hidden_comment).children(".comment-list");
 				for(let i =0; i<delete_ul.length; i++){
 					$(delete_ul[i]).remove();
-				}
-				
+				}				
 			}
 		})
 		
-		//댓글뿌리기
-//		$(document).on("click","#commenticon",function(){
-//			$(document).on("click","#commenticon",function(){
-//				$.ajax({
-//					url : "/snscomm/replyList",
-//					type : "POST",
-//					data : {"parentSeq":$(this).parent().siblings("#hiddencomment").children(".input-group").children("#hidden").val()}
-//				}).done(function(resp){
-//					list = resp;
-//					for(var i = 0; i < list.length; i++){
-//						console.log(list);
-//					}
-//					
-//				})
-//			})
-//		})
+		$(document).on("click","#modicomm",function(){
+			console.log($(this).parents(".comment-heading").siblings("#comment").attr("contenteditable") );
+			console.log($(this).parent().siblings("#commentseq").text());
+			if($(this).parents(".comment-heading").siblings("#comment").attr("contenteditable") === "false" || $(this).parents(".comment-heading").siblings("#comment").attr("contenteditable") == undefined  ){ // 첫 클릭 했을 때 
+				$(this).parents(".comment-heading").siblings("#comment").attr("contenteditable","true");
+				$(this).parents(".comment-heading").siblings("#comment").focus();	//수정 시작
+			} else{
+				$(this).parents(".comment-heading").siblings("#comment").blur();
+				$.ajax({
+					url: "/snscomm/modify",
+					data:{"seq":$(this).parent().siblings("#commentseq").text(),"contents":$(this).parents(".comment-heading").siblings("#comment").text()},
+					dataType:"TEXT",
+				}).done(function(e){
+					if(e == 'success'){
+						$(this).parents(".comment-heading").siblings("#comment").attr("contenteditable","false");
+					}else{
+						alert('수정실패')
+					}
+				})
+			}
+		})	
 		
 		//댓글작성
-		$(document).on("click","#sendcomment",function(){	
+		$(document).on("click","#sendcomment",function(){
+			let hidden_comment = $(this).parents("#hiddencomment");
 			if(${loginID == null}){
 	            alert('로그인 후 이용해주세요')
 	         }else{
@@ -185,17 +181,65 @@ style>body {
 	               url : "/snscomm/write",
 	               type : "GET",
 	               data : {"contents":$(this).parent().siblings("#comment").val(),"seq":$(this).parent().siblings("#hidden").val()}               
-	            }).done(function(resp){
+	            }).done(function(resp){0
 	               if(resp == 1){
 	                  alert('댓글작성완료!')
-	                  $("#comment").val("")	                  
+	                  let ul = $("<ul>")
+						ul.attr("class","comment-list");
+						ul.attr("id", "commentList");
+						
+						let body_div = $("<div>");
+						body_div.attr("class","comment-body");
+						
+						let comment_head = $("<div>");
+						comment_head.attr("class","comment-heading");
+												
+						let comment_writer = $("<h6>");
+						comment_writer.text($("#session").val());
+						
+						let delete_tag = $("<a>");
+						delete_tag.attr("href","/snscomm/delete?seq="+$(this).parent().siblings("#hidden").val());
+						delete_tag.attr("id","delcomm");
+						delete_tag.text("삭제");
+						
+						let modify_tag = $("<a>");
+						modify_tag.attr("href","/snscomm/modify?seq="+$(this).parent().siblings("#hidden").val());
+						modify_tag.attr("id","modicomm");
+						modify_tag.text("수정");						
+						
+						let input = $("<input type=hidden id=commentseq>");
+						input.text()
+						
+						let comment = $("<div>");
+						comment.text($(this).parent().siblings("#comment").val());
+						
+			
+						comment_writer.append(delete_tag);
+						comment_writer.append(modify_tag);
+						
+						
+						comment_head.append(comment_writer);
+						comment_head.append(input);					
+						
+						body_div.append(comment_head);
+						body_div.append(comment);												
+						
+						ul.append(body_div);
+						
+						$(hidden_comment).prepend(ul);                
 	               }else{
 	                  alert('작성실패')
 	               }
-	            })	            
+	            })
+	            
+	            $(this).parent().siblings("#comment").val("");
 	         }
 		})
 		
+		//댓글수정
+		
+		
+		//좋아요
 		$(document).on("click","#love",function(){
 			if(${loginID == null}){
 	            alert('로그인 후 이용해주세요')
@@ -209,6 +253,7 @@ style>body {
 	         }
 		})
 
+		//화면올리기
     	$( window ).scroll( function() {
     		if ( $( this ).scrollTop() > 200 ) {
     			$( '#top' ).fadeIn();

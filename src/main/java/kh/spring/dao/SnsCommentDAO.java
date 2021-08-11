@@ -31,4 +31,8 @@ public class SnsCommentDAO {
 		return mybatis.selectOne("Snscomm.getComment", seq);
 	}
 	
+	public int modify(Map<String,Object>param) {
+		return mybatis.update("Snscomm.modify", param);
+	}
+	
 }
