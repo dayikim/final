@@ -23,7 +23,6 @@ public class BorrowDAO {
 			// 검색 조건에 빈 문자열을 넣어준다.
 			search = "";
 		}
-		System.out.println("dao갯수1 : " + search);
 
 		// 전체 row의 개수를 담을 지역변수
 		int totalRow = 0;
@@ -31,14 +30,10 @@ public class BorrowDAO {
 		// 검색 키워드가 넘어온다면
 		if (!search.equals("")) {
 			totalRow = ((Integer) (mybatis.selectOne("Borrow.numSearch", search)));
-			System.out.println("dao갯수2 : " + totalRow);
 		} else if (search.equals("")) {
 			totalRow = (Integer) mybatis.selectOne("Borrow.numList");
-			System.out.println("dao갯수3 : " + totalRow);
 		}
 		
-		System.out.println("dao갯수4 : " + totalRow);
-
 		return totalRow;
 	}
 
@@ -49,14 +44,11 @@ public class BorrowDAO {
 
 		// 보여줄 페이지의 시작 ROWNum = 0 부터 시작
 		int startRowNum = (0 + (pageNum - 1) * PAGE_ROW_COUNT)+1;
-		System.out.println(startRowNum);
 
 		// 보여줄 페이지의 끝 ROWNum
 		int endRowNum = pageNum * PAGE_ROW_COUNT;
-		System.out.println(endRowNum);
 
 		int rowCount = PAGE_ROW_COUNT;
-		System.out.println(rowCount);
 
 		// 검색 키워드 관련 처리 - 검색 키워드가 있을수도 있고 없을수도 있다.
 		if (search == null) {
@@ -71,9 +63,6 @@ public class BorrowDAO {
 		map.put("rowCount", rowCount);
 		map.put("endRowNum", endRowNum);
 		
-		System.out.println(map.get("search"));
-		System.out.println(map.get("startRowNum"));	
-		
 		// list 객체의 참조값을 담을 지역변수를 미리 만든다.
 		List<BorrowDTO> list = null;
 
@@ -85,8 +74,6 @@ public class BorrowDAO {
 		} else if (search.equals("")) {// 검색이 널일 경우 전체목록 나오게하기
 			list = mybatis.selectList("Borrow.toList", map);
 		}
-
-		System.out.println("mapper -> " + list. size());
 
 		return list;
 

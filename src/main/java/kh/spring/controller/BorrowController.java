@@ -26,7 +26,6 @@ public class BorrowController {
 	
 	@RequestMapping(value="/firstlist")	
 	public String firstList(String search, String pageNum, Model model) {
-		System.out.println("여기는 첫검색");
 		
 		List<BorrowDTO> firstlist = null;
 		int strpageNum = 1;
@@ -48,9 +47,6 @@ public class BorrowController {
 		// 전체 페이지의 갯수 구하기
 		int totalPageCount = (int) Math.ceil(totalRow / (double) PAGE_ROW_COUNT);
 		
-		System.out.println("service에서 온 페이지값 " + totalPageCount);
-		System.out.println("service에서 온 리스트 " +firstlist);
-		
 		model.addAttribute("list",firstlist);
 		model.addAttribute("totalPageCount", totalPageCount);
 		model.addAttribute("search", search);
@@ -64,7 +60,6 @@ public class BorrowController {
 	@RequestMapping(value="/list",produces="text/html;charset=utf-8")
 	@ResponseBody
 	public String join(String search, String pageNum, HttpSession session) {
-		System.out.println("여기는 다음검색창");
 				
 		//글의 개수		
 		int totalRow = service.getPageCount(search);
@@ -84,9 +79,6 @@ public class BorrowController {
 		}else if (pageNum == null) {			
 			list = service.getPageList(search,strpageNum);
 		}
-				
-		System.out.println("service에서 온 페이지값 " + totalPageCount);
-		System.out.println("service에서 온 리스트 " +list);
 		
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		
@@ -97,8 +89,6 @@ public class BorrowController {
 		result.put("pageNum",strpageNum);
 		
 		Gson gs = new Gson(); 
-				
-		System.out.println("쥐슨 : " + gs.toJson(result));
 		
 		return gs.toJson(result);
 

@@ -16,15 +16,11 @@ public class BorrowService {
 	private BorrowDAO dao;
 
 	public int getPageCount(String search) {
-		
-		System.out.println("서비스에서 총갯수 search 값 : " + search);
 
 		return dao.getPageCount(search);
 	}
 
 	public List<BorrowDTO> getPageList(String search, int pageNum) {
-		
-		System.out.println("서비스에서 search 값 : " + search);
 
 		return dao.getPageList(search,pageNum);
 	}

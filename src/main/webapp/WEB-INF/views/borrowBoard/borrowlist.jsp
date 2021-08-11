@@ -136,9 +136,9 @@
   	  				url:"/borrow/list",
   	  				data:{"search":$("#search2").val(),"pageNum":currentPage,"lastseq":$("#seq:last").val()}, 
   	  				datatype:"json"
-  	  			}).done(function(data){
-  	  				console.log(data.list);
-  	  				var list = data.list;
+  	  			}).done(function(list){
+  	  				console.log(list);
+  	  				var list = list.list;
   	  				console.log(list);
   	  				for(var i=0; i<list.length;i++){
   	  					console.log(list[i]);
