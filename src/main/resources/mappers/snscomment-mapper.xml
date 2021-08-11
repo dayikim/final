@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Snscomm">
+	<insert id="insert">
+		insert into snsBoardComment values(snsBoardComment_seq.nextval,#{id},#{contents},#{parentSeq},sysdate)
+	</insert>
+	
+	<select id="replyList" resultType="kh.spring.dto.SnsCommentDTO">
+		select * from snsBoardComment where parentSeq=#{parentSeq} order by 1 desc
+	</select>
+	
+	<delete id="delete">
+		delete from snsBoardComment where seq= #{value}
+	</delete>
+	
+	<select id="getComment" resultType="String">
+		select contents from snsBoardComment where seq= #{value} 
+	</select>
+	
+	<update id="modify">
+		update snsBoardComment set contents =#{contents} where seq = #{seq}
+	</update>
+	
+</mapper>
