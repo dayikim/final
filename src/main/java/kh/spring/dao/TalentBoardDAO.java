@@ -18,4 +18,8 @@ public class TalentBoardDAO {
 	public TalentBoardDTO detailView(int seq) {
 		return  mybatis.selectOne("TBoard.detailView",seq);
 	}
+	
+	public int getSeq(){
+		return mybatis.selectOne("TBoard.getSeq");
+	}
 }
