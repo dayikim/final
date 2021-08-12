@@ -6,4 +6,7 @@
 <insert id ="charge">
 insert into point values(point_seq.nextval,#{id},#{pointAmount},sysdate)
 </insert>
+<select id="amount" resultType="int">
+select sum(pointAmount) pointAmount from point
+</select>
 </mapper>
