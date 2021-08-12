@@ -317,9 +317,9 @@ img {
 					otherAmount.focus();
 					return false;
 				} else {
-					$(".amount").text(money);
-					document.querySelector(".amount").onchange(); // 값이 바뀐 엘리먼트에 onchange 함수를 실행
-				}
+					 $(".amount").text(money);
+/* 					document.querySelector(".amount").onchange(); // 값이 바뀐 엘리먼트에 onchange 함수를 실행 
+ */				}
 			} else {
 				alert("숫자만 입력해주세요.")
 				otherAmount.val("");
@@ -327,6 +327,8 @@ img {
 				return false;
 				console.log
 			}
+			otherAmount.val("");
+			$(".modal_box").modal("hide");
 		})
 
 		$("#cancel").on("click", function() {
@@ -478,7 +480,8 @@ img {
                                                     기타금액</button></a> -->
 										<button type="button" class="btn btn-outline-success"
 											data-toggle="modal" data-target="#exampleModal" id="other">기타금액</button>
-										<div class="modal fade" id="exampleModal" tabindex="-1"
+											
+										<div class="modal fade modal_box" id="exampleModal" tabindex="-1"
 											aria-labelledby="exampleModalLabel" aria-hidden="true">
 											<div class="modal-dialog">
 												<div class="modal-content">
@@ -496,11 +499,10 @@ img {
                                                                         onKeyup="this.value=this.value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');"
                                                                         required></input><span
                                                                         class="point_title"><strong>상추</strong></span> -->
-															<input class="form-control" id="amount_input"
+															<input type="number" class="form-control" id="amount_input"
 																placeholder="충전금액" required></input><span
 																class="point_title"><strong>상추</strong></span>
 														</div>
-														</form>
 
 														<button type="button" class="btn btn-dark modalBtn"
 															data-dismiss="modal">취소</button>
@@ -534,9 +536,8 @@ img {
 								<b>결제할 충전금액 : </b>
 							</h4>
 							<div class="amount_box">
-								<span class="amount"
-									onchange="this.value=this.value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');"
-									value="0">0</span><b id="won">원</b>
+<!-- 							onchange="this.value=this.value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');"
+ -->								<span class="amount">0 <b id="won">원</b></span>
 							</div>
 						</div>
 						<Strong class="pay_info">*100 상추는 1,000원입니다.</Strong>

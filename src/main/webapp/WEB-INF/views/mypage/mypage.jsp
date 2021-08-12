@@ -359,7 +359,7 @@
 				</div>
 
 				<div class="charge">
-					<a href="#">충전하기</a> <span>ㅣ</span> <a href="/my/pointChargeList" onclick="window.open(this.href,'','width=550,height=600');return false">포인트 내역 확인</a>
+					<a href="/point/ToCharging">충전하기</a> <span>ㅣ</span> <a href="/my/pointChargeList" onclick="window.open(this.href,'','width=550,height=600');return false">포인트 내역 확인</a>
 				</div>
 			</div>
 			<hr>
