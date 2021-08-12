@@ -39,9 +39,8 @@
 	.Main{margin-top: 5%;}
 
 	*{box-sizing: inherit;}
-   *{box-sizing: inherit;}
     div{display: block;}
-    .minicontainer{margin: auto; overflow: hidden;text-align: center; margin-top:120px;}
+    .minicontainer{margin: auto; overflow: hidden;text-align: center; margin-top:120px; padding: 150px 80px;}
     .minibody{padding:0 8px; overflow: hidden;}
     img{border-radius: 20px;}
     a{color: black; cursor: pointer; text-decoration: none;}
@@ -75,15 +74,15 @@
 	
 	$(function(){
 	 	$("#lendBtn").on("click",function(){
-	    	location.href="/lend/listAll";
+	    	location.href="/lend/listAll?cpage=1";
 	    })
 	       
 	    $("#borrowBtn").on("click",function(){
-	    	location.href="/borrow/listAll";
+	    	location.href="/borrow/listAll?cpage=1";
 	    })
 	       
 	    $("#talentBtn").on("click",function(){
-	    	location.href="/tBoard/listAll";
+	    	location.href="/tBoard/listAll?cpage=1";
 	    })
 	      	  
 	})
@@ -160,6 +159,7 @@
 	<!-- Search All List Start -->
 	 <div class="minicontainer">
         <div class="miniheader">
+        	<!-- 카테고리별 버튼 누를시 그 카테고리로 이동한다 -->
             <div class="dropdown">
                 <button class="dropbtn" id="lendBtn">대여하기</button>
             </div>
@@ -170,6 +170,8 @@
                 <button class="dropbtn" id="talentBtn">재능기부</button>
             </div>
         </div>
+        
+        <!-- 게시판 최신순으로 5개씩 나옴 -->
        <div class="minibody">
        		<input type="hidden" id="search2" name="search2" value="${search}">
             <div id="count" class="count">대여하기 총<p>${ldCount}</p>개</div> 
@@ -184,7 +186,7 @@
 				<p>검색 결과가 없습니다</p>
 			</c:if>
             <br>
-            <a href="/lend/list?search=${search}">나머지 확인하기</a>
+            <a href="/lend/listAll?search=${search}&cpage=1">나머지 확인하기</a>
             <hr>
             <div id="count" class="count">대여요청 총<p>${bwCount}</p>개</div>
 			<c:forEach var="bw" items="${bwList}">
@@ -198,7 +200,7 @@
 				<p>검색 결과가 없습니다</p>
 			</c:if>
             <br>
-            <a href="/borrow/list?search=${search}">나머지 확인하기</a>
+            <a href="/borrow/listAll?search=${search}&cpage=1">나머지 확인하기</a>
             <hr>
             <div id="count" class="count">재능기부 총<p>${tlCount}</p>개</div>
 			<c:forEach var="tl" items="${tlList}">
@@ -212,7 +214,7 @@
 				<p>검색 결과가 없습니다</p>
 			</c:if>
             <br>
-            <a href="/tBoard/list?search=${search}">나머지 확인하기</a>
+            <a href="/tBoard/list?search=${search}&cpage=1">나머지 확인하기</a>
             <hr>
 		</div>
 		</div>

@@ -7,22 +7,22 @@
   
 	<!-- 검색 지역 & 타이틀 -->
 	<select id="toSearch" resultType="kh.spring.dto.BorrowDTO">
-		<![CDATA[select * from (select rownum as rnum, A.* from (select * from borrowboard where address1 like '%'||#{search}||'%' or title like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endRowNum}) where rnum >= #{startRowNum}]]>
+		<![CDATA[select * from (select rownum as rnum, A.* from (select * from borrowboard where address1 like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
 	</select>
 	
 	<!-- 검색이 null일 경우 전체목록 나오게 -->
 	<select id="toList" resultType="kh.spring.dto.BorrowDTO">
-		<![CDATA[select * from (select rownum as rnum, A.* from (select * FROM borrowboard order by seq desc) A where ROWNUM <= #{endRowNum}) where rnum >= #{startRowNum}]]>
+		<![CDATA[select * from (select rownum as rnum, A.* from (select * from borrowboard order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
 	</select>
 		
-	<!-- 검색 지역 & 타이틀 카운트 -->
-	<select id="numSearch" resultType="int">
-		select count(*) from borrowboard where address1 like '%'||#{search}||'%' or title like '%'||#{search}||'%'
+	<!-- 검색 지역 & 타이틀 & 컨텐츠 카운트 -->
+	<select id="allList" resultType="int">
+		select count(*) from borrowboard
 	</select>
 	
-	<!-- 검색 지역 & 타이틀 카운트 -->
-	<select id="numList" resultType="int">
-		select count(*) from borrowboard
+	<!-- 검색 지역 & 타이틀 & 컨텐츠 카운트 -->
+	<select id="searchList" resultType="int">
+		select count(*) from borrowboard where address1 like '%'||#{value}||'%' or title like '%'||#{value}||'%' or contents like '%'||#{value}||'%'
 	</select>
 	
 </mapper>

@@ -15,13 +15,17 @@ public class BorrowService {
 	@Autowired
 	private BorrowDAO dao;
 
-	public int getPageCount(String search) {
 
-		return dao.getPageCount(search);
+	public List<String> getPageNavi(String search, String cpage) {
+		
+		int currentPage = Integer.parseInt(cpage);
+		
+		return dao.getPageNavi(search, currentPage);
 	}
-
-	public List<BorrowDTO> getPageList(String search, int pageNum) {
-
-		return dao.getPageList(search,pageNum);
+	
+	public List<BorrowDTO> getList(String search, String cpage){
+		int currentPage = Integer.parseInt(cpage);
+		
+		return dao.getList(search,currentPage);
 	}
 }

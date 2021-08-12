@@ -28,63 +28,35 @@
         
         <link href="/css/style.css" rel="stylesheet">
         <style>
-#titlename{
-    margin-top: 1%;
-    margin-bottom: 0;
-    font-size: 30px;
-    font-family: 'Gugi', cursive;
-    color:white;
-}
+			#titlename{margin-top: 1%; margin-bottom: 0; font-size: 30px; font-family: 'Gugi', cursive; color:white;}
 /* img{ */
 /*     width: 100%; */
 /* } */
-#search{
-    width: 500px;
-    position: relative;
-}
-.Explanation{
-    position: relative;
-    top: 30%;
-}
-.subject{
-    color: #1d2434;
-    text-align: center;
-    font-size: 40px;
-    font-weight: 800;
-}
-.contents{
-    margin-top: 5%;
-    text-align: center;
-    font-size: 25px;
-    font-weight: bold;
-}
-.Main{
-    margin-top: 5%;
-}
+			#search{width: 500px; position: relative;}
+			.Explanation{position: relative; top: 30%;}
+			.subject{color: #1d2434; text-align: center; font-size: 40px; font-weight: 800;}
+			.contents{margin-top: 5%; text-align: center; font-size: 25px; font-weight: bold;}
+			.Main{margin-top: 5%;}
 
-*{box-sizing: inherit;}
-    div{display: block;}
-    .minicontainer{margin: auto; overflow: hidden;text-align: center; padding: 150px 80px;}
-    .minibody{padding:0 8px; overflow: hidden;}
-    img{border-radius: 20px;}
-    h3{font-size: 1rem;}
-    p{font-size: 1.1rem;}
+
+    		*{box-sizing: inherit;}
+   			div{display: block;}
+    		.minicontainer{margin: auto; overflow: hidden;text-align: center; padding: 150px 80px;}
+    		.minibody{padding:0 8px; overflow: hidden;}
+    		img{border-radius: 20px;}
+    		a{color: black; cursor: pointer; text-decoration: none;}
+    		p{font-size: 1.1rem;}
     
-    .dropbtn {background-color: #acafac; color: white;padding: 10px; font-size: 13px; border: none; cursor: pointer;border-radius: 3px;}
-    .dropdown {position: relative; display: inline-block;margin-bottom: 20px;}
-    .dropdown-content {display: none; position: absolute; background-color: #f9f9f9; min-width: 160px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 1;}
-    .dropdown-content a {color: black; padding: 12px 16px; text-decoration: none; display: block;}
-    .dropdown-content a:hover {background-color: #f1f1f1}
-    .dropdown:hover .dropdown-content {display: block;}
-    .dropdown:hover .dropbtn {background-color: #acafac}
+    		.dropbtn {background-color: #1d2434; color: white;padding: 10px; font-size: 13px; border: none; cursor: pointer;border-radius: 3px;}
+    		.dropdown {position: relative; display: inline-block;margin-bottom: 20px;}
+    		.dropbtn:hover {background-color: skyblue}
 
-    .minibody{text-align: center;}
-    .reservation{overflow: hidden; font-size: 0.5rem; position: absolute;  transform: translate( 5%, -10%);}
-    .borrow-board{width: 25%;overflow: hidden; display:inline-block; margin-right:30px; margin-bottom: 56px;}
-    .borrow-board img{width: 100%; height: 70%;} 
-    .minibody a{color: black; cursor: pointer; text-decoration: none;}
-    .minibody a:hover{color: black; text-decoration: none;}
-
+    		.minibody{text-align: center;}
+    		.reservation{overflow: hidden; font-size: 0.5rem; position: absolute;  transform: translate( 5%, -10%);}
+    		.borrow-board{width: 25%;overflow: hidden; display:inline-block; margin-right:30px; margin-bottom: 56px;}
+    		.borrow-board img{width: 100%; height: 70%;} 
+    		.minibody a{color: black; cursor: pointer; text-decoration: none;}
+    		.minibody a:hover{color: black; text-decoration: none;}
 
     </style>
     
@@ -96,7 +68,22 @@
       				location.href="/AllBoardList/allList?search="+$("#search").val();
            	}
       	 }) 
-       })
+    })
+       
+	$(function(){
+	 	$("#lendBtn").on("click",function(){
+	    	location.href="/lend/listAll?cpage=1";
+	    })
+	       
+	    $("#borrowBtn").on("click",function(){
+	    	location.href="/borrow/listAll?cpage=1";
+	    })
+	       
+	    $("#talentBtn").on("click",function(){
+	    	location.href="/tBoard/listAll?cpage=1";
+	    })
+	      	  
+	})
     
    
 
@@ -167,35 +154,25 @@
 
 	<div class="minicontainer">
 		<div class="miniheader">
-			<div class="dropdown">
-				<button class="dropbtn">Dropdown</button>
-				<div class="dropdown-content">
-					<a href="#">Link 1</a> <a href="#">Link 2</a>
-				</div>
-			</div>
-			<div class="dropdown">
-				<button class="dropbtn">Dropdown</button>
-				<div class="dropdown-content">
-					<a href="#">Link 1</a> <a href="#">Link 2</a>
-				</div>
-			</div>
-			<div class="dropdown">
-				<button class="dropbtn">Dropdown</button>
-				<div class="dropdown-content">
-					<a href="#">Link 1</a> <a href="#">Link 2</a>
-				</div>
-			</div>
+        	<!-- 카테고리별 버튼 누를시 그 카테고리로 이동한다 -->
+            <div class="dropdown">
+                <button class="dropbtn" id="lendBtn">대여하기</button>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn" id="borrowBtn">대여요청하기</button>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn" id="talentBtn">재능기부</button>
+            </div>
 		</div>
 		<div class="minibody">
-			<c:forEach var="list" items="${list}">
-				<div class="borrow-board">
-					<input type="hidden" value="${search}" id=search2 name="search2">
-					<div class="reservation" id="reservation" name="reservation">미예약</div>
+		<input type="hidden" value="${search}" id=search2 name="search2">
+			<c:forEach var="bw" items="${bwList}">
+				<div class="borrow-board">					
 					<img src="ittaketwo.jpg" alt="#"> 
-					<input type="hidden" value="${list.seq}" id="seq" name="seq">
-					<h3 id="title" name="title">${list.title}</h3>
-					<p id="address1" name="address1">${list.address1}</p>
-
+					<input type="hidden" value="${bw.seq}" id="seq" name="seq">
+					<h3 id="title" name="title">${bw.title}</h3>
+					<p id="address1" name="address1">${bw.address1}</p>
 				</div>
 			</c:forEach>
 		</div>
@@ -203,13 +180,13 @@
 			<c:forEach var="i" items="${navi}" varStatus="s">
 				<c:choose>
 					<c:when test="${i == '>'}">
-						<a href="/borrow/list?cpage=${navi[s.index-1]+1}&search=${search}">${i}</a>
+						<a href="/borrow/listAll?cpage=${navi[s.index-1]+1}&search=${search}">${i}</a>
 					</c:when>
 					<c:when test="${i == '<'}">
-						<a href="/borrow/list?cpage=${navi[s.index-1]+1}&search=${search}">${i}</a>
+						<a href="/borrow/listAll?cpage=${navi[s.index-1]+1}&search=${search}">${i}</a>
 					</c:when>
 					<c:otherwise>
-						<a href="/borrow/list?cpage=${i}&search=${search}">${i}</a>
+						<a href="/borrow/listAll?cpage=${i}&search=${search}">${i}</a>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>

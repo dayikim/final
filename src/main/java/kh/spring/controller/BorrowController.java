@@ -24,23 +24,19 @@ public class BorrowController {
 	private BorrowService service;
 	
 
-	@RequestMapping("/list")	
-	public String firstList(String search, Model model) {
+	@RequestMapping("/listAll")	
+	public String listAll(String search, String cpage, Model model) {
 		
-		List<BorrowDTO> list = null;
+		List<String> pageNavi = service.getPageNavi(search,cpage);
 		
-		int totalRow = service.getPageCount(search);
-			
-		model.addAttribute("list",list);
-		model.addAttribute("totalPageCount", totalPageCount);
+		List<BorrowDTO> list = service.getList(search,cpage);
+		
+
+		model.addAttribute("navi", pageNavi);
+		model.addAttribute("bwList", list);
 		model.addAttribute("search", search);
-		model.addAttribute("totalRow", totalRow);
-		model.addAttribute("pageNum",strpageNum);
 		
-		return "borrowBoard/borrowlist";
-		
-		
-		 
+		return "borrowBoard/borrowlist"; 
 	}
 	
 	
