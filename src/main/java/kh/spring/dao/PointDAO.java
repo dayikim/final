@@ -1,5 +1,7 @@
 package kh.spring.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,6 +18,10 @@ public class PointDAO {
 	}
 	public int amount() {
 		return mybatis.selectOne("Point.amount");
+	}
+	
+	public List<PointDTO> pointChargeList(String sessionID) {
+		return mybatis.selectList("Point.pointChargeList",sessionID);
 	}
 	
 }

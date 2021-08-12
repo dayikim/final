@@ -9,4 +9,8 @@ insert into point values(point_seq.nextval,#{id},#{pointAmount},sysdate)
 <select id="amount" resultType="int">
 select sum(pointAmount) pointAmount from point
 </select>
+
+<select id="pointChargeList" resultType="kh.spring.dto.PointDTO">
+	select * from point where id=#{value}
+</select>
 </mapper>
