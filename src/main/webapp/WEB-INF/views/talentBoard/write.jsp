@@ -335,12 +335,13 @@ footer {
 
 	<section>
 		<div class="container">
-			<form action="/tBoard/boardWrite" method="post" id="writeform">
+			<form action="/tBoard/boardWrite" method="get" id="writeform">
 				<div class="form-control wrapper ">
 					<div class="title">
 						<h2>
 							<b>상품등록</b>
 						</h2>
+				<input type="hidden" name="kind" id=kind value="1">
 
 					</div>
 					<div class="input-group mb-3 col-md-12 ">
