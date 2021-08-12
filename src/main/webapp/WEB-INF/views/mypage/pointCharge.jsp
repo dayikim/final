@@ -134,20 +134,22 @@
     <div id=hr>
 
     <!-- 포인트 사용내역 리스트 출력 -->
-    <!-- forEach 사용예정 -->
-    <div class="row list">
-        <div class="col-8">
-            <div class="date">
-                2021/08/06
-            </div>
-            <div class="content">
-                <b>포인트 충전</b>
-            </div>
-        </div>
-        <div class="col-4 pay">
-            얼마충전했는지
-        </div>
-    </div>
+    <c:forEach var="i" items="${pointCharge }">
+    	<div class="row list">
+        	<div class="col-8">
+            	<div class="date">
+                	${i.pointdate }
+            	</div>
+            	<div class="content">
+                	<b>포인트 충전</b>
+            	</div>
+        	</div>
+        	<div class="col-4 pay">
+            	<b>${i.pointAmount}</b> 원
+        	</div>
+    	</div>
+    </c:forEach>
+    
 </body>
 
 </html>

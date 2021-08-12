@@ -353,7 +353,7 @@
 					<div class="p">Point</div>
 					<div class="myPoint2">
 						<h3>
-							<b>100</b>
+							<b>${point }</b>
 						</h3>
 					</div>
 				</div>
