@@ -42,5 +42,9 @@
 	<select id="checkcount" resultType="int">
 		select LOGINFAILCOUNT from person where id = #{id}
 	</select>
+	
+	<select id="memberInfo" resultType="kh.spring.dto.PersonDTO" >
+       select name,address1 from person where id=#{id}
+   </select>
 
 </mapper>
