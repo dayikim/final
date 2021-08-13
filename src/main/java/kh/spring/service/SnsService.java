@@ -61,5 +61,33 @@ public class SnsService {
 		param.put("love", love);
 		return dao.love(param);
 	}
+	
+	public int getlike(String id,int seq) {
+		Map<String,Object>param = new HashMap();
+		param.put("id", id);
+		param.put("parentSeq", seq);
+		return dao.getlike(param);
+	}
+	
+	public void pluslove(String id, int seq) {
+		Map<String,Object>param = new HashMap();
+		param.put("id", id);
+		param.put("parentSeq", seq);
+		dao.pluslove(param);
+	}
+	
+	public void cancellove(int seq, int love) {
+		Map<String,Integer>param = new HashMap();
+		param.put("seq", seq);
+		param.put("love", love);
+		dao.cancellove(param);
+	}
+	
+	public void minuslove(String id, int seq) {
+		Map<String,Object>param = new HashMap();
+		param.put("id", id);
+		param.put("parentSeq", seq);
+		dao.minuslove(param);
+	}
 
 }

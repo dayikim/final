@@ -38,4 +38,20 @@
 	<update id="love">
 		update snsBoard set love=#{love} +1 where seq =#{seq}
 	</update>
+	
+	<select id="getlike" resultType="int">
+		select count(*) from liketo where id=#{id} and parentSeq =#{parentSeq}
+	</select>
+	
+	<insert id="pluslove">
+		insert into liketo values(liketo_seq.nextval,#{id},#{parentSeq},1)
+	</insert>
+	
+	<update id="cancellove">
+		update snsBoard set love=#{love} -1 where seq =#{seq}
+	</update>
+	
+	<update id="minuslove">
+		update liketo set count=0 where id=#{id} and parentSeq =#{parentSeq}
+	</update>
 </mapper>
