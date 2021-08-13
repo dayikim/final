@@ -23,8 +23,8 @@ public class PersonDAO {
 		return mybatis.selectOne("Person.idDuplCheck",id);
 	}
 	
-	public List<PersonDTO> login(PersonDTO dto) {
-		return mybatis.selectList("Person.login",dto);
+	public int login(Map<String,String>param) {
+		return mybatis.selectOne("Person.login",param);
 	}
 	
 	public String findid(PersonDTO dto) {
@@ -39,21 +39,28 @@ public class PersonDAO {
 		return mybatis.selectOne("Person.pswd",dto);
 	}
 	
-	public String loginCheck(String id) {
-		return mybatis.selectOne("Person.loginCheck", id);
+	public void resetlogincount(String id) {
+		mybatis.update("Person.resetlogincount", id);
 	}
 	
-	public String pwCheck(PersonDTO dto) {
-		return mybatis.selectOne("Person.pwCheck", dto);
+	public int checkid(String id) {
+		return mybatis.selectOne("Person.checkid", id);
 	}
 	
-	public int loginFail(Map<String,String> param){	
-		return mybatis.update("Person.loginFail", param);
+	public int failcount(String id) {
+		return mybatis.update("Person.failcount", id);
+	}
+
+	public int checkcount(String id) {
+		return mybatis.selectOne("Person.checkcount", id);
 	}
 	
 	public PersonDTO memberInfoById(String sessionID) {
+	      return mybatis.selectOne("Person.memberInfo",sessionID);
+	 }
+
+	public PersonDTO memberInfoById(String sessionID) {
 		return mybatis.selectOne("Person.memberInfo",sessionID);
-	}
-	
+  }
 
 }
