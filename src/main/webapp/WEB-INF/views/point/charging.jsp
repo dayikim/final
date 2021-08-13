@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,6 +22,7 @@
 
 <!-- CSS Libraries -->
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
 <link
@@ -228,6 +230,9 @@ img {
 }
 
 .amount {
+	width:100px;
+	text-align:right;
+	
 	margin-right: 10px;
 	font-size: 20px;
 }
@@ -254,7 +259,7 @@ img {
 	margin-right: 10px;
 }
 
-/* 기타금액 */
+/* 기타금액 충전 */
 .modalBtn {
 	float: right;
 	margin-left: 10px;
@@ -279,29 +284,29 @@ img {
 	 } */
 	$(function() {
 		$(".point1").on("click", function() {
-			$(".amount").text("1,000");
+			$(".amount").val("1000");
 
 		})
 
 		$(".point2").on("click", function() {
-			$(".amount").text("2,000");
+			$(".amount").val("2000");
 
 		})
 		$(".point3").on("click", function() {
-			$(".amount").text("5,000");
+			$(".amount").val("5000");
 
 		})
 		$(".point4").on("click", function() {
-			$(".amount").text("7,000");
+			$(".amount").val("7000");
 
 		})
 		$(".point5").on("click", function() {
-			$(".amount").text("10,000");
+			$(".amount").val("10000");
 
 		})
 
 		$("#other").on("click", function() {
-			$(".amount").text("0");
+			$(".amount").val("0");
 		})
 
 		$(".insert").on("click", function() {
@@ -317,7 +322,7 @@ img {
 					otherAmount.focus();
 					return false;
 				} else {
-					 $(".amount").text(money);
+					 $(".amount").val(money);
 /* 					document.querySelector(".amount").onchange(); // 값이 바뀐 엘리먼트에 onchange 함수를 실행 
  */				}
 			} else {
@@ -332,14 +337,55 @@ img {
 		})
 
 		$("#cancel").on("click", function() {
-			$(".amount").text("0");
+			$(".amount").val("0");
 		})
+		
+    $('#charge').click(function () {
+        // getter
+        let IMP = window.IMP;
+        IMP.init('imp55463683');
+        let money = $(".amount").val();
+        console.log(money);
 
-		//   $("#otherAmount").on("click",function() {							
-		// 			  window.open("/payment/otherAmount?seq="+parent,"기타 금액","width=450,height=450");           
-		// 		    });   
+        IMP.request_pay({
+            pg: 'kakao',
+            merchant_uid: 'merchant_' + new Date().getTime(),
 
+            name: '돈다 : 돈다 포인트 충전',
+            amount: money,
+            buyer_email: '${myInfo.email}',
+            buyer_name: '${myInfo.name}',
+            buyer_tel: '${myInfo.phone}',
+            buyer_addr: '${myInfo.address1}',
+            buyer_postcode: '{myInfo.postcode}'
+        }, function (rsp) {
+            console.log(rsp);
+            if (rsp.success) {
+                var msg = '결제가 완료되었습니다.\n';
+             /*    msg += '고유ID : ' + rsp.imp_uid;
+                msg += '상점 거래ID : ' + rsp.merchant_uid; */
+                msg += '\n 결제 금액 : ' + rsp.paid_amount;
+                msg += '\n 카드 승인번호 : ' + rsp.apply_num;
+				msg += '\n\n 확인 후 마이 페이지로 이동합니다.'
+
+                $.ajax({
+                    type: "GET", 
+                    url: "/point/charging", //충전 금액값을 보낼 url 설정
+                    data: {
+                        "amount" : money
+                    },
+                });
+            } else {
+                var msg = '결제에 실패하였습니다.\n';
+                msg += '\n 에러내용 : ' + rsp.error_msg;
+                
+            }
+            alert(msg);
+            document.location.href="/point/charging; //alert창 확인 후 이동할 url 설정
+        });
 	})
+
+})
 </script>
 
 
@@ -379,7 +425,7 @@ img {
 	<div class="navbar navbar-expand-lg bg-dark navbar-dark">
 		<div class="container-fluid">
 			<a href="index.html" class="navbar-brand">
-				<p id=titlename>돈-다</p>
+				<p id="titlename">돈-다</p>
 			</a>
 
 			<button type="button" class="navbar-toggler" data-toggle="collapse"
@@ -410,8 +456,9 @@ img {
 						</h2>
 						<span id="region_name">${myInfo.address1}</span>
 					</div>
+					
 					<div id="mypoint">
-						<span>현재 나의 포인트(상추) :</span>
+						<span>현재 나의 포인트(상추) : ${point}</span>
 
 					</div>
 					<div id="profile-image">
@@ -494,11 +541,7 @@ img {
 																	<b>100 상추부터 10,000 상추까지 충전가능합니다.</b>
 																</h5>
 															</label>
-															<!-- <input class="form-control" id="amount_input"
-                                                                        placeholder="충전금액"
-                                                                        onKeyup="this.value=this.value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');"
-                                                                        required></input><span
-                                                                        class="point_title"><strong>상추</strong></span> -->
+														
 															<input type="number" class="form-control" id="amount_input"
 																placeholder="충전금액" required></input><span
 																class="point_title"><strong>상추</strong></span>
@@ -536,8 +579,7 @@ img {
 								<b>결제할 충전금액 : </b>
 							</h4>
 							<div class="amount_box">
-<!-- 							onchange="this.value=this.value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');"
- -->								<span class="amount">0 <b id="won">원</b></span>
+							<input class="amount" readonly> <b id="won">원</b>
 							</div>
 						</div>
 						<Strong class="pay_info">*100 상추는 1,000원입니다.</Strong>
@@ -618,8 +660,8 @@ img {
 			<div class="container copyright">
 				<div class="row">
 					<div class="col-12" style="text-align: center;">
-						<p id=titlename>
-							&copy; <a href="#">돈-다</a>, All Right Reserved.
+						<p id="titlename">
+							 <a href="#">돈-다</a>, All Right Reserved.
 						</p>
 					</div>
 				</div>
@@ -640,5 +682,4 @@ img {
 	</footer>
 
 </body>
-
 </html>

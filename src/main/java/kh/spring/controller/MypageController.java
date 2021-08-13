@@ -14,9 +14,11 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import kh.spring.config.SHA256;
 import kh.spring.dto.PersonDTO;
+import kh.spring.dto.PointDTO;
 import kh.spring.dto.ProfileFilesDTO;
 import kh.spring.service.MypageService;
 import kh.spring.service.PersonService;
+import kh.spring.service.PointService;
 
 @Controller
 @RequestMapping("/my")
@@ -24,6 +26,8 @@ public class MypageController {
 	
 	@Autowired
 	private MypageService service;
+	@Autowired
+	private  PointService PointService;
 	@Autowired
 	private HttpSession session;
 	
@@ -33,9 +37,11 @@ public class MypageController {
 		String sessionID = (String) session.getAttribute("loginID");
 		PersonDTO dto = service.mypageList(sessionID); // 내 정보 출력
 		ProfileFilesDTO pdto = service.profileSelect(sessionID); // 내 프사 출력
+		int pointAmount =PointService.amount(sessionID);//잔고금액
 		
 		session.setAttribute("myInfo", dto); // 내 정보
-		model.addAttribute("profile",pdto);
+		model.addAttribute("profile",pdto); // 내 프사
+		model.addAttribute("point",pointAmount); // 내 포인트
 		
 		return "mypage/mypage";
 	}
@@ -83,11 +89,13 @@ public class MypageController {
 		return "/mypage/profileView";
 	}
 	
-	// 현재 나의 포인트 출력(미완)
-	
-	// 포인트 충전내역 확인(미완)
+	// 포인트 충전내역 확인(완)
 	@RequestMapping(value="/pointChargeList", produces="text/html;charset=utf8")
-	public String pointChargeList() {
+	public String pointChargeList(Model model) {
+		String sessionID = (String)session.getAttribute("loginID");
+		List<PointDTO> dto = service.pointChargeList(sessionID);
+		
+		model.addAttribute("pointCharge",dto);
 		return "/mypage/pointCharge";
 	}
 	
@@ -107,6 +115,12 @@ public class MypageController {
 	@RequestMapping(value="/lendProduct", produces="text/html;charset=utf8")
 	public String lendProduct() {
 		return "/mypage/nowLendProduct";
+	}
+	
+	// 대여 요청 목록(미완)
+	@RequestMapping("/requestRental")
+	public String requestRental() {
+		return "/mypage/requestRental";
 	}
 	
 	// 거래 완료 목록 출력(미완)

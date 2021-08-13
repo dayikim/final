@@ -44,7 +44,7 @@
 
 /* 마이페이지 글씨체 */
 #titleNextName {
-	margin-left:20px;
+	margin-left: 20px;
 	color: white;
 }
 
@@ -81,7 +81,73 @@ img {
 }
 
 /* 시작 */
-.margin{height:1000px;}
+.container {
+	margin: auto;
+	width: 1000px;
+	padding: 50px;
+	margin-top: 108px;
+	border: 1px solid rgb(211, 205, 205);
+	border-radius: 4px;
+}
+
+/* 대여 요청 내역 */
+.requestList {
+	overflow: hidden;
+	border-radius: 7px;
+	border: 1px solid black;
+	margin-top: 20px;
+}
+
+.image {
+	width: 200px;
+	height: 200px;
+	overflow: hidden;
+	padding-top: 10px;
+}
+
+img {
+	width: 200px;
+	height: 200px;
+	border-radius: 5px;
+}
+
+.information {
+	padding-top: 40px;
+	padding-left: 40px;
+}
+
+/* 버튼 */
+.under {
+	text-align: center;
+	padding: 10px;
+	margin-top: 10px;
+}
+
+.cnum-btn1 {
+	/* 취소 */
+	border-radius: 5px;
+	width: 45%;
+	height: 50px;
+	background-color: white;
+	border: 1px solid #334257;
+	color: #334257;
+	font-size: 15px;
+	outline: none;
+	cursor: pointer;
+}
+
+.cnum-btn2 {
+	/* 수정 */
+	border-radius: 5px;
+	width: 45%;
+	height: 50px;
+	background-color: #334257;
+	border: none;
+	color: #fff;
+	font-size: 15px;
+	outline: none;
+	cursor: pointer;
+}
 </style>
 
 </head>
@@ -119,7 +185,8 @@ img {
 	<div class="navbar navbar-expand-lg bg-dark navbar-dark">
 		<div class="container-fluid">
 			<a href="index.html" class="navbar-brand"><p id=titlename>돈-다</a>
-			</p> <b id=titleNextName>나의 커뮤니티</b>
+			</p>
+			<b id=titleNextName>대여 요청 내역</b>
 			<button type="button" class="navbar-toggler" data-toggle="collapse"
 				data-target="#navbarCollapse">
 				<span class="navbar-toggler-icon"></span>
@@ -155,12 +222,48 @@ img {
 
 		</div>
 	</div>
-	
 
-	<!-- 여기부터 알아서 대여 요청 내역 만들어야함 -->
-	<div class="margin">
-		
-	</div>
+
+	<!-- 대여 요청 내역 -->
+	<div class="container">
+	
+		<!-- forEach문 사용 -->
+        <div class="requestList">
+            <div class="row high">
+                <div class="col-8 information">
+                    <div class="title">
+                        <h4><b>자전거 대여가능합니다. 단 안망가뜨릴 자신 있으신분만</b></h4> 
+                    </div>
+                    <div class="row content">
+                        <div class="col-4 left"><b>대여 일자</b></div>
+                        <div class="col-8 right">2021-08-06</div> 
+                    </div>
+                    <div class="row content">
+                        <div class="col-4 left"><b>결제 내역</b></div>
+                        <div class="col-8 right">15000원</div> 
+                    </div>
+                    <div class="row content">
+                        <div class="col-4 left"><b>대여자</b></div>
+                        <div class="col-8 right">이희정</div> 
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="image">
+                        <img src="">
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="under">
+                <button type=button id=updateMyInfoBtn class="cnum-btn1">취소</button>
+                <button type=button id=updateMyProfile class="cnum-btn2">승인</button>
+            </div>
+        </div>
+        <!-- forEach문 사용 -->
+        
+        
+    </div>
+    
 
 	<!-- Footer Start -->
 	<div class="footer">

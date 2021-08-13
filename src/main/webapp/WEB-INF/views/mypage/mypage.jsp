@@ -129,7 +129,7 @@
 	margin: auto;
 }
 
-.left>div>img {
+.left>div>a>img {
 	width: 165px;
 	height: 165px;
 	border-radius: 100px;
@@ -139,8 +139,9 @@
 .myInfo {
 	text-align: center;
 }
-.name>b{
-	font-size:20px;
+
+.name>b {
+	font-size: 20px;
 }
 
 /* 나의 포인트 */
@@ -214,26 +215,16 @@
 /*오른쪽*/
 
 /* 마이페이지 목차 */
-
-.list1 {
+.list {
 	border-radius: 20px;
-	height: 310px;
+	height: 250px;
 	margin-bottom: 20px;
 	border: 1px solid rgb(158, 157, 157);
 }
 
 .list2 {
 	border-radius: 20px;
-	height: 310px;
-	margin-top:20px;
-	margin-bottom: 20px;
-	border: 1px solid rgb(158, 157, 157);
-}
-
-.list3 {
-	margin-top:20px;
-	border-radius: 20px;
-	height: 310px;
+	height: 250px;
 	border: 1px solid rgb(158, 157, 157);
 }
 
@@ -252,23 +243,23 @@
 
 /* 큰 제목 */
 .title>h3>b {
-	line-height: 250px;
+	line-height: 200px;
 	color: gray;
-	margin-left: 20px;
+	margin-left: 10px;
 }
 
 /* 부 제목 */
 .stitle>b {
-	margin-left: 20px;
+	margin-left: 10px;
 }
 
 /* 확인 버튼 */
 .okBtn {
 	border-radius: 5px;
-	width: 70px;
-	height: 50px;
-	margin-top: 120px;
-	margin-left: 5px;
+	width: 60px;
+	height: 30px;
+	margin-top: 100px;
+	margin-left: 10px;
 	background-color: #334257;
 	border: none;
 	color: #fff;
@@ -322,10 +313,10 @@
 			<div class="profile" align=center>
 				<c:choose>
 					<c:when test="${profile != null}">
-						<img src="/imgs/mypage/${profile.sysName }" id=profile>
+						<a href="/tBoard/myProfile"><img src="/imgs/mypage/${profile.sysName }" id=profile></a>
 					</c:when>
 					<c:otherwise>
-						<img src="/imgs/nomalProfile.jpg" id=profile>
+						<a href="/tBoard/myProfile"><img src="/imgs/nomalProfile.jpg" id=profile></a>
 					</c:otherwise>
 				</c:choose>
 			</div>
@@ -334,7 +325,7 @@
 			<!-- 내 정보 출력 -->
 			<div class="myInfo">
 				<div class="name">
-					<b>${myInfo.name}</b>님
+					<a href="/tBoard/myProfile"><b>${myInfo.name}</b>님</a>
 				</div>
 				<br>
 				<div class="add">${myInfo.address1 }</div>
@@ -353,13 +344,16 @@
 					<div class="p">Point</div>
 					<div class="myPoint2">
 						<h3>
-							<b>100</b>
+							<b>${point }</b>
 						</h3>
 					</div>
 				</div>
 
 				<div class="charge">
-					<a href="/point/ToCharging">충전하기</a> <span>ㅣ</span> <a href="/my/pointChargeList" onclick="window.open(this.href,'','width=550,height=600');return false">포인트 내역 확인</a>
+					<a href="/point/ToCharging">충전하기</a> <span>ㅣ</span> <a
+						href="/my/pointChargeList"
+						onclick="window.open(this.href,'','width=550,height=600');return false">포인트
+						내역 확인</a>
 				</div>
 			</div>
 			<hr>
@@ -373,7 +367,8 @@
 						</h5>
 					</div>
 					<div class="col-6" align=right>
-						<a href="/my/borrowProduct" onclick="window.open(this.href,'','width=550,height=600');return false">더보기</a>
+						<a href="/my/borrowProduct"
+							onclick="window.open(this.href,'','width=550,height=600');return false">더보기</a>
 					</div>
 				</div>
 				<div class="row borrowList">
@@ -395,7 +390,8 @@
 						</h5>
 					</div>
 					<div class="col-5" align=right>
-						<a href="/my/lendProduct" onclick="window.open(this.href,'','width=550,height=600');return false">더보기</a>
+						<a href="/my/lendProduct"
+							onclick="window.open(this.href,'','width=550,height=600');return false">더보기</a>
 					</div>
 				</div>
 				<div class="row lendList">
@@ -413,70 +409,82 @@
 		<div class="col-12 col-sm-12 col-md-1 center"></div>
 
 		<!-- 오른쪽 레이아웃 -->
-		<div class="col-12 col-sm-12 col-md-7 right">
-			<div class="row">
-
-				<!-- 거래 완료 목록 -->
-				<div class="col-12 list1">
-					<div class="row go">
-						<div class="col-10 titleDiv">
-							<div class="title">
-								<h3>
-									<b>거래 완료 목록</b>
-								</h3>
-							</div>
-							<div class="stitle">
-								<b>내가 빌린 상품, 빌려준 상품에 대한 거래 완료 목록 확인</b>
-							</div>
-						</div>
-						<div class="col-2 buttonDiv">
-							<a href="/my/dealEndList"><button type=button class="okBtn">확인</button></a>
-						</div>
-					</div>
-				</div>
-
-
-				<!-- 나의 커뮤니티 -->
-				<div class="col-12 list2">
-					<div class="row go">
-						<div class="col-10 titleDiv">
-							<div class="title">
-								<h3>
-									<b>나의 커뮤니티</b>
-								</h3>
-							</div>
-							<div class="stitle">
-								<b>내가 쓴 커뮤니티의 목록을 확인</b>
-							</div>
-						</div>
-						<div class="col-2 buttonDiv">
-							<a href="/my/selectMySns"><button type=button class="okBtn">확인</button></a>
-						</div>
-					</div>
-				</div>
-
-				<!-- 내가 쓴 대여글 확인 -->
-				<div class="col-12 list3">
-					<div class="row go">
-						<div class="col-10 titleDiv">
-							<div class="title">
-								<h3>
-									<b>내가 쓴 대여 글 확인</b>
-								</h3>
-							</div>
-							<div class="stitle">
-								<b>내가 대여한 상품, 나의 글 리스트 확인</b>
-							</div>
-						</div>
-						<div class="col-2 buttonDiv">
-							<a href="/my/myBoardList"><button type=button class="okBtn">확인</button></a>
-						</div>
-					</div>
-				</div>
-
-
-			</div>
-		</div>
+        <div class="col-12 col-sm-12 col-md-7 right">
+            <div class="row">
+            
+            	<!-- 대여 요청 내역 -->
+            	<div class="col-12 list">
+                    <div class="row go">
+                        <div class="col-10 titleDiv">
+                            <div class="title">
+                                <h3><b>대여 요청 내역</b></h3>
+                            </div>
+                            <div class="stitle">
+                                <b>나에게 온, 나의 물건 대여 요청 리스트 확인</b>
+                            </div>
+                        </div>
+                        <div class="col-2 buttonDiv">
+                            <a href="/my/requestRental"><button type=button class="okBtn">확인</button></a>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+                <!-- 거래 완료 목록 -->
+                <div class="col-12 list">
+                    <div class="row go">
+                        <div class="col-10 titleDiv">
+                            <div class="title">
+                                <h3><b>거래 완료 목록</b></h3>
+                            </div>
+                            <div class="stitle">
+                                <b>내가 빌린 상품, 빌려준 상품에 대한 거래 완료 목록 확인</b>
+                            </div>
+                        </div>
+                        <div class="col-2 buttonDiv">
+                            <a href="/my/dealEndList"><button type=button class="okBtn">확인</button></a>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <!-- 나의 커뮤니티 -->
+                <div class="col-12 list">
+                    <div class="row go">
+                        <div class="col-10 titleDiv">
+                            <div class="title">
+                                <h3><b>나의 커뮤니티</b></h3>
+                            </div>
+                            <div class="stitle">
+                                <b>내가 쓴 커뮤니티의 목록을 확인</b>
+                            </div>
+                        </div>
+                        <div class="col-2 buttonDiv">
+                            <a href="/my/selectMySns"><button type=button class="okBtn">확인</button></a>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <!-- 내가 쓴 대여 글 확인 -->
+                <div class="col-12 list2">
+                    <div class="row go">
+                        <div class="col-10 titleDiv">
+                            <div class="title">
+                                <h3><b>나의 대여 글 목록</b></h3>
+                            </div>
+                            <div class="stitle">
+                                <b>내가 대여한 상품, 나의 글 리스트 확인</b>
+                            </div>
+                        </div>
+                        <div class="col-2 buttonDiv">
+                            <a href="/my/myBoardList"><button type=button class="okBtn">확인</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 	</div>
 

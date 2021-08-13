@@ -148,7 +148,7 @@ div {
 
 .tab_list {
 	display: inline-block;
-	width: 33.3334%;
+	width: 50%;
 	height: 100%;
 	font-size: 15px;
 	line-height: 30px;
@@ -300,6 +300,10 @@ li {
 			location.href="/";
 			
 		})
+		
+		$("#sellingList").on("click",function(){
+			$("#frm").submit();
+		})
 
 	});
 </script>
@@ -368,7 +372,7 @@ li {
 
 				<section id="user-profile">
 					<h2 id="nickname">
-						<b>${myInfo.name}</b>님 <span id="region_name">${myInfo.address1}</span>
+						<b>${memberInfo.name}</b>님 <span id="region_name">${memberInfo.address1}</span>
 					</h2>
 
 					<div id="profile-image">
@@ -388,61 +392,42 @@ li {
 				<section id=table_menu>
 					<!-- Tabs -->
 					<div class="tab_basic">
-						<div class="tab_list_wrap">
-							<div class="tab_list tab_active" data-tabnum="0">
-								<a href="/TBoard/sellingList">판매목록 <span class="badge badge-pill badge-dark">3</span></a>
+						<div class="row tab_list_wrap">
+							<div class="tab_list tab_active col" data-tabnum="0">
+							
+								<button type="button" id="sellingList"> 판매목록 <span class="badge badge-pill badge-dark">${sellingCount}</span></button>
 							</div>
-							<div class="tab_list" data-tabnum="1">
+							<div class="tab_list col" data-tabnum="1">
 								<a href="/TBoard/Review">거래 후기 <span class="badge badge-pill badge-dark">3</span></a>
 							</div>
-							<div class="tab_list" data-tabnum="2">
+							<!-- <div class="tab_list" data-tabnum="2">
 								<a href="#">3번 탭</a>
-							</div>
+							</div> -->
 						</div>
+						
 						<div class="tab_container">
 							<div class="tab_content">
 								<div class="row">
+								<c:forEach var="i" items="${sellinglist}">
+								<form action="/tBoard/sellingList" id="frm">
+										<input type="hidden" name="id" value="${i.id}">
+									</form>
 									<div class="col-sm-4">
 										<div class="card">
 											<div class="card-body">
+											
 												<img src="..." class="card-img-top" alt="...">
-												<h5 class="card-title">Special title treatment</h5>
-												<div class="card-price ">80,000원</div>
-												<div class="card-region-name">서울 송파구 잠실2동</div>
+												<h5 class="card-title">${i.title}</h5>
+												<div class="card-price ">${i.price} 원</div>
+												<div class="card-region-name">${memberInfo.address1}</div>
 												<div class="card-counts">
 													<span> 채팅 <span class="badge badge-danger">3</span></span>
 												</div>
 											</div>
 										</div>
 									</div>
+									</c:forEach>
 
-									<div class="col-sm-4">
-										<div class="card">
-											<div class="card-body">
-												<img src="..." class="card-img-top" alt="...">
-												<h5 class="card-title">Special title treatment</h5>
-												<div class="card-price ">80,000원</div>
-												<div class="card-region-name">서울 송파구 잠실2동</div>
-												<div class="card-counts">
-													<span> 채팅 61 </span>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-sm-4">
-										<div class="card">
-											<div class="card-body">
-												<img src="..." class="card-img-top" alt="...">
-												<h5 class="card-title">Special title treatment</h5>
-												<div class="card-price ">80,000원</div>
-												<div class="card-region-name">서울 송파구 잠실2동</div>
-												<div class="card-counts">
-													<span> 채팅 61 </span>
-												</div>
-											</div>
-										</div>
-									</div>
 								</div>
 							</div>
 							<div class="tab_content">
@@ -522,9 +507,9 @@ li {
 									</li>
 								</ul>
 							</div>
-							<div class="tab_content">
+							<!-- <div class="tab_content">
 								<span>빈 탭</span>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</section>

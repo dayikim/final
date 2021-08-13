@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import kh.spring.dao.MypageDAO;
+import kh.spring.dao.PointDAO;
 import kh.spring.dao.ProfileFilesDAO;
 import kh.spring.dto.PersonDTO;
+import kh.spring.dto.PointDTO;
 import kh.spring.dto.ProfileFilesDTO;
 
 @Service
@@ -20,6 +22,8 @@ public class MypageService {
 	private MypageDAO dao;
 	@Autowired
 	private ProfileFilesDAO pdao;
+	@Autowired
+	private PointDAO ppdao;
 
 	// 마이페이지 정보 출력
 	public PersonDTO mypageList(String sessionID){
@@ -64,6 +68,11 @@ public class MypageService {
 	// 기존 프로필 사진 삭제
 	public int delete(String sessionID) {
 		return pdao.delete(sessionID);
+	}
+	
+	// 포인트 충전 내역 출력
+	public List<PointDTO> pointChargeList(String sessionID) {
+		return ppdao.pointChargeList(sessionID);
 	}
 	
 	// 나의 커뮤니티 목록 출력

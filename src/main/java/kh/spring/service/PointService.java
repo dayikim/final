@@ -13,8 +13,14 @@ public class PointService {
 	@Autowired
 	private PointDAO dao;
 	
+
 	public int charging(PointDTO dto) throws Exception{
 		return dao.charging(dto);
 	}
+	
+	public int amount(String sessionID) {
+		return dao.amount(sessionID);
+	}
+
 	
 }

@@ -50,5 +50,10 @@ public class PersonDAO {
 	public int loginFail(Map<String,String> param){	
 		return mybatis.update("Person.loginFail", param);
 	}
+	
+	public PersonDTO memberInfoById(String sessionID) {
+		return mybatis.selectOne("Person.memberInfo",sessionID);
+	}
+	
 
 }
