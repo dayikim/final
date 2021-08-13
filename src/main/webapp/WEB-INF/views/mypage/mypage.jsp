@@ -41,6 +41,9 @@
 <!-- Template Stylesheet -->
 <link href="/css/style.css" rel="stylesheet">
 
+<!-- icon css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 
 
 <style>
@@ -325,10 +328,10 @@
 			<!-- 내 정보 출력 -->
 			<div class="myInfo">
 				<div class="name">
-					<a href="/tBoard/myProfile"><b>${myInfo.name}</b>님</a>
+					<a href="/tBoard/myProfile"><b><i class="fas fa-user-alt"></i> ${myInfo.name}</b>님</a>
 				</div>
 				<br>
-				<div class="add">${myInfo.address1 }</div>
+				<div class="add"><i class="fas fa-map-marker-alt"></i> ${myInfo.address1 }</div>
 			</div>
 			<hr>
 
@@ -341,7 +344,7 @@
 				</div>
 
 				<div class="myPoint">
-					<div class="p">Point</div>
+					<div class="p">Point <i class="fas fa-hockey-puck"></i></div>
 					<div class="myPoint2">
 						<h3>
 							<b>${point }</b>
