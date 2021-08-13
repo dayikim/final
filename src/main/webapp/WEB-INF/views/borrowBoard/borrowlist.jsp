@@ -63,7 +63,7 @@
     		.minibody a{color: black; cursor: pointer; text-decoration: none;}
     		.minibody a:hover{color: black; text-decoration: none;}
     		
-    		.write{width:80%; display:inline-block; text-align:end;}
+    		.write{width:80%; display:inline-block; text-align:end; margin-bottom:20px;}
     		.writeBtn{background-color: #1d2434; color:white;}
 
     </style>
@@ -84,7 +84,7 @@
 	    })
 	       
 	    $("#borrowBtn").on("click",function(){
-	    	location.href="/borrow/listAll?category=AllCategory&search="+${search}+"cpage=1";
+	    	location.href="/borrow/listAll?category=AllCategory&search=${search}&cpage=1";
 	    })
 	       
 	    $("#talentBtn").on("click",function(){
@@ -179,7 +179,7 @@
 		</div>
 		
 		<!-- 검색 -->
-		<form action="/borrow/searchBorrowd" method="get">
+		<form action="/borrow/listAll" method="get">
 			<div class="browse">
 				<input type="hidden" name="cpage" value=1> 
 				<div class="inp_slct">
@@ -190,14 +190,14 @@
 						<option value="contents">내용</option>
 					</select>
 				</div>
-				<input type="text" name="keyword" class="inpform" placeholder="검색을 입력하세요.">
+				<input type="text" name="search" class="inpform" placeholder="검색을 입력하세요.">
 				<button class="browseBtn" id="browseBtn">검색</button>
 			</div>
 		</form>
 		
 		<!-- 검색결과 리스트 -->
 		<div class="minibody">
-		<input type="hidden" value="${search}" id=search2 name="search">
+		<input type="hidden" value="${search}" id=search2>
 			<c:forEach var="bw" items="${bwList}">
 				<div class="borrow-board">					
 					<img src="ittaketwo.jpg" alt="#"> 
@@ -210,20 +210,21 @@
 		
 		<!-- 글쓰기 버튼 -->
 		<div class="write" id="write">		
-		<button class="writeBtn" id="writeBtn">글쓰기</button>
+			<button type="button" class="writeBtn" id="writeBtn">글쓰기</button>
 		</div>
+		
 		<!-- 페이징 네비바 -->
 		<div class="board_page">
 			<c:forEach var="i" items="${navi}" varStatus="s">
 				<c:choose>
 					<c:when test="${i == '>'}">
-						<a href="/borrow/listAll?cpage=${navi[s.index-1]+1}&search=${search}">${i}</a>
+						<a href="/borrow/listAll?cpage=${navi[s.index-1]+1}&category=${category}&search=${search}">${i}</a>
 					</c:when>
 					<c:when test="${i == '<'}">
-						<a href="/borrow/listAll?cpage=${navi[s.index-1]+1}&search=${search}">${i}</a>
+						<a href="/borrow/listAll?cpage=${navi[s.index-1]+1}&category=${category}&search=${search}">${i}</a>
 					</c:when>
 					<c:otherwise>
-						<a href="/borrow/listAll?cpage=${i}&search=${search}">${i}</a>
+						<a href="/borrow/listAll?cpage=${i}&category=${category}&search=${search}">${i}</a>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>

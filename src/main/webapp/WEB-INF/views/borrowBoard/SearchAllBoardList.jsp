@@ -78,7 +78,7 @@
 	    })
 	       
 	    $("#borrowBtn").on("click",function(){
-	    	location.href="/borrow/listAll?category=AllCategory&search="+${search}+"&cpage=1";
+	    	location.href="/borrow/listAll?category=AllCategory&search=${search}&cpage=1";
 	    })
 	       
 	    $("#talentBtn").on("click",function(){
@@ -175,7 +175,7 @@
        <div class="minibody">
        
        		<!-- 대여하기 -->
-       		<input type="hidden" id="search2" name="search2" value="${search}">
+       		<input type="hidden" id="search2" value="${search}">
             <div id="count" class="count">대여하기 총<p>${ldCount}</p>개</div> 
             <c:choose>
            		<c:when test="${ldCount != 0}">

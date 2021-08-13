@@ -26,6 +26,10 @@ public class BorrowService {
 	public List<BorrowDTO> getList(String category, String search, String cpage){
 		int currentPage = Integer.parseInt(cpage);
 		
+		System.out.println("서->디 : " + category + " : " + search);
+		
+		System.out.println("서->컨 : " + dao.getList(category, search,currentPage));
+		
 		return dao.getList(category, search,currentPage);
 	}
 	

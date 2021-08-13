@@ -19,6 +19,8 @@ public class BorrowDAO {
 	
 	public List<BorrowDTO> getList(String category, String search,int cpage){
 		
+		System.out.println("디 : " + category + " : " + search);
+		
 		if(search == null) {
 			search = "";
 		}
@@ -27,22 +29,27 @@ public class BorrowDAO {
 		int startNum = endNum - (BoardConfig.RECORD_COUNT_PER_PAGE-1);
 		
 		HashMap<String, Object> map = new HashMap<>();
-		map.put("category", category);
 		map.put("search",search);
 		map.put("endNum", endNum);
 		map.put("startNum", startNum);
-		
+				
 		List<BorrowDTO> list = null;
 		
 		if(!search.equals("")) {
-			if(category == "AllCategory") {
+			if(category.equals("AllCategory")) {
 				list = mybatis.selectList("Borrow.toSearch", map);
-			}else {
-				list = mybatis.selectList("Borrow.toCategory", map);
-			}
+			}else if(category.equals("address1")) {
+				list = mybatis.selectList("Borrow.toAddress1", map);
+			}else if(category.equals("title")) {
+				list = mybatis.selectList("Borrow.toTitle", map);
+			}else if(category.equals("contents")) {
+				list = mybatis.selectList("Borrow.toContents", map);
+			}										
 		}else {
 			list = mybatis.selectList("Borrow.toList", map);
 		}
+		
+		System.out.println("디->서 : " + list);
 		
 		return list;
 		
@@ -56,10 +63,18 @@ public class BorrowDAO {
 			search = "";
 		}
 
-		if (search.equals("")) {
-			recordTotalCount = mybatis.selectOne("Borrow.allList"); // 전체 레코드개수 (원래는 커넥션으로 카운트해서 가져옴)
+		if (!search.equals("")) {
+			if(category.equals("AllCategory")) {
+				recordTotalCount = mybatis.selectOne("Borrow.numAllList", search);
+			}else if(category.equals("address1")) {
+				recordTotalCount = mybatis.selectOne("Borrow.numAddress1", search);
+			}else if(category.equals("title")) {
+				recordTotalCount = mybatis.selectOne("Borrow.numTitle", search);
+			}else if(category.equals("contents")) {
+				recordTotalCount = mybatis.selectOne("Borrow.numContents", search);
+			} // 전체 레코드개수 (원래는 커넥션으로 카운트해서 가져옴)
 		} else {
-			recordTotalCount = mybatis.selectOne("Borrow.searchList", search);
+			recordTotalCount = mybatis.selectOne("Borrow.allList");
 		}
 		
 		int recordCountPerPage = BoardConfig.RECORD_COUNT_PER_PAGE; // 한 페이지 당 보여줄 게시글의 개수

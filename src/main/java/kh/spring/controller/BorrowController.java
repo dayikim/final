@@ -29,12 +29,16 @@ public class BorrowController {
 		
 		List<String> pageNavi = service.getPageNavi(category, search,cpage);
 		
+		System.out.println("컨->서 : " + category + " : " + search);
+		
 		List<BorrowDTO> list = service.getList(category, search,cpage);
 		
-
+		System.out.println("컨->서 : " + list);
+		
 		model.addAttribute("navi", pageNavi);
 		model.addAttribute("bwList", list);
 		model.addAttribute("search", search);
+		model.addAttribute("category",category);
 		
 		return "borrowBoard/borrowlist"; 
 	}
