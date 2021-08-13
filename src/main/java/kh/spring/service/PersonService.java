@@ -24,8 +24,11 @@ public class PersonService {
 		return dao.idDuplCheck(id);
 	}
 	
-	public List<PersonDTO> login(PersonDTO dto) {
-		return dao.login(dto);
+	public int login(String id, String pw) {
+		Map<String,String>param = new HashMap();
+		param.put("id", id);
+		param.put("pw", pw);
+		return dao.login(param);
 	}
 	
 	public String findid(PersonDTO dto) {
@@ -39,19 +42,21 @@ public class PersonService {
 	public String pswd(PersonDTO dto) {
 		return dao.pswd(dto);
 	}
+	
+	public void resetlogincount(String id) {
+		dao.resetlogincount(id);
+	}
+	
+	public int checkid(String id) {
+		return dao.checkid(id);
+	}
+	
+	public int failcount(String id) {
+		return dao.failcount(id);
+	}
+	
+	public int checkcount(String id) {
+		return dao.checkcount(id);
+	}
 
-	public String loginCheck(String id) {
-		return dao.loginCheck(id);
-	}
-	
-	public String pwCheck(PersonDTO dto) {
-		return dao.pwCheck(dto);
-	}
-	
-	public int loginFail(String id, String count) {
-		HashMap<String,String>param = new HashMap();
-		param.put("id", id);
-		param.put("count", count);
-		return dao.loginFail(param);
-	}
 }

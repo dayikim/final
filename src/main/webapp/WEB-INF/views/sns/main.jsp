@@ -79,7 +79,14 @@ style>body {
 }
 </style>
 <script>
-	$(function() {	
+	$(function() {
+		
+//		$("#submit").on("click",funtion(){
+///		if(${loginID == null}){
+//	            alert('로그인 후 이용해주세요')
+//	         }
+//		})
+		
 		//댓글버튼눌렀을때
 		$(document).on("click","#commenticon",function(){
 			let hidden_comment = $(this).parent().siblings("#hiddencomment");
@@ -208,7 +215,7 @@ style>body {
 						modify_tag.text("수정");						
 						
 						let input = $("<input type=hidden id=commentseq>");
-						input.text()
+						input.text(resp[i].seq);
 						
 						let comment = $("<div>");
 						comment.text($(this).parent().siblings("#comment").val());
@@ -235,8 +242,6 @@ style>body {
 	            $(this).parent().siblings("#comment").val("");
 	         }
 		})
-		
-		//댓글수정
 		
 		
 		//좋아요
@@ -279,7 +284,7 @@ style>body {
 			<div class="col-md-6 gedf-main">
 
 				<!--- 글쓰기-->
-				<form action="/sns/write" method=post>
+				<form action="/sns/write" method=post enctype="multipart/form-data">
 					<div class="card gedf-card">
 						<div class="card-header">
 							<ul class="nav nav-tabs card-header-tabs" id="myTab"
@@ -306,9 +311,10 @@ style>body {
 									aria-labelledby="images-tab">
 									<div class="form-group">
 										<div class="custom-file">
-											<input type="file" class="custom-file-input" id="customFile">
+											<input type=file name=file multiple>
+											<!--  <input type="file" class="custom-file-input" id="customFile">
 											<label class="custom-file-label" for="customFile">Upload
-												image</label>
+												image</label>-->
 										</div>
 									</div>
 									<div class="py-4"></div>

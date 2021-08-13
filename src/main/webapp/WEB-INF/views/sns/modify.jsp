@@ -73,7 +73,7 @@ style>body {
 			<div class="col-md-6 gedf-main">
 
 				<!--- 글쓰기-->
-				<form action="/sns/modiProc" method=post>
+				<form action="/sns/modiProc" method=post enctype="multipart/form-data">
 					<div class="card gedf-card">
 						<div class="card-header">
 							<ul class="nav nav-tabs card-header-tabs" id="myTab"
@@ -98,9 +98,7 @@ style>body {
 								<div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
 									<div class="form-group">
 										<div class="custom-file">
-											<input type="file" class="custom-file-input" id="customFile">
-											<label class="custom-file-label" for="customFile">Upload
-												image</label>
+											<input type="file" name=file multiple>
 										</div>
 									</div>
 									<div class="py-4"></div>

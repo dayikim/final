@@ -67,45 +67,39 @@ public class PersonController {
 		return "person/joincomplete";
 	}
 	
-	@RequestMapping("/loginCheck")
-	@ResponseBody
-	public String loginCheck(String id) {
-		String result = service.loginCheck(id);
-		return result;
-	}
-	
-	@RequestMapping("/pwCheck")
-	@ResponseBody
-	public int pwCheck(PersonDTO dto) {
-		int count = 0;
-		String id = dto.getId();
-		System.out.println(dto.getLoginFailCount());
-		String result = service.pwCheck(dto);
-		String pw = dto.getPw();
-		if(pw != result) {
-			count ++;			
-		}
-		System.out.println(count);
-		int fcount = service.loginFail(id,(String.valueOf(count)));
-		System.out.println(fcount);
-		return fcount;
-	}
-	
 	@RequestMapping("/login")
 	public String login() {
 		return "person/login";
 	}
 	
 	@RequestMapping("/loginProc")
-	public String loginProc(PersonDTO dto) {
-		String shaPass = SHA256.getSHA512(dto.getPw());
-		dto.setPw(shaPass);
-		List<PersonDTO> result = service.login(dto);
-		if(result != null && !result.isEmpty()) {			
-			session.setAttribute("loginID",dto.getId());
-			}
-		
-		return "redirect:/";
+	@ResponseBody
+	public String loginProc(String id,String pw1) {
+		String pw = SHA256.getSHA512(pw1);
+		int login = service.login(id, pw);
+		if(login > 0) {
+			session.setAttribute("loginID", id);
+			service.resetlogincount(id); //로그인실패카운트 리셋
+		}
+		return String.valueOf(login);
+	}
+	
+	@RequestMapping("/checkid")
+	@ResponseBody
+	public String checkid(String id) {
+		int checkid = service.checkid(id);
+		if(checkid > 0) {
+			service.failcount(id);
+		}
+		return String.valueOf(checkid);
+	}
+	
+	@RequestMapping("/checkcount")
+	@ResponseBody
+	public int checkcount(String id) {
+		int checkcount = service.checkcount(id);
+		System.out.println(checkcount);
+		return checkcount;
 	}
 	
     @ResponseBody
