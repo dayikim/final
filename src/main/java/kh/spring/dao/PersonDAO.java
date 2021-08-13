@@ -54,5 +54,9 @@ public class PersonDAO {
 	public int checkcount(String id) {
 		return mybatis.selectOne("Person.checkcount", id);
 	}
+	
+	public PersonDTO memberInfoById(String sessionID) {
+	      return mybatis.selectOne("Person.memberInfo",sessionID);
+	 }
 
 }
