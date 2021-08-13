@@ -167,7 +167,10 @@
                 <button class="dropbtn" id="borrowBtn">대여요청하기</button>
             </div>
             <div class="dropdown">
-                <button class="dropbtn" id="talentBtn">재능기부</button>
+                <button class="dropbtn" id="tlSellBtn">재능등록</button>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn" id="tlRequestBtn">재능요청</button>
             </div>
         </div>
         
@@ -192,7 +195,7 @@
 				</c:otherwise>
 			</c:choose>
             <br>
-            <a href="/lend/listAll?search=${search}&cpage=1">더보기</a>
+            <a href="/lend/listAll?category=AllCategory&search=${search}&cpage=1">더보기</a>
             <hr>
             
             <!-- 대여요청 하기 -->
@@ -215,15 +218,15 @@
             <a href="/borrow/listAll?category=AllCategory&search=${search}&cpage=1">더보기</a>
             <hr>
             
-            <!-- 재능기부 하기 -->
-            <div id="count" class="count">재능기부 총<p>${tlCount}</p>개</div>
+            <!-- 재능등록 하기 -->
+            <div id="count" class="count">재능등록 총<p>${tlsCount}</p>개</div>
             <c:choose>
-            	<c:when test="${tlCount != 0}">
-					<c:forEach var="tl" items="${tlList}">
+            	<c:when test="${tlsCount != 0}">
+					<c:forEach var="tls" items="${tlsList}">
 						<div class="borrow-board">
-							<div id="tlseq" class="seq" name="tltlseq" >${tl.seq}</div>
-							<a href="/tBoard/detailView?seq=${tl.seq}" id="tltitle" class="title" name="tltitle">${tl.title}</a>
-							<p id="tlregdate" class="regdate" name="tlregdate">${tl.regDate}</p>
+							<div id="tlseq" class="seq" name="tltlseq" >${tls.seq}</div>
+							<a href="/tBoard/detailView?seq=${tls.seq}" id="tltitle" class="title" name="tltitle">${tls.title}</a>
+							<p id="tlregdate" class="regdate" name="tlregdate">${tls.regDate}</p>
 						</div>
 					</c:forEach>
 				</c:when>
@@ -232,7 +235,27 @@
 				</c:otherwise>
 			</c:choose>
             <br>
-            <a href="/tBoard/list?search=${search}&cpage=1">더보기</a>
+            <a href="/tBoard/list?kind=재능등록&category=AllCategory&search=${search}&cpage=1">더보기</a>
+            <hr>
+            
+            <!-- 재능요청 하기 -->
+            <div id="count" class="count">재능요청 총<p>${tlrCount}</p>개</div>
+            <c:choose>
+            	<c:when test="${tlrCount != 0}">
+					<c:forEach var="tlr" items="${tlrList}">
+						<div class="borrow-board">
+							<div id="tlseq" class="seq" name="tltlseq" >${tlr.seq}</div>
+							<a href="/tBoard/detailView?seq=${tlr.seq}" id="tltitle" class="title" name="tltitle">${tlr.title}</a>
+							<p id="tlregdate" class="regdate" name="tlregdate">${tlr.regDate}</p>
+						</div>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<p>검색 결과가 없습니다</p>
+				</c:otherwise>
+			</c:choose>
+            <br>
+            <a href="/tBoard/list?kind=재능요청&category=AllCategory&search=${search}&cpage=1">더보기</a>
             <hr>
 		</div>
 		</div>

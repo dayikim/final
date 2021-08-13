@@ -1,6 +1,7 @@
 package kh.spring.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -17,6 +18,7 @@ public class AllSearchDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 	
+	//대여하기 리스트
 	public List<LendDTO> getLendList(String search){
 		
 		if(search == null) {
@@ -33,7 +35,8 @@ public class AllSearchDAO {
 		
 		return list;
 	}
-	
+
+	//대여요청 리스트
 	public List<BorrowDTO> getBorrowList(String search){
 		
 		if(search == null) {
@@ -51,16 +54,21 @@ public class AllSearchDAO {
 		return list;	
 	}
 	
-	public List<TalentBoardDTO> getTalentList(String search){
+	//재능등록 리스트
+	public List<TalentBoardDTO> getTlSellList(String search){
 		
 		if(search == null) {
 			search = "";
 		}
 		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("kind", "재능등록");
+		map.put("search",search);
+		
 		List<TalentBoardDTO> list = new ArrayList<>();	
 		
 		if(search != "") {
-			list = mybatis.selectList("AllList.talentList", search);
+			list = mybatis.selectList("AllList.tlSellList", map);
 		}else {
 			list = null;
 		}
@@ -68,6 +76,29 @@ public class AllSearchDAO {
 		return list;
 	}
 	
+	//재능요청 리스트
+	public List<TalentBoardDTO> getTlRequestList(String search){
+		
+		if(search == null) {
+			search = "";
+		}
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("kind", "재능요청");
+		map.put("search",search);
+		
+		List<TalentBoardDTO> list = new ArrayList<>();	
+		
+		if(search != "") {
+			list = mybatis.selectList("AllList.tlRequsetList", map);
+		}else {
+			list = null;
+		}
+		
+		return list;
+	}
+	
+	//대여하기 카운트
 	public int getLendCount(String search) {
 		
 		if(search == null) {
@@ -84,6 +115,7 @@ public class AllSearchDAO {
 		return count;
 	}
 	
+	//대여요청 카운트
 	public int getBorrowCount(String search) {
 		
 		if(search == null) {
@@ -100,15 +132,41 @@ public class AllSearchDAO {
 		return count;
 	}
 	
-	public int getTalentCount(String search) {
+	//재능등록 카운트
+	public int getTlSellCount(String search) {
 		
 		if(search == null) {
 			search = "";
 		}
 		int count = 0;
 		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("kind", "재능등록");
+		map.put("search",search);
+		
 		if(search != "") {
-			count = mybatis.selectOne("AllList.numTalent", search);
+			count = mybatis.selectOne("AllList.numTlSell", map);
+		}else {
+			count = 0;
+		}
+		
+		return count;
+	}
+	
+	//재능요청 카운트
+	public int getTlRequsetCount(String search) {
+		
+		if(search == null) {
+			search = "";
+		}
+		int count = 0;
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("kind", "재능요청");
+		map.put("search",search);
+		
+		if(search != "") {
+			count = mybatis.selectOne("AllList.numTlRequest", map);
 		}else {
 			count = 0;
 		}

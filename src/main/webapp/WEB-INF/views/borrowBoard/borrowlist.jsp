@@ -87,8 +87,12 @@
 	    	location.href="/borrow/listAll?category=AllCategory&search=${search}&cpage=1";
 	    })
 	       
-	    $("#talentBtn").on("click",function(){
-	    	location.href="/tBoard/listAll?cpage=1";
+	    $("#tlSellBtn").on("click",function(){
+	    	location.href="/tBoard/listAll?kind=재능등록&cpage=1";
+	    })
+	    
+	    $("#tlRequestBtn").on("click",function(){
+	    	location.href="/tBoard/listAll?kind=재능등록&cpage=1";
 	    })
 	    
 	    $("#writeBtn").on("click",function(){
@@ -174,7 +178,10 @@
                 <button class="dropbtn" id="borrowBtn">대여요청하기</button>
             </div>
             <div class="dropdown">
-                <button class="dropbtn" id="talentBtn">재능기부</button>
+                <button class="dropbtn" id="tlSellBtn">재능등록</button>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn" id="tlRequestBtn">재능요청</button>
             </div>
 		</div>
 		
@@ -202,16 +209,18 @@
 				<div class="borrow-board">					
 					<img src="ittaketwo.jpg" alt="#"> 
 					<input type="hidden" value="${bw.seq}" id="seq" name="seq">
-					<h3 id="title" name="title">${bw.title}</h3>
+					<a href="/borrow/detailView?seq=${bw.seq}" id="bwtitle" class="title" name="bwtitle">${bw.title}</a>
 					<p id="address1" name="address1">${bw.address1}</p>
 				</div>
 			</c:forEach>
 		</div>
 		
 		<!-- 글쓰기 버튼 -->
-		<div class="write" id="write">		
-			<button type="button" class="writeBtn" id="writeBtn">글쓰기</button>
-		</div>
+<%-- 		<c:if test="${loginID != null}"> --%>
+			<div class="write" id="write">		
+				<button type="button" class="writeBtn" id="writeBtn">글쓰기</button>
+			</div>
+<%-- 		</c:if> --%>
 		
 		<!-- 페이징 네비바 -->
 		<div class="board_page">

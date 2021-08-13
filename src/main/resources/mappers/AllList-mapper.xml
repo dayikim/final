@@ -16,9 +16,16 @@
 	</select>
 	
 	<!-- 재능기부검색 카테고리 & 제목 & 내용  -->
-	<select id="talentList" resultType="kh.spring.dto.TalentBoardDTO">
-		<![CDATA[select * from (select rownum as rnum, A.* from (select * from talentboard where category like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= 5) where rnum >= 1]]>
+	<select id="tlSellList" resultType="kh.spring.dto.TalentBoardDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select * from (select * from talentboard where kind = #{kind}) where category like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= 5) where rnum >= 1]]>
 	</select>
+	
+	<!-- 재능기부검색 카테고리 & 제목 & 내용  -->
+	<select id="tlRequsetList" resultType="kh.spring.dto.TalentBoardDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select * from (select * from talentboard where kind = #{kind}) where category like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= 5) where rnum >= 1]]>
+	</select>
+	
+	
 		
 	<!-- 대여검색 지역 & 제목 & 내용 카운트 -->
 	<select id="numLend" resultType="int">
@@ -30,9 +37,14 @@
 		select count(*) from borrowboard where address1 like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%'
 	</select>
 	
-	<!-- 재능기부검색 카테고리 & 제목 & 내용 카운트 -->
-	<select id="numTalent" resultType="int">
-		select count(*) from talentboard where category like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%'
+	<!-- 재능등록검색 카테고리 & 제목 & 내용 카운트 -->
+	<select id="numTlSell" resultType="int">
+		select count(*) from (select * from talentboard where kind = #{kind}) where category like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%'
+	</select>
+	
+	<!-- 재능요청검색 카테고리 & 제목 & 내용 카운트 -->
+	<select id="numTlRequest" resultType="int">
+		select count(*) from (select * from talentboard where kind = #{kind}) where category like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%'
 	</select>
 	
 	
