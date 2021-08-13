@@ -48,8 +48,13 @@
     		p{font-size: 1.1rem;}
     
     		.dropbtn {background-color: #1d2434; color: white;padding: 10px; font-size: 13px; border: none; cursor: pointer;border-radius: 3px;}
-    		.dropdown {position: relative; display: inline-block;margin-bottom: 20px;}
+    		.dropdown {position: relative; display: inline-block;margin-bottom: 40px;}
     		.dropbtn:hover {background-color: skyblue}
+    		
+    		.browse{display:inline-block; text-align:end; width:70%; margin-bottom:40px;}
+    		.inp_slct{width:10%; height:28px; display:inline-block; margin-right:5px;}
+    		.inp_slct select{height:100%;}
+    		.browseBtn{width:40px;background-color:#1d2434;color:white;}
 
     		.minibody{text-align: center;}
     		.reservation{overflow: hidden; font-size: 0.5rem; position: absolute;  transform: translate( 5%, -10%);}
@@ -57,6 +62,9 @@
     		.borrow-board img{width: 100%; height: 70%;} 
     		.minibody a{color: black; cursor: pointer; text-decoration: none;}
     		.minibody a:hover{color: black; text-decoration: none;}
+    		
+    		.write{width:80%; display:inline-block; text-align:end;}
+    		.writeBtn{background-color: #1d2434; color:white;}
 
     </style>
     
@@ -76,11 +84,15 @@
 	    })
 	       
 	    $("#borrowBtn").on("click",function(){
-	    	location.href="/borrow/listAll?category=AllCategory&search=${}cpage=1";
+	    	location.href="/borrow/listAll?category=AllCategory&search="+${search}+"cpage=1";
 	    })
 	       
 	    $("#talentBtn").on("click",function(){
 	    	location.href="/tBoard/listAll?cpage=1";
+	    })
+	    
+	    $("#writeBtn").on("click",function(){
+	    	location.href="/borrowBoard/borrowWrite";
 	    })
 	      	  
 	})
@@ -165,9 +177,10 @@
                 <button class="dropbtn" id="talentBtn">재능기부</button>
             </div>
 		</div>
+		
 		<!-- 검색 -->
 		<form action="/borrow/searchBorrowd" method="get">
-			<div class="search">
+			<div class="browse">
 				<input type="hidden" name="cpage" value=1> 
 				<div class="inp_slct">
 					<select name="category">
@@ -178,12 +191,13 @@
 					</select>
 				</div>
 				<input type="text" name="keyword" class="inpform" placeholder="검색을 입력하세요.">
-				<button class="btn_m btn_default" id="search">검색</button>
+				<button class="browseBtn" id="browseBtn">검색</button>
 			</div>
 		</form>
+		
 		<!-- 검색결과 리스트 -->
 		<div class="minibody">
-		<input type="hidden" value="${search}" id=search2 name="search2">
+		<input type="hidden" value="${search}" id=search2 name="search">
 			<c:forEach var="bw" items="${bwList}">
 				<div class="borrow-board">					
 					<img src="ittaketwo.jpg" alt="#"> 
@@ -193,6 +207,12 @@
 				</div>
 			</c:forEach>
 		</div>
+		
+		<!-- 글쓰기 버튼 -->
+		<div class="write" id="write">		
+		<button class="writeBtn" id="writeBtn">글쓰기</button>
+		</div>
+		<!-- 페이징 네비바 -->
 		<div class="board_page">
 			<c:forEach var="i" items="${navi}" varStatus="s">
 				<c:choose>

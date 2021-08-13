@@ -78,7 +78,7 @@
 	    })
 	       
 	    $("#borrowBtn").on("click",function(){
-	    	location.href="/borrow/listAll?category=AllCategory&search=${search}&cpage=1";
+	    	location.href="/borrow/listAll?category=AllCategory&search="+${search}+"&cpage=1";
 	    })
 	       
 	    $("#talentBtn").on("click",function(){

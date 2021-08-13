@@ -38,5 +38,13 @@ public class BorrowController {
 		
 		return "borrowBoard/borrowlist"; 
 	}
+	
+	@RequestMapping("/writeBorrow")	
+	public String writeBorrow() {
+				
+		return "borrowBoard/borrowlist"; 
+	}
+	
+	
 
 }
