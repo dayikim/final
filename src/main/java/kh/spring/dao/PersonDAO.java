@@ -59,8 +59,5 @@ public class PersonDAO {
 	      return mybatis.selectOne("Person.memberInfo",sessionID);
 	 }
 
-	public PersonDTO memberInfoById(String sessionID) {
-		return mybatis.selectOne("Person.memberInfo",sessionID);
-  }
 
 }
