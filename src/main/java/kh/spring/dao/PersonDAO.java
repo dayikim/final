@@ -50,7 +50,7 @@ public class PersonDAO {
 	public int failcount(String id) {
 		return mybatis.update("Person.failcount", id);
 	}
-	
+
 	public int checkcount(String id) {
 		return mybatis.selectOne("Person.checkcount", id);
 	}
@@ -58,5 +58,9 @@ public class PersonDAO {
 	public PersonDTO memberInfoById(String sessionID) {
 	      return mybatis.selectOne("Person.memberInfo",sessionID);
 	 }
+
+	public PersonDTO memberInfoById(String sessionID) {
+		return mybatis.selectOne("Person.memberInfo",sessionID);
+  }
 
 }

@@ -6,7 +6,7 @@
 
 <head>
 <meta charset="utf-8">
-<title>유저 프로필 내역</title>
+<title>돈 빼고 다! 돈-고</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free Website Template" name="keywords">
 <meta content="Free Website Template" name="description">
@@ -34,10 +34,6 @@
 <!-- Template Stylesheet -->
 <link href="/css/style.css" rel="stylesheet">
 <style>
-body {
-	background-color: #f5f6f7;
-}
-
 * {
 	margin: 0;
 	padding: 0;
@@ -49,6 +45,12 @@ body {
 	margin-bottom: 0;
 	font-size: 30px;
 	font-family: 'Gugi', cursive;
+	color: white;
+}
+
+/* 마이페이지 글씨체 */
+#titleNextName {
+	margin-left: 20px;
 	color: white;
 }
 
@@ -84,54 +86,20 @@ img {
 	margin-top: 5%;
 }
 
-/* 프로필-판매물품,거래후기 */
+.margin1 {
+	height: 30px;
+}
+
+/* 판매완료, 구매완료 메뉴 */
 #body {
-	padding-top: 80px;
+	padding-top: 30px;
 	padding-bottom: 30px;
 }
 
 .wrapper {
 	width: 100%;
 	height: auto;
-}
-
-/* 작성자 프로필 */
-#user-profile {
-	position: relative;
-	margin-top: 20px;
-}
-
-#user-profile #nickname {
-	position: absolute;
-	text-align: left;
-	margin-top: 10px;
-	font-size: 22px;
-	font-weight: 600;
-	letter-spacing: -0.6px;
-	margin-bottom: 10px;
-	vertical-align: middle;
-	margin-left: 220px;
-}
-
-#user-profile #nickname #region_name {
-	font-size: 17px;
-	color: #212529;
-	font-weight: normal;
-	vertical-align: middle;
-	margin-left: 6px;
-}
-
-div {
-	display: block;
-}
-
-#user-profile #profile-image {
-	width: 100px;
-	height: 100px;
-	margin-left: 100px;
-	border-radius: 40px;
-	overflow: hidden;
-	vertical-align: middle;
+	margin-top: 75px;
 }
 
 /* 탭 메뉴 */
@@ -179,10 +147,8 @@ div {
 
 .tab_content {
 	display: none;
-	width: 100%;
 	min-height: 100px;
 	padding: 20px;
-	background: white;
 	box-sizing: border-box;
 }
 
@@ -192,6 +158,10 @@ div {
 
 .card {
 	display: inline-block;
+}
+
+.tab_container {
+	margin: 10px;
 }
 
 /* 거래후기 tab */
@@ -275,38 +245,89 @@ li {
 .text_view {
 	margin-left: 10px;
 }
+
+/* 판매 완료 리스트 */
+.completDiv {
+	margin: 10px;
+	margin-top: 20px;
+	border: 1px solid black;
+	border-radius: 10px;
+}
+
+/* 상품 이미지 부분 */
+.completImg {
+	width: 200px;
+	height: 200px;
+	border-radius: 10px;
+	border: 1px solid black;
+	overflow: hidden;
+	margin-left: 32px;
+	margin-top: 15px;
+}
+
+/* 상품 정보 부분 */
+.information {
+	margin-top: 60px;
+}
+
+/* 거래완료 뱃지 */
+.completBg {
+	border-radius: 3px;
+	background-color: #1d2434;
+}
+
+.foot {
+	margin-left: 2px;
+	margin-top: 20px;
+}
+
+.completBg>h6 {
+	color: white;
+	text-align: center;
+	line-height: 25px;
+}
+
+/* 리뷰 */
+.review {
+	text-align: center;
+	height: 45px;
+}
+
+.review>a {
+	text-decoration: none;
+	color: orange;
+}
+
+/* footer */
+footer {
+	margin-top: 20px;
+}
 </style>
 <script>
-	$(function() {
-		let tabList = document.querySelectorAll('.tab_list_wrap .tab_list')
-		Array.prototype.forEach.call(tabList, function(list) {
-			list.children[0].addEventListener('click', function(e) {
-				e.preventDefault()
-				let tabContent = document
-						.querySelectorAll('.tab_container .tab_content')
-				let tabNum = this.parentElement.getAttribute('data-tabnum')
-				Array.prototype.forEach.call(tabContent, function(cont, i) {
-					cont.style.display = 'none'
-					tabList[i].className = 'tab_list'
-				})
-				tabContent[tabNum].style.display = 'block'
-				if (list.className.indexOf('tab_active') == -1) {
-					list.className = 'tab_list tab_active'
-				}
-			})
-		})
-		
-		$("#Tomain").on("click",function(){
-			location.href="/";
-			
-		})
-		
-		$("#sellingList").on("click",function(){
-			$("#frm").submit();
-		})
 
-	});
-</script>
+        $(function () {
+            let tabList = document.querySelectorAll('.tab_list_wrap .tab_list')
+            Array.prototype.forEach.call(tabList, function (list) {
+                list.children[0].addEventListener('click', function (e) {
+                    e.preventDefault()
+                    let tabContent = document.querySelectorAll('.tab_container .tab_content')
+                    let tabNum = this.parentElement.getAttribute('data-tabnum')
+                    Array.prototype.forEach.call(tabContent, function (cont, i) {
+                        cont.style.display = 'none'
+                        tabList[i].className = 'tab_list'
+                    })
+                    tabContent[tabNum].style.display = 'block'
+                    if (list.className.indexOf('tab_active') == -1) {
+                        list.className = 'tab_list tab_active'
+                    }
+                })
+            })
+
+
+
+
+        });
+    </script>
 
 
 </head>
@@ -344,181 +365,169 @@ li {
 	<!-- Nav Bar Start -->
 	<div class="navbar navbar-expand-lg bg-dark navbar-dark">
 		<div class="container-fluid">
-			<a href="index.html" class="navbar-brand">
-				<p id=titlename>돈-다</p>
-			</a>
-
+			<a href="index.html" class="navbar-brand"><p id=titlename>돈-다</a>
+			</p>
+			<b id=titleNextName>거래 완료 목록</b>
 			<button type="button" class="navbar-toggler" data-toggle="collapse"
 				data-target="#navbarCollapse">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-			<div class="collapse navbar-collapse justify-content-between"
-				id="navbarCollapse">
-				<div class="navbar-nav ml-auto">
-
-					<a href="#" class="nav-item nav-link active">Login</a>
-					<!-- Login Page 이동 -->
-					<a href="/person/join" class="nav-item nav-link">Sign Up</a>
-					<!-- SignUp Page 이동 -->
-				</div>
-			</div>
+			<c:choose>
+				<c:when test="${loginID == null }">
+					<div class="collapse navbar-collapse justify-content-between"
+						id="navbarCollapse">
+						<div class="navbar-nav ml-auto">
+							<input class="form-control mr-sm-5" type="search"
+								placeholder="물품, 지역을 검색해주세요." id=search aria-label="Search">
+							<a href="/person/login" class="nav-item nav-link active">Login</a>
+							<!-- Login Page 이동 -->
+							<a href="/person/join" class="nav-item nav-link">Sign Up</a>
+							<!-- SignUp Page 이동 -->
+						</div>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div class="collapse navbar-collapse justify-content-between"
+						id="navbarCollapse">
+						<div class="navbar-nav ml-auto">
+							<input class="form-control mr-sm-5" type="search"
+								placeholder="물품, 지역을 검색해주세요." id=search aria-label="Search">
+							<a href="/person/logout" class="nav-item nav-link active">Logout</a>
+							<!-- Logout -->
+							<a href="/my/mypageProc" class="nav-item nav-link">MyPage</a>
+							<!-- My Page 이동 -->
+						</div>
+					</div>
+				</c:otherwise>
+			</c:choose>
 
 		</div>
 	</div>
 	<!-- Nav Bar End -->
+	
+	
 	<section id="body">
 		<div class="container">
 			<div class="form-control wrapper ">
 
-				<section id="user-profile">
-					<h2 id="nickname">
-						<b>${memberInfo.name}</b>님 <span id="region_name">${memberInfo.address1}</span>
-					</h2>
-
-					<div id="profile-image">
-						<c:choose>
-							<c:when test="${profile != null}">
-								<img src="/imgs/mypage/${profile.sysName }" id=profile>
-							</c:when>
-							<c:otherwise>
-								<img src="/imgs/nomalProfile.jpg" id=profile>
-							</c:otherwise>
-						</c:choose>
-					</div>
-
-
-				</section>
+				<div class="margin1"></div>
 
 				<section id=table_menu>
 					<!-- Tabs -->
 					<div class="tab_basic">
-						<div class="row tab_list_wrap">
-							<div class="tab_list tab_active col" data-tabnum="0">
-							
-								<button type="button" id="sellingList"> 판매목록 <span class="badge badge-pill badge-dark">${sellingCount}</span></button>
+						<!-- 탭 메뉴 -->
+						<div class="tab_list_wrap">
+							<div class="tab_list tab_active" data-tabnum="0">
+								<a href="/TBoard/sellingList">판매완료</a>
 							</div>
-							<div class="tab_list col" data-tabnum="1">
-								<a href="/TBoard/Review">거래 후기 <span class="badge badge-pill badge-dark">3</span></a>
+							<div class="tab_list" data-tabnum="1">
+								<a href="/TBoard/Review">구매완료</a>
 							</div>
-							<!-- <div class="tab_list" data-tabnum="2">
-								<a href="#">3번 탭</a>
-							</div> -->
+
 						</div>
-						
+
+
 						<div class="tab_container">
+							<!-- 판매 완료 -->
 							<div class="tab_content">
-								<div class="row">
-								<c:forEach var="i" items="${sellinglist}">
-								<form action="/tBoard/sellingList" id="frm">
-										<input type="hidden" name="id" value="${i.id}">
-									</form>
-									<div class="col-sm-4">
-										<div class="card">
-											<div class="card-body">
-											
-												<img src="..." class="card-img-top" alt="...">
-												<h5 class="card-title">${i.title}</h5>
-												<div class="card-price ">${i.price} 원</div>
-												<div class="card-region-name">${memberInfo.address1}</div>
-												<div class="card-counts">
-													<span> 채팅 <span class="badge badge-danger">3</span></span>
+
+								<!---------forEach 사용 구간------------------------------------------------------------------------------>
+								<ul class="comment_list">
+									<li class="commentItem">
+										<!-- 판매 완료 출력 -->
+										<div class="completDiv">
+											<div class="row complet">
+												<div class="col-12 col-md-4 col-sm-4 completImgDiv">
+													<div class="completImg">
+														<img src="...">
+													</div>
+												</div>
+												<div class="col-12 col-md-8 col-sm-8 information">
+													<div>
+														<h4>
+															<b>혼자 공부하는 자바</b>
+														</h4>
+													</div>
+													<div>shoowghjk ㅣ 서울특별시 동대문구</div>
+													<div class="row foot">
+														<div class="col-3 completBg">
+															<h6>거래완료</h6>
+														</div>
+														<div class="col-9 price">
+															<h5>10000원</h5>
+														</div>
+													</div>
+
 												</div>
 											</div>
-										</div>
-									</div>
-									</c:forEach>
+											<hr>
 
-								</div>
+											<!-- 거래 후기 링크 걸기 -->
+											<div class="review">
+												<a href="">거래후기 보내기</a>
+											</div>
+										</div>
+
+									</li>
+								</ul>
+								<!---------forEach 사용 구간------------------------------------------------------------------------------>
+
 							</div>
+
+
+							<!-- 구매 완료 탭 -->
 							<div class="tab_content">
+
+								<!---------forEach 사용 구간------------------------------------------------------------------------------>
 								<ul class="comment_list">
 									<li class="commentItem">
-										<!-- 거래 후기 출력 -->
-										<div class="col-12 d-md-block comment_box">
-											<div class="comment_writerInfo">
-
-												<!-- 거래 후기 작성자 프로필 -->
-												<section id="small_user-profile">
-													<h2 id="small_nickname">
-														<a href="/users/2736355">cjy3037</a> <span
-															id="small_region_name">송파구 잠실2동</span>
-													</h2>
-
-													<div id="small_profile-image">
-														<c:choose>
-															<c:when test="${profile != null}">
-																<img src="/imgs/mypage/${profile.sysName }" id=profile>
-															</c:when>
-															<c:otherwise>
-																<img src="/imgs/nomalProfile.jpg" id=profile>
-															</c:otherwise>
-														</c:choose>
+										<!-- 구매 완료 출력 -->
+										<div class="completDiv">
+											<div class="row complet">
+												<div class="col-12 col-md-4 col-sm-4 completImgDiv">
+													<div class="completImg">
+														<img src="...">
+													</div>
+												</div>
+												<div class="col-12 col-md-8 col-sm-8 information">
+													<div>
+														<h4>
+															<b>둘이 공부하는 자바</b>
+														</h4>
+													</div>
+													<div>gab_by3130 ㅣ 서울특별시 송파구</div>
+													<div class="row foot">
+														<div class="col-3 completBg">
+															<h6>거래완료</h6>
+														</div>
+														<div class="col-9 price">
+															<h5>15000원</h5>
+														</div>
 													</div>
 
-												</section>
+												</div>
 											</div>
-											<div class="comment_text">
-												<p class="text_view">
-													<span class="modify_option" id="com">${i.comments}</span>
-												</p>
-											</div>
+											<hr>
 
-											<div class="commentInfo">
-												<span> <fmt:formatDate pattern="yyyy-MM-dd:hh:mm" />날짜
-												</span>
+											<!-- 거래 후기 링크 걸기 -->
+											<div class="review">
+												<a href="">거래후기 보내기</a>
 											</div>
-
 										</div>
+
 									</li>
 								</ul>
-								<hr>
+								<!---------forEach 사용 구간------------------------------------------------------------------------------>
 
-								<ul class="comment_list">
-									<li class="commentItem">
-										<!-- 거래 후기 출력 -->
-										<div class="col-12 d-md-block comment_box">
-											<div class="comment_writerInfo">
-												<section id="small_user-profile">
-													<h2 id="small_nickname">
-														<a href="/users/2736355">cjy3037</a> <span
-															id="small_region_name">송파구 잠실2동</span>
-													</h2>
-
-													<div id="small_profile-image">
-
-														<img alt="써니사이드"
-															src="https://d1unjqcospf8gs.cloudfront.net/assets/users/default_profile_80-7e50c459a71e0e88c474406a45bbbdce8a3bf2ed4f2efcae59a064e39ea9ff30.png">
-													</div>
-
-												</section>
-											</div>
-											<div class="comment_text">
-												<p class="text_view">
-													<span class="modify_option" id="com">${i.comments}</span>
-												</p>
-											</div>
-
-											<div class="commentInfo">
-												<span> <fmt:formatDate pattern="yyyy-MM-dd:hh:mm" />날짜
-												</span>
-											</div>
-
-										</div>
-									</li>
-								</ul>
 							</div>
-							<!-- <div class="tab_content">
-								<span>빈 탭</span>
-							</div> -->
+
 						</div>
 					</div>
 				</section>
-				<div class=" btn_wrap text-right ">
-					<button type="button" class="btn btn-outline-info" id="Tomain">메인으로 이동</button>
-				</div>
 			</div>
 		</div>
 	</section>
+
 	<footer>
 		<!-- Footer Start -->
 		<div class="footer">

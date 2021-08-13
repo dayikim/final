@@ -18,6 +18,14 @@
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
+<!-- Favicon -->
+<link href="img/favicon.ico" rel="icon">
+
+<!-- Google Font -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"
+	rel="stylesheet">
+
 <!-- CSS Libraries -->
 <link
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -29,6 +37,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap"
 	rel="stylesheet">
+
+<!-- Template Stylesheet -->
+<link href="/css/style.css" rel="stylesheet">
 
 
 
@@ -118,7 +129,7 @@
 	margin: auto;
 }
 
-.left>div>img {
+.left>div>a>img {
 	width: 165px;
 	height: 165px;
 	border-radius: 100px;
@@ -127,6 +138,10 @@
 /* 내 정보 */
 .myInfo {
 	text-align: center;
+}
+
+.name>b {
+	font-size: 20px;
 }
 
 /* 나의 포인트 */
@@ -254,15 +269,11 @@
 }
 </style>
 <script>
-	$(function(){
-		// 내 정보 수정
-		$("#updateMyInfoBtn").on("click",function(){
-			
-		})
-		
+	$(function(){		
 		// 프로필 사진 업로드
 		$("#updateMyProfile").on("click",function(){
-			
+			let origin_picture = $("#profile").attr("src");
+			let popup = window.open('/my/picture_change?origin='+origin_picture,'change','width=500px,height=460px,scrollbars=no,resizable=no');
 		})
 	})
 </script>
@@ -272,7 +283,7 @@
 	<!-- 맨 윗 상단 -->
 	<div class="row container-fulid">
 		<div class="col-4" align=center>
-			<a href="index.html" class="navbar-brand">
+			<a href="/" class="navbar-brand">
 				<p id=titlename>돈-다</p>
 			</a> <b id=titleNextName>마이페이지</b>
 		</div>
@@ -292,27 +303,35 @@
 					</h3>
 				</div>
 				<div class="col-6" align=right>
-					<a href="/my/modify"><button type=button id=updateMyInfoBtn class="cnum-btn1">수정</button></a>
+					<a href="/my/modify"><button type=button id=updateMyInfoBtn
+							class="cnum-btn1">수정</button></a>
 					<button type=button id=updateMyProfile class="cnum-btn2">프로필</button>
 				</div>
 			</div>
+
 			<!-- 나의 프로필 -->
-			<!-- choose 쓸 예정 -->
 			<div class="profile" align=center>
-				<img src="/imgs/mypage/nomalProfile.jpg">
+				<c:choose>
+					<c:when test="${profile != null}">
+						<a href="/tBoard/myProfile"><img src="/imgs/mypage/${profile.sysName }" id=profile></a>
+					</c:when>
+					<c:otherwise>
+						<a href="/tBoard/myProfile"><img src="/imgs/nomalProfile.jpg" id=profile></a>
+					</c:otherwise>
+				</c:choose>
 			</div>
 			<br>
-			
+
 			<!-- 내 정보 출력 -->
 			<div class="myInfo">
 				<div class="name">
-					<b>ooo</b>님
+					<a href="/tBoard/myProfile"><b>${myInfo.name}</b>님</a>
 				</div>
 				<br>
-				<div class="add">서울특별시 동대문구</div>
+				<div class="add">${myInfo.address1 }</div>
 			</div>
 			<hr>
-	
+
 			<!-- 나의 포인트 -->
 			<div class="point">
 				<div class="pointIntro">
@@ -325,17 +344,20 @@
 					<div class="p">Point</div>
 					<div class="myPoint2">
 						<h3>
-							<b>100</b>
+							<b>${point }</b>
 						</h3>
 					</div>
 				</div>
 
 				<div class="charge">
-					<a href="#">충전하기</a> <span>ㅣ</span> <a href="#">포인트 내역 확인</a>
+					<a href="/point/ToCharging">충전하기</a> <span>ㅣ</span> <a
+						href="/my/pointChargeList"
+						onclick="window.open(this.href,'','width=550,height=600');return false">포인트
+						내역 확인</a>
 				</div>
 			</div>
 			<hr>
-			
+
 			<!-- 현재 빌린 상품 -->
 			<div class="borrow">
 				<div class="row borrowIntro">
@@ -345,19 +367,20 @@
 						</h5>
 					</div>
 					<div class="col-6" align=right>
-						<a href="#">더보기</a>
+						<a href="/my/borrowProduct"
+							onclick="window.open(this.href,'','width=550,height=600');return false">더보기</a>
 					</div>
 				</div>
 				<div class="row borrowList">
 					<!-- forEach 쓸 예정 -->
-						<div class="product">
-							<a href="#">현재 내가 빌려준 상품 목록 미리보기</a>
-						</div>
-					
+					<div class="product">
+						<a href="#">현재 내가 빌려준 상품 목록 미리보기</a>
+					</div>
+
 				</div>
 			</div>
 			<hr>
-			
+
 			<!-- 현재 빌려준 상품 -->
 			<div class="lend">
 				<div class="row lendIntro">
@@ -367,15 +390,16 @@
 						</h5>
 					</div>
 					<div class="col-5" align=right>
-						<a href="#">더보기</a>
+						<a href="/my/lendProduct"
+							onclick="window.open(this.href,'','width=550,height=600');return false">더보기</a>
 					</div>
 				</div>
 				<div class="row lendList">
 					<!-- forEach 쓸 예정 -->
-						<div class="product">
-							<a href="#">현재 내가 빌린 상품 목록 미리보기</a>
-						</div>
-					
+					<div class="product">
+						<a href="#">현재 내가 빌린 상품 목록 미리보기</a>
+					</div>
+
 
 				</div>
 			</div>
@@ -385,89 +409,163 @@
 		<div class="col-12 col-sm-12 col-md-1 center"></div>
 
 		<!-- 오른쪽 레이아웃 -->
-		<div class="col-12 col-sm-12 col-md-7 right">
+        <div class="col-12 col-sm-12 col-md-7 right">
+            <div class="row">
+            
+            	<!-- 대여 요청 내역 -->
+            	<div class="col-12 list">
+                    <div class="row go">
+                        <div class="col-10 titleDiv">
+                            <div class="title">
+                                <h3><b>대여 요청 내역</b></h3>
+                            </div>
+                            <div class="stitle">
+                                <b>나에게 온, 나의 물건 대여 요청 리스트 확인</b>
+                            </div>
+                        </div>
+                        <div class="col-2 buttonDiv">
+                            <a href="/my/requestRental"><button type=button class="okBtn">확인</button></a>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+                <!-- 거래 완료 목록 -->
+                <div class="col-12 list">
+                    <div class="row go">
+                        <div class="col-10 titleDiv">
+                            <div class="title">
+                                <h3><b>거래 완료 목록</b></h3>
+                            </div>
+                            <div class="stitle">
+                                <b>내가 빌린 상품, 빌려준 상품에 대한 거래 완료 목록 확인</b>
+                            </div>
+                        </div>
+                        <div class="col-2 buttonDiv">
+                            <a href="/my/dealEndList"><button type=button class="okBtn">확인</button></a>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <!-- 나의 커뮤니티 -->
+                <div class="col-12 list">
+                    <div class="row go">
+                        <div class="col-10 titleDiv">
+                            <div class="title">
+                                <h3><b>나의 커뮤니티</b></h3>
+                            </div>
+                            <div class="stitle">
+                                <b>내가 쓴 커뮤니티의 목록을 확인</b>
+                            </div>
+                        </div>
+                        <div class="col-2 buttonDiv">
+                            <a href="/my/selectMySns"><button type=button class="okBtn">확인</button></a>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <!-- 내가 쓴 대여 글 확인 -->
+                <div class="col-12 list2">
+                    <div class="row go">
+                        <div class="col-10 titleDiv">
+                            <div class="title">
+                                <h3><b>나의 대여 글 목록</b></h3>
+                            </div>
+                            <div class="stitle">
+                                <b>내가 대여한 상품, 나의 글 리스트 확인</b>
+                            </div>
+                        </div>
+                        <div class="col-2 buttonDiv">
+                            <a href="/my/myBoardList"><button type=button class="okBtn">확인</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+	</div>
+
+	<!-- Footer Start -->
+	<div class="footer">
+		<div class="container">
 			<div class="row">
-			
-				<!-- 거래 완료 목록 -->
-				<div class="col-12 list">
-					<div class="row go">
-						<div class="col-10 titleDiv">
-							<div class="title">
-								<h3>
-									<b>거래 완료 목록</b>
-								</h3>
+				<div class="col-lg-6">
+					<div class="row">
+						<div class="col-12">
+							<div class="footer-contact">
+								<p>
+									<i class="fa fa-map-marker-alt"></i>서울특별시 강남대로 123로
+								</p>
+								<p>
+									<i class="fa fa-phone-alt"></i>02-123-4567
+								</p>
+								<p>
+									<i class="fa fa-envelope"></i>DonDa@example.com
+								</p>
+								<div class="footer-social">
+									<a href=""><i class="fab fa-twitter"></i></a> <a href=""><i
+										class="fab fa-facebook-f"></i></a> <a href=""><i
+										class="fab fa-youtube"></i></a> <a href=""><i
+										class="fab fa-instagram"></i></a>
+								</div>
 							</div>
-							<div class="stitle">
-								<b>내가 빌린 상품, 빌려준 상품에 대한 거래 완료 목록 확인</b>
-							</div>
-						</div>
-						<div class="col-2 buttonDiv">
-							<button type=button class="okBtn">확인</button>
 						</div>
 					</div>
 				</div>
-				
-				
-				<!-- 나의 커뮤니티 -->
-				<div class="col-12 list">
-					<div class="row go">
-						<div class="col-10 titleDiv">
-							<div class="title">
-								<h3>
-									<b>나의 커뮤니티</b>
-								</h3>
-							</div>
-							<div class="stitle">
-								<b>내가 쓴 커뮤니티의 목록을 확인</b>
+				<div class="col-lg-6">
+					<div class="row">
+						<div class="col-6">
+							<div class="footer-contact">
+								<p>
+									<i class="far fa-building"></i>회사소개
+								</p>
+								<p>
+									<i class="far fa-user-circle"></i>채용
+								</p>
 							</div>
 						</div>
-						<div class="col-2 buttonDiv">
-							<button type=button class="okBtn">확인</button>
-						</div>
-					</div>
-				</div>
-				
-				<!-- 내가 쓴 대여글 확인 -->
-				<div class="col-12 list">
-					<div class="row go">
-						<div class="col-10 titleDiv">
-							<div class="title">
-								<h3>
-									<b>내가 쓴 대여 글 확인</b>
-								</h3>
+						<div class="col-6">
+							<div class="footer-contact">
+								<p>
+									<i class="fas fa-info"></i>이용약관
+								</p>
+								<p>
+									<i class="far fa-id-badge"></i>개인정보처리방침
+								</p>
+								<p>
+									<i class="fas fa-map-pin"></i>위치기반서비스 이용약관
+								</p>
 							</div>
-							<div class="stitle">
-								<b>내가 대여한 상품, 나의 글 리스트 확인</b>
-							</div>
-						</div>
-						<div class="col-2 buttonDiv">
-							<button type=button class="okBtn">확인</button>
-						</div>
-					</div>
-				</div>
-				
-				<!-- 나의 후기글 모음 -->
-				<div class="col-12 list2">
-					<div class="row go">
-						<div class="col-10 titleDiv">
-							<div class="title">
-								<h3>
-									<b>나의 후기 글</b>
-								</h3>
-							</div>
-							<div class="stitle">
-								<b>거래 완료 후, 구매자 혹 판매자에 대한 후기 작성 목록 확인</b>
-							</div>
-						</div>
-						<div class="col-2 buttonDiv">
-							<button type=button class="okBtn">확인</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
+		<div class="container copyright">
+			<div class="row">
+				<div class="col-12" style="text-align: center;">
+					<p id=titlename>
+						&copy; <a href="#">돈-다</a>, All Right Reserved.
+					</p>
+				</div>
+			</div>
+		</div>
 	</div>
+	<!-- Footer End -->
+
+	<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+	<!-- JavaScript Libraries -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+	<script src="/lib/easing/easing.min.js"></script>
+
+	<!-- Template Javascript -->
+	<script src="/js/main.js"></script>
 </body>
 
 </html>
