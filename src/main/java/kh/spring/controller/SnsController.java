@@ -32,14 +32,11 @@ public class SnsController {
 	private HttpSession session;
 	
 	@RequestMapping("/main")
-	public String main(Model model) {
+	public String main(String id,Model model) {
+		String loginId= (String)session.getAttribute("loginID");
 		List<SnsDTO>list = service.selectAll();
 		model.addAttribute("list", list);
-		
-		
-		
-//		List<SnsCommentDTO>comment = scservice.selectAll();
-//		model.addAttribute("comment", comment);
+
 		return "sns/main";
 	}
 	
@@ -106,7 +103,16 @@ public class SnsController {
 	@RequestMapping("love")
 	@ResponseBody
 	public String love(int seq,int love) {
-		service.love(seq, love);		
+		String id = (String)session.getAttribute("loginID");
+		int count = service.getlike(id,seq);
+		System.out.println(count);  //ok
+		if(count == 0) {
+			service.love(seq, love);
+			service.pluslove(id, seq);
+		}else {
+			service.cancellove(seq, love);
+			service.minuslove(id, seq);
+		}
 		return "redirect:/sns/main";
 	}
 
