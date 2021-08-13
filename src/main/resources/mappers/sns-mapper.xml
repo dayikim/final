@@ -7,6 +7,14 @@
 		insert into snsBoard values(snsboard_seq.nextval,#{id},#{contents},#{category},#{region},sysdate,#{love})
 	</insert>
 	
+	<select id="seq" resultType="int">
+		select snsboard_seq.NEXTVAL from dual
+	</select>
+	
+	<insert id="file">
+		insert into snsfiles values(snsfiles_seq.nextval,#{oriName},#{sysName},#{parent},sysdate)
+	</insert>
+	
 	<select id="selectAll" resultType="kh.spring.dto.SnsDTO">
 		select * from snsBoard order by 1 desc
 	</select>

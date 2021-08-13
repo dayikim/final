@@ -19,6 +19,10 @@ public class SnsDAO {
 		return mybatis.insert("Sns.insert", dto);
 	}
 	
+	public int seq() {
+		return mybatis.selectOne("Sns.seq");
+	}
+	
 	public List<SnsDTO>selectAll(){
 		return mybatis.selectList("Sns.selectAll");
 	}

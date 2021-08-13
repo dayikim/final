@@ -76,28 +76,39 @@
 }
 </style>
 <script>
-	$(function(){
-		$("#button").on("click",function(){
-			$.ajax({
-				url : "/person/loginCheck",
-				data :{id:$("#id").val()}
-			}).done(function(res){
-				if(res == 0 ){
-					alert("가입된 정보가 없습니다. 회원가입을 진행해주세요")
-				}else{
-					$.ajax({
-						url : "/person/pwCheck",
-						data : {id:$("#id").val(),pw:$("#pw").val()},
-					}).done(function(res){
-						if(res > 3){
-							$("#hidden").show();
-						}
-					})
-				}
-			})
-		});
-		
-		
+$(function(){
+	
+	$("#login").on("click",function(){
+		$.ajax({
+			url : "/person/loginProc",
+			data :{id:$("#id").val(), pw1:$("#pw").val()}
+		}).done(function(resp){
+			if(resp == 1){
+				alert('로그인성공')
+				location.href = "${pageContext.request.contextPath}/"
+			}else{
+				$.ajax({
+					url : "/person/checkid",
+					data : {id:$("#id").val()}
+				}).done(function(resp){
+					if(resp == 1){
+						alert('비밀번호를 확인해주세요')
+						$.ajax({
+							url : "/person/checkcount",
+							data : {id:$("#id").val()}
+						}).done(function(resp){
+							if(resp > 3){
+								$("#recaptcha").show();
+							}
+						})
+					}else{
+						alert('가입되어있지 않는 정보입니다. 회원가입을 진행해주세요')
+					}
+				})                                      
+			}
+		})
+	});
+				
 		$(document).ready(function() {
             $("#button_1").click(function() {
                 $.ajax({
@@ -131,7 +142,7 @@
 <div class="card-body">
   <h2 class="text-center">Login</h2>
   <br>
-  <form action="/person/loginProc" method=post>
+
     <div class="form-group">
       <input type="text" class="form-control" id="id" placeholder="Enter id" name="id">
     </div>
@@ -139,8 +150,8 @@
       <input type="password" class="form-control" id="pw" placeholder="Enter password" name="pw">
     </div>
     <div class="g-recaptcha" data-sitekey="6Ldka9IbAAAAAGr2VBj7DtFK-OErvhtHh5MWRris" id=recaptcha></div>
-    <button type="submit" id="button" class="btn btn-primary deep-purple btn-block ">Login</button><br>
-  </form>
+    <button type="button" id="login" class="btn btn-primary deep-purple btn-block ">Login</button><br>
+
 	<div id=f>
   	<a href="/person/findId" class=find>아이디찾기</a> | <a href="/person/findPw" class=find>비밀번호찾기</a>
   </div>

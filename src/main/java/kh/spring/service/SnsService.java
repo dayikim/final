@@ -20,6 +20,10 @@ public class SnsService {
 		dao.insert(dto);
 	}
 	
+	public int seq() {
+		return dao.seq();
+	}
+	
 	public List<SnsDTO> selectAll(){
 		return dao.selectAll();
 	}
