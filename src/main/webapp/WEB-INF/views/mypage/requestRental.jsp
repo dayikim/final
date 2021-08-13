@@ -81,7 +81,7 @@ img {
 }
 
 /* 시작 */
-.container {
+.container2 {
 	margin: auto;
 	width: 1000px;
 	padding: 50px;
@@ -225,7 +225,7 @@ img {
 
 
 	<!-- 대여 요청 내역 -->
-	<div class="container">
+	<div class="container2">
 	
 		<!-- forEach문 사용 -->
         <div class="requestList">
