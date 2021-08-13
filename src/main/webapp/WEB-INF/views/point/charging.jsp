@@ -381,7 +381,7 @@ img {
                 
             }
             alert(msg);
-            document.location.href="/point/charging"; //alert창 확인 후 이동할 url 설정
+            document.location.href="/point/charging; //alert창 확인 후 이동할 url 설정
         });
 	})
 

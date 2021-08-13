@@ -34,9 +34,8 @@ public class PointController {
 		session.setAttribute("myInfo", pdto); // 내 정보
 		model.addAttribute("profile",pfdto); //프로필
 		
-		int pointAmount =PointService.amount();//잔고금액
+		int pointAmount =PointService.amount(sessionID);//잔고금액
 		model.addAttribute("point",pointAmount);
-		
 		return "/point/charging";
 	}
 	@ResponseBody
@@ -48,7 +47,7 @@ public class PointController {
 			pointdto.setPointAmount(amount);//충전금액
 			PointService.charging(pointdto);//포인트 적립
 			
-			int pointAmount =PointService.amount();//잔고금액
+			int pointAmount =PointService.amount(sessionID);//잔고금액
 			model.addAttribute("point",pointAmount);
 		
 		PersonDTO pdto = MypageService.mypageList(sessionID); // 내 정보 출력

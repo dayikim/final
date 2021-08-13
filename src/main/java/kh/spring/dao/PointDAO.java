@@ -16,8 +16,8 @@ public class PointDAO {
 	public int charging(PointDTO dto) {
 		return mybatis.insert("Point.charge",dto);
 	}
-	public int amount() {
-		return mybatis.selectOne("Point.amount");
+	public int amount(String sessionID) {
+		return mybatis.selectOne("Point.amount",sessionID);
 	}
 	
 	public List<PointDTO> pointChargeList(String sessionID) {

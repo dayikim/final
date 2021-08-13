@@ -313,10 +313,10 @@
 			<div class="profile" align=center>
 				<c:choose>
 					<c:when test="${profile != null}">
-						<img src="/imgs/mypage/${profile.sysName }" id=profile>
+						<a href="/tBoard/myProfile"><img src="/imgs/mypage/${profile.sysName }" id=profile></a>
 					</c:when>
 					<c:otherwise>
-						<img src="/imgs/nomalProfile.jpg" id=profile>
+						<a href="/tBoard/myProfile"><img src="/imgs/nomalProfile.jpg" id=profile></a>
 					</c:otherwise>
 				</c:choose>
 			</div>
@@ -325,7 +325,7 @@
 			<!-- 내 정보 출력 -->
 			<div class="myInfo">
 				<div class="name">
-					<b>${myInfo.name}</b>님
+					<a href="/tBoard/myProfile"><b>${myInfo.name}</b>님</a>
 				</div>
 				<br>
 				<div class="add">${myInfo.address1 }</div>

@@ -18,8 +18,8 @@ public class PointService {
 		return dao.charging(dto);
 	}
 	
-	public int amount() {
-		return dao.amount();
+	public int amount(String sessionID) {
+		return dao.amount(sessionID);
 	}
 
 	

@@ -4,26 +4,34 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="TBoard">
 	<insert id="insert">
-		insert into TalentBoard values(talentboard_seq.nextval,#{id},#{kind},#{title},#{category},#{contents},#{price},sysdate)
+		insert into TalentBoard values(#{seq},#{id},#{kind},#{title},#{category},#{contents},#{price},sysdate)
 	</insert>
 	
 	<select id="detailView" resultType="kh.spring.dto.TalentBoardDTO">
 		select * from TalentBoard where seq =#{seq}
 	</select>
+			
+	<select id="sellingCount" resultType="int">
+	select count(*) from TalentBoard where kind=#{kind}
+	</select>
 	
-	<delete id="delete">
-		delete from TalentBoard where seq=#{seq}
-	</delete>
+	<select id="getSellingList" resultType="kh.spring.dto.TalentBoardDTO">
+	select * from TalentBoard where kind=#{kind}
+	</select>
+	
+	<select id="getId" resultType="String">
+	select id from TalentBoard 
+	</select>
+	
 
 	<update id="updateBoard">
 		update TalentBoard set title=#{title}, category =#{category}, contents =#{contents}, price=#{price} REGDATE = sysdate
 		where seq=#{seq}
 	</update>
-
+     
 	
 	<select id="getSeq" resultType="int">
 		select TalentBoard_seq.nextval from dual
 	</select>
-	
 	
 	</mapper>

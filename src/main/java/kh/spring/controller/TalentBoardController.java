@@ -2,9 +2,7 @@ package kh.spring.controller;
 
 
 
-import java.io.File;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,12 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import kh.spring.dao.TBoardFilesDAO;
 import kh.spring.dto.PersonDTO;
 import kh.spring.dto.ProfileFilesDTO;
 import kh.spring.dto.TBoardFilesDTO;
@@ -28,10 +22,7 @@ import kh.spring.service.TalentBoardService;
 @Controller
 @RequestMapping("/tBoard")
 public class TalentBoardController {
-	private static final int RESULT_EXCEED_SIZE = -2;
-	private static final int RESULT_UNACCEPTED_EXTENSION = -1;
-	private static final int RESULT_SUCCESS = 1;
-	private static final long LIMIT_SIZE = 10 * 1024 * 1024;
+	
 	@Autowired
 	private TalentBoardService TBoardService;
 
@@ -59,31 +50,71 @@ public class TalentBoardController {
 
 		return "redirect:/";
 	}
-
+	
 	@RequestMapping("detailView")
-	public String post(int seq,Model model) throws Exception {
+	public String post(String id, int seq,Model model) throws Exception {
 		System.out.println(seq);
-		TalentBoardDTO dto = TBoardService.detailView(seq);
-		model.addAttribute("post",dto);
-
-		////		List<TalentFilesDTO> fileList = F_Service.selectAll(seq); //첨부파일 목록 출력   
-		//        System.out.println("파일이 비어 있나요?? "+fileList.isEmpty());//파일이 있나요?
-		//        model.addAttribute("filelist", fileList);//파일리스트를 request애 담는다.
-		//		
-		return "/talentboard/detailView";
-	}
-	@RequestMapping(value="userProfile",produces="text/html;charset=utf8")
-	public String userProfile(String id,Model model) {
 		String sessionID = (String) session.getAttribute("loginID");
 		PersonDTO pdto = MypageService.mypageList(sessionID); // 내 정보 출력
 		ProfileFilesDTO pfdto = MypageService.profileSelect(sessionID); // 내 프사 출력
 		session.setAttribute("myInfo", pdto); // 내 정보
 		model.addAttribute("profile",pfdto); //프로필
+		
+		PersonDTO pd = TBoardService.memberInfoById(id);//글 작성자 정보(이름,주소)
+		model.addAttribute("memberInfo",pd);
+		
+		TalentBoardDTO dto = TBoardService.detailView(seq);
+		model.addAttribute("tboard",dto);
+
+		////		List<TalentFilesDTO> fileList = F_Service.selectAll(seq); //첨부파일 목록 출력   
+		//        System.out.println("파일이 비어 있나요?? "+fileList.isEmpty());//파일이 있나요?
+		//        model.addAttribute("filelist", fileList);//파일리스트를 request애 담는다.
+		//		
+		return "/talentBoard/view_selling";
+	}
+	@RequestMapping(value="myProfile",produces="text/html;charset=utf8")
+	public String myProfile(String id,Model model) {
+		String sessionID = (String) session.getAttribute("loginID");
+		PersonDTO pdto = MypageService.mypageList(sessionID); // 내 정보 출력
+		ProfileFilesDTO pfdto = MypageService.profileSelect(sessionID); // 내 프사 출력
+		session.setAttribute("myInfo", pdto); // 내 정보
+		model.addAttribute("profile",pfdto); //프로필
+		return "/talentBoard/myProfile";
+	}
+	
+	@RequestMapping(value="userProfile",produces="text/html;charset=utf8")
+	public String userProfile(String id, Model model) {
+		PersonDTO pd = TBoardService.memberInfoById(id);//글 작성자 정보(이름,주소)
+		model.addAttribute("memberInfo",pd);
+		
+		String kind ="재능등록";
+		 int result = TBoardService.sellingCount(kind);
+		 model.addAttribute("sellingCount",result);//판매목록 갯수
+		 
+			List<TalentBoardDTO> sellingList;
+			sellingList =TBoardService.getSellingList(kind);//판매목록 리스트
+		
+	      model.addAttribute("sellinglist",sellingList);
+          System.out.println(sellingList.isEmpty());
+          System.out.println(sellingList.size());
 		return "/talentBoard/userProfile";
 	}
-
+	
 	@RequestMapping("sellingList")
-	public String sellingList() {
+	public String sellingList(String id,Model model) {
+	PersonDTO pd = TBoardService.memberInfoById(id);//글 작성자 정보(이름,주소)
+		model.addAttribute("memberInfo",pd);
+		
+		String kind ="재능등록";
+	 int result = TBoardService.sellingCount(kind);
+	 model.addAttribute("sellingCount",result);
+	 
+	 List<TalentBoardDTO> sellingList;
+		sellingList =TBoardService.getSellingList(kind);//판매목록 리스트
+	
+   model.addAttribute("sellinglist",sellingList);
+   System.out.println(sellingList.isEmpty());
+   System.out.println(sellingList.size());
 		return "/talentBoard/userProfile";
 	}
 
