@@ -130,9 +130,14 @@ public class MypageController {
 	}
 	// 나의 커뮤니티 목록 출력(예정)
 	@RequestMapping(value="/selectMySns", produces="text/html;charset=utf8")
-	public String selectMySns() {
-//		String sessionID = (String) session.getAttribute("loginID");
-//		service.selectMySns(sessionID);
+	public String selectMySns(Model model) {
+		String sessionID = (String) session.getAttribute("loginID");
+		ProfileFilesDTO pdto = service.profileSelect(sessionID); // 내 프사 출력
+		PersonDTO dto = service.mypageList(sessionID); // 내 정보 출력
+//		service.selectMySns(sessionID);  // 내 커뮤니티글 출력
+		
+		model.addAttribute("profile", pdto); // 내 프로필
+		model.addAttribute("myInfo", dto);  // 내 정보
 		return "/mypage/mySnsPage";
 	}
 	
