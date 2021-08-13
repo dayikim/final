@@ -89,7 +89,7 @@ public class MypageController {
 		return "/mypage/profileView";
 	}
 	
-	// 포인트 충전내역 확인(미완)
+	// 포인트 충전내역 확인(완)
 	@RequestMapping(value="/pointChargeList", produces="text/html;charset=utf8")
 	public String pointChargeList(Model model) {
 		String sessionID = (String)session.getAttribute("loginID");
@@ -115,6 +115,12 @@ public class MypageController {
 	@RequestMapping(value="/lendProduct", produces="text/html;charset=utf8")
 	public String lendProduct() {
 		return "/mypage/nowLendProduct";
+	}
+	
+	// 대여 요청 목록(미완)
+	@RequestMapping("/requestRental")
+	public String requestRental() {
+		return "/mypage/requestRental";
 	}
 	
 	// 거래 완료 목록 출력(미완)
