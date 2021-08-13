@@ -25,11 +25,11 @@ public class BorrowController {
 	
 
 	@RequestMapping("/listAll")	
-	public String listAll(String search, String cpage, Model model) {
+	public String listAll(String category, String search, String cpage, Model model) {
 		
-		List<String> pageNavi = service.getPageNavi(search,cpage);
+		List<String> pageNavi = service.getPageNavi(category, search,cpage);
 		
-		List<BorrowDTO> list = service.getList(search,cpage);
+		List<BorrowDTO> list = service.getList(category, search,cpage);
 		
 
 		model.addAttribute("navi", pageNavi);
@@ -38,7 +38,5 @@ public class BorrowController {
 		
 		return "borrowBoard/borrowlist"; 
 	}
-	
-	
 
 }

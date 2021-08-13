@@ -76,7 +76,7 @@
 	    })
 	       
 	    $("#borrowBtn").on("click",function(){
-	    	location.href="/borrow/listAll?cpage=1";
+	    	location.href="/borrow/listAll?category=AllCategory&search=${}cpage=1";
 	    })
 	       
 	    $("#talentBtn").on("click",function(){
@@ -165,6 +165,23 @@
                 <button class="dropbtn" id="talentBtn">재능기부</button>
             </div>
 		</div>
+		<!-- 검색 -->
+		<form action="/borrow/searchBorrowd" method="get">
+			<div class="search">
+				<input type="hidden" name="cpage" value=1> 
+				<div class="inp_slct">
+					<select name="category">
+						<option value="AllCategory">전체</option>
+						<option value="title">제목</option>
+						<option value="address1">지역</option>
+						<option value="contents">내용</option>
+					</select>
+				</div>
+				<input type="text" name="keyword" class="inpform" placeholder="검색을 입력하세요.">
+				<button class="btn_m btn_default" id="search">검색</button>
+			</div>
+		</form>
+		<!-- 검색결과 리스트 -->
 		<div class="minibody">
 		<input type="hidden" value="${search}" id=search2 name="search2">
 			<c:forEach var="bw" items="${bwList}">

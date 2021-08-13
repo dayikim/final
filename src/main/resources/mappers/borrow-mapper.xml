@@ -5,9 +5,14 @@
   
 <mapper namespace="Borrow">
   
-	<!-- 검색 지역 & 타이틀 -->
+	<!-- 전체 검색 지역 & 타이틀 & 내용 -->
 	<select id="toSearch" resultType="kh.spring.dto.BorrowDTO">
 		<![CDATA[select * from (select rownum as rnum, A.* from (select * from borrowboard where address1 like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	</select>
+	
+	<!-- 카테고리 검색 -->
+	<select id="toCategory" resultType="kh.spring.dto.BorrowDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select * from borrowboard where #{category} like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
 	</select>
 	
 	<!-- 검색이 null일 경우 전체목록 나오게 -->

@@ -17,7 +17,7 @@ public class BorrowDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 	
-	public List<BorrowDTO> getList(String search,int cpage){
+	public List<BorrowDTO> getList(String category, String search,int cpage){
 		
 		if(search == null) {
 			search = "";
@@ -27,6 +27,7 @@ public class BorrowDAO {
 		int startNum = endNum - (BoardConfig.RECORD_COUNT_PER_PAGE-1);
 		
 		HashMap<String, Object> map = new HashMap<>();
+		map.put("category", category);
 		map.put("search",search);
 		map.put("endNum", endNum);
 		map.put("startNum", startNum);
@@ -34,7 +35,11 @@ public class BorrowDAO {
 		List<BorrowDTO> list = null;
 		
 		if(!search.equals("")) {
-			list = mybatis.selectList("Borrow.toSearch", map);
+			if(category == "AllCategory") {
+				list = mybatis.selectList("Borrow.toSearch", map);
+			}else {
+				list = mybatis.selectList("Borrow.toCategory", map);
+			}
 		}else {
 			list = mybatis.selectList("Borrow.toList", map);
 		}
@@ -43,7 +48,7 @@ public class BorrowDAO {
 		
 	}
 
-	public List<String> getPageNavi(String search, int currentPage) { // 페이지
+	public List<String> getPageNavi(String category, String search, int currentPage) { // 페이지
 		int recordTotalCount = 0;
 		// 공지사항 게시글 리스트 페이지
 		

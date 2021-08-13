@@ -16,16 +16,17 @@ public class BorrowService {
 	private BorrowDAO dao;
 
 
-	public List<String> getPageNavi(String search, String cpage) {
+	public List<String> getPageNavi(String category, String search, String cpage) {
 		
 		int currentPage = Integer.parseInt(cpage);
 		
-		return dao.getPageNavi(search, currentPage);
+		return dao.getPageNavi(category, search, currentPage);
 	}
 	
-	public List<BorrowDTO> getList(String search, String cpage){
+	public List<BorrowDTO> getList(String category, String search, String cpage){
 		int currentPage = Integer.parseInt(cpage);
 		
-		return dao.getList(search,currentPage);
+		return dao.getList(category, search,currentPage);
 	}
+	
 }

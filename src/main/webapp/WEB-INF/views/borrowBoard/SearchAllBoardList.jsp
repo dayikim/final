@@ -78,7 +78,7 @@
 	    })
 	       
 	    $("#borrowBtn").on("click",function(){
-	    	location.href="/borrow/listAll?cpage=1";
+	    	location.href="/borrow/listAll?category=AllCategory&search=${search}&cpage=1";
 	    })
 	       
 	    $("#talentBtn").on("click",function(){
@@ -173,48 +173,66 @@
         
         <!-- 게시판 최신순으로 5개씩 나옴 -->
        <div class="minibody">
+       
+       		<!-- 대여하기 -->
        		<input type="hidden" id="search2" name="search2" value="${search}">
             <div id="count" class="count">대여하기 총<p>${ldCount}</p>개</div> 
-			<c:forEach var="ld" items="${ldList}">
-				<div class="borrow-board">
-					<div id="ldseq" class="seq" name="ldseq" >${ld.seq}</div>
-					<a href="/lend/detailView?seq=${ld.seq}" id="ldtitle" class="title" name="title">${ld.title}</a>
-					<p id="ldregdate" class="regdate" name="address1">${ld.regdate}</p>
-				</div>
-			</c:forEach>
-			<c:if test="${ldCount == 0}">
-				<p>검색 결과가 없습니다</p>
-			</c:if>
+            <c:choose>
+           		<c:when test="${ldCount != 0}">
+					<c:forEach var="ld" items="${ldList}">
+						<div class="borrow-board">
+							<div id="ldseq" class="seq" name="ldseq" >${ld.seq}</div>
+							<a href="/lend/detailView?seq=${ld.seq}" id="ldtitle" class="title" name="title">${ld.title}</a>
+							<p id="ldregdate" class="regdate" name="address1">${ld.regdate}</p>
+						</div>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<p>검색 결과가 없습니다</p>
+				</c:otherwise>
+			</c:choose>
             <br>
-            <a href="/lend/listAll?search=${search}&cpage=1">나머지 확인하기</a>
+            <a href="/lend/listAll?search=${search}&cpage=1">더보기</a>
             <hr>
+            
+            <!-- 대여요청 하기 -->
             <div id="count" class="count">대여요청 총<p>${bwCount}</p>개</div>
-			<c:forEach var="bw" items="${bwList}">
-				<div class="borrow-board">
-					<div id="bwseq" class="seq" name="bwsleq" >${bw.seq}</div>
-					<a href="/borrow/detailView?seq=${bw.seq}" id="bwtitle" class="title" name="bwtitle">${bw.title}</a>
-					<p id="bwregdate" class="regdate" name="bwregdate">${bw.regdate}</p>
-				</div>
-			</c:forEach>
-			<c:if test="${bwCount == 0}">
-				<p>검색 결과가 없습니다</p>
-			</c:if>
+            <c:choose>
+            	<c:when test="${bwCount != 0}">
+					<c:forEach var="bw" items="${bwList}">
+						<div class="borrow-board">
+							<div id="bwseq" class="seq" name="bwsleq" >${bw.seq}</div>
+							<a href="/borrow/detailView?seq=${bw.seq}" id="bwtitle" class="title" name="bwtitle">${bw.title}</a>
+							<p id="bwregdate" class="regdate" name="bwregdate">${bw.regdate}</p>
+						</div>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<p>검색 결과가 없습니다</p>
+				</c:otherwise>
+			</c:choose>
             <br>
-            <a href="/borrow/listAll?search=${search}&cpage=1">나머지 확인하기</a>
+            <a href="/borrow/listAll?category=AllCategory&search=${search}&cpage=1">더보기</a>
             <hr>
+            
+            <!-- 재능기부 하기 -->
             <div id="count" class="count">재능기부 총<p>${tlCount}</p>개</div>
-			<c:forEach var="tl" items="${tlList}">
-				<div class="borrow-board">
-					<div id="tlseq" class="seq" name="tltlseq" >${tl.seq}</div>
-					<a href="/tBoard/detailView?seq=${tl.seq}" id="tltitle" class="title" name="tltitle">${tl.title}</a>
-					<p id="tlregdate" class="regdate" name="tlregdate">${tl.regDate}</p>
-				</div>
-			</c:forEach>
-			<c:if test="${tlCount == 0}">
-				<p>검색 결과가 없습니다</p>
-			</c:if>
+            <c:choose>
+            	<c:when test="${tlCount != 0}">
+					<c:forEach var="tl" items="${tlList}">
+						<div class="borrow-board">
+							<div id="tlseq" class="seq" name="tltlseq" >${tl.seq}</div>
+							<a href="/tBoard/detailView?seq=${tl.seq}" id="tltitle" class="title" name="tltitle">${tl.title}</a>
+							<p id="tlregdate" class="regdate" name="tlregdate">${tl.regDate}</p>
+						</div>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<p>검색 결과가 없습니다</p>
+				</c:otherwise>
+			</c:choose>
             <br>
-            <a href="/tBoard/list?search=${search}&cpage=1">나머지 확인하기</a>
+            <a href="/tBoard/list?search=${search}&cpage=1">더보기</a>
             <hr>
 		</div>
 		</div>
