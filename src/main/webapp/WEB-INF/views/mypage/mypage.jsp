@@ -129,7 +129,7 @@
 	margin: auto;
 }
 
-.left>div>img {
+.left>div>a>img {
 	width: 165px;
 	height: 165px;
 	border-radius: 100px;
