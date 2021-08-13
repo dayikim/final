@@ -25,55 +25,86 @@
         <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
 
         <!-- Template Stylesheet -->
+        
         <link href="/css/style.css" rel="stylesheet">
         <style>
-#titlename{
-    margin-top: 1%;
-    margin-bottom: 0;
-    font-size: 30px;
-    font-family: 'Gugi', cursive;
-    color:white;
-}
-img{
-    width: 100%;
-}
-#search{
-    width: 500px;
-    position: relative;
-}
-.Explanation{
-    position: relative;
-    top: 30%;
-}
-.subject{
-    color: #1d2434;
-    text-align: center;
-    font-size: 40px;
-    font-weight: 800;
-}
-.contents{
-    margin-top: 5%;
-    text-align: center;
-    font-size: 25px;
-    font-weight: bold;
-}
-.Main{
-    margin-top: 5%;
-}
+			#titlename{margin-top: 1%; margin-bottom: 0; font-size: 30px; font-family: 'Gugi', cursive; color:white;}
+/* img{ */
+/*     width: 100%; */
+/* } */
+			#search{width: 500px; position: relative;}
+			.Explanation{position: relative; top: 30%;}
+			.subject{color: #1d2434; text-align: center; font-size: 40px; font-weight: 800;}
+			.contents{margin-top: 5%; text-align: center; font-size: 25px; font-weight: bold;}
+			.Main{margin-top: 5%;}
+
+
+    		*{box-sizing: inherit;}
+   			div{display: block;}
+    		.minicontainer{margin: auto; overflow: hidden;text-align: center; padding: 150px 80px;}
+    		.minibody{padding:0 8px; overflow: hidden;}
+    		img{border-radius: 20px;}
+    		a{color: black; cursor: pointer; text-decoration: none;}
+    		p{font-size: 1.1rem;}
+    
+    		.dropbtn {background-color: #1d2434; color: white;padding: 10px; font-size: 13px; border: none; cursor: pointer;border-radius: 3px;}
+    		.dropdown {position: relative; display: inline-block;margin-bottom: 40px;}
+    		.dropbtn:hover {background-color: skyblue}
+    		
+    		.browse{display:inline-block; text-align:end; width:70%; margin-bottom:40px;}
+    		.inp_slct{width:10%; height:28px; display:inline-block; margin-right:5px;}
+    		.inp_slct select{height:100%;}
+    		.browseBtn{width:40px;background-color:#1d2434;color:white;}
+
+    		.minibody{text-align: center;}
+    		.reservation{overflow: hidden; font-size: 0.5rem; position: absolute;  transform: translate( 5%, -10%);}
+    		.borrow-board{width: 25%;overflow: hidden; display:inline-block; margin-right:30px; margin-bottom: 56px;}
+    		.borrow-board img{width: 100%; height: 70%;} 
+    		.minibody a{color: black; cursor: pointer; text-decoration: none;}
+    		.minibody a:hover{color: black; text-decoration: none;}
+    		
+    		.write{width:80%; display:inline-block; text-align:end; margin-bottom:20px;}
+    		.writeBtn{background-color: #1d2434; color:white;}
+
     </style>
+    
+    <script>  
+    
+    $(function(){
+      	 $("#search").keyup(function(e){
+      		 if(e.keyCode == 13){
+      				location.href="/AllBoardList/allList?search="+$("#search").val();
+           	}
+      	 }) 
+    })
+       
+	$(function(){
+	 	$("#lendBtn").on("click",function(){
+	    	location.href="/lend/listAll?cpage=1";
+	    })
+	       
+	    $("#borrowBtn").on("click",function(){
+	    	location.href="/borrow/listAll?category=AllCategory&search=${search}&cpage=1";
+	    })
+	       
+	    $("#tlSellBtn").on("click",function(){
+	    	location.href="/tBoard/listAll?kind=재능등록&cpage=1";
+	    })
+	    
+	    $("#tlRequestBtn").on("click",function(){
+	    	location.href="/tBoard/listAll?kind=재능등록&cpage=1";
+	    })
+	    
+	    $("#writeBtn").on("click",function(){
+	    	location.href="/borrowBoard/borrowWrite";
+	    })
+	      	  
+	})
+    
+   
 
-	<script>
-		$(function() {
-			$("#search").keyup(function(e) {
-				if (e.keyCode == 13) {
-					location.href = "/AllBoardList/allList?search="+ $("#search").val();
-				}
-			})
-		})
 	</script>
-
-
-</head>
+    </head>
 
     <body>
         <!-- Top Bar Start -->
@@ -94,9 +125,9 @@ img{
                     <div class="col-md-6">
                         <div class="top-bar-right">
                             <div class="social">
-                                <a href="/sns/main"><i class="fab fa-twitter"></i></a>
-                                <a href="/sns/main"><i class="fab fa-facebook-f"></i></a>
-                                <a href="/sns/main"><i class="fab fa-instagram"></i></a>
+                                <a href=""><i class="fab fa-twitter"></i></a>
+                                <a href=""><i class="fab fa-facebook-f"></i></a>
+                                <a href=""><i class="fab fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
@@ -136,58 +167,81 @@ img{
             </div>
         </div>
         <!-- Nav Bar End -->
-        <div class="container-fluid">
-            <div class = "row Main">
-                <div class="col-6" id ="Main-1">
-                    <img src="/imgs/Main-1.jpg">
-                </div>
-                <div class="col-6 Main-text first">
-                    <div class="Explanation">
-                        <div class = "subject">돈-다에서는 물건에 대한 새로운 방식을 제시합니다!</div>
-                        <div class = "contents">가까운 이웃에게 물건을 빌리고, 빌려주세요!</div>
-                    </div>
-                    </div>
-                </div>
-            <div class = "row Main">
-                <div class="col-6">
-                    <img src="/imgs/Main-2.png">
-                </div>
-                <div class="col-6 Main-text second">
-                    <div class="Explanation">
-                        <div class = "subject">새로운 즐거움을 나눠봐요!</div>
-                        <div class = "contents">새로운 이웃을 만나고,</div>
-                        <div class = "contents">그들과 경험을 공유하세요!</div>
-                    </div>
-                </div>
+
+	<div class="minicontainer">
+		<div class="miniheader">
+        	<!-- 카테고리별 버튼 누를시 그 카테고리로 이동한다 -->
+            <div class="dropdown">
+                <button class="dropbtn" id="lendBtn">대여하기</button>
             </div>
-            <div class = "row Main">
-                <div class="col-6">
-                    <img src="/imgs/Main-3.jpg">
-                </div>
-                <div class="col-6 Main-text third">
-                    <div class="Explanation">
-                        <div class = "subject">경제적이고, 합리적인 선택이 됩니다!</div>
-                        <div class = "contents">경제적이고,합리적인 소비를 통해</div>
-                        <div class = "contents">똑똑한 소비자가 돼 보아요!</div>
-                    </div>
-                </div>
+            <div class="dropdown">
+                <button class="dropbtn" id="borrowBtn">대여요청하기</button>
             </div>
-            <div class = "row Main">
-                <div class="col-6">
-                    <img src="/imgs/Main-4.jpg">
-                </div>
-                <div class="col-6 Main-text third">
-                    <div class="Explanation">
-                        <div class = "subject">주변과의 새로운 연결 고리가 됩니다!</div>
-                        <div class = "contents">단순히 물건을 주고 받는게 아닌</div>
-                        <div class = "contents">서로와 서로를 연결해봐요!</div>
-                    </div>
-                </div>
+            <div class="dropdown">
+                <button class="dropbtn" id="tlSellBtn">재능등록</button>
             </div>
-        </div>
+            <div class="dropdown">
+                <button class="dropbtn" id="tlRequestBtn">재능요청</button>
+            </div>
+		</div>
+		
+		<!-- 검색 -->
+		<form action="/borrow/listAll" method="get">
+			<div class="browse">
+				<input type="hidden" name="cpage" value=1> 
+				<div class="inp_slct">
+					<select name="category">
+						<option value="AllCategory">전체</option>
+						<option value="title">제목</option>
+						<option value="address1">지역</option>
+						<option value="contents">내용</option>
+					</select>
+				</div>
+				<input type="text" name="search" class="inpform" placeholder="검색을 입력하세요.">
+				<button class="browseBtn" id="browseBtn">검색</button>
+			</div>
+		</form>
+		
+		<!-- 검색결과 리스트 -->
+		<div class="minibody">
+		<input type="hidden" value="${search}" id=search2>
+			<c:forEach var="bw" items="${bwList}">
+				<div class="borrow-board">					
+					<img src="ittaketwo.jpg" alt="#"> 
+					<input type="hidden" value="${bw.seq}" id="seq" name="seq">
+					<a href="/borrow/detailView?seq=${bw.seq}" id="bwtitle" class="title" name="bwtitle">${bw.title}</a>
+					<p id="address1" name="address1">${bw.address1}</p>
+				</div>
+			</c:forEach>
+		</div>
+		
+		<!-- 글쓰기 버튼 -->
+<%-- 		<c:if test="${loginID != null}"> --%>
+			<div class="write" id="write">		
+				<button type="button" class="writeBtn" id="writeBtn">글쓰기</button>
+			</div>
+<%-- 		</c:if> --%>
+		
+		<!-- 페이징 네비바 -->
+		<div class="board_page">
+			<c:forEach var="i" items="${navi}" varStatus="s">
+				<c:choose>
+					<c:when test="${i == '>'}">
+						<a href="/borrow/listAll?cpage=${navi[s.index-1]+1}&category=${category}&search=${search}">${i}</a>
+					</c:when>
+					<c:when test="${i == '<'}">
+						<a href="/borrow/listAll?cpage=${navi[s.index-1]+1}&category=${category}&search=${search}">${i}</a>
+					</c:when>
+					<c:otherwise>
+						<a href="/borrow/listAll?cpage=${i}&category=${category}&search=${search}">${i}</a>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+		</div>
+	</div>
 
 
-        <!-- Footer Start -->
+	<!-- Footer Start -->
         <div class="footer">
             <div class="container">
                 <div class="row">
@@ -240,7 +294,7 @@ img{
         <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
         <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<!--         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
         <script src="/lib/easing/easing.min.js"></script>
         

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="AllList">
+  
+	<!-- 대여검색 지역 & 제목 & 내용  -->
+	<select id="lendList" resultType="kh.spring.dto.LendDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select * from lendboard where title like '%'||#{search}||'%' or contents like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= 5) where rnum >= 1]]>
+	</select>
+	
+	<!-- 대여요청검색 지역 & 제목 & 내용 -->
+	<select id="borrowList" resultType="kh.spring.dto.BorrowDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select * from borrowboard where address1 like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= 5) where rnum >= 1]]>
+	</select>
+	
+	<!-- 재능기부검색 카테고리 & 제목 & 내용  -->
+	<select id="tlSellList" resultType="kh.spring.dto.TalentBoardDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select * from (select * from talentboard where kind = #{kind}) where category like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= 5) where rnum >= 1]]>
+	</select>
+	
+	<!-- 재능기부검색 카테고리 & 제목 & 내용  -->
+	<select id="tlRequsetList" resultType="kh.spring.dto.TalentBoardDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select * from (select * from talentboard where kind = #{kind}) where category like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= 5) where rnum >= 1]]>
+	</select>
+	
+	
+		
+	<!-- 대여검색 지역 & 제목 & 내용 카운트 -->
+	<select id="numLend" resultType="int">
+		select count(*) from lendboard where title like '%'||#{search}||'%' or contents like '%'||#{search}||'%'
+	</select>
+	
+	<!-- 대여요청검색 지역 & 제목 & 내용 카운트 -->
+	<select id="numBorrow" resultType="int">
+		select count(*) from borrowboard where address1 like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%'
+	</select>
+	
+	<!-- 재능등록검색 카테고리 & 제목 & 내용 카운트 -->
+	<select id="numTlSell" resultType="int">
+		select count(*) from (select * from talentboard where kind = #{kind}) where category like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%'
+	</select>
+	
+	<!-- 재능요청검색 카테고리 & 제목 & 내용 카운트 -->
+	<select id="numTlRequest" resultType="int">
+		select count(*) from (select * from talentboard where kind = #{kind}) where category like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%'
+	</select>
+	
+	
+</mapper>

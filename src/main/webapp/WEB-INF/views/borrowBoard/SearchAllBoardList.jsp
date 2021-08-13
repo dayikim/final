@@ -25,55 +25,74 @@
         <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
 
         <!-- Template Stylesheet -->
+        
         <link href="/css/style.css" rel="stylesheet">
-        <style>
-#titlename{
-    margin-top: 1%;
-    margin-bottom: 0;
-    font-size: 30px;
-    font-family: 'Gugi', cursive;
-    color:white;
-}
-img{
-    width: 100%;
-}
-#search{
-    width: 500px;
-    position: relative;
-}
-.Explanation{
-    position: relative;
-    top: 30%;
-}
-.subject{
-    color: #1d2434;
-    text-align: center;
-    font-size: 40px;
-    font-weight: 800;
-}
-.contents{
-    margin-top: 5%;
-    text-align: center;
-    font-size: 25px;
-    font-weight: bold;
-}
-.Main{
-    margin-top: 5%;
-}
+   <style>
+	#titlename{margin-top: 1%; margin-bottom: 0; font-size: 30px; font-family: 'Gugi', cursive; color:white;}
+/* img{ */
+/*     width: 100%; */
+/* } */
+	#search{width: 500px; position: relative;}
+	.Explanation{position: relative; top: 30%;}
+	.subject{color: #1d2434; text-align: center; font-size: 40px; font-weight: 800;}
+	.contents{margin-top: 5%; text-align: center; font-size: 25px; font-weight: bold;}
+	.Main{margin-top: 5%;}
+
+	*{box-sizing: inherit;}
+    div{display: block;}
+    .minicontainer{margin: auto; overflow: hidden;text-align: center; margin-top:120px; padding: 150px 80px;}
+    .minibody{padding:0 8px; overflow: hidden;}
+    img{border-radius: 20px;}
+    a{color: black; cursor: pointer; text-decoration: none;}
+    p{font-size: 1.1rem;}
+    
+    .dropbtn {background-color: #1d2434; color: white;padding: 10px; font-size: 13px; border: none; cursor: pointer;border-radius: 3px;}
+    .dropdown {position: relative; display: inline-block;margin-bottom: 20px;}
+    .dropbtn:hover {background-color: skyblue}
+
+    .count {overflow: hidden; }
+    .count p{width: 3%; display: inline-block;text-align: end;}
+    .minibody{text-align: center;}
+    .reservation{overflow: hidden; font-size: 0.5rem; position: absolute;  transform: translate( 5%, -10%);}
+    .board{width: 25%;height: 300px; overflow: hidden; float: left; margin-right:30px; margin-bottom: 56px;}
+    .board img{width: 100%; height: 70%;} 
+    .seq {width: 10%; display: inline-block;}
+    .title {width: 50%; display: inline-block;}
+    .regdate {width: 20%; display: inline-block;}
+    .minibody a:hover{text-decoration: none;}
     </style>
+    
+    <script>  
+    
+    $(function(){
+       $("#search").keyup(function(e){
+      		if(e.keyCode == 13){
+      			location.href="/AllBoardList/allList?search="+$("#search").val();
+           	}
+      	})
+	})
+	
+	$(function(){
+	 	$("#lendBtn").on("click",function(){
+	    	location.href="/lend/listAll?cpage=1";
+	    })
+	       
+	    $("#borrowBtn").on("click",function(){
+	    	location.href="/borrow/listAll?category=AllCategory&search=${search}&cpage=1";
+	    })
+	       
+	    $("#talentBtn").on("click",function(){
+	    	location.href="/tBoard/listAll?cpage=1";
+	    })
+	      	  
+	})
+       
+       
+    
+   
 
-	<script>
-		$(function() {
-			$("#search").keyup(function(e) {
-				if (e.keyCode == 13) {
-					location.href = "/AllBoardList/allList?search="+ $("#search").val();
-				}
-			})
-		})
 	</script>
-
-
-</head>
+    </head>
 
     <body>
         <!-- Top Bar Start -->
@@ -94,9 +113,9 @@ img{
                     <div class="col-md-6">
                         <div class="top-bar-right">
                             <div class="social">
-                                <a href="/sns/main"><i class="fab fa-twitter"></i></a>
-                                <a href="/sns/main"><i class="fab fa-facebook-f"></i></a>
-                                <a href="/sns/main"><i class="fab fa-instagram"></i></a>
+                                <a href=""><i class="fab fa-twitter"></i></a>
+                                <a href=""><i class="fab fa-facebook-f"></i></a>
+                                <a href=""><i class="fab fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
@@ -113,7 +132,7 @@ img{
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <c:choose>
-                	<c:when test="${loginID == null }">
+                	<c:when test="${loginID == null}">
                 		<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     	<div class="navbar-nav ml-auto">
                         	<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
@@ -136,58 +155,114 @@ img{
             </div>
         </div>
         <!-- Nav Bar End -->
-        <div class="container-fluid">
-            <div class = "row Main">
-                <div class="col-6" id ="Main-1">
-                    <img src="/imgs/Main-1.jpg">
-                </div>
-                <div class="col-6 Main-text first">
-                    <div class="Explanation">
-                        <div class = "subject">돈-다에서는 물건에 대한 새로운 방식을 제시합니다!</div>
-                        <div class = "contents">가까운 이웃에게 물건을 빌리고, 빌려주세요!</div>
-                    </div>
-                    </div>
-                </div>
-            <div class = "row Main">
-                <div class="col-6">
-                    <img src="/imgs/Main-2.png">
-                </div>
-                <div class="col-6 Main-text second">
-                    <div class="Explanation">
-                        <div class = "subject">새로운 즐거움을 나눠봐요!</div>
-                        <div class = "contents">새로운 이웃을 만나고,</div>
-                        <div class = "contents">그들과 경험을 공유하세요!</div>
-                    </div>
-                </div>
+        
+	<!-- Search All List Start -->
+	 <div class="minicontainer">
+        <div class="miniheader">
+        	<!-- 카테고리별 버튼 누를시 그 카테고리로 이동한다 -->
+            <div class="dropdown">
+                <button class="dropbtn" id="lendBtn">대여하기</button>
             </div>
-            <div class = "row Main">
-                <div class="col-6">
-                    <img src="/imgs/Main-3.jpg">
-                </div>
-                <div class="col-6 Main-text third">
-                    <div class="Explanation">
-                        <div class = "subject">경제적이고, 합리적인 선택이 됩니다!</div>
-                        <div class = "contents">경제적이고,합리적인 소비를 통해</div>
-                        <div class = "contents">똑똑한 소비자가 돼 보아요!</div>
-                    </div>
-                </div>
+            <div class="dropdown">
+                <button class="dropbtn" id="borrowBtn">대여요청하기</button>
             </div>
-            <div class = "row Main">
-                <div class="col-6">
-                    <img src="/imgs/Main-4.jpg">
-                </div>
-                <div class="col-6 Main-text third">
-                    <div class="Explanation">
-                        <div class = "subject">주변과의 새로운 연결 고리가 됩니다!</div>
-                        <div class = "contents">단순히 물건을 주고 받는게 아닌</div>
-                        <div class = "contents">서로와 서로를 연결해봐요!</div>
-                    </div>
-                </div>
+            <div class="dropdown">
+                <button class="dropbtn" id="tlSellBtn">재능등록</button>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn" id="tlRequestBtn">재능요청</button>
             </div>
         </div>
+        
+        <!-- 게시판 최신순으로 5개씩 나옴 -->
+       <div class="minibody">
+       
+       		<!-- 대여하기 -->
+       		<input type="hidden" id="search2" value="${search}">
+            <div id="count" class="count">대여하기 총<p>${ldCount}</p>개</div> 
+            <c:choose>
+           		<c:when test="${ldCount != 0}">
+					<c:forEach var="ld" items="${ldList}">
+						<div class="borrow-board">
+							<div id="ldseq" class="seq" name="ldseq" >${ld.seq}</div>
+							<a href="/lend/detailView?seq=${ld.seq}" id="ldtitle" class="title" name="title">${ld.title}</a>
+							<p id="ldregdate" class="regdate" name="address1">${ld.regdate}</p>
+						</div>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<p>검색 결과가 없습니다</p>
+				</c:otherwise>
+			</c:choose>
+            <br>
+            <a href="/lend/listAll?category=AllCategory&search=${search}&cpage=1">더보기</a>
+            <hr>
+            
+            <!-- 대여요청 하기 -->
+            <div id="count" class="count">대여요청 총<p>${bwCount}</p>개</div>
+            <c:choose>
+            	<c:when test="${bwCount != 0}">
+					<c:forEach var="bw" items="${bwList}">
+						<div class="borrow-board">
+							<div id="bwseq" class="seq" name="bwsleq" >${bw.seq}</div>
+							<a href="/borrow/detailView?seq=${bw.seq}" id="bwtitle" class="title" name="bwtitle">${bw.title}</a>
+							<p id="bwregdate" class="regdate" name="bwregdate">${bw.regdate}</p>
+						</div>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<p>검색 결과가 없습니다</p>
+				</c:otherwise>
+			</c:choose>
+            <br>
+            <a href="/borrow/listAll?category=AllCategory&search=${search}&cpage=1">더보기</a>
+            <hr>
+            
+            <!-- 재능등록 하기 -->
+            <div id="count" class="count">재능등록 총<p>${tlsCount}</p>개</div>
+            <c:choose>
+            	<c:when test="${tlsCount != 0}">
+					<c:forEach var="tls" items="${tlsList}">
+						<div class="borrow-board">
+							<div id="tlseq" class="seq" name="tltlseq" >${tls.seq}</div>
+							<a href="/tBoard/detailView?seq=${tls.seq}" id="tltitle" class="title" name="tltitle">${tls.title}</a>
+							<p id="tlregdate" class="regdate" name="tlregdate">${tls.regDate}</p>
+						</div>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<p>검색 결과가 없습니다</p>
+				</c:otherwise>
+			</c:choose>
+            <br>
+            <a href="/tBoard/list?kind=재능등록&category=AllCategory&search=${search}&cpage=1">더보기</a>
+            <hr>
+            
+            <!-- 재능요청 하기 -->
+            <div id="count" class="count">재능요청 총<p>${tlrCount}</p>개</div>
+            <c:choose>
+            	<c:when test="${tlrCount != 0}">
+					<c:forEach var="tlr" items="${tlrList}">
+						<div class="borrow-board">
+							<div id="tlseq" class="seq" name="tltlseq" >${tlr.seq}</div>
+							<a href="/tBoard/detailView?seq=${tlr.seq}" id="tltitle" class="title" name="tltitle">${tlr.title}</a>
+							<p id="tlregdate" class="regdate" name="tlregdate">${tlr.regDate}</p>
+						</div>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<p>검색 결과가 없습니다</p>
+				</c:otherwise>
+			</c:choose>
+            <br>
+            <a href="/tBoard/list?kind=재능요청&category=AllCategory&search=${search}&cpage=1">더보기</a>
+            <hr>
+		</div>
+		</div>
+		<!-- Search All List End -->
 
 
-        <!-- Footer Start -->
+	<!-- Footer Start -->
         <div class="footer">
             <div class="container">
                 <div class="row">
@@ -240,7 +315,7 @@ img{
         <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
         <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<!--         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
         <script src="/lib/easing/easing.min.js"></script>
         
