@@ -70,4 +70,12 @@ public class SnsDAO {
 	public void minuslove(Map<String,Object>param) {
 		mybatis.update("Sns.minuslove", param);
 	}
+	
+	public int getcount(Map<String,Object>param) {
+		return mybatis.selectOne("Sns.getcount", param);
+	}
+	
+	public void updatecount(Map<String,Object>param) {
+		mybatis.update("Sns.updatecount", param);
+	}
 }
