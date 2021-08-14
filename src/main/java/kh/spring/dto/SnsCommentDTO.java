@@ -2,11 +2,6 @@ package kh.spring.dto;
 
 import java.sql.Date;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 public class SnsCommentDTO {
 	private int seq ;
 	private String id;
@@ -24,6 +19,50 @@ public class SnsCommentDTO {
 		this.parentSeq = parentSeq;
 		this.regDate = regDate;
 	}
+
+	public int getSeq() {
+		return seq;
+	}
+
+	public void setSeq(int seq) {
+		this.seq = seq;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getContents() {
+		return contents;
+	}
+
+	public void setContents(String contents) {
+		this.contents = contents;
+	}
+
+	public int getParentSeq() {
+		return parentSeq;
+	}
+
+	public void setParentSeq(int parentSeq) {
+		this.parentSeq = parentSeq;
+	}
+
+	public Date getRegDate() {
+		return regDate;
+	}
+
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
+	}
+	
+	
+	
+	
 	
 	
 	
