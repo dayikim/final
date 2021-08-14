@@ -40,25 +40,39 @@ public class SnsController {
 		return "sns/main";
 	}
 	
+//	@RequestMapping("/write")
+//	public String write(SnsDTO dto, MultipartFile[] file) throws Exception{
+//		System.out.println(file);
+//		String id = (String)session.getAttribute("loginID");
+//		dto.setId(id);
+//		String region = service.region(id);
+//		dto.setRegion(region);
+//		if(file == null) {		
+//			service.insert(dto);
+//		}else {
+//			service.insert(dto);	
+//			int parent = service.seq();//작성한글번호
+//			
+//			String realPath = session.getServletContext().getRealPath("files");
+//			File filesPath = new File(realPath);
+//			if(!filesPath.exists()) {filesPath.mkdir();}
+//			for(MultipartFile tmp : file) {
+//				String oriName = tmp.getOriginalFilename();
+//				String sysName = UUID.randomUUID().toString().replaceAll("-", "")+ "_"+oriName;
+//				fservice.insert(oriName, sysName, parent);
+//				tmp.transferTo(new File(filesPath.getAbsolutePath()+"/"+sysName));
+//			}
+//		}			
+//		return "redirect:/sns/main";
+//	}
+	
 	@RequestMapping("/write")
-	public String write(SnsDTO dto, MultipartFile[] file) throws Exception{
+	public String write(SnsDTO dto) throws Exception{
 		String id = (String)session.getAttribute("loginID");
 		dto.setId(id);
 		String region = service.region(id);
-		dto.setRegion(region);		
-		service.insert(dto);	
-		int parent = service.seq();//작성한글번호
-		
-		String realPath = session.getServletContext().getRealPath("files");
-		File filesPath = new File(realPath);
-		if(!filesPath.exists()) {filesPath.mkdir();}
-		for(MultipartFile tmp : file) {
-			String oriName = tmp.getOriginalFilename();
-			String sysName = UUID.randomUUID().toString().replaceAll("-", "")+ "_"+oriName;
-			fservice.insert(oriName, sysName, parent);
-			tmp.transferTo(new File(filesPath.getAbsolutePath()+"/"+sysName));
-		}
-		
+		dto.setRegion(region);	
+			service.insert(dto);			
 		return "redirect:/sns/main";
 	}
 
@@ -85,6 +99,7 @@ public class SnsController {
 		int seq = dto.getSeq();
 		int parent = dto.getSeq();
 		String contents = dto.getContents();
+
 		service.modify(dto);
 		
 		String realPath = session.getServletContext().getRealPath("files");
@@ -102,18 +117,27 @@ public class SnsController {
 	
 	@RequestMapping("love")
 	@ResponseBody
-	public String love(int seq,int love) {
+	public int love(int seq,int love) {
 		String id = (String)session.getAttribute("loginID");
-		int count = service.getlike(id,seq);
-		System.out.println(count);  //ok
-		if(count == 0) {
+		int countexists = service.getlike(id,seq);
+		int resultcode = 1;
+		if(countexists == 0) { //처음눌렀을때
 			service.love(seq, love);
 			service.pluslove(id, seq);
+			resultcode = 1;
 		}else {
-			service.cancellove(seq, love);
-			service.minuslove(id, seq);
-		}
-		return "redirect:/sns/main";
+			int count = service.getcount(id, seq);
+			if(count ==1) { //취소했을때
+				service.cancellove(seq, love);
+				service.minuslove(id, seq);
+				resultcode = 0;
+			}else { //취소후 다시눌렀을때
+				service.love(seq, love);
+				service.updatecount(id, seq);
+				resultcode = 1;
+			}
+		}		
+		return resultcode;
 	}
 
 }

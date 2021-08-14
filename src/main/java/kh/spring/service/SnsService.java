@@ -89,5 +89,19 @@ public class SnsService {
 		param.put("parentSeq", seq);
 		dao.minuslove(param);
 	}
+	
+	public int getcount(String id, int seq) {
+		Map<String,Object>param = new HashMap();
+		param.put("id", id);
+		param.put("parentSeq", seq);
+		return dao.getcount(param);
+	}
+	
+	public void updatecount(String id, int seq) {
+		Map<String,Object>param = new HashMap();
+		param.put("id", id);
+		param.put("parentSeq", seq);
+		dao.updatecount(param);
+	}
 
 }
