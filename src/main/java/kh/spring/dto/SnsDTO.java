@@ -2,11 +2,6 @@ package kh.spring.dto;
 
 import java.sql.Date;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 public class SnsDTO {
 	private int seq;
 	private String id;
@@ -14,6 +9,48 @@ public class SnsDTO {
 	private String category;
 	private String region;
 	private Date regDate;
+	public int getSeq() {
+		return seq;
+	}
+	public void setSeq(int seq) {
+		this.seq = seq;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getContents() {
+		return contents;
+	}
+	public void setContents(String contents) {
+		this.contents = contents;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public String getRegion() {
+		return region;
+	}
+	public void setRegion(String region) {
+		this.region = region;
+	}
+	public Date getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
+	}
+	public int getLove() {
+		return love;
+	}
+	public void setLove(int love) {
+		this.love = love;
+	}
 	private int love;
 	
 	public SnsDTO() {};	
