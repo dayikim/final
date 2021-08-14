@@ -54,15 +54,12 @@ style>body {
 	display: none;
 }
 
-#commenticon, #top, #love {
+#commenticon, #top, #love, #modicomm {
 	cursor: pointer;
 }
 
 #commenticon {
 	color: #AA96DA;
-}
-#love{
-	color : #FFBCBC;
 }
 
 #del, #modi, #delcomm, #modicomm {
@@ -80,12 +77,6 @@ style>body {
 </style>
 <script>
 	$(function() {
-		
-//		$("#submit").on("click",funtion(){
-///		if(${loginID == null}){
-//	            alert('로그인 후 이용해주세요')
-//	         }
-//		})
 		
 		//댓글버튼눌렀을때
 		$(document).on("click","#commenticon",function(){
@@ -121,7 +112,6 @@ style>body {
 						delete_tag.text("삭제");
 						
 						let modify_tag = $("<a>");
-						//modify_tag.attr("href","/snscomm/modify?seq="+resp[i].seq);
 						modify_tag.attr("id","modicomm");
 						modify_tag.text("수정");
 											
@@ -156,6 +146,7 @@ style>body {
 			}
 		})
 		
+		//댓글수정
 		$(document).on("click","#modicomm",function(){
 			console.log($(this).parents(".comment-heading").siblings("#comment").attr("contenteditable") );
 			console.log($(this).parent().siblings("#commentseq").text());
@@ -180,7 +171,7 @@ style>body {
 		
 		//댓글작성
 		$(document).on("click","#sendcomment",function(){
-			let hidden_comment = $(this).parents("#hiddencomment");
+//			let hidden_comment = $(this).parents("#hiddencomment");
 			if(${loginID == null}){
 	            alert('로그인 후 이용해주세요')
 	         }else{
@@ -188,57 +179,55 @@ style>body {
 	               url : "/snscomm/write",
 	               type : "GET",
 	               data : {"contents":$(this).parent().siblings("#comment").val(),"seq":$(this).parent().siblings("#hidden").val()}               
-	            }).done(function(resp){0
+	            }).done(function(resp){
 	               if(resp == 1){
 	                  alert('댓글작성완료!')
-	                  let ul = $("<ul>")
-						ul.attr("class","comment-list");
-						ul.attr("id", "commentList");
-						
-						let body_div = $("<div>");
-						body_div.attr("class","comment-body");
-						
-						let comment_head = $("<div>");
-						comment_head.attr("class","comment-heading");
-												
-						let comment_writer = $("<h6>");
-						comment_writer.text($("#session").val());
-						
-						let delete_tag = $("<a>");
-						delete_tag.attr("href","/snscomm/delete?seq="+$(this).parent().siblings("#hidden").val());
-						delete_tag.attr("id","delcomm");
-						delete_tag.text("삭제");
-						
-						let modify_tag = $("<a>");
-						modify_tag.attr("href","/snscomm/modify?seq="+$(this).parent().siblings("#hidden").val());
-						modify_tag.attr("id","modicomm");
-						modify_tag.text("수정");						
-						
-						let input = $("<input type=hidden id=commentseq>");
-						input.text(resp[i].seq);
-						
-						let comment = $("<div>");
-						comment.text($(this).parent().siblings("#comment").val());
-						
-			
-						comment_writer.append(delete_tag);
-						comment_writer.append(modify_tag);
-						
-						
-						comment_head.append(comment_writer);
-						comment_head.append(input);					
-						
-						body_div.append(comment_head);
-						body_div.append(comment);												
-						
-						ul.append(body_div);
-						
-						$(hidden_comment).prepend(ul);                
+	                  $(this).parents("#hiddencomment").load(window.location.href + $(this).parents("#hiddencomment"));
+//	                  let ul = $("<ul>")
+//						ul.attr("class","comment-list");
+//						ul.attr("id", "commentList");
+//						
+//						let body_div = $("<div>");
+//						body_div.attr("class","comment-body");
+//						
+//						let comment_head = $("<div>");
+//						comment_head.attr("class","comment-heading");
+//												
+//						let comment_writer = $("<h6>");
+//						comment_writer.text($("#session").val());
+//						
+//						let delete_tag = $("<a>");
+//						delete_tag.attr("href","/snscomm/delete?seq="+$(this).parent().siblings("#hidden").val());
+//						delete_tag.attr("id","delcomm");
+//						delete_tag.text("삭제");
+//						
+//						let modify_tag = $("<a>");
+//						modify_tag.attr("href","/snscomm/modify?seq="+$(this).parent().siblings("#hidden").val());
+//						modify_tag.attr("id","modicomm");
+//						modify_tag.text("수정");						
+//						
+//						let input = $("<input type=hidden id=commentseq>");
+//						input.text(resp[i].seq);
+//						
+//						let comment = $("<div>");
+//						comment.text($(this).parent().siblings("#comment").val());
+//									
+//						comment_writer.append(delete_tag);
+//						comment_writer.append(modify_tag);						
+//						
+//						comment_head.append(comment_writer);
+//						comment_head.append(input);					
+//						
+//						body_div.append(comment_head);
+//						body_div.append(comment);												
+//						
+//						ul.append(body_div);
+//						
+//						$(hidden_comment).prepend(ul);                
 	               }else{
 	                  alert('작성실패')
 	               }
-	            })
-	            
+	            })            
 	            $(this).parent().siblings("#comment").val("");
 	         }
 		})
@@ -254,6 +243,14 @@ style>body {
 	        		 type : "POST",
 	        		 data : {"seq":$(this).parent().siblings("#hiddencomment").children(".input-group").children("#hidden").val(),
 	        			 "love":$(this).parent().siblings("#hiddencomment").children(".input-group").children("#lovecount").val()}
+	        	 }).done(function(resp){
+	        		location.reload();
+	        		console.log(resp)
+					if(resp == 1){
+						$(this).css("color","red")
+					}else{
+						$(this).css("color","black")
+					}
 	        	 })
 	         }
 		})
@@ -374,7 +371,7 @@ style>body {
 							<p class="card-text">${item.contents }</p>
 						</div>
 						<div class="card-footer">
-							<a class="card-link" id=love><i class="far fa-heart"></i>${item.love }</a>
+							<a class="card-link" id=love><i class="fas fa-heart"></i>${item.love }</a>
 							<a class="card-link" id=commenticon><i class="fas fa-comment-dots"></i>Comment</a>
 						</div>
 

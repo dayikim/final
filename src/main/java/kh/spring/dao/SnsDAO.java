@@ -54,4 +54,28 @@ public class SnsDAO {
 	public int love(Map<String,Integer>param) {
 		return mybatis.update("Sns.love", param);
 	}
+	
+	public int getlike(Map<String,Object>param) {
+		return mybatis.selectOne("Sns.getlike", param);
+	}
+	
+	public void pluslove(Map<String,Object>param) {
+		mybatis.insert("Sns.pluslove", param);
+	}
+	
+	public void cancellove(Map<String,Integer>param) {
+		mybatis.update("Sns.cancellove", param);
+	}
+	
+	public void minuslove(Map<String,Object>param) {
+		mybatis.update("Sns.minuslove", param);
+	}
+	
+	public int getcount(Map<String,Object>param) {
+		return mybatis.selectOne("Sns.getcount", param);
+	}
+	
+	public void updatecount(Map<String,Object>param) {
+		mybatis.update("Sns.updatecount", param);
+	}
 }
