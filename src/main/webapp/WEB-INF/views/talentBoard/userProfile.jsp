@@ -409,7 +409,7 @@ li {
 							<div class="tab_content">
 								<div class="row">
 								<c:forEach var="i" items="${sellinglist}">
-								<form action="/tBoard/sellingList" id="frm">
+								<form action="/tBoard/userSelling" id="frm">
 										<input type="hidden" name="id" value="${i.id}">
 									</form>
 									<div class="col-sm-4">
@@ -447,7 +447,7 @@ li {
 													<div id="small_profile-image">
 														<c:choose>
 															<c:when test="${profile != null}">
-																<img src="/imgs/mypage/${profile.sysName }" id=profile>
+																<img src="/imgs/mypage/${profile.sysName}" id=profile>
 															</c:when>
 															<c:otherwise>
 																<img src="/imgs/nomalProfile.jpg" id=profile>

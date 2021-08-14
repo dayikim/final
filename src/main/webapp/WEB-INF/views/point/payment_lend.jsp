@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title> 재능 요청 게시글 상세보기</title>
+    <title>대여 결제하기</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free Website Template" name="keywords">
     <meta content="Free Website Template" name="description">
@@ -20,13 +20,12 @@
 
     <!-- CSS Libraries -->
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
-
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 
@@ -81,24 +80,38 @@
 
         .Main {
             margin-top: 5%;
+
         }
 
-        /* 프로필,상세보기 */
+        /* 페이지 구성 */
+        .wrapper {
+            width: 70%;
+            height: auto;
+        }
+
         #body {
-            padding-top: 60px;
+            height: auto;
+            padding-top: 30px;
             padding-bottom: 30px;
 
         }
 
         .wrapper {
-            width: 100%;
+            width: 70%;
+            margin: auto;
             height: auto;
         }
 
-        /* 버튼 박스 */
-        .btn_box {
-            margin-top: 10px;
-            margin-bottom: 5px;
+        /* 결제하기 title */
+        .card-header {
+            width: 70%;
+            margin: 0 atuo 0 0;
+            background-color: rgba(18, 54, 29, 0.973);
+            border-radius: 10px;
+            border: solid 1px black;
+            color: white;
+            font-size: 20px;
+            font-weight: bolder;
         }
 
         /* 게시글 제목 */
@@ -106,62 +119,29 @@
             margin: auto;
             margin-top: 10px;
             border-radius: 5px;
-            border: 1px solid #ddd;
+            border: 1px solid gray;
             width: 85%;
             margin-bottom: 20px;
 
         }
 
-        .title_msg {
-            margin-left: 10px;
-
-        }
-
-        /* 사진 슬라이드 */
-        .carousel {
-            margin: 0;
-        }
-
-        .carousel-item {
-            max-height: 500px;
-        }
-
-        .carousel-item img {
-            width: 100%;
-            height: 100%;
-        }
-
-        .carousel-inner {
-            width: 100%;
-        }
-
-        .row .carousel-control-prev {
-            left: -40px;
-            border-bottom: 0;
-            font-size: 40px;
-            color: #444;
-        }
-
-        .row .carousel-control-next {
-            right: -40px;
-            border-bottom: 0;
-            font-size: 40px;
-            color: #444;
-        }
-
-        /* 작성자 프로필 */
-        #user-profile {
+        /* 대여 상품 */
+        #lend_product {
             margin: auto;
-            margin-top: 30px;
+            margin-top: 20px;
             margin-bottom: 20px;
             border-radius: 5px;
-            border: 1px solid #ddd;
+            border: 1px solid gray;
             width: 85%;
             margin-bottom: 20px;
         }
 
-        /* 아이디 */
-        #user-profile #nickname {
+        hr {
+            margin: 0px;
+        }
+
+        /* 상품명 */
+        #lend_product #product {
             position: absolute;
             text-align: center;
             margin-top: 20px;
@@ -169,122 +149,195 @@
             font-weight: bold;
             letter-spacing: -0.6px;
             margin-bottom: 10px;
-            margin-left: 90px;
+            margin-left: 140px;
             display: inline-block;
         }
 
-        /* 위치  */
-        #user-profile #region_name {
+        #lend_product #price {
             position: absolute;
-            text-align: center;
             margin-top: 50px;
-            letter-spacing: -0.6px;
-            margin-bottom: 10px;
-            margin-left: 100px;
-            font-size: 15px;
-            display: inline-block;
-        }
-
-        #user-profile #price {
-            float: right;
-            margin-top: 30px;
+            margin-left: 150px;
             font-size: 18px;
             font-weight: bold;
             letter-spacing: -0.6px;
-            margin-right: 130px;
             margin-bottom: 10px;
         }
 
-        #user-profile #booking {
-            float: right;
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
-            letter-spacing: -0.6px;
-            margin-right: 30px;
-            margin-bottom: 10px;
-        }
-
-        /* 프로필 이미지 */
-        #user-profile #profile-image img {
-            width: 60px;
-            height: 60px;
+        #lend_product #profile-image img {
+            width: 100px;
+            height: 100px;
             margin-left: 20px;
             margin-top: 10px;
             margin-bottom: 10px;
-            border-radius: 40px;
             overflow: hidden;
             vertical-align: middle;
         }
 
-        /* 세부 설명 */
-        #contents {
+
+        /* 판매자 정보 */
+        #sellerInfo_box {
+            margin-top: 10px;
+        }
+
+        #lend_product #seller {
+            margin-top: 10px;
+            margin-left: 20px;
+            font-weight: 800;
+            font-size: 18px;
+            color: gray;
+            text-align: center;
+        }
+
+        #lend_product #small_profile-image {
+            width: 40px;
+            height: 40px;
+            margin-left: 30px;
+            margin-bottom: 10px;
+            border-radius: 30px;
+            overflow: hidden;
+            vertical-align: middle;
+        }
+
+        #lend_product #nickname {
+            position: absolute;
+            margin-left: 60px;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: -0.6px;
+            margin-bottom: 10px;
+            margin-top: 5px;
+            vertical-align: bottom;
+        }
+
+        /* 결제 금액 */
+        #lend {
             border-radius: 5px;
-            border: 1px solid #ddd;
+            border: 1px solid gray;
+            width: 85%;
+            margin: auto;
+            margin-bottom: 20px;
+
+        }
+
+        .lend_period {
+            margin-top: 10px;
+            margin-left: 20px;
+        }
+
+        .period {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* 최종 결제 금액 */
+        #payment {
+            border-radius: 5px;
+            border: 1px solid gray;
             width: 85%;
             margin: auto;
             height: auto;
-            margin-top: 10px;
-            margin-bottom: 30px;
-
-        }
-
-        .contents_input {
-            padding: 0;
-            margin-left: 20px;
-            min-height: 100%;
-            width: 95%;
-            border-radius: 10px;
-        }
-
-        p {
-            margin-left: 20px;
-            margin-top: 10px;
-        }
-
-
-        #chat,#request{
             margin-bottom: 10px;
+
+        }
+
+        /* 포인트 결제액 */
+        .point_wrap {
+            margin-top: 10px;
+            margin-left: 20px;
+            height: auto;
+            margin-bottom: 30px;
+        }
+
+        .point {
+            display: inline-block;
             margin-right: 10px;
         }
 
+        .point_wrap .all {
+            margin: auto;
+            margin-right: 10px;
+        }
+
+        /* 보유포인트 */
+        .point_wrap #remain_point {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            margin-right: 100px;
+        }
+
+        /* 사용포인트 */
+        .point_wrap #use_point {
+            display: block;
+            text-align: center;
+            margin-bottom: 0;
+        }
+
+        /* 포인트 관련 알림 */
+        .point_wrap .alertPoint {
+            margin: 0;
+            margin-left: 60px;
+            text-align: center;
+            color: red;
+            display: block;
+        }
+
+        .point_wrap .amount {
+            width: 80px;
+            margin-left: 10px;
+            margin-right: 10px;
+
+        }
+
+        .pointAmount {
+            color: #2ca10f;
+            font-weight: 800;
+            width: 120px;
+            margin-left: 20px;
+            width: 80px;
+
+        }
+
+        #point1 {
+            margin-left: 10px;
+        }
+
+        #point2 {
+            margin-right: 10px;
+        }
+
+        .pay_box {
+            text-align: center;
+        }
+
+        #pay {
+            margin: auto;
+            display: block;
+            margin-bottom: 10px;
+
+        }
+
+        .final_price {
+            margin-left: 10px;
+            color: #2ca10f;
+            font-weight: 800;
+        }
+
+        .back {
+            color: black;
+            font-size: xx-large;
+        }
     </style>
 </head>
 
 <body>
-    <!-- Top Bar Start -->
-    <div class="top-bar d-none d-md-block">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="top-bar-left">
-                        <div class="text">
-                            <h2>AM 9:00 - PM 7:00</h2>
-                        </div>
-                        <div class="text">
-                            <h2>02 123 4567</h2>
-                            <p>고객 센터</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="top-bar-right">
-                        <div class="social">
-                            <a href=""><i class="fab fa-twitter"></i></a> <a href=""><i
-                                    class="fab fa-facebook-f"></i></a> <a href=""><i class="fab fa-instagram"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Top Bar End -->
 
     <!-- Nav Bar Start -->
     <div class="navbar navbar-expand-lg bg-dark navbar-dark">
         <div class="container-fluid">
-            <a href="/" class="navbar-brand">
-                <p id=titlename>돈-다</p>
+            <a href="index.html" class="navbar-brand">
+                <p id="titlename">돈-다</p>
             </a>
 
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -303,104 +356,103 @@
         </div>
     </div>
     <!-- Nav Bar End -->
+
     <section id="body">
         <div class="container">
-            <div class="btn_box btn_wrap text-right ">
-                <button type="button" class="btn btn-info" id="Tomain"><i class="fas fa-trash-restore"> 삭제</i></button>
-                <button type="button" class="btn btn-info" id="Tomain">수정</button>
+            <div class="container-fluid card-header">
+                <i class="fas fa-comment-dollar">  <b>결제하기</b></i>
             </div>
             <div class="form-control wrapper">
-                <div class="board_title">
-                    <a href="#" class="badge badge-info">재능 요청</a>
-                    <span id="category">${tboard.category}</span>
-                    <h2 class="title_msg"><b>${tboard.title}<b></h2>
-                </div>
-                <div class="row col-12 carousel">
-                    <!-- Carousel -->
-                    <div id="carousel-example" class="col-12 carousel slide" data-ride="carousel">
 
+                <section id="lend_product">
 
-                        <div class="col-12 carousel-inner">
-                            <div class="col-12 col-md-12 carousel-item active">
-                                <img src="자유게시판 상세 및 신고.png" class="col-12 d-block w-100" alt="slide-img-1">
-
-                            </div>
-                            <div class=" col-12 carousel-item">
-                                <img src="자유게시판 수정.PNG" class="col-12 col-md-12 d-block w-100" alt="slide-img-2">
-                                <div class="carousel-caption">
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class=" col-12 carousel-item">
-                            <img src="자유게시판 작성.png" class="col-12 col-md-12 d-block w-100" alt="slide-img-3">
-
-                        </div>
-                        <div class="col-12 carousel-item">
-                            <img src="assets/img/slides/slide-img-4.jpg" class="d-block w-100" alt="slide-img-4">
-
-                        </div>
-                    </div>
-
-                    <a class="carousel-control-prev" href="#carousel-example" role="button" data-slide="prev">
-                        <i class="fas fa-chevron-circle-left" aria-hidden="true"></i>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carousel-example" role="button" data-slide="next">
-                        <i class="fas fa-chevron-circle-right" aria-hidden="true"></i>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
-                <!-- End carousel -->
-                <section id="user-profile">
-                    <div id="nickname_box">
-                        <h2 id="nickname">
-                            <a href="/tBoard/userProfile?id=${tboard.id}"><b>${memberInfo.name}</b>님</a>
+                    <div class="lend_period">
+                        <h4>
+                            <b> 대여상품</b>
+                        </h4>
+                        <hr>
+                        <h2 id="product">
+                            <b> 자전거 대여 </b>
                         </h2>
+                        <span class="align-baseline" id="price"><b class="final_price">100</b> 상추</span>
+                        <div id="profile-image">
+                            <!-- 프로필 이미지 -->
+                            <img src="/imgs/nomalProfile.jpg">
+                        </div>
+                        <hr>
+                        <div id="sellerInfo_box">
+                            <h8 id="seller">
+                                판매자 정보
+                            </h8>
+                        </div>
+
+                        <div id="nickname_box">
+                            <h9 id="nickname">
+                                <b>김다이</b>님
+                                </h2>
+                        </div>
 
                     </div>
-                    <span id="region_name">${memberInfo.address1}</span>
-                    <div class=" btn_wrap text-right">
-                        <!-- <button type="button" class="btn btn-secondary" id="booking">
-                            예약하기</i></button> -->
-                    </div>
-                    <span class="align-baseline" id="price">${tboard.price} 상추</span>
-                    
-                    <div id="profile-image">
+
+                    <div id="small_profile-image">
                         <!-- 프로필 이미지 -->
-                        <c:choose>
-					<c:when test="${profile != null}">
-						<a href="/tBoard/userProfile"><img src="/imgs/mypage/${profile.sysName }" id=profile></a>
-					</c:when>
-					<c:otherwise>
-						<a href="/tBoard/userProfile"><img src="/imgs/nomalProfile.jpg" id=profile></a>
-					</c:otherwise>
-				</c:choose>
+                        <img src="자유게시판 수정.PNG">
                     </div>
                 </section>
 
-                <section id="contents">
-                <!-- 게시글  내용 -->
-                    <div class="col-12 md-5 contents_input">
-                        <p class="target"> 금액에 관한 자세한 내용은 1:1 채팅창으로 문의주세요.</p>
-                    </div>
-
-                    <div class="btn_wrap text-right">
-                        <button type="button" class="btn btn-outline-info btn btn-lg" id="chat"><i class="far fa-comment-dots"></i>
-                            1:1 채팅</button>
-                            <a href="/tBoard/ToRegister"><button type="button" class="btn btn-outline-info btn btn-lg" id="request"><i class="far fa-comment-dots"></i>
-                                재능 판매</button></a>
+                <section id="lend">
+                    <div class="lend_period">
+                        <h4>
+                            <b> 대여기간</b>
+                        </h4>
+                        <hr>
+                        <div class="period">
+                            <b>2021-08-18~ 2021-08-19</b>
+                        </div>
                     </div>
 
                 </section>
 
+                <section id="payment">
+                    <div class="point_wrap">
+                        <h4 class=" point">
+                            <b>최종 결제 금액 </b>
+                        </h4>
+                        <hr>
+                        <span id="remain_point"><b>현재 보유 포인트 : </b> <span
+                                class="align-baseline pointAmount">middle</span>
+                            <b id="point1">상추</b></span>
+                        <span id="use_point"><b id="use">사용 포인트 : </b> <input class="amount"> <b id="point2">상추</b>
+                            <button type="button" class=" all btn-outline-info btn btn-sm">
+                                사용</i></button></span>
 
+                        <span class="alertPoint">
+                            보유 포인트 이상~~~
+                        </span>
+                    </div>
+                    <div class="pay_box">
+                        <span id="pay_amount">
+                            <h5><b>결제 금액 : <b class="final_price">100</b> <b id="point1">상추</b></b></h4>
+                        </span>
+                    </div>
+                </section>
 
+                <div class="btn_wrap">
+                    <button type="button" class="btn btn-success btn btn-lg" id="pay"><i
+                            class="far fa-comment-dots"></i>
+                        결제하기</i></button>
+
+                </div>
+                <div class="btn_wrap text-right">
+                    <a href="" class="back"><i class="fas fa-arrow-alt-circle-left"></i></a>
+
+                </div>
             </div>
         </div>
+
+
     </section>
 
-    <hr>
     <footer>
         <!-- Footer Start -->
         <div class="footer">
@@ -461,8 +513,8 @@
             <div class="container copyright">
                 <div class="row">
                     <div class="col-12" style="text-align: center;">
-                        <p id=titlename>
-                            &copy; <a href="#">돈-다</a>, All Right Reserved.
+                        <p id="titlename">
+                            <a href="#">돈-다</a>, All Right Reserved.
                         </p>
                     </div>
                 </div>

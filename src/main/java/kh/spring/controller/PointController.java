@@ -40,22 +40,21 @@ public class PointController {
 	}
 	@ResponseBody
 	@RequestMapping(value="charging", produces="text/html;charset=utf8")
-	public String Charging(int amount, Model model,PointDTO pointdto) throws Exception {
+	public String Charging(String amount, Model model,PointDTO pointdto) throws Exception {
 
 			String sessionID = (String) session.getAttribute("loginID");
 			pointdto.setId(sessionID);//충전한 아이디
-			pointdto.setPointAmount(amount);//충전금액
+			pointdto.setPointAmount(Integer.parseInt(amount));//충전금액
 			PointService.charging(pointdto);//포인트 적립
-			
 			int pointAmount =PointService.amount(sessionID);//잔고금액
-			model.addAttribute("point",pointAmount);
-		
+			
 		PersonDTO pdto = MypageService.mypageList(sessionID); // 내 정보 출력
 		ProfileFilesDTO pfdto = MypageService.profileSelect(sessionID); // 내 프사 출력
 		session.setAttribute("myInfo", pdto); // 내 정보
 		model.addAttribute("profile",pfdto); //프로필
+		model.addAttribute("point",pointAmount); // 내 포인트
 
-		return "/mypage/mypage";
+		return "my/mypageProc";
 
 	}
 
