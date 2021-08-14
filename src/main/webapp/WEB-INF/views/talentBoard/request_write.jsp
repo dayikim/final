@@ -6,7 +6,7 @@
 
 		<head>
 			<meta charset="utf-8">
-			<title>재능 판매</title>
+			<title>재능 요청하기</title>
 			<meta content="width=device-width, initial-scale=1.0" name="viewport">
 			<meta content="Free Website Template" name="keywords">
 			<meta content="Free Website Template" name="description">
@@ -185,10 +185,14 @@
 				$(function () {
 					$("#file").on("change", preview)
 
-					$("#file").change(function() { $("#fileName").val(this.files && this.files.length ? this.files[0].name : this.value.replace(/^C:\\fakepath\\/i, '')); })
+					$("#file").change(function() {
+						$("#fileName").val(this.files && this.files.length ? this.files[0].name : this.value.replace(/^C:\\fakepath\\/i, ''));
+						
+					})
 
-
-					let fileTarget = $('.upload-hidden'); fileTarget.on('change', function () { // 값이 변경되면
+					let fileTarget = $('.upload-hidden'); 
+					
+					fileTarget.on('change', function () { // 값이 변경되면
 						if (window.FileReader) { // modern browser
 							var filename = this.files[0].name;
 						}
@@ -198,6 +202,10 @@
 						// 추출한 파일명 삽입 
 						$(this).siblings("fileName").val(filename);
 					});
+					
+					/* document.on("click","selProductFile",function(){
+						$(this).
+					}) */
 
 
 					let title = $("#title_input");
@@ -298,8 +306,7 @@
 
 					let img_id = "#img_id_" + index;
 					$(img_id).remove();
-					$("file").remove()
-
+					$("#fileName").val("");
 					console.log(preview_files);
 				}
 
@@ -373,14 +380,14 @@
 								</h2>
 
 							</div>
-
+							<!-- 제목 -->
 							<div class="input-group mb-3 col-md-12 ">
 								<label class="input-group-text input"
 									for="inputGroupSelect02">요청할 재능명<strong>＊</strong></label>
 								<input type="text" class="form-control" id="title_input" name="title"
 									placeholder="요청할 재능을 입력하세요" required>
 							</div>
-
+									<!--카테고리-->
 							<div class="input-group mb-3 col-md-12">
 								<label class="input-group-text" for="inputGroupSelect02">카테고리<strong>＊</strong></label>
 								<select class="custom-select" id="category" name="category">
@@ -395,7 +402,7 @@
 								</select>
 							</div>
 							
-
+							<!-- 이미지 미리보기 -->
 							<div class="input-group mb-3 col-md-12">
 								<h4>
 									<b>이미지 미리 보기</b>
@@ -403,17 +410,14 @@
 								<div class="input-group mb-3 col-md-12 " id="preview">
 									<!-- <img id="img"/> -->
 								</div>
-
-								
-								
 								<!-- onchange="javascript:document.getElementById('fileName').value = this.value" -->
 								
-									<div class="custom-file">
-										<input type="file" name="file" class="upload-hidden" id="file"  onchange="javascript:document.getElementById('fileName').value = this.value"  multiple>
-										<input type=text class="custom-file-label"  id="fileName" name="filename" style="width: 380px;">
+									<div class="custom-file ">
+										<input type="file" name="file" class="upload-hidden" id="file"  multiple>
+										<input type=text class="custom-file-label"  id="fileName" name="filename" style="width: 800px;">
 																		</div>
 									<div class="input-group-append">
-										<button class="btn btn-outline-secondary" type="button" onclick="filesUpload();"class="uploadBtn">업로드</button>
+										<button type="button" class="btn btn-outline-secondary" onclick="filesUpload();" >업로드</button>
 									</div>
 									<!-- </form> -->
 								
@@ -440,7 +444,7 @@
 									rows="10" id="contents" name="contents" required></textarea>
 							</div>
 							<div class="btn_wrap text-right">
-								<button type="button" class="btn btn-primary" id="submitBtn">등록</button>
+								<button type="button" class="btn btn-primary" id="submitBtn">요청하기</button>
 								<button type="reset" id="cancel" class="btn btn-dark">취소</button>
 
 							</div>

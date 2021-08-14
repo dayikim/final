@@ -382,7 +382,7 @@ p {
 						<button type="button" class="btn btn-secondary" id="booking">
 							예약하기</button>
 					</div>
-					<span class="align-baseline" id="price">${tboard.price}</span>
+					<span class="align-baseline" id="price">${tboard.price} 상추</span>
 
 					<div id="profile-image">
 						<!-- 프로필 이미지 -->

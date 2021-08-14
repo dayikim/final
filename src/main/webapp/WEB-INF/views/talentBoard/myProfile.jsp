@@ -6,7 +6,7 @@
 
 <head>
 <meta charset="utf-8">
-<title>유저 프로필 내역</title>
+<title>마이 프로필 내역</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free Website Template" name="keywords">
 <meta content="Free Website Template" name="description">
@@ -165,6 +165,7 @@ div {
 .tab_list.tab_active {
 	background: #cdcfd3;
 	color: whitesmoke;
+	text-align: center;
 }
 
 .tab_list a {
@@ -192,6 +193,15 @@ div {
 
 .card {
 	display: inline-block;
+}
+
+/* 판매 목록 */
+button {
+	border: 0;
+	outline: 0;
+	background: #cdcfd3;
+	justify-content: center;
+	;
 }
 
 /* 거래후기 tab */
@@ -295,13 +305,13 @@ li {
 				}
 			})
 		})
-		
-		$("#Tomain").on("click",function(){
-			location.href="/";
-			
+
+		$("#Tomain").on("click", function() {
+			location.href = "/";
+
 		})
-		
-		$("#sellingList").on("click",function(){
+
+		$("#sellingList").on("click", function() {
 			$("#frm").submit();
 		})
 
@@ -372,7 +382,7 @@ li {
 
 				<section id="user-profile">
 					<h2 id="nickname">
-						<b>${memberInfo.name}</b>님 <span id="region_name">${memberInfo.address1}</span>
+						<b>${myInfo.name}</b>님 <span id="region_name">${myInfo.address1}</span>
 					</h2>
 
 					<div id="profile-image">
@@ -394,38 +404,40 @@ li {
 					<div class="tab_basic">
 						<div class="row tab_list_wrap">
 							<div class="tab_list tab_active col" data-tabnum="0">
-							
-								<button type="button" id="sellingList"> 판매목록 <span class="badge badge-pill badge-dark">${sellingCount}</span></button>
+								<button type="button" id="sellingList">
+									내 판매목록 <span class="badge badge-pill badge-dark">${sellingCount}</span>
+								</button>
 							</div>
 							<div class="tab_list col" data-tabnum="1">
-								<a href="/TBoard/Review">거래 후기 <span class="badge badge-pill badge-dark">3</span></a>
+								<a href="/TBoard/Review">거래 후기 <span
+									class="badge badge-pill badge-dark">3</span></a>
 							</div>
 							<!-- <div class="tab_list" data-tabnum="2">
 								<a href="#">3번 탭</a>
 							</div> -->
 						</div>
-						
+
 						<div class="tab_container">
 							<div class="tab_content">
 								<div class="row">
-								<c:forEach var="i" items="${sellinglist}">
-								<form action="/tBoard/userSelling" id="frm">
-										<input type="hidden" name="id" value="${i.id}">
-									</form>
-									<div class="col-sm-4">
-										<div class="card">
-											<div class="card-body">
-											
-												<img src="..." class="card-img-top" alt="...">
-												<h5 class="card-title">${i.title}</h5>
-												<div class="card-price ">${i.price} 원</div>
-												<div class="card-region-name">${memberInfo.address1}</div>
-												<div class="card-counts">
-													<span> 채팅 <span class="badge badge-danger">3</span></span>
+									<c:forEach var="i" items="${sellinglist}">
+										<form action="/tBoard/myselling" id="frm">
+											<input type="hidden" name="id" value="${i.id}">
+										</form>
+										<div class="col-sm-4">
+											<div class="card">
+												<div class="card-body">
+
+													<img src="..." class="card-img-top" alt="...">
+													<h5 class="card-title">${i.title}</h5>
+													<div class="card-price ">${i.price}원</div>
+													<div class="card-region-name">${myInfo.address1}</div>
+													<div class="card-counts">
+														<span> 채팅 <span class="badge badge-danger">3</span></span>
+													</div>
 												</div>
 											</div>
 										</div>
-									</div>
 									</c:forEach>
 
 								</div>
@@ -514,7 +526,8 @@ li {
 					</div>
 				</section>
 				<div class=" btn_wrap text-right ">
-					<button type="button" class="btn btn-outline-info" id="Tomain">메인으로 이동</button>
+					<button type="button" class="btn btn-outline-info" id="Tomain">메인으로
+						이동</button>
 				</div>
 			</div>
 		</div>

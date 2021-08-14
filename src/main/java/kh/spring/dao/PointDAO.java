@@ -23,5 +23,8 @@ public class PointDAO {
 	public List<PointDTO> pointChargeList(String sessionID) {
 		return mybatis.selectList("Point.pointChargeList",sessionID);
 	}
+	public int isempty(String sessionID) {
+		return mybatis.selectOne(sessionID);
+	}
 	
 }
