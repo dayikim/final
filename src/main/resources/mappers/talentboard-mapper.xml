@@ -12,11 +12,11 @@
 	</select>
 			
 	<select id="sellingCount" resultType="int">
-	select count(*) from TalentBoard where kind=#{kind}
+	select count(*) from TalentBoard where kind=#{kind} and id=#{id}
 	</select>
 	
 	<select id="getSellingList" resultType="kh.spring.dto.TalentBoardDTO">
-	select * from TalentBoard where kind=#{kind}
+	select * from TalentBoard where kind=#{kind} and id=#{id}
 	</select>
 	
 	<select id="getId" resultType="String">
