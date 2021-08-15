@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,12 +39,21 @@ public class TalentBoardService {
 		return dao.detailView(seq);
 	}
 
-	public int sellingCount(String kind) {
-		return dao.sellingCount(kind);
+	public int sellingCount(String kind,String sessionID ) {
+		 Map<String,Object> param = new HashMap<>();
+		param.put("kind",kind );
+	    param.put("id", sessionID);
+		return dao.sellingCount(param);
 	}
-	public List<TalentBoardDTO> getSellingList(String kind){
-		return dao.getSellingList(kind);
+	
+	public List<TalentBoardDTO> getSellingList(String kind,String sessionID){
+		 Map<String,Object> param = new HashMap<>();
+			param.put("kind",kind );
+		    param.put("id", sessionID);
+				return dao.getSellingList(param);
+
 	}
+	
 
 
 

@@ -1,6 +1,7 @@
 package kh.spring.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,11 @@ public class TalentBoardDAO {
 		return mybatis.selectOne("TBoard.getSeq");
 	}
 	
-	public int sellingCount(String kind) {
-		return mybatis.selectOne("TBoard.sellingCount",kind);
+	public int sellingCount(Map<String,Object>param) {
+		return mybatis.selectOne("TBoard.sellingCount",param);
 	}
 	
-	public List<TalentBoardDTO> getSellingList(String kind){
-		return mybatis.selectList("TBoard.getSellingList",kind);
+	public List<TalentBoardDTO> getSellingList(Map<String,Object>param){
+		return mybatis.selectList("TBoard.getSellingList",param);
 	}
 }
