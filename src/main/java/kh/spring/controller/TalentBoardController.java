@@ -88,11 +88,11 @@ public class TalentBoardController {
 //         model.addAttribute("pictures",pList);
 		
 		String kind ="재능등록";
-		int result = TBoardService.sellingCount(kind);
+		int result = TBoardService.sellingCount(kind,sessionID);
 		model.addAttribute("sellingCount",result);
 
 		List<TalentBoardDTO> sellingList;
-		sellingList =TBoardService.getSellingList(kind);//판매목록 리스트
+		sellingList =TBoardService.getSellingList(kind,sessionID);//판매목록 리스트
 
 		model.addAttribute("sellinglist",sellingList);
 		System.out.println(sellingList.isEmpty());
@@ -111,11 +111,11 @@ public class TalentBoardController {
 		model.addAttribute("profile",pfdto); //프로필
 
 		String kind ="재능등록";
-		int result = TBoardService.sellingCount(kind);
+		int result = TBoardService.sellingCount(kind,id);
 		model.addAttribute("sellingCount",result);
 
 		List<TalentBoardDTO> sellingList;
-		sellingList =TBoardService.getSellingList(kind);//판매목록 리스트
+		sellingList =TBoardService.getSellingList(kind,id);//판매목록 리스트
 
 		model.addAttribute("sellinglist",sellingList);
 		System.out.println(sellingList.isEmpty());
@@ -129,11 +129,11 @@ public class TalentBoardController {
 		model.addAttribute("memberInfo",pd);
 
 		String kind ="재능등록";
-		int result = TBoardService.sellingCount(kind);
+		int result = TBoardService.sellingCount(kind,id);
 		model.addAttribute("sellingCount",result);//판매목록 갯수
 
 		List<TalentBoardDTO> sellingList;
-		sellingList =TBoardService.getSellingList(kind);//판매목록 리스트
+		sellingList =TBoardService.getSellingList(kind,id);//판매목록 리스트
 
 		model.addAttribute("sellinglist",sellingList);
 		System.out.println(sellingList.isEmpty());
@@ -147,11 +147,11 @@ public class TalentBoardController {
 		model.addAttribute("memberInfo",pd);
 
 		String kind ="재능등록";
-		int result = TBoardService.sellingCount(kind);
+		int result = TBoardService.sellingCount(kind,id);
 		model.addAttribute("sellingCount",result);
 
 		List<TalentBoardDTO> sellingList;
-		sellingList =TBoardService.getSellingList(kind);//판매목록 리스트
+		sellingList =TBoardService.getSellingList(kind,id);//판매목록 리스트
 
 		model.addAttribute("sellinglist",sellingList);
 		System.out.println(sellingList.isEmpty());

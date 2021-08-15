@@ -5,7 +5,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>돈 빼고 다! 돈-고</title>
+        <title>돈 빼고 다! 돈-다</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="Free Website Template" name="keywords">
         <meta content="Free Website Template" name="description">
@@ -69,6 +69,10 @@ img{
 					location.href = "/AllBoardList/lendList?category=AllCategory&search="+$("#search").val()+"&cpage=1";
 				}
 			})
+			
+			$("#chat").on("click",function(){
+				location.href = "/chat";
+			})
 		})
 	</script>
 
@@ -127,7 +131,22 @@ img{
                     		<div class="navbar-nav ml-auto">
                         		<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
                         		<a href="/person/logout" class="nav-item nav-link active">Logout</a> <!-- Logout -->
-                        		<a href="/my/mypageProc" class="nav-item nav-link">MyPage</a>  <!-- My Page 이동 -->
+                        		 <div class="collapse navbar-collapse" id="navbarNavDropdown">
+	                        		 <ul class="navbar-nav">
+	                        			<li class="nav-item dropdown">
+									        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									         Menu
+									        </a>
+									        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+									          <a class="dropdown-item" href="#">Board</a>
+									          <a class="dropdown-item" href="#">SNS</a>
+									          <a class="dropdown-item" href="#">My page</a>
+									          <a class="dropdown-item" href="#">Charging</a>
+									        </div>
+								      	</li>
+								      </ul>
+								      <button type="button" class="btn btn-outline-warning" id="chat">Chatting</button>
+							      </div>
                     		</div>
                 		</div>
                 	</c:otherwise>
