@@ -33,11 +33,12 @@ public class PersonDTO {
 		this.regDate = regDate;
 		this.loginFailCount = loginFailCount;
 	}
+
 	public int getLoginFailCount() {
 		return loginFailCount;
 	}
-	public int setLoginFailCount(int loginFailCount) {
-		return this.loginFailCount = loginFailCount;
+	public void setLoginFailCount(int loginFailCount) {
+		this.loginFailCount = loginFailCount;
 	}
 	public int getSeq() {
 		return seq;

@@ -112,7 +112,7 @@ img{
         <!-- Nav Bar Start -->
         <div class="navbar navbar-expand-lg bg-dark navbar-dark">
             <div class="container-fluid">
-                <a href="index.html" class="navbar-brand"><p id= titlename>돈-다</a></p>
+                <a href="/" class="navbar-brand"><p id= titlename>돈-다</a></p>
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
