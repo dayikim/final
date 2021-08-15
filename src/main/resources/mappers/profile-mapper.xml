@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Profile">
+
+<select id="sellingCount" resultType="int">
+	select count(*) from TalentBoard where kind=#{kind} and id=#{id}
+	</select>
+	
+	<select id="getSellingList" resultType="kh.spring.dto.TalentBoardDTO">
+	select * from TalentBoard where kind=#{kind} and id=#{id}
+	</select>
+
+</mapper>

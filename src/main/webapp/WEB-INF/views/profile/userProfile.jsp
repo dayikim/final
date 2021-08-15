@@ -6,7 +6,7 @@
 
 <head>
 <meta charset="utf-8">
-<title>마이 프로필 내역</title>
+<title>유저 프로필 내역</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free Website Template" name="keywords">
 <meta content="Free Website Template" name="description">
@@ -165,7 +165,6 @@ div {
 .tab_list.tab_active {
 	background: #cdcfd3;
 	color: whitesmoke;
-	text-align: center;
 }
 
 .tab_list a {
@@ -193,15 +192,6 @@ div {
 
 .card {
 	display: inline-block;
-}
-
-/* 판매 목록 */
-button {
-	border: 0;
-	outline: 0;
-	background: #cdcfd3;
-	justify-content: center;
-	;
 }
 
 /* 거래후기 tab */
@@ -305,13 +295,13 @@ li {
 				}
 			})
 		})
-
-		$("#Tomain").on("click", function() {
-			location.href = "/";
-
+		
+		$("#Tomain").on("click",function(){
+			location.href="/";
+			
 		})
-
-		$("#sellingList").on("click", function() {
+		
+		$("#sellingList").on("click",function(){
 			$("#frm").submit();
 		})
 
@@ -322,67 +312,59 @@ li {
 </head>
 
 <body>
-	<!-- Top Bar Start -->
-	<div class="top-bar d-none d-md-block">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-6">
-					<div class="top-bar-left">
-						<div class="text">
-							<h2>AM 9:00 - PM 7:00</h2>
-						</div>
-						<div class="text">
-							<h2>02 123 4567</h2>
-							<p>고객 센터</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="top-bar-right">
-						<div class="social">
-							<a href=""><i class="fab fa-twitter"></i></a> <a href=""><i
-								class="fab fa-facebook-f"></i></a> <a href=""><i
-								class="fab fa-instagram"></i></a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Top Bar End -->
+ <!-- Nav Bar Start -->
+        <div class="navbar navbar-expand-lg bg-dark navbar-dark">
+            <div class="container-fluid">
+                <a href="/" class="navbar-brand"><p id= titlename>돈-다</a></p>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <c:choose>
+                	<c:when test="${loginID == null }">
+                		<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    	<div class="navbar-nav ml-auto">
+                        	<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
+                        	<a href="/person/login" class="nav-item nav-link active">Login</a> <!-- Login Page 이동 -->
+                        	<a href="/person/join" class="nav-item nav-link">Sign Up</a>  <!-- SignUp Page 이동 -->
+                    	</div>
+                		</div>
+                	</c:when>
+                	<c:otherwise>
+                		<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    		<div class="navbar-nav ml-auto">
+                        		<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
+                        		<a href="/person/logout" class="nav-item nav-link active">Logout</a> <!-- Logout -->
+                        		 <div class="collapse navbar-collapse" id="navbarNavDropdown">
+	                        		 <ul class="navbar-nav">
+	                        			<li class="nav-item dropdown">
+									        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									         Menu
+									        </a>
+									        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+									          <a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
+									          <a class="dropdown-item" href="#">SNS</a>
+									          <a class="dropdown-item" href="/my/mypageProc">My page</a>
+									          <a class="dropdown-item" href="#">Charging</a>
+									        </div>
+								      	</li>
+								      </ul>
+								      <button type="button" class="btn btn-outline-warning" id="chat">Chatting</button>
+							      </div>
+                    		</div>
+                		</div>
+                	</c:otherwise>
+                </c:choose>
 
-	<!-- Nav Bar Start -->
-	<div class="navbar navbar-expand-lg bg-dark navbar-dark">
-		<div class="container-fluid">
-			<a href="index.html" class="navbar-brand">
-				<p id=titlename>돈-다</p>
-			</a>
-
-			<button type="button" class="navbar-toggler" data-toggle="collapse"
-				data-target="#navbarCollapse">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse justify-content-between"
-				id="navbarCollapse">
-				<div class="navbar-nav ml-auto">
-
-					<a href="#" class="nav-item nav-link active">Login</a>
-					<!-- Login Page 이동 -->
-					<a href="/person/join" class="nav-item nav-link">Sign Up</a>
-					<!-- SignUp Page 이동 -->
-				</div>
-			</div>
-
-		</div>
-	</div>
-	<!-- Nav Bar End -->
+            </div>
+        </div>
+        <!-- Nav Bar End -->
 	<section id="body">
 		<div class="container">
 			<div class="form-control wrapper ">
 
 				<section id="user-profile">
 					<h2 id="nickname">
-						<b>${myInfo.name}</b>님 <span id="region_name">${myInfo.address1}</span>
+						<b>${memberInfo.name}</b>님 <span id="region_name">${memberInfo.address1}</span>
 					</h2>
 
 					<div id="profile-image">
@@ -404,40 +386,38 @@ li {
 					<div class="tab_basic">
 						<div class="row tab_list_wrap">
 							<div class="tab_list tab_active col" data-tabnum="0">
-								<button type="button" id="sellingList">
-									내 판매목록 <span class="badge badge-pill badge-dark">${sellingCount}</span>
-								</button>
+							
+								<button type="button" id="sellingList"> 판매목록 <span class="badge badge-pill badge-dark">${sellingCount}</span></button>
 							</div>
 							<div class="tab_list col" data-tabnum="1">
-								<a href="/TBoard/Review">거래 후기 <span
-									class="badge badge-pill badge-dark">3</span></a>
+								<a href="/TBoard/Review">거래 후기 <span class="badge badge-pill badge-dark">3</span></a>
 							</div>
 							<!-- <div class="tab_list" data-tabnum="2">
 								<a href="#">3번 탭</a>
 							</div> -->
 						</div>
-
+						
 						<div class="tab_container">
 							<div class="tab_content">
 								<div class="row">
-									<c:forEach var="i" items="${sellinglist}">
-										<form action="/tBoard/myselling" id="frm">
-											<input type="hidden" name="id" value="${i.id}">
-										</form>
-										<div class="col-sm-4">
-											<div class="card">
-												<div class="card-body">
-
-													<img src="..." class="card-img-top" alt="...">
-													<h5 class="card-title">${i.title}</h5>
-													<div class="card-price ">${i.price}원</div>
-													<div class="card-region-name">${myInfo.address1}</div>
-													<div class="card-counts">
-														<span> 채팅 <span class="badge badge-danger">3</span></span>
-													</div>
+								<c:forEach var="i" items="${sellinglist}">
+								<form action="/tBoard/userSelling" id="frm">
+										<input type="hidden" name="id" value="${i.id}">
+									</form>
+									<div class="col-sm-4">
+										<div class="card">
+											<div class="card-body">
+											
+												<img src="..." class="card-img-top" alt="...">
+												<h5 class="card-title">${i.title}</h5>
+												<div class="card-price ">${i.price} 원</div>
+												<div class="card-region-name">${memberInfo.address1}</div>
+												<div class="card-counts">
+													<span> 채팅 <span class="badge badge-danger">3</span></span>
 												</div>
 											</div>
 										</div>
+									</div>
 									</c:forEach>
 
 								</div>
@@ -526,8 +506,7 @@ li {
 					</div>
 				</section>
 				<div class=" btn_wrap text-right ">
-					<button type="button" class="btn btn-outline-info" id="Tomain">메인으로
-						이동</button>
+					<button type="button" class="btn btn-outline-info" id="Tomain">메인으로 이동</button>
 				</div>
 			</div>
 		</div>

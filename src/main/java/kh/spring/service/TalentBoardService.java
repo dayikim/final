@@ -39,22 +39,7 @@ public class TalentBoardService {
 		return dao.detailView(seq);
 	}
 
-	public int sellingCount(String kind,String sessionID ) {
-		 Map<String,Object> param = new HashMap<>();
-		param.put("kind",kind );
-	    param.put("id", sessionID);
-		return dao.sellingCount(param);
-	}
 	
-	public List<TalentBoardDTO> getSellingList(String kind,String sessionID){
-		 Map<String,Object> param = new HashMap<>();
-			param.put("kind",kind );
-		    param.put("id", sessionID);
-				return dao.getSellingList(param);
-
-	}
-	
-
 
 
 	@Transactional //DML: insert,delete,update 트렌젝션에 영향을 받음!
@@ -78,6 +63,9 @@ public class TalentBoardService {
 
 	public int getSeq() {
 		return dao.getSeq();
+	}
+	public List<TalentBoardDTO> getAllList() {
+		return dao.getAllList();
 	}
 
 

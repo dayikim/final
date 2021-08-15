@@ -252,60 +252,80 @@ p {
 </head>
 
 <body>
-	<!-- Top Bar Start -->
-	<div class="top-bar d-none d-md-block">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-6">
-					<div class="top-bar-left">
-						<div class="text">
-							<h2>AM 9:00 - PM 7:00</h2>
-						</div>
-						<div class="text">
-							<h2>02 123 4567</h2>
-							<p>고객 센터</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="top-bar-right">
-						<div class="social">
-							<a href=""><i class="fab fa-twitter"></i></a> <a href=""><i
-								class="fab fa-facebook-f"></i></a> <a href=""><i
-								class="fab fa-instagram"></i></a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Top Bar End -->
+ <!-- Top Bar Start -->
+        <div class="top-bar d-none d-md-block">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="top-bar-left">
+                            <div class="text">
+                                <h2>AM 9:00 - PM 7:00</h2>
+                            </div>
+                            <div class="text">
+                                <h2>02 123 4567</h2>
+                                <p>고객 센터</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="top-bar-right">
+                            <div class="social">
+                                <a href="/sns/main"><i class="fab fa-twitter"></i></a>
+                                <a href="/sns/main"><i class="fab fa-facebook-f"></i></a>
+                                <a href="/sns/main"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Top Bar End -->
+	 <!-- Nav Bar Start -->
+        <div class="navbar navbar-expand-lg bg-dark navbar-dark">
+            <div class="container-fluid">
+                <a href="/" class="navbar-brand"><p id= titlename>돈-다</a></p>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <c:choose>
+                	<c:when test="${loginID == null }">
+                		<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    	<div class="navbar-nav ml-auto">
+                        	<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
+                        	<a href="/person/login" class="nav-item nav-link active">Login</a> <!-- Login Page 이동 -->
+                        	<a href="/person/join" class="nav-item nav-link">Sign Up</a>  <!-- SignUp Page 이동 -->
+                    	</div>
+                		</div>
+                	</c:when>
+                	<c:otherwise>
+                		<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    		<div class="navbar-nav ml-auto">
+                        		<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
+                        		<a href="/person/logout" class="nav-item nav-link active">Logout</a> <!-- Logout -->
+                        		 <div class="collapse navbar-collapse" id="navbarNavDropdown">
+	                        		 <ul class="navbar-nav">
+	                        			<li class="nav-item dropdown">
+									        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									         Menu
+									        </a>
+									        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+									          <a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
+									          <a class="dropdown-item" href="#">SNS</a>
+									          <a class="dropdown-item" href="/my/mypageProc">My page</a>
+									          <a class="dropdown-item" href="#">Charging</a>
+									        </div>
+								      	</li>
+								      </ul>
+								      <button type="button" class="btn btn-outline-warning" id="chat">Chatting</button>
+							      </div>
+                    		</div>
+                		</div>
+                	</c:otherwise>
+                </c:choose>
 
-	<!-- Nav Bar Start -->
-	<div class="navbar navbar-expand-lg bg-dark navbar-dark">
-		<div class="container-fluid">
-			<a href="/" class="navbar-brand">
-				<p id=titlename>돈-다</p>
-			</a>
-
-			<button type="button" class="navbar-toggler" data-toggle="collapse"
-				data-target="#navbarCollapse">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse justify-content-between"
-				id="navbarCollapse">
-				<div class="navbar-nav ml-auto">
-
-					<a href="#" class="nav-item nav-link active">Login</a>
-					<!-- Login Page 이동 -->
-					<a href="/person/join" class="nav-item nav-link">Sign Up</a>
-					<!-- SignUp Page 이동 -->
-				</div>
-			</div>
-
-		</div>
-	</div>
-	<!-- Nav Bar End -->
+            </div>
+        </div>
+        <!-- Nav Bar End -->
 	<section id="body">
 		<div class="container">
 			<div class="btn_box btn_wrap text-right ">

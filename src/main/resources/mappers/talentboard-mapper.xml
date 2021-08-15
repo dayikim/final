@@ -10,13 +10,9 @@
 	<select id="detailView" resultType="kh.spring.dto.TalentBoardDTO">
 		select * from TalentBoard where seq =#{seq}
 	</select>
-			
-	<select id="sellingCount" resultType="int">
-	select count(*) from TalentBoard where kind=#{kind} and id=#{id}
-	</select>
-	
-	<select id="getSellingList" resultType="kh.spring.dto.TalentBoardDTO">
-	select * from TalentBoard where kind=#{kind} and id=#{id}
+				
+	<select id="getAllList" resultType="kh.spring.dto.TalentBoardDTO">
+		select * from TalentBoard
 	</select>
 	
 	<select id="getId" resultType="String">
