@@ -66,7 +66,7 @@ img{
 		$(function() {
 			$("#search").keyup(function(e) {
 				if (e.keyCode == 13) {
-					location.href = "/AllBoardList/allList?search="+ $("#search").val();
+					location.href = "/AllBoardList/lendList?category=AllCategory&search="+$("#search").val()+"&cpage=1";
 				}
 			})
 		})

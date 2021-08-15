@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="Lend">
+  
+	<!-- 전체 검색 지역 & 타이틀 & 내용 -->
+	<select id="toSearch" resultType="kh.spring.dto.LendDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select * from lendboard where address1 like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	</select>
+	
+	<!-- 주소 검색 -->
+	<select id="toAddress1" resultType="kh.spring.dto.LendDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select * from lendboard where address1 like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	</select>
+	
+	<!-- 타이틀 검색 -->
+	<select id="toTitle" resultType="kh.spring.dto.LendDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select * from lendboard where title like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	</select>
+	
+	<!-- 컨텐츠 검색 -->
+	<select id="toContents" resultType="kh.spring.dto.LendDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select * from lendboard where contents like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	</select>
+	
+	<!-- 검색이 null일 경우 전체목록 나오게 -->
+	<select id="toList" resultType="kh.spring.dto.LendDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select * from lendboard order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	</select>
+		
+	<!-- 검색 지역 & 타이틀 & 컨텐츠 카운트 -->
+	<select id="allList" resultType="int">
+		select count(*) from lendboard
+	</select>
+	
+	<!-- 검색 지역 & 타이틀 & 컨텐츠 카운트 -->
+	<select id="numAllList" resultType="int">
+		select count(*) from lendboard where address1 like '%'||#{value}||'%' or title like '%'||#{value}||'%' or contents like '%'||#{value}||'%'
+	</select>
+	
+	<!-- 검색 지역 카운트 -->
+	<select id="numAddress1" resultType="int">
+		select count(*) from lendboard where address1 like '%'||#{value}||'%' 
+	</select>
+	
+	<!-- 검색 타이틀 카운트 -->
+	<select id="numTitle" resultType="int">
+		select count(*) from lendboard where title like '%'||#{value}||'%'
+	</select>
+	
+	<!-- 검색 컨텐츠 카운트 -->
+	<select id="numContents" resultType="int">
+		select count(*) from lendboard where contents like '%'||#{value}||'%'
+	</select>
+	
+</mapper>

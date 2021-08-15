@@ -5,55 +5,52 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kh.spring.dao.AllSearchDAO;
+import kh.spring.dao.BorrowDAO;
+import kh.spring.dao.LendDAO;
 import kh.spring.dto.BorrowDTO;
 import kh.spring.dto.LendDTO;
-import kh.spring.dto.TalentBoardDTO;
 
 @Service
 public class AllSearchService {
 	
 	@Autowired
-	private AllSearchDAO dao; 
+	private LendDAO lddao;
 	
-	//대여하기 리스트
-	public List<LendDTO> lendSearch(String search){
-		return dao.getLendList(search);
+	@Autowired
+	private BorrowDAO bwdao;
+	
+	public List<String> getLdPageNavi(String category, String search, String cpage) {
+		
+		int currentPage = Integer.parseInt(cpage);
+		
+		return lddao.getPageNavi(category, search, currentPage);
 	}
 	
-	//대여요청 리스트
-	public List<BorrowDTO> borrowSearch(String search){
-		return dao.getBorrowList(search);
+	public List<LendDTO> getLdList(String category, String search, String cpage){
+		int currentPage = Integer.parseInt(cpage);
+		
+		System.out.println("서->디 : " + category + " : " + search);
+		
+		System.out.println("서->컨 : " + lddao.getList(category, search,currentPage));
+		
+		return lddao.getList(category, search,currentPage);
 	}
 	
-	//재능등록 리스트
-	public List<TalentBoardDTO> tlSellSearch(String search){
-		return dao.getTlSellList(search);
+	public List<String> getBwPageNavi(String category, String search, String cpage) {
+		
+		int currentPage = Integer.parseInt(cpage);
+		
+		return bwdao.getPageNavi(category, search, currentPage);
 	}
 	
-	//재능요청 리스트
-	public List<TalentBoardDTO> tlRequestSearch(String search){
-		return dao.getTlRequestList(search);
-	}
-	
-	//대여하기 카운트
-	public int lendCount(String search){
-		return dao.getLendCount(search);
-	}
-	
-	//대여요청 카운트
-	public int borrowCount(String search){
-		return dao.getBorrowCount(search);
-	}
-	
-	//재능등록 카운트
-	public int tlSellCount(String search){ 
-		return dao.getTlSellCount(search);
-	}
-	
-	//재능요청 카운트
-	public int tlRequsetCount(String search){
-		return dao.getTlRequsetCount(search);
+	public List<BorrowDTO> getBwList(String category, String search, String cpage){
+		int currentPage = Integer.parseInt(cpage);
+		
+		System.out.println("서->디 : " + category + " : " + search);
+		
+		System.out.println("서->컨 : " + bwdao.getList(category, search,currentPage));
+		
+		return bwdao.getList(category, search,currentPage);
 	}
 
 	
