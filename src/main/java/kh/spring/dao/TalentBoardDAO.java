@@ -25,12 +25,10 @@ public class TalentBoardDAO {
 	public int getSeq(){
 		return mybatis.selectOne("TBoard.getSeq");
 	}
-	
-	public int sellingCount(Map<String,Object>param) {
-		return mybatis.selectOne("TBoard.sellingCount",param);
+	public List<TalentBoardDTO> getAllList() {
+		return mybatis.selectList("TBoard.getAllList");
+		
 	}
 	
-	public List<TalentBoardDTO> getSellingList(Map<String,Object>param){
-		return mybatis.selectList("TBoard.getSellingList",param);
-	}
+	
 }

@@ -41,7 +41,6 @@ public class PointController {
 	@ResponseBody
 	@RequestMapping(value="charging", produces="text/html;charset=utf8")
 	public String Charging(String amount, Model model,PointDTO pointdto) throws Exception {
-
 			String sessionID = (String) session.getAttribute("loginID");
 			pointdto.setId(sessionID);//충전한 아이디
 			pointdto.setPointAmount(Integer.parseInt(amount));//충전금액
