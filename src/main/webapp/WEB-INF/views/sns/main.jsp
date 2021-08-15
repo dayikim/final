@@ -6,6 +6,28 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="Free Website Template" name="keywords">
+<meta content="Free Website Template" name="description">
+<!-- Favicon -->
+<link href="img/favicon.ico" rel="icon">
+<!-- Google Font -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"
+	rel="stylesheet">
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+	rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap"
+	rel="stylesheet">
+
+<!-- Template Stylesheet -->
+<link href="/css/style.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link
 	href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
@@ -27,6 +49,28 @@
 
 
 <style>
+#titlename {
+	margin-top: 1%;
+	margin-bottom: 0;
+	font-size: 30px;
+	font-family: 'Gugi', cursive;
+	color: white;
+}
+
+img {
+	width: 100%;
+}
+
+#search {
+	width: 500px;
+	position: relative;
+}
+
+.Explanation {
+	position: relative;
+	top: 30%;
+}
+
 style>body {
 	background-color: #eeeeee;
 }
@@ -267,12 +311,106 @@ style>body {
     		$( 'html, body' ).animate( { scrollTop : 0 }, 400 );
     		return false;
     	} );
+    	
+    	$("#search").keyup(function(e) {
+			if (e.keyCode == 13) {
+				location.href = "/AllBoardList/allList?search="+ $("#search").val();
+			}
+		})
+		
+		$("#chat").on("click",function(){
+			location.href = "/chat";
+		})
+		
 	})
 </script>
 </head>
 <body>
 
-	<nav class="navbar navbar-light bg-white"></nav>
+	<!-- Top Bar Start -->
+	<div class="top-bar d-none d-md-block">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="top-bar-left">
+						<div class="text">
+							<h2>AM 9:00 - PM 7:00</h2>
+						</div>
+						<div class="text">
+							<h2>02 123 4567</h2>
+							<p>고객 센터</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="top-bar-right">
+						<div class="social">
+							<a href="/sns/main"><i class="fab fa-twitter"></i></a> <a
+								href="/sns/main"><i class="fab fa-facebook-f"></i></a> <a
+								href="/sns/main"><i class="fab fa-instagram"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Top Bar End -->
+
+	<!-- Nav Bar Start -->
+	<div class="navbar navbar-expand-lg bg-dark navbar-dark">
+		<div class="container-fluid">
+			<a href="/" class="navbar-brand"><p id=titlename>돈-다</a>
+			</p>
+			<button type="button" class="navbar-toggler" data-toggle="collapse"
+				data-target="#navbarCollapse">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<c:choose>
+				<c:when test="${loginID == null }">
+					<div class="collapse navbar-collapse justify-content-between"
+						id="navbarCollapse">
+						<div class="navbar-nav ml-auto">
+							<input class="form-control mr-sm-5" type="search"
+								placeholder="물품, 지역을 검색해주세요." id=search aria-label="Search">
+							<a href="/person/login" class="nav-item nav-link active">Login</a>
+							<!-- Login Page 이동 -->
+							<a href="/person/join" class="nav-item nav-link">Sign Up</a>
+							<!-- SignUp Page 이동 -->
+						</div>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div class="collapse navbar-collapse justify-content-between"
+						id="navbarCollapse">
+						<div class="navbar-nav ml-auto">
+							<input class="form-control mr-sm-5" type="search"
+								placeholder="물품, 지역을 검색해주세요." id=search aria-label="Search">
+							<a href="/person/logout" class="nav-item nav-link active">Logout</a>
+							<!-- Logout -->
+							<div class="collapse navbar-collapse" id="navbarNavDropdown">
+								<ul class="navbar-nav">
+									<li class="nav-item dropdown"><a
+										class="nav-link dropdown-toggle" href="#"
+										id="navbarDropdownMenuLink" role="button"
+										data-toggle="dropdown" aria-haspopup="true"
+										aria-expanded="false"> Menu </a>
+										<div class="dropdown-menu"
+											aria-labelledby="navbarDropdownMenuLink">
+											<a class="dropdown-item" href="#">Board</a> <a
+												class="dropdown-item" href="/sns/main">SNS</a> <a
+												class="dropdown-item" href="#">My page</a> <a
+												class="dropdown-item" href="#">Charging</a>
+										</div></li>
+								</ul>
+								<button type="button" class="btn btn-outline-warning" id="chat">Chatting</button>
+							</div>
+						</div>
+					</div>
+				</c:otherwise>
+			</c:choose>
+		</div>
+	</div>
+	<!-- Nav Bar End -->
 
 
 	<div class="container-fluid gedf-wrapper">
@@ -291,7 +429,7 @@ style>body {
 									aria-controls="posts" aria-selected="true">글 작성</a></li>
 								<li class="nav-item"><a class="nav-link" id="images-tab"
 									data-toggle="tab" role="tab" aria-controls="images"
-									aria-selected="false" href="#images">사진첨부</a></li>
+									aria-selected="false" href="#images">파일첨부</a></li>
 							</ul>
 						</div>
 						<div class="card-body">
@@ -372,7 +510,8 @@ style>body {
 						</div>
 						<div class="card-footer">
 							<a class="card-link" id=love><i class="fas fa-heart"></i>${item.love }</a>
-							<a class="card-link" id=commenticon><i class="fas fa-comment-dots"></i>Comment</a>
+							<a class="card-link" id=commenticon><i
+								class="fas fa-comment-dots"></i>Comment</a>
 						</div>
 
 						<!-- 댓글작성 -->
@@ -387,8 +526,8 @@ style>body {
 										<i class="fas fa-pen"></i>
 									</button>
 								</div>
-								<input type=hidden id=hidden value=${item.seq }>
-								<input type=hidden id=lovecount value=${item.love }>
+								<input type=hidden id=hidden value=${item.seq }> <input
+									type=hidden id=lovecount value=${item.love }>
 							</div>
 
 							<!-- 댓글리스트 -->
@@ -422,6 +561,6 @@ style>body {
 		</div>
 	</div>
 	</div>
-	<input type = hidden id = session value = ${loginID }>
+	<input type=hidden id=session value=${loginID }>
 </body>
 </html>

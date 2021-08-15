@@ -62,7 +62,9 @@ public class PersonController {
 	@RequestMapping("/joinProc")
 	public String joinProc(PersonDTO dto) throws Exception{	
 		String shaPass = SHA256.getSHA512(dto.getPw());
+		int zero = 0;
 		dto.setPw(shaPass);
+		dto.setLoginFailCount(zero);
 		service.insert(dto);
 		return "person/joincomplete";
 	}
