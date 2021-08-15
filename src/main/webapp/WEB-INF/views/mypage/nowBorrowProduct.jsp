@@ -79,7 +79,7 @@
 <body>
     <div class="row container-fulid">
         <div class="col-6" align=center>
-            <a href="index.html" class="navbar-brand">
+            <a href="#" class="navbar-brand">
                 <p id=titlename>돈-다</p>
             </a>
             <b id=titleNextName>현재 대여 받은 상품</b>

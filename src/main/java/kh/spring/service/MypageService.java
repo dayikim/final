@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kh.spring.dao.MypageDAO;
 import kh.spring.dao.PointDAO;
 import kh.spring.dao.ProfileFilesDAO;
+import kh.spring.dao.SnsDAO;
 import kh.spring.dto.PersonDTO;
 import kh.spring.dto.PointDTO;
 import kh.spring.dto.ProfileFilesDTO;
@@ -24,6 +25,8 @@ public class MypageService {
    private ProfileFilesDAO pdao;
    @Autowired
    private PointDAO ppdao;
+   @Autowired
+   private SnsDAO sdao;
 
    // 마이페이지 정보 출력
    public PersonDTO mypageList(String sessionID){

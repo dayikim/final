@@ -184,9 +184,8 @@ img {
 	<!-- Nav Bar Start -->
 	<div class="navbar navbar-expand-lg bg-dark navbar-dark">
 		<div class="container-fluid">
-			<a href="index.html" class="navbar-brand"><p id=titlename>돈-다</a>
+			<a href="/" class="navbar-brand"><p id=titlename>돈-다</a>
 			</p>
-			<b id=titleNextName>대여 요청 내역</b>
 			<button type="button" class="navbar-toggler" data-toggle="collapse"
 				data-target="#navbarCollapse">
 				<span class="navbar-toggler-icon"></span>

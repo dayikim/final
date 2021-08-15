@@ -128,6 +128,7 @@ public class MypageController {
 	public String dealEndList() {
 		return "/mypage/dealEndList";
 	}
+	
 	// 나의 커뮤니티 목록 출력(예정)
 	@RequestMapping(value="/selectMySns", produces="text/html;charset=utf8")
 	public String selectMySns(Model model) {
