@@ -398,11 +398,11 @@ img{
 			<div class="profile" align=center>
 				<c:choose>
 					<c:when test="${profile != null}">
-						<a href="/tBoard/myProfile"><img
+						<a href="/profile/myProfile"><img
 							src="/imgs/mypage/${profile.sysName }" id=profile></a>
 					</c:when>
 					<c:otherwise>
-						<a href="/tBoard/myProfile"><img src="/imgs/nomalProfile.jpg"
+						<a href="/profile/myProfile"><img src="/imgs/nomalProfile.jpg"
 							id=profile></a>
 					</c:otherwise>
 				</c:choose>
@@ -412,7 +412,7 @@ img{
 			<!-- 내 정보 출력 -->
 			<div class="myInfo">
 				<div class="name">
-					<a href="/tBoard/myProfile"><b><i class="fas fa-user-alt"></i>
+					<a href="/profile/myProfile"><b><i class="fas fa-user-alt"></i>
 							${myInfo.name}</b>님</a>
 				</div>
 				<br>
