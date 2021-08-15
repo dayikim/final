@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Message">
+	<insert id="insert">
+		insert into message values(#{seq},#{roomid},#{id},#{message},sysdate)
+	</insert>
+	
+	<select id="getMessage" resultType="kh.spring.dto.MessageDTO">
+		select seq,roomid,id,message,reg_date from message where seq = #{seq}
+	</select>
+	
+	<select id="getSeq" resultType="Integer">
+		select message_SEQ.nextval from dual
+	</select>
+	
+	<select id="pastMessage" resultType="kh.spring.dto.MessageDTO">
+		select * from (select * from message order by seq asc) where roomid = #{value} 
+	</select>
+
+	
+</mapper>
