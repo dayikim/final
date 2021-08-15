@@ -104,15 +104,13 @@ img {width: 100%;}
 			
 		})
 		
-		$("#lendList").on("click",function(){
-			
-			$("#frm1").submit();
-		})
+// 		$("#lendList").on("click",function(){
+// 			$("#frm1").submit();
+// 		})
 		
-		$("#borrowList").on("click",function(){
-			$(".borrowList").css("display","block");
-			$("#frm2").submit();
-		})
+// 		$("#borrowList").on("click",function(){
+// 			$("#frm2").submit();
+// 		})
 		
 	});
 </script>
@@ -185,20 +183,23 @@ img {width: 100%;}
 		<div class="container">
 			<div class="form-control wrapper ">
 				<section id=table_menu>
+				
 					<!-- Tabs -->
 					<div class="tab_basic">
+						
+						<!-- Tabs button -->
 						<div class="row tab_list_wrap">
 							<div class="tab_list tab_active col" data-tabnum="0">
-								 <a href="/AllBoardList/lendList?category=${category}&search=${search}&cpage=1" id="lendList">대여하기</a>
+								 <a href="/AllBoardList/lendList?category=${category}&search=${search}&cpage=1" class="btn" id="lendList">대여하기</a>
 							</div>
 							<div class="tab_list col" data-tabnum="1">
-								<a href="/AllBoardList/borrowList?category=${category}&search=${search}&cpage=1" id="borrowList">대여요청</a>
+								<a href="/AllBoardList/borrowList?category=${category}&search=${search}&cpage=1" class="btn" id="borrowList">대여요청</a>
 							</div>
 							<div class="tab_list col" data-tabnum="2">
-								<button type="button" class="btn" id="tlSellList">재능등록</button> 
+								<button type="button" id="tlSellList">재능등록</button> 
 							</div>
 							<div class="tab_list col" data-tabnum="3">
-								<button type="button" class="btn" id="tlRequestList">재능대여</button> 
+								<button type="button" id="tlRequestList">재능대여</button> 
 							</div>
 						</div>
 						
@@ -217,8 +218,9 @@ img {width: 100%;}
 										<div class="card">
 											<div class="card-body">
 												<img src="..." class="card-img-top" alt="...">
-												<h5 class="card-title"><a href="/lend/detailView?seq=${bw.seq}">${ld.title}</a></h5>
-												<div class="card-address1">${ld.address1} 원</div>
+												<h5 class="card-title"><a href="/lend/detailView?seq=${ld.seq}">${ld.title}</a></h5>
+												<div class="card-address1">${ld.address1}</div>
+												
 											</div>
 										</div>
 									</div>
