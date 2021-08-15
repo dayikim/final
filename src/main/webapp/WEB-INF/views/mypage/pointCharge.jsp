@@ -104,7 +104,7 @@
 <body>
     <div class="row container-fulid">
         <div class="col-4" align=center>
-            <a href="index.html" class="navbar-brand">
+            <a href="#" class="navbar-brand">
                 <p id=titlename>돈-다</p>
             </a>
             <b id=titleNextName>포인트 내역</b>
