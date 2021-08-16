@@ -46,9 +46,23 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
 	integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
 	crossorigin="anonymous"></script>
+	
+	   <script src="/js/main.js"></script>
 
 
 <style>
+.navbar{
+position: absolute;
+top:8%;
+
+}
+
+#SnSbody{
+position:absolute;
+top:20%;
+margin-left:4%;
+
+}
 #titlename {
 	margin-top: 1%;
 	margin-bottom: 0;
@@ -121,6 +135,24 @@ style>body {
 </style>
 <script>
 	$(function() {
+		
+		//무한스크롤
+		var count = 3;
+		var isScroll = true;
+		let loadNewPage = $(window).on("scroll",(function() {
+			if (((window.innerHeight + window.scrollY) >= document.body.offsetHeight)&& isScroll) {
+				$.ajax({
+					url : "",
+					type : "get",
+					data : {"count" : count},
+					dataType : "json"
+				}).done(function(){
+					
+				})
+			}
+		}));	
+
+
 		
 		//댓글버튼눌렀을때
 		$(document).on("click","#commenticon",function(){
@@ -289,12 +321,6 @@ style>body {
 	        			 "love":$(this).parent().siblings("#hiddencomment").children(".input-group").children("#lovecount").val()}
 	        	 }).done(function(resp){
 	        		location.reload();
-	        		console.log(resp)
-					if(resp == 1){
-						$(this).css("color","red")
-					}else{
-						$(this).css("color","black")
-					}
 	        	 })
 	         }
 		})
@@ -413,7 +439,7 @@ style>body {
 	<!-- Nav Bar End -->
 
 
-	<div class="container-fluid gedf-wrapper">
+	<div class="container-fluid gedf-wrapper" id=SnSbody>
 		<div class="row">
 			<div class="col-md-3"></div>
 			<div class="col-md-6 gedf-main">
@@ -505,11 +531,28 @@ style>body {
 						<div class="card-body">
 							<div class="text-muted h7 mb-2">
 								<i class="fa fa-clock-o"></i>${item.category }
-							</div>
-							<p class="card-text">${item.contents }</p>
+							</div>						
+								<c:forEach var="file" items="${file}">
+									<c:choose>
+										<c:when test="${file.parent == item.seq }">	
+											<a href ="/Board/download?oriName=${file.oriName}&sysName=${file.sysName}"> <img src="/imgs/${file.oriName}"> </a>										
+											<img src="/imgs/${file.oriName}">
+										</c:when>
+									</c:choose>
+									
+								</c:forEach>
+							<p class="card-text">${item.contents }</p>							
 						</div>
 						<div class="card-footer">
-							<a class="card-link" id=love><i class="fas fa-heart"></i>${item.love }</a>
+								<c:choose>
+									<c:when test="${isLove.indexOf(String.valueOf(item.seq)) != -1}">
+										<a class="card-link" id=love style="color:#FF6B6B"><i class="fas fa-heart"></i>${item.love }</a>
+									</c:when>
+									<c:otherwise>
+										<a class="card-link" id=love style="color:#FDD2BF"><i class="far fa-heart"></i>${item.love }</a>
+									</c:otherwise>
+								</c:choose>
+							
 							<a class="card-link" id=commenticon><i
 								class="fas fa-comment-dots"></i>Comment</a>
 						</div>

@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import kh.spring.dto.LoveDTO;
 import kh.spring.dto.SnsDTO;
 
 @Component
@@ -77,5 +78,9 @@ public class SnsDAO {
 	
 	public void updatecount(Map<String,Object>param) {
 		mybatis.update("Sns.updatecount", param);
+	}
+	
+	public List<String> existlike(String loginId){
+		return mybatis.selectList("Sns.existlike", loginId);
 	}
 }

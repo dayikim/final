@@ -323,7 +323,7 @@ img{
 	<!-- Nav Bar Start -->
 	<div class="navbar navbar-expand-lg bg-dark navbar-dark">
 		<div class="container-fluid">
-			<a href="index.html" class="navbar-brand"><p id=titlename>돈-다</a>
+			<a href="/" class="navbar-brand"><p id=titlename>돈-다</a>
 			</p>
 			<button type="button" class="navbar-toggler" data-toggle="collapse"
 				data-target="#navbarCollapse">
@@ -504,21 +504,40 @@ img{
 		<div class="col-12 col-sm-12 col-md-7 right">
 			<div class="row">
 
+				<!-- 거래 요청 내역 -->
+				<div class="col-12 list">
+					<div class="row go">
+						<div class="col-10 titleDiv">
+							<div class="title">
+								<h3>
+									<b>거래 요청 내역</b>
+								</h3>
+							</div>
+							<div class="stitle">
+								<b>나에게 온, 나의 물건 거래 요청 리스트 확인</b>
+							</div>
+						</div>
+						<div class="col-2 buttonDiv">
+							<a href="/my/requestRentalProduct"><button type=button class="okBtn">확인</button></a>
+						</div>
+					</div>
+				</div>
+				
 				<!-- 대여 요청 내역 -->
 				<div class="col-12 list">
 					<div class="row go">
 						<div class="col-10 titleDiv">
 							<div class="title">
 								<h3>
-									<b>대여 요청 내역</b>
+									<b>내가 쓴 요청 내역</b>
 								</h3>
 							</div>
 							<div class="stitle">
-								<b>나에게 온, 나의 물건 대여 요청 리스트 확인</b>
+								<b>나에게 필요한, 나의 물건 대여 요청 리스트 확인</b>
 							</div>
 						</div>
 						<div class="col-2 buttonDiv">
-							<a href="/my/requestRental"><button type=button class="okBtn">확인</button></a>
+							<a href="/my/myRequestProduct"><button type=button class="okBtn">확인</button></a>
 						</div>
 					</div>
 				</div>
@@ -539,14 +558,14 @@ img{
 							</div>
 						</div>
 						<div class="col-2 buttonDiv">
-							<a href="/my/dealEndList"><button type=button class="okBtn">확인</button></a>
+							<a href="/my/dealEndProductSellList"><button type=button class="okBtn">확인</button></a>
 						</div>
 					</div>
 				</div>
 
 
 				<!-- 나의 커뮤니티 -->
-				<div class="col-12 list">
+				<div class="col-12 list2">
 					<div class="row go">
 						<div class="col-10 titleDiv">
 							<div class="title">
@@ -565,24 +584,7 @@ img{
 				</div>
 
 
-				<!-- 내가 쓴 대여 글 확인 -->
-				<div class="col-12 list2">
-					<div class="row go">
-						<div class="col-10 titleDiv">
-							<div class="title">
-								<h3>
-									<b>나의 대여 글 목록</b>
-								</h3>
-							</div>
-							<div class="stitle">
-								<b>내가 대여한 상품, 나의 글 리스트 확인</b>
-							</div>
-						</div>
-						<div class="col-2 buttonDiv">
-							<a href="/my/myBoardList"><button type=button class="okBtn">확인</button></a>
-						</div>
-					</div>
-				</div>
+				
 			</div>
 		</div>
 

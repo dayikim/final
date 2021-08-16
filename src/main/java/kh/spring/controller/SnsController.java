@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kh.spring.dto.SnsDTO;
+import kh.spring.dto.SnsFilesDTO;
 import kh.spring.service.SnsCommentService;
 import kh.spring.service.SnsFilesService;
 import kh.spring.service.SnsService;
@@ -36,46 +37,40 @@ public class SnsController {
 		String loginId= (String)session.getAttribute("loginID");
 		List<SnsDTO>list = service.selectAll();
 		model.addAttribute("list", list);
+		
+		List<String> ldto = service.existlike(loginId);
+		model.addAttribute("isLove",ldto);
+		
+		List<SnsFilesDTO>fdto = fservice.fileList();
+		model.addAttribute("file", fdto);
+		
 
 		return "sns/main";
 	}
 	
-//	@RequestMapping("/write")
-//	public String write(SnsDTO dto, MultipartFile[] file) throws Exception{
-//		System.out.println(file);
-//		String id = (String)session.getAttribute("loginID");
-//		dto.setId(id);
-//		String region = service.region(id);
-//		dto.setRegion(region);
-//		if(file == null) {		
-//			service.insert(dto);
-//		}else {
-//			service.insert(dto);	
-//			int parent = service.seq();//작성한글번호
-//			
-//			String realPath = session.getServletContext().getRealPath("files");
-//			File filesPath = new File(realPath);
-//			if(!filesPath.exists()) {filesPath.mkdir();}
-//			for(MultipartFile tmp : file) {
-//				String oriName = tmp.getOriginalFilename();
-//				String sysName = UUID.randomUUID().toString().replaceAll("-", "")+ "_"+oriName;
-//				fservice.insert(oriName, sysName, parent);
-//				tmp.transferTo(new File(filesPath.getAbsolutePath()+"/"+sysName));
-//			}
-//		}			
-//		return "redirect:/sns/main";
-//	}
-	
 	@RequestMapping("/write")
-	public String write(SnsDTO dto) throws Exception{
+	public String write(SnsDTO dto, MultipartFile[] file) throws Exception{
 		String id = (String)session.getAttribute("loginID");
+		int seq = service.seq();
 		dto.setId(id);
 		String region = service.region(id);
-		dto.setRegion(region);	
-			service.insert(dto);			
+		dto.setRegion(region);
+		if(file[0].getSize() ==0) {		
+			service.insert(seq ,dto);
+		}else {
+			service.insert(seq ,dto); //게시글  10	
+			String realPath = session.getServletContext().getRealPath("files");
+			File filesPath = new File(realPath);
+			if(!filesPath.exists()) {filesPath.mkdir();}
+			for(MultipartFile tmp : file) {
+				String oriName = tmp.getOriginalFilename();
+				String sysName = UUID.randomUUID().toString().replaceAll("-", "")+ "_"+oriName;
+				fservice.insert(oriName, sysName, seq,id);
+				tmp.transferTo(new File(filesPath.getAbsolutePath()+"/"+sysName));
+			}
+		}			
 		return "redirect:/sns/main";
 	}
-
 	
 	@RequestMapping("/delete")
 	public String delete(int seq) {
@@ -96,6 +91,7 @@ public class SnsController {
 	
 	@RequestMapping("/modiProc")
 	public String modiProc(SnsDTO dto, MultipartFile[] file) throws Exception{
+		String id = (String)session.getAttribute("loginID");
 		int seq = dto.getSeq();
 		int parent = dto.getSeq();
 		String contents = dto.getContents();
@@ -108,7 +104,7 @@ public class SnsController {
 		for(MultipartFile tmp : file) {
 			String oriName = tmp.getOriginalFilename();
 			String sysName = UUID.randomUUID().toString().replaceAll("-", "")+ "_"+oriName;
-			fservice.insert(oriName, sysName, parent);
+			fservice.insert(oriName, sysName, parent,id);
 			tmp.transferTo(new File(filesPath.getAbsolutePath()+"/"+sysName));
 		}
 		
