@@ -191,7 +191,7 @@ public class MypageController {
 
 		model.addAttribute("profile", pdto); // 내 프로필
 		model.addAttribute("myInfo", dto);  // 내 정보
-		return "/mypage/mySnsPage";
+		return "/mypage/mySnsPage"; 
 	}
 }
 
