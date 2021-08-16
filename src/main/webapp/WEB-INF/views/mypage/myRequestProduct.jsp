@@ -44,7 +44,7 @@
 
 /* 마이페이지 글씨체 */
 #titleNextName {
-	margin-left:20px;
+	margin-left: 20px;
 	color: white;
 }
 
@@ -80,9 +80,114 @@ img {
 	margin-top: 5%;
 }
 
+/* 네비바 */
+.navi>div {
+	float: left;
+	width: 50%;
+	text-align: center;
+}
+
+.navi {
+	margin: auto;
+	margin-top: 115px;
+	width: 500px;
+}
+
+.requestProduct>a>h3>b {
+	color: blue;
+	border-bottom: 3px solid blue;
+}
+
 /* 시작 */
-.margin{height:1000px;}
+.container2 {
+	margin: auto;
+	width: 1000px;
+	padding: 50px;
+}
+
+/* 대여 요청 내역 */
+.requestList {
+	overflow: hidden;
+	border-radius: 7px;
+	border: 1px solid black;
+	margin-top: 20px;
+}
+
+.image {
+	width: 200px;
+	height: 200px;
+	overflow: hidden;
+	padding-top: 10px;
+}
+
+img {
+	width: 200px;
+	height: 200px;
+	border-radius: 5px;
+}
+
+.information {
+	padding-top: 40px;
+	padding-left: 40px;
+}
+
+/* 버튼 */
+.under {
+	text-align: center;
+	padding: 10px;
+	margin-top: 10px;
+}
+
+.cnum-btn1 {
+	/* 취소 */
+	border-radius: 5px;
+	width: 45%;
+	height: 50px;
+	background-color: white;
+	border: 1px solid #334257;
+	color: #334257;
+	font-size: 15px;
+	outline: none;
+	cursor: pointer;
+}
+
+.cnum-btn2 {
+	/* 수정 */
+	border-radius: 5px;
+	width: 45%;
+	height: 50px;
+	background-color: #334257;
+	border: none;
+	color: #fff;
+	font-size: 15px;
+	outline: none;
+	cursor: pointer;
+}
 </style>
+
+<script>
+	$(function(){
+		// 취소 버튼을 눌렀을 경우
+		$(".cnum-btn1").on("click",function(){
+			let result = confirm("정말 삭제하시겠습니까?");
+			if(result){
+				$(".cnum-btn1").parent().parent().parent().empty();
+			}else{
+				return false;
+			}
+		})
+		
+		// 승인 버튼을 눌렀을 경우
+		$(".cnum-btn2").on("click",function(){
+			let result = confirm("대여 승인 하시겠습니까?");
+			if(result){
+				$("#frm").submit();
+			}else{
+				return false;
+			}
+		})
+	})
+</script>
 
 </head>
 <body>
@@ -119,7 +224,7 @@ img {
 	<div class="navbar navbar-expand-lg bg-dark navbar-dark">
 		<div class="container-fluid">
 			<a href="/" class="navbar-brand"><p id=titlename>돈-다</a>
-			</p> 
+			</p>
 			<button type="button" class="navbar-toggler" data-toggle="collapse"
 				data-target="#navbarCollapse">
 				<span class="navbar-toggler-icon"></span>
@@ -146,8 +251,23 @@ img {
 								placeholder="물품, 지역을 검색해주세요." id=search aria-label="Search">
 							<a href="/person/logout" class="nav-item nav-link active">Logout</a>
 							<!-- Logout -->
-							<a href="/my/mypageProc" class="nav-item nav-link">MyPage</a>
-							<!-- My Page 이동 -->
+							<div class="collapse navbar-collapse" id="navbarNavDropdown">
+								<ul class="navbar-nav">
+									<li class="nav-item dropdown"><a
+										class="nav-link dropdown-toggle" href="#"
+										id="navbarDropdownMenuLink" role="button"
+										data-toggle="dropdown" aria-haspopup="true"
+										aria-expanded="false"> Menu </a>
+										<div class="dropdown-menu"
+											aria-labelledby="navbarDropdownMenuLink">
+											<a class="dropdown-item" href="#">Board</a> <a
+												class="dropdown-item" href="#">SNS</a> <a
+												class="dropdown-item" href="#">My page</a> <a
+												class="dropdown-item" href="#">Charging</a>
+										</div></li>
+								</ul>
+								<button type="button" class="btn btn-outline-warning" id="chat">Chatting</button>
+							</div>
 						</div>
 					</div>
 				</c:otherwise>
@@ -155,12 +275,75 @@ img {
 
 		</div>
 	</div>
-	
+	<!-- Nav Bar End -->
 
-	<!-- 여기부터 알아서 대여 요청 내역 만들어야함 -->
-	<div class="margin">
-		
+
+	<!-- 네비바 -->
+	<div class="navi">
+		<div class="requestProduct">
+			<a href="/my/myRequestProduct"><h3>
+					<b>대여 요청</b>
+				</h3></a>
+		</div>
+		<div class="requestTalent">
+			<a href="/my/myRequestTalent"><h3>
+					<b>재능 요청</b>
+				</h3></a>
+		</div>
 	</div>
+
+
+
+	<!-- 대여 요청 내역 -->
+	<div class="container2">
+
+		<!-- forEach문 사용 -->
+		<%-- <c:forEach var="i" items="${requestRental }"> --%>
+		<form action="" method="get">
+			<div class="requestList">
+				<div class="row high">
+					<div class="col-8 information">
+						<div class="title">
+							<h4>
+								<b>자전거 대여해주세요</b>
+							</h4>
+						</div>
+						<div class="row content">
+							<div class="col-4 left">
+								<b>대여 일자</b>
+							</div>
+							<div class="col-8 right">2021-08-06 ~ 2021-09-27</div>
+						</div>
+						<div class="row content">
+							<div class="col-4 left">
+								<b>결제 내역</b>
+							</div>
+							<div class="col-8 right">15000원</div>
+						</div>
+						<div class="row content">
+							<div class="col-4 left">
+								<b>대여자</b>
+							</div>
+							<div class="col-8 right">이희정</div>
+						</div>
+					</div>
+					<div class="col-4">
+						<div class="image">
+							<img src="">
+						</div>
+
+					</div>
+				</div>
+				<div class="under">
+					<input type=button id=cancel class="cnum-btn1" value="삭제">
+					<button type=button id=approval class="cnum-btn2">??</button>
+				</div>
+			</div>
+		</form>
+		<%-- </c:forEach> --%>
+
+	</div>
+
 
 	<!-- Footer Start -->
 	<div class="footer">

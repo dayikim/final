@@ -80,14 +80,29 @@ img {
 	margin-top: 5%;
 }
 
+/* 네비바 */
+.navi>div {
+	float: left;
+	width: 50%;
+	text-align: center;
+}
+
+.navi {
+	margin: auto;
+	margin-top: 115px;
+	width: 500px;
+}
+
+.requestTalent>a>h3>b {
+	color: blue;
+	border-bottom: 3px solid blue;
+}
+
 /* 시작 */
 .container2 {
 	margin: auto;
 	width: 1000px;
 	padding: 50px;
-	margin-top: 108px;
-	border: 1px solid rgb(211, 205, 205);
-	border-radius: 4px;
 }
 
 /* 대여 요청 내역 */
@@ -149,6 +164,30 @@ img {
 	cursor: pointer;
 }
 </style>
+
+<script>
+	$(function() {
+		// 취소 버튼을 눌렀을 경우
+		$(".cnum-btn1").on("click", function() {
+			let result = confirm("정말 삭제하시겠습니까?");
+			if (result) {
+				$(".cnum-btn1").parent().parent().parent().empty();
+			} else {
+				return false;
+			}
+		})
+
+		// 승인 버튼을 눌렀을 경우
+		$(".cnum-btn2").on("click", function() {
+			let result = confirm("대여 승인 하시겠습니까?");
+			if (result) {
+				$("#frm").submit();
+			} else {
+				return false;
+			}
+		})
+	})
+</script>
 
 </head>
 <body>
@@ -212,8 +251,23 @@ img {
 								placeholder="물품, 지역을 검색해주세요." id=search aria-label="Search">
 							<a href="/person/logout" class="nav-item nav-link active">Logout</a>
 							<!-- Logout -->
-							<a href="/my/mypageProc" class="nav-item nav-link">MyPage</a>
-							<!-- My Page 이동 -->
+							<div class="collapse navbar-collapse" id="navbarNavDropdown">
+								<ul class="navbar-nav">
+									<li class="nav-item dropdown"><a
+										class="nav-link dropdown-toggle" href="#"
+										id="navbarDropdownMenuLink" role="button"
+										data-toggle="dropdown" aria-haspopup="true"
+										aria-expanded="false"> Menu </a>
+										<div class="dropdown-menu"
+											aria-labelledby="navbarDropdownMenuLink">
+											<a class="dropdown-item" href="#">Board</a> <a
+												class="dropdown-item" href="#">SNS</a> <a
+												class="dropdown-item" href="#">My page</a> <a
+												class="dropdown-item" href="#">Charging</a>
+										</div></li>
+								</ul>
+								<button type="button" class="btn btn-outline-warning" id="chat">Chatting</button>
+							</div>
 						</div>
 					</div>
 				</c:otherwise>
@@ -221,48 +275,75 @@ img {
 
 		</div>
 	</div>
+	<!-- Nav Bar End -->
+
+
+	<!-- 네비바 -->
+	<div class="navi">
+		<div class="requestProduct">
+			<a href="/my/myRequestProduct"><h3>
+					<b>대여 요청</b>
+				</h3></a>
+		</div>
+		<div class="requestTalent">
+			<a href="/my/myRequestTalent"><h3>
+					<b>재능 요청</b>
+				</h3></a>
+		</div>
+	</div>
+
 
 
 	<!-- 대여 요청 내역 -->
 	<div class="container2">
-	
+
 		<!-- forEach문 사용 -->
-        <div class="requestList">
-            <div class="row high">
-                <div class="col-8 information">
-                    <div class="title">
-                        <h4><b>자전거 대여가능합니다. 단 안망가뜨릴 자신 있으신분만</b></h4> 
-                    </div>
-                    <div class="row content">
-                        <div class="col-4 left"><b>대여 일자</b></div>
-                        <div class="col-8 right">2021-08-06</div> 
-                    </div>
-                    <div class="row content">
-                        <div class="col-4 left"><b>결제 내역</b></div>
-                        <div class="col-8 right">15000원</div> 
-                    </div>
-                    <div class="row content">
-                        <div class="col-4 left"><b>대여자</b></div>
-                        <div class="col-8 right">이희정</div> 
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="image">
-                        <img src="">
-                    </div>
-                    
-                </div>
-            </div>
-            <div class="under">
-                <button type=button id=updateMyInfoBtn class="cnum-btn1">취소</button>
-                <button type=button id=updateMyProfile class="cnum-btn2">승인</button>
-            </div>
-        </div>
-        <!-- forEach문 사용 -->
-        
-        
-    </div>
-    
+		<%-- <c:forEach var="i" items="${requestRental }"> --%>
+		<form action="" method="get">
+			<div class="requestList">
+				<div class="row high">
+					<div class="col-8 information">
+						<div class="title">
+							<h4>
+								<b>칼질 잘하시는 분 찾습니다</b>
+							</h4>
+						</div>
+						<div class="row content">
+							<div class="col-4 left">
+								<b>대여 일자</b>
+							</div>
+							<div class="col-8 right">2021-08-06 ~ 2021-09-27</div>
+						</div>
+						<div class="row content">
+							<div class="col-4 left">
+								<b>결제 내역</b>
+							</div>
+							<div class="col-8 right">15000원</div>
+						</div>
+						<div class="row content">
+							<div class="col-4 left">
+								<b>대여자</b>
+							</div>
+							<div class="col-8 right">이희정</div>
+						</div>
+					</div>
+					<div class="col-4">
+						<div class="image">
+							<img src="">
+						</div>
+
+					</div>
+				</div>
+				<div class="under">
+					<input type=button id=cancel class="cnum-btn1" value="삭제">
+					<button type=button id=approval class="cnum-btn2">??</button>
+				</div>
+			</div>
+		</form>
+		<%-- </c:forEach> --%>
+
+	</div>
+
 
 	<!-- Footer Start -->
 	<div class="footer">
