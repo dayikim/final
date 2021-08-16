@@ -29,6 +29,12 @@ public class TalentBoardDAO {
 		return mybatis.selectList("TBoard.getAllList");
 		
 	}
+	public int delete(int seq) {
+		return mybatis.delete("TBoard.delete",seq);
+	}
+	public int booking(Map<String, Object> param) {
+		return mybatis.delete("TBoard.booking",param);
+	}
 	
 	
 }
