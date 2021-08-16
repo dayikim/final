@@ -9,16 +9,26 @@ public class SnsFilesDTO {
 	private String sysName;
 	private int parent;
 	private Date reg_date;
+	private String id;
 	
 	public SnsFilesDTO() {}
 
-	public SnsFilesDTO(int seq, String oriName, String sysName, int parent, Date reg_date) {
+	public SnsFilesDTO(int seq, String oriName, String sysName, int parent, Date reg_date, String id) {
 		super();
 		this.seq = seq;
 		this.oriName = oriName;
 		this.sysName = sysName;
 		this.parent = parent;
 		this.reg_date = reg_date;
+		this.id = id;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public int getSeq() {

@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Sns">
 	<insert id="insert">
-		insert into snsBoard values(snsboard_seq.nextval,#{id},#{contents},#{category},#{region},sysdate,#{love})
+		insert into snsBoard values(#{seq},#{id},#{contents},#{category},#{region},sysdate,#{love})
 	</insert>
 	
 	<select id="seq" resultType="int">
@@ -12,7 +12,7 @@
 	</select>
 	
 	<insert id="file">
-		insert into snsfiles values(snsfiles_seq.nextval,#{oriName},#{sysName},#{parent},sysdate)
+		insert into snsfiles values(snsfiles_seq.nextval,#{oriName},#{sysName},#{parent},sysdate,#{id})
 	</insert>
 	
 	<select id="selectAll" resultType="kh.spring.dto.SnsDTO">
@@ -62,4 +62,12 @@
 	<update id="updatecount">
 		update liketo set count=1 where id=#{id} and parentSeq =#{parentSeq}
 	</update>
+	
+	<select id="existlike" resultType="String">
+		select parentSeq from liketo where id =#{value}  and count = 1
+	</select>
+	
+	<select id="existfile" resultType="String">
+		select parent from snsfiles where id =#{value}
+	</select>
 </mapper>

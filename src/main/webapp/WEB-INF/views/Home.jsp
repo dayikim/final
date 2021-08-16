@@ -139,7 +139,7 @@ img{
 									        </a>
 									        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 									          <a class="dropdown-item" href="#">Board</a>
-									          <a class="dropdown-item" href="#">SNS</a>
+									          <a class="dropdown-item" href="/sns/main">SNS</a>
 									          <a class="dropdown-item" href="#">My page</a>
 									          <a class="dropdown-item" href="#">Charging</a>
 									        </div>
