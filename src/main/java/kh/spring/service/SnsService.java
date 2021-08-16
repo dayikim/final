@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kh.spring.dao.SnsDAO;
+import kh.spring.dto.LoveDTO;
 import kh.spring.dto.SnsDTO;
 
 @Service
@@ -16,7 +17,8 @@ public class SnsService {
 	@Autowired
 	private SnsDAO dao;
 	
-	public void insert(SnsDTO dto) throws Exception{
+	public void insert(int seq,SnsDTO dto) throws Exception{
+		dto.setSeq(seq);
 		dao.insert(dto);
 	}
 	
@@ -103,5 +105,9 @@ public class SnsService {
 		param.put("parentSeq", seq);
 		dao.updatecount(param);
 	}
-
+	
+	public List<String> existlike(String loginId){
+		return dao.existlike(loginId);
+	}
+	
 }
