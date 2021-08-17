@@ -1,17 +1,21 @@
 package kh.spring.service;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import kh.spring.dao.BookingDAO;
 import kh.spring.dao.MypageDAO;
 import kh.spring.dao.PointDAO;
 import kh.spring.dao.ProfileFilesDAO;
 import kh.spring.dao.SnsDAO;
+import kh.spring.dao.TalentBoardDAO;
 import kh.spring.dto.PersonDTO;
 import kh.spring.dto.PointDTO;
 import kh.spring.dto.ProfileFilesDTO;
@@ -22,11 +26,13 @@ public class MypageService {
    @Autowired
    private MypageDAO dao;
    @Autowired
-   private ProfileFilesDAO pdao;
+   private ProfileFilesDAO pdao; // 프로필
    @Autowired
-   private PointDAO ppdao;
+   private PointDAO ppdao; // 포인트
    @Autowired
-   private SnsDAO sdao;
+   private BookingDAO bdao; // 재능 예약
+   @Autowired
+   private SnsDAO sdao; // 커뮤니티
 
    // 마이페이지 정보 출력
    public PersonDTO mypageList(String sessionID){
@@ -77,6 +83,21 @@ public class MypageService {
    public List<PointDTO> pointChargeList(String sessionID) {
       return ppdao.pointChargeList(sessionID);
    }
+   
+   ////////////////////////////////////////////////////////////////////////////////////////////// 거래 요청 목록(판매자 입장)
+   
+   // 거래 요청 목록 - 재능
+   public List<HashMap<String,String>> requestRentalTalent(String sessionID) {
+	   String y = "y";
+	   Map<String, String> param = new HashMap<>();
+	   param.put("y", y);
+	   param.put("id", sessionID);
+	   
+	   return bdao.requestRentalTalent(param);
+   }
+   
+   
+   //////////////////////////////////////////////////////////////////////////////////////////////
    
    // 나의 커뮤니티 목록 출력
    public String selectMySns(String sessionID) {

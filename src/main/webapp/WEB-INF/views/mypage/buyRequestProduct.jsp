@@ -86,42 +86,38 @@ img {
 	width: 50%;
 	text-align: center;
 }
-
 .navi {
 	margin: auto;
 	margin-top: 115px;
 	width: 500px;
-	height: 60px;
-	border: 1px solid black;
+	height:60px;
+	border:1px solid black;
 	border-radius: 7px;
-	overflow: hidden;
+	overflow:hidden;
 }
-
-.requestProduct { /* 대여요청 네비 */
-	height: 100%;
-	background-color: #334257;
+.requestProduct{   /* 대여요청 네비 */
+	height:100%;
+	background-color:#334257;
 }
-
 .requestProduct>a>b {
 	color: white;
-	font-size: 30px;
-	line-height: 60px;
+	font-size:30px;
+	line-height:60px;
+}
+.requestTalent{    /* 재능요청 네비 */
+	height:100%;
+}
+.requestTalent>a>b{
+	font-size:30px;
+	line-height:60px;
 }
 
-.requestTalent { /* 재능요청 네비 */
-	height: 100%;
-}
-
-.requestTalent>a>b {
-	font-size: 30px;
-	line-height: 60px;
-}
 
 /* 시작 */
 .container2 {
 	margin: auto;
 	width: 1000px;
-	padding-top: 35px;
+	padding-top:35px;
 	padding-left: 50px;
 	padding-right: 50px;
 	padding-bottom: 50px;
@@ -151,9 +147,6 @@ img {
 .information {
 	padding-top: 40px;
 	padding-left: 40px;
-}
-.content{
-	margin-top:10px;
 }
 
 /* 버튼 */
@@ -188,29 +181,23 @@ img {
 	outline: none;
 	cursor: pointer;
 }
+
+
 </style>
 
 <script>
-	$(function() {
+	$(function(){
 		// 취소 버튼을 눌렀을 경우
-		$(".cnum-btn1").on("click", function() {
-			let result = confirm("요청을 거절 하시겠습니까?");
-			if (result) {
+		$(".cnum-btn1").on("click",function(){
+			let result = confirm("예약을 취소 하시겠습니까?");
+			if(result){
 				$(".cnum-btn1").parent().parent().parent().empty();
-			} else {
+			}else{
 				return false;
 			}
 		})
-
-		// 승인 버튼을 눌렀을 경우
-		$(".cnum-btn2").on("click", function() {
-			let result = confirm("거래 승인 하시겠습니까?");
-			if (result) {
-				$("#frm").submit();
-			} else {
-				return false;
-			}
-		})
+		
+		
 	})
 </script>
 
@@ -306,11 +293,13 @@ img {
 	<!-- 네비바 -->
 	<div class="navi">
 		<div class="requestProduct">
-			<a href="/my/requestRentalProduct"> <b>대여 요청</b>
+			<a href="/my/buyRequestProduct">
+					<b>대여 요청</b>
 			</a>
 		</div>
 		<div class="requestTalent">
-			<a href="/my/requestRentalTalent"> <b>재능 요청</b>
+			<a href="/my/buyRequestTalent">
+					<b>재능 요청</b>
 			</a>
 		</div>
 	</div>
@@ -319,7 +308,7 @@ img {
 
 	<!-- 대여 요청 내역 -->
 	<div class="container2">
-		<div>거래 요청 내역 > 대여 요청</div>
+	<div>예약 내역 > 대여 요청</div>
 		<!-- forEach문 사용 -->
 		<%-- <c:forEach var="i" items="${requestRental }"> --%>
 		<form action="" method="get">
@@ -331,33 +320,24 @@ img {
 								<b>자전거 대여가능합니다. 단 안망가뜨릴 자신 있으신분만</b>
 							</h4>
 						</div>
-						<div class=content>
-							<div class="row">
-								<div class="col-4 left">
-									<b>대여자</b>
-								</div>
-								<div class="col-8 right">이희정</div>
+						<div class="row content">
+							<div class="col-4 left">
+								<b>대여 일자</b>
 							</div>
-							<div class="row">
-								<div class="col-4 left">
-									<b>구매요청자</b>
-								</div>
-								<div class="col-8 right">아무개</div>
-							</div>
-							<div class="row">
-								<div class="col-4 left">
-									<b>대여 일자</b>
-								</div>
-								<div class="col-8 right">2021-08-06 ~ 2021-09-27</div>
-							</div>
-							<div class="row">
-								<div class="col-4 left">
-									<b>결제 내역</b>
-								</div>
-								<div class="col-8 right">15000원</div>
-							</div>
+							<div class="col-8 right">2021-08-06 ~ 2021-09-27</div>
 						</div>
-
+						<div class="row content">
+							<div class="col-4 left">
+								<b>결제 내역</b>
+							</div>
+							<div class="col-8 right">15000원</div>
+						</div>
+						<div class="row content">
+							<div class="col-4 left">
+								<b>대여자</b>
+							</div>
+							<div class="col-8 right">이희정</div>
+						</div>
 					</div>
 					<div class="col-4">
 						<div class="image">
@@ -367,8 +347,8 @@ img {
 					</div>
 				</div>
 				<div class="under">
-					<input type=button id=cancel class="cnum-btn1" value="요청 거절">
-					<button type=button id=approval class="cnum-btn2">거래 승인</button>
+					<input type=button id=cancel class="cnum-btn1" value="예약 취소">
+					<button type=button id=approval class="cnum-btn2">승인 대기 중</button>
 				</div>
 			</div>
 		</form>

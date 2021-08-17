@@ -86,23 +86,41 @@ img {
 	width: 50%;
 	text-align: center;
 }
-
 .navi {
 	margin: auto;
 	margin-top: 115px;
 	width: 500px;
+	height:60px;
+	border:1px solid black;
+	border-radius: 7px;
+	overflow:hidden;
+}
+.requestTalent{   /* 재능요청 네비 */
+	height:100%;
+	background-color:#334257;
+}
+.requestTalent>a>b {
+	color: white;
+	font-size:30px;
+	line-height:60px;
+}
+.requestProduct{    /* 대여요청 네비 */
+	height:100%;
+}
+.requestProduct>a>b{
+	font-size:30px;
+	line-height:60px;
 }
 
-.requestProduct>a>h3>b {
-	color: blue;
-	border-bottom: 3px solid blue;
-}
 
 /* 시작 */
 .container2 {
 	margin: auto;
 	width: 1000px;
-	padding: 50px;
+	padding-top:35px;
+	padding-left: 50px;
+	padding-right: 50px;
+	padding-bottom: 50px;
 }
 
 /* 대여 요청 내역 */
@@ -129,6 +147,9 @@ img {
 .information {
 	padding-top: 40px;
 	padding-left: 40px;
+}
+.content{
+	margin-top:40px;
 }
 
 /* 버튼 */
@@ -163,13 +184,15 @@ img {
 	outline: none;
 	cursor: pointer;
 }
+
+
 </style>
 
 <script>
 	$(function(){
 		// 취소 버튼을 눌렀을 경우
 		$(".cnum-btn1").on("click",function(){
-			let result = confirm("정말 삭제하시겠습니까?");
+			let result = confirm("예약을 취소 하시겠습니까?");
 			if(result){
 				$(".cnum-btn1").parent().parent().parent().empty();
 			}else{
@@ -177,15 +200,7 @@ img {
 			}
 		})
 		
-		// 승인 버튼을 눌렀을 경우
-		$(".cnum-btn2").on("click",function(){
-			let result = confirm("대여 승인 하시겠습니까?");
-			if(result){
-				$("#frm").submit();
-			}else{
-				return false;
-			}
-		})
+		
 	})
 </script>
 
@@ -281,14 +296,14 @@ img {
 	<!-- 네비바 -->
 	<div class="navi">
 		<div class="requestProduct">
-			<a href="/my/myRequestProduct"><h3>
+			<a href="/my/buyRequestProduct">
 					<b>대여 요청</b>
-				</h3></a>
+			</a>
 		</div>
 		<div class="requestTalent">
-			<a href="/my/myRequestTalent"><h3>
+			<a href="/my/buyRequestTalent">
 					<b>재능 요청</b>
-				</h3></a>
+			</a>
 		</div>
 	</div>
 
@@ -296,7 +311,7 @@ img {
 
 	<!-- 대여 요청 내역 -->
 	<div class="container2">
-
+	<div>예약 내역 > 재능 요청</div>
 		<!-- forEach문 사용 -->
 		<%-- <c:forEach var="i" items="${requestRental }"> --%>
 		<form action="" method="get">
@@ -305,14 +320,8 @@ img {
 					<div class="col-8 information">
 						<div class="title">
 							<h4>
-								<b>자전거 대여해주세요</b>
+								<b>칼질 잘 하시는 분</b>
 							</h4>
-						</div>
-						<div class="row content">
-							<div class="col-4 left">
-								<b>대여 일자</b>
-							</div>
-							<div class="col-8 right">2021-08-06 ~ 2021-09-27</div>
 						</div>
 						<div class="row content">
 							<div class="col-4 left">
@@ -320,7 +329,7 @@ img {
 							</div>
 							<div class="col-8 right">15000원</div>
 						</div>
-						<div class="row content">
+						<div class="row content2">
 							<div class="col-4 left">
 								<b>대여자</b>
 							</div>
@@ -335,8 +344,8 @@ img {
 					</div>
 				</div>
 				<div class="under">
-					<input type=button id=cancel class="cnum-btn1" value="삭제">
-					<button type=button id=approval class="cnum-btn2">??</button>
+					<input type=button id=cancel class="cnum-btn1" value="예약 취소">
+					<button type=button id=approval class="cnum-btn2">승인 대기 중</button>
 				</div>
 			</div>
 		</form>
