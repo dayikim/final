@@ -82,20 +82,35 @@ img {
 }
 
 /* 네비바 */
-
-.navi1,.navi2 {
-	float: left;
-	width: 50%;
-	text-align: center;
-}
-
-.navi {
+.navi{
 	margin: auto;
 	margin-top: 115px;
 	width: 500px;
+	height:60px;
+	border:1px solid black;
+	border-radius: 7px;
+}
+.navi1,.navi2 {
+	float: left;
+	width: 50%;
+	height:100%;
+	text-align: center;
+}
+.navi1{  /* 물품대여 네비 */
+	height:100%;
+	background-color:#334257;
+}
+.dropdown-toggle1>b{
+	color: white;
+	font-size:20px;
+	line-height:40px;
+}
+.dropdown-toggle2>b{
+	color: black;
+	font-size:20px;
+	line-height:40px;
 }
 
-hr{width:1000px;}
 
 
 /* 시작 */
@@ -158,10 +173,7 @@ hr{width:1000px;}
 	color: orange;
 }
 
-/* footer */
-footer {
-	margin-top: 20px;
-}
+
 </style>
 <script>
 
@@ -274,7 +286,7 @@ footer {
 		<div class="navi1">
 			<ul class="navbar-nav">
 			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 물품대여 </a>
+				<a class="nav-link dropdown-toggle1" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <b>물품대여 ▼</b> </a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 					<a class="dropdown-item" href="/my/dealEndProductSellList">판매 완료</a> 
 					<a class="dropdown-item" href="/my/dealEndProductBuyList">구매 완료</a> 
@@ -286,7 +298,7 @@ footer {
 		<div class=navi2>
 			<ul class="navbar-nav">
 			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 재능등록 </a>
+				<a class="nav-link dropdown-toggle2" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <b>재능등록 ▼</b> </a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 					<a class="dropdown-item" href="/my/dealEndTalentSellList">판매 완료</a> 
 					<a class="dropdown-item" href="/my/dealEndTalentBuyList">구매 완료</a> 
@@ -296,9 +308,7 @@ footer {
 		</div>
 		
 		
-	</div><br><br>
-	
-	<hr>
+	</div><br>
 
 
 	<div class="container2">

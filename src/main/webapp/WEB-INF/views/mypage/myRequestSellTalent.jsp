@@ -83,45 +83,40 @@ img {
 /* 네비바 */
 .navi>div {
 	float: left;
-	width: 50%;
+	width: 25%;
 	text-align: center;
 }
-
 .navi {
 	margin: auto;
 	margin-top: 115px;
-	width: 500px;
-	height: 60px;
-	border: 1px solid black;
+	width: 900px;
+	height:60px;
+	border:1px solid black;
 	border-radius: 7px;
-	overflow: hidden;
+	overflow:hidden;
 }
-
-.requestProduct { /* 대여요청 네비 */
-	height: 100%;
-	background-color: #334257;
+.requestSellTalent{ /* 재능등록 네비 */
+	height:100%;
+	background-color:#334257;
 }
-
-.requestProduct>a>b {
+.requestSellTalent>a>b {
 	color: white;
-	font-size: 30px;
-	line-height: 60px;
+	font-size:30px;
+	line-height:60px;
 }
-
-.requestTalent { /* 재능요청 네비 */
-	height: 100%;
+.requestBuyProduct,.requestSellProduct,.requestBuyTalent{ /* 재능등록 제외한 나머지 네비 */
+	height:100%;
 }
-
-.requestTalent>a>b {
-	font-size: 30px;
-	line-height: 60px;
+.requestBuyProduct,.requestSellProduct,.requestBuyTalent>a>b{
+	font-size:30px;
+	line-height:60px;
 }
 
 /* 시작 */
 .container2 {
 	margin: auto;
 	width: 1000px;
-	padding-top: 35px;
+	padding-top:35px;
 	padding-left: 50px;
 	padding-right: 50px;
 	padding-bottom: 50px;
@@ -153,7 +148,7 @@ img {
 	padding-left: 40px;
 }
 .content{
-	margin-top:10px;
+	margin-top:30px;
 }
 
 /* 버튼 */
@@ -163,23 +158,11 @@ img {
 	margin-top: 10px;
 }
 
-.cnum-btn1 {
-	/* 취소 */
-	border-radius: 5px;
-	width: 45%;
-	height: 50px;
-	background-color: white;
-	border: 1px solid #334257;
-	color: #334257;
-	font-size: 15px;
-	outline: none;
-	cursor: pointer;
-}
-
+/* 게시물 삭제 */
 .cnum-btn2 {
-	/* 수정 */
+	margin:auto;
 	border-radius: 5px;
-	width: 45%;
+	width: 20%;
 	height: 50px;
 	background-color: #334257;
 	border: none;
@@ -191,24 +174,14 @@ img {
 </style>
 
 <script>
-	$(function() {
-		// 취소 버튼을 눌렀을 경우
-		$(".cnum-btn1").on("click", function() {
-			let result = confirm("요청을 거절 하시겠습니까?");
-			if (result) {
-				$(".cnum-btn1").parent().parent().parent().empty();
-			} else {
-				return false;
-			}
-		})
-
-		// 승인 버튼을 눌렀을 경우
-		$(".cnum-btn2").on("click", function() {
-			let result = confirm("거래 승인 하시겠습니까?");
-			if (result) {
+	$(function(){		
+		// 게시물 삭제
+		$(".cnum-btn2").on("click",function(){
+			let result = confirm("정말 삭제하시겠습니까?");
+			if(result){
 				$("#frm").submit();
-			} else {
-				return false;
+			}else{
+				$(".cnum-btn1").parent().parent().parent().empty();
 			}
 		})
 	})
@@ -305,21 +278,34 @@ img {
 
 	<!-- 네비바 -->
 	<div class="navi">
-		<div class="requestProduct">
-			<a href="/my/requestRentalProduct"> <b>대여 요청</b>
+		<div class="requestSellProduct">
+			<a href="/my/myRequestSellProduct">
+					<b>대여 하기</b>
 			</a>
 		</div>
-		<div class="requestTalent">
-			<a href="/my/requestRentalTalent"> <b>재능 요청</b>
+		<div class="requestBuyProduct">
+			<a href="/my/myRequestBuyProduct">
+					<b>대여 요청</b>
 			</a>
 		</div>
+		<div class="requestSellTalent">
+			<a href="/my/myRequestSellTalent">
+					<b>재능 등록</b>
+			</a>
+		</div>
+		<div class="requestBuyTalent">
+			<a href="/my/myRequestBuyTalent">
+					<b>재능 요청</b>
+			</a>
+		</div>
+		
 	</div>
 
 
 
 	<!-- 대여 요청 내역 -->
 	<div class="container2">
-		<div>거래 요청 내역 > 대여 요청</div>
+	<div>나의 게시물 > 재능 등록</div>
 		<!-- forEach문 사용 -->
 		<%-- <c:forEach var="i" items="${requestRental }"> --%>
 		<form action="" method="get">
@@ -328,36 +314,35 @@ img {
 					<div class="col-8 information">
 						<div class="title">
 							<h4>
-								<b>자전거 대여가능합니다. 단 안망가뜨릴 자신 있으신분만</b>
+								<b>칼질 잘 할 자신 있습니다</b>
 							</h4>
 						</div>
-						<div class=content>
+						<div class="content">
 							<div class="row">
 								<div class="col-4 left">
-									<b>대여자</b>
+									<b>재능기부자</b>
 								</div>
-								<div class="col-8 right">이희정</div>
+								<div class="col-8 right">내이름 ㅣ shoowghjk</div>
 							</div>
 							<div class="row">
 								<div class="col-4 left">
-									<b>구매요청자</b>
+									<b>위치</b>
 								</div>
-								<div class="col-8 right">아무개</div>
-							</div>
-							<div class="row">
-								<div class="col-4 left">
-									<b>대여 일자</b>
-								</div>
-								<div class="col-8 right">2021-08-06 ~ 2021-09-27</div>
+								<div class="col-8 right">서울특별시 동대문구</div>
 							</div>
 							<div class="row">
 								<div class="col-4 left">
 									<b>결제 내역</b>
 								</div>
-								<div class="col-8 right">15000원</div>
+								<div class="col-8 right">10000000원</div>
+							</div>
+							<div class="row">
+								<div class="col-4 left">
+									<b>게시물 등록일</b>
+								</div>
+								<div class="col-8 right">2021-08-16</div>
 							</div>
 						</div>
-
 					</div>
 					<div class="col-4">
 						<div class="image">
@@ -367,8 +352,7 @@ img {
 					</div>
 				</div>
 				<div class="under">
-					<input type=button id=cancel class="cnum-btn1" value="요청 거절">
-					<button type=button id=approval class="cnum-btn2">거래 승인</button>
+					<button type=button id=delete class="cnum-btn2">게시물 삭제</button>
 				</div>
 			</div>
 		</form>

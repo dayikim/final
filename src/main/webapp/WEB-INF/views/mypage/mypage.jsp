@@ -228,14 +228,14 @@ img{
 /* 마이페이지 목차 */
 .list {
 	border-radius: 20px;
-	height: 250px;
+	height: 200px;
 	margin-bottom: 20px;
 	border: 1px solid rgb(158, 157, 157);
 }
 
 .list2 {
 	border-radius: 20px;
-	height: 250px;
+	height: 200px;
 	border: 1px solid rgb(158, 157, 157);
 }
 
@@ -245,16 +245,18 @@ img{
 }
 
 .title {
-	height: 60%;
+	height: 55%;
 }
 
 .stitle {
-	height: 40%;
+	height: 45%;
 }
+
+
 
 /* 큰 제목 */
 .title>h3>b {
-	line-height: 200px;
+	line-height: 150px;
 	color: gray;
 	margin-left: 10px;
 }
@@ -262,6 +264,7 @@ img{
 /* 부 제목 */
 .stitle>b {
 	margin-left: 10px;
+	margin-top: 100px;
 }
 
 /* 확인 버튼 */
@@ -269,7 +272,7 @@ img{
 	border-radius: 5px;
 	width: 60px;
 	height: 30px;
-	margin-top: 100px;
+	margin-top: 80px;
 	margin-left: 10px;
 	background-color: #334257;
 	border: none;
@@ -504,7 +507,7 @@ img{
 		<div class="col-12 col-sm-12 col-md-7 right">
 			<div class="row">
 
-				<!-- 거래 요청 내역 -->
+				<!-- 거래 요청 내역(판매자 입장) -->
 				<div class="col-12 list">
 					<div class="row go">
 						<div class="col-10 titleDiv">
@@ -523,24 +526,48 @@ img{
 					</div>
 				</div>
 				
-				<!-- 대여 요청 내역 -->
+				
+				
+				<!-- 예약 내역(구매자 입장) -->
 				<div class="col-12 list">
 					<div class="row go">
 						<div class="col-10 titleDiv">
 							<div class="title">
 								<h3>
-									<b>내가 쓴 요청 내역</b>
+									<b>예약 내역</b>
 								</h3>
 							</div>
 							<div class="stitle">
-								<b>나에게 필요한, 나의 물건 대여 요청 리스트 확인</b>
+								<b>나에게 필요한, 물건 예약 요청 리스트 확인</b>
 							</div>
 						</div>
 						<div class="col-2 buttonDiv">
-							<a href="/my/myRequestProduct"><button type=button class="okBtn">확인</button></a>
+							<a href="/my/buyRequestProduct"><button type=button class="okBtn">확인</button></a>
 						</div>
 					</div>
 				</div>
+				
+				
+				
+				<!-- 내가 쓴 게시글 보기 -->
+				<div class="col-12 list">
+					<div class="row go">
+						<div class="col-10 titleDiv">
+							<div class="title">
+								<h3>
+									<b>나의 게시물</b>
+								</h3>
+							</div>
+							<div class="stitle">
+								<b>홈페이지에 작성한 나의 게시글 모아보기</b>
+							</div>
+						</div>
+						<div class="col-2 buttonDiv">
+							<a href="/my/myRequestSellProduct"><button type=button class="okBtn">확인</button></a>
+						</div>
+					</div>
+				</div>
+
 
 
 
@@ -562,6 +589,7 @@ img{
 						</div>
 					</div>
 				</div>
+
 
 
 				<!-- 나의 커뮤니티 -->

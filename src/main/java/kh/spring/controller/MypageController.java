@@ -121,7 +121,7 @@ public class MypageController {
 	}
 
 
-	/////////////////////////////////////////////////////////////////////////////////////////// 거래 요청 목록
+	/////////////////////////////////////////////////////////////////////////////////////////// 거래 요청 목록 (판매자 입장)
 
 
 	// 거래 요청 목록 - 대여
@@ -130,25 +130,57 @@ public class MypageController {
 		return "/mypage/requestRentalProduct";
 	}
 
-	// 거래 요청 목록 - 재능
+	// 거래 요청 목록 - 재능(일단 이거먼저)
 	@RequestMapping("/requestRentalTalent")
-	public String requestRentalTalent() {
+	public String requestRentalTalent(Model model) {
+		String sessionID = (String)session.getAttribute("loginID");
+		service.requestRentalTalent(sessionID);
+		
+		
 		return "/mypage/requestRentalTalent";
 	}
 
 
-	/////////////////////////////////////////////////////////////////////////////////////////// 대여 요청 목록
+	////////////////////////////////////////////////////////////////////////////////////////// 예약 내역 목록(구매자 입장)
 
-	// 대여 요청 목록 - 대여
-	@RequestMapping("/myRequestProduct")
-	public String myRequestProduct() {
-		return "/mypage/myRequestProduct";
+
+	// 예약 내역 목록 - 대여
+	@RequestMapping("/buyRequestProduct")
+	public String buyRequestProduct() {
+		return "/mypage/buyRequestProduct";
 	}
 
-	// 대여 요청 목록 - 재능
-	@RequestMapping("/myRequestTalent")
-	public String myRequestTalent(){
-		return "/mypage/myRequestTalent";
+	// 예약 내역 목록 - 재능
+	@RequestMapping("buyRequestTalent")
+	public String buyRequestTalent() {
+		return "/mypage/buyRequestTalent";
+	}
+
+
+	/////////////////////////////////////////////////////////////////////////////////////////// 내가 쓴 게시글 목록
+
+	// 내가 쓴 게시글 목록 - 판매글
+	@RequestMapping("/myRequestSellProduct")
+	public String myRequestSellProduct() {
+		return "/mypage/myRequestSellProduct";
+	}
+
+	// 내가 쓴 게시글 목록 - 대여요청
+	@RequestMapping("/myRequestBuyProduct")
+	public String myRequestBuyProduct(){
+		return "/mypage/myRequestBuyProduct";
+	}
+
+	// 내가 쓴 게시글 목록 - 재능등록
+	@RequestMapping("/myRequestSellTalent")
+	public String myRequestSellTalent(){
+		return "/mypage/myRequestSellTalent";
+	}
+
+	// 내가 쓴 게시글 목록 = 재능요청
+	@RequestMapping("/myRequestBuyTalent")
+	public String myRequestBuyTalent(){
+		return "/mypage/myRequestBuyTalent";
 	}
 
 
@@ -177,8 +209,8 @@ public class MypageController {
 	public String dealEndTalentBuyList() {
 		return "/mypage/dealEndTalentBuyList";
 	}
-	
-	
+
+
 	///////////////////////////////////////////////////////////////////////////////////////////// 커뮤
 
 	// 나의 커뮤니티 목록 출력(예정)
