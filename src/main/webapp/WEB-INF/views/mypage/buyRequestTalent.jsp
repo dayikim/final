@@ -86,38 +86,42 @@ img {
 	width: 50%;
 	text-align: center;
 }
+
 .navi {
 	margin: auto;
 	margin-top: 115px;
 	width: 500px;
-	height:60px;
-	border:1px solid black;
+	height: 60px;
+	border: 1px solid black;
 	border-radius: 7px;
-	overflow:hidden;
-}
-.requestTalent{   /* 재능요청 네비 */
-	height:100%;
-	background-color:#334257;
-}
-.requestTalent>a>b {
-	color: white;
-	font-size:30px;
-	line-height:60px;
-}
-.requestProduct{    /* 대여요청 네비 */
-	height:100%;
-}
-.requestProduct>a>b{
-	font-size:30px;
-	line-height:60px;
+	overflow: hidden;
 }
 
+.requestTalent { /* 재능요청 네비 */
+	height: 100%;
+	background-color: #334257;
+}
+
+.requestTalent>a>b {
+	color: white;
+	font-size: 30px;
+	line-height: 60px;
+}
+
+.requestProduct { /* 대여요청 네비 */
+	height: 100%;
+}
+
+.requestProduct>a>b {
+	font-size: 30px;
+	line-height: 60px;
+}
 
 /* 시작 */
 .container2 {
 	margin: auto;
 	width: 1000px;
-	padding-top:35px;
+	padding-top: 35px;
 	padding-left: 50px;
 	padding-right: 50px;
 	padding-bottom: 50px;
@@ -148,8 +152,9 @@ img {
 	padding-top: 40px;
 	padding-left: 40px;
 }
-.content{
-	margin-top:40px;
+
+.content {
+	margin-top: 40px;
 }
 
 /* 버튼 */
@@ -184,23 +189,20 @@ img {
 	outline: none;
 	cursor: pointer;
 }
-
-
 </style>
 
 <script>
-	$(function(){
+	$(function() {
 		// 취소 버튼을 눌렀을 경우
-		$(".cnum-btn1").on("click",function(){
+		$(".cnum-btn1").on("click", function() {
 			let result = confirm("예약을 취소 하시겠습니까?");
-			if(result){
+			if (result) {
 				$(".cnum-btn1").parent().parent().parent().empty();
-			}else{
+			} else {
 				return false;
 			}
 		})
-		
-		
+
 	})
 </script>
 
@@ -296,13 +298,11 @@ img {
 	<!-- 네비바 -->
 	<div class="navi">
 		<div class="requestProduct">
-			<a href="/my/buyRequestProduct">
-					<b>대여 요청</b>
+			<a href="/my/buyRequestProduct"> <b>대여 요청</b>
 			</a>
 		</div>
 		<div class="requestTalent">
-			<a href="/my/buyRequestTalent">
-					<b>재능 요청</b>
+			<a href="/my/buyRequestTalent"> <b>재능 요청</b>
 			</a>
 		</div>
 	</div>
@@ -311,45 +311,53 @@ img {
 
 	<!-- 대여 요청 내역 -->
 	<div class="container2">
-	<div>예약 내역 > 재능 요청</div>
-		<!-- forEach문 사용 -->
-		<%-- <c:forEach var="i" items="${requestRental }"> --%>
-		<form action="" method="get">
-			<div class="requestList">
-				<div class="row high">
-					<div class="col-8 information">
-						<div class="title">
-							<h4>
-								<b>칼질 잘 하시는 분</b>
-							</h4>
-						</div>
-						<div class="row content">
-							<div class="col-4 left">
-								<b>결제 내역</b>
+		<div>예약 내역 > 재능 요청</div>
+		<c:forEach var="i" items="${requestRental }">
+			<form action="" method="get">
+				<div class="requestList">
+					<div class="row high">
+						<div class="col-8 information">
+							<div class="title">
+								<h4>
+									<b>${i.title }</b>
+								</h4>
 							</div>
-							<div class="col-8 right">15000원</div>
-						</div>
-						<div class="row content2">
-							<div class="col-4 left">
-								<b>대여자</b>
+							<div class="content">
+								<div class="row">
+									<div class="col-4 left">
+										<b>대여자</b>
+									</div>
+									<div class="col-8 right">${i.writer}</div>
+								</div>
+								<div class="row">
+									<div class="col-4 left">
+										<b>대여요청자</b>
+									</div>
+									<div class="col-8 right">${i.booker}</div>
+								</div>
+								<div class="row">
+									<div class="col-4 left">
+										<b>결제 내역</b>
+									</div>
+									<div class="col-8 right">${i.price}원</div>
+								</div>
 							</div>
-							<div class="col-8 right">이희정</div>
-						</div>
-					</div>
-					<div class="col-4">
-						<div class="image">
-							<img src="">
-						</div>
 
+						</div>
+						<div class="col-4">
+							<div class="image">
+								<img src="">
+							</div>
+
+						</div>
+					</div>
+					<div class="under">
+						<input type=button id=cancel class="cnum-btn1" value="예약 취소">
+						<button type=button id=approval class="cnum-btn2" disabled='disabled'>승인 대기 중</button>
 					</div>
 				</div>
-				<div class="under">
-					<input type=button id=cancel class="cnum-btn1" value="예약 취소">
-					<button type=button id=approval class="cnum-btn2">승인 대기 중</button>
-				</div>
-			</div>
-		</form>
-		<%-- </c:forEach> --%>
+			</form>
+		</c:forEach>
 
 	</div>
 
