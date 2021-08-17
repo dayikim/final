@@ -47,17 +47,16 @@ img {width: 100%;}
 .wrapper {width: 100%; height: auto;}
 
 /* 탭 메뉴 */
-.tab_basic {margin-top: 10px; width: 80%; margin: auto;}
-.tab_list_wrap {font-size: 0; height: 35px;}
-.tab_list {display: inline-block; width: 50%; height: 100%;	font-size: 15px; line-height: 30px;	text-align: center;	border: 1px solid grey;	border-right: 0; box-sizing: border-box;}
-.tab_list:last-child {border-right: 1px solid rgb(112, 91, 91);}
-.tab_list {background: #1d2434;}
-.tab_list button{background-color: #1d2434; border:#1d2434; color: white;}
-.tab_list a {display: block; width: 100%; height: 100%; text-decoration: none; color: rgb(0, 0, 0);	font-weight: 800;font-weight: 800;}
-.tab_content {display: none; width: 100%; min-height: 100px; padding: 20px; box-sizing: border-box;}
-.tab_content:first-child {display: block;}
-.card {display: inline-block; border: white;}
-.board_page{text-align:center;}
+.tab_content {text-align:center;}
+input[type="radio"] {display:none}
+input[type="radio"] + label {display:inline-block; padding:9px; background:#1d2434;color:white;font-size:19px;cursor:pointer;}
+input[type="radio"]:checked + label {background:blue;color:white;}
+
+.conbox {width:500px; height:600px;margin:0 auto;display:none;}
+input[id="tab01"]:checked ~ .con1 {display:block;}
+input[id="tab02"]:checked ~ .con2 {display:block;}
+input[id="tab03"]:checked ~ .con3 {display:block;}
+input[id="tab04"]:checked ~ .con4 {display:block;}
 
 </style>
 
@@ -69,52 +68,35 @@ img {width: 100%;}
 			}
 		})	
 	})
-		
-	$(function() {			
-
-		var tabList = document.querySelectorAll('.tab_list_wrap .tab_list');
-		
-		
-		Array.prototype.forEach.call(tabList, function(list) {
-			console.log(list.children[0]);
-			list.children[0].addEventListener('click', function(e) {
-				e.preventDefault()
+	
+// 	$(function(){
+// 		$("#tab02").on("click",function(){
+						
+// 			$.ajax({
+// 				type: "post",
+// 				url:"/AllBoardList/borrowList?category=${category}&search=${search}&cpage=1",
+// 				dataType:"json"
+// 			}).done(function(r){
+// 				console.log(r);
+// 				let json=JSON.parse(r.bwList);
+// 				let res="";
+// 				for(let i=0;i<json.length;i++)
+//                 {
+//                     res+="<div class='col-sm-4'>";
+//                     res+="<div class='card'>";
+//                     res+="<div class='card-body'>";
+//                     res+="<img src='' class='card-img-top'>";
+//                     res+="<h5 class='card-title'>";
+//                     res+="<a href='/borrow/detailView?seq='"+json[i].seq+"'>"+json[i].title+"</a></h5>";
+//                    	res+="<div class='card-address1'>"+json[i].address1;
+//                     res+="</div></div></div></div>";
+//                 }
 				
-				let tabContent = document.querySelectorAll('.tab_content');
-				console.log(tabContent);
-				
-				let tabNum = this.parentElement.getAttribute('data-tabnum');
-				console.log(tabNum);
-				
-				Array.prototype.forEach.call(tabContent, function(cont, i) {
-					cont.style.display = 'none'
-					tabList[i].className = 'tab_list'
-				})
-				
-				tabContent[tabNum].style.display = 'block'
-					if(list.className.indexOf('tab_active') == -1) {
-					list.className = 'tab_list tab_active'
-				}
-			})
-		})
-
-		
-		$("#Tomain").on("click",function(){
-			location.href="/";
-			
-		})
-		
-		$("#lendList").on("click",function(){
-			
-			$("#frm1").submit();
-		})
-		
-		$("#borrowList").on("click",function(){
-			$(".borrowList").css("display","block");
-			$("#frm2").submit();
-		})
-		
-	});
+// 				$(".con2").append(res);
+// 			})
+// 		})
+// 	})
+	
 </script>
 
 
@@ -183,155 +165,144 @@ img {width: 100%;}
 	<!-- Nav Bar End -->
 	<section id="body">
 		<div class="container">
-			<div class="form-control wrapper ">
-				<section id=table_menu>
-					<!-- Tabs -->
-					<div class="tab_basic">
-						<div class="row tab_list_wrap">
-							<div class="tab_list tab_active col" data-tabnum="0">
-								 <a href="/AllBoardList/lendList?category=${category}&search=${search}&cpage=1" id="lendList">대여하기</a>
-							</div>
-							<div class="tab_list col" data-tabnum="1">
-								<a href="/AllBoardList/borrowList?category=${category}&search=${search}&cpage=1" id="borrowList">대여요청</a>
-							</div>
-							<div class="tab_list col" data-tabnum="2">
-								<button type="button" class="btn" id="tlSellList">재능등록</button> 
-							</div>
-							<div class="tab_list col" data-tabnum="3">
-								<button type="button" class="btn" id="tlRequestList">재능대여</button> 
-							</div>
-						</div>
-						
-						
 						<div class="tab_container">
-							<!-- 대여하기 -->
 							<div class="tab_content">
-								<div class="row">
-								<form action="/AllBoardList/lendList" id="frm1">
-										<input type="hidden" name="search" value="${search}">
-										<input type="hidden" name="category" value="${category}">
-										<input type="hidden" name="cpage" value="1">
-								</form>
-								<c:forEach var="ld" items="${ldList}">
-									<div class="col-sm-4">
-										<div class="card">
-											<div class="card-body">
-												<img src="..." class="card-img-top" alt="...">
-												<h5 class="card-title"><a href="/lend/detailView?seq=${bw.seq}">${ld.title}</a></h5>
-												<div class="card-address1">${ld.address1} 원</div>
-											</div>
-										</div>
-									</div>
-									</c:forEach>
-								</div>
-								<!-- 페이징 네비바 -->
-								<div class="board_page">
-									<c:forEach var="ln" items="${ldNavi}" varStatus="s">
-										<c:choose>
-											<c:when test="${ln == '>'}">
-												<a href="/AllBoardList/lendList?cpage=${ldNavi[s.index-1]+1}&category=${category}&search=${search}">${ln}</a>
-											</c:when>
-											<c:when test="${ln == '<'}">
-												<a href="/AllBoardList/lendList?cpage=${ldNavi[s.index-1]+1}&category=${category}&search=${search}">${ln}</a>
-											</c:when>
-											<c:otherwise>
-												<a href="/AllBoardList/lendList?cpage=${ln}&category=${category}&search=${search}">${ln}</a>
-											</c:otherwise>
-										</c:choose>
-									</c:forEach>
-								</div>
-							</div>
-						
-							<!-- 대여요청 -->
-							<div class="tab_content borrowList">
-								<div class="row">
-								<form action="/AllBoardList/borrowList" id="frm2">
-										<input type="hidden" name="search" value="${search}">
-										<input type="hidden" name="category" value="${category}">
-										<input type="hidden" name="cpage" value="1">
-								</form>
-								<c:forEach var="bw" items="${bwList}">
-									<div class="col-sm-4">
-										<div class="card">
-											<div class="card-body">
-												<img src="..." class="card-img-top" alt="...">
-												<h5 class="card-title"><a href="/borrow/detailView?seq=${bw.seq}">${bw.title}</a></h5>
-												<div class="card-price ">${bw.address1}</div>
-											</div>
-										</div>
-									</div>
-									</c:forEach>
-								</div>
-								<!-- 페이징 네비바 -->
-								<div class="board_page">
-									<c:forEach var="bn" items="${bwNavi}" varStatus="s">
-										<c:choose>
-											<c:when test="${bn == '>'}">
-												<a href="/AllBoardList/borrowList?cpage=${bwNavi[s.index-1]+1}&category=${category}&search=${search}">${bn}</a>
-											</c:when>
-											<c:when test="${bn == '<'}">
-												<a href="/AllBoardList/borrowList?cpage=${bwNavi[s.index-1]+1}&category=${category}&search=${search}">${bn}</a>
-											</c:when>
-											<c:otherwise>
-												<a href="/AllBoardList/borrowList?cpage=${bn}&category=${category}&search=${search}">${bn}</a>
-											</c:otherwise>
-										</c:choose>
-									</c:forEach>
-								</div>
-							</div>
-						
-							<!-- 재능등록 -->
-							<div class="tab_content">
-								<div class="row">
-								<c:forEach var="i" items="${sellinglist}">
-								<form action="/tBoard/userSelling" id="frm3">
-										<input type="hidden" name="id" value="${i.id}">
-								</form>
-									<div class="col-sm-4">
-										<div class="card">
-											<div class="card-body">
-											
-												<img src="..." class="card-img-top" alt="...">
-												<h5 class="card-title">${i.title}</h5>
-												<div class="card-price ">${i.price} 원</div>
-												<div class="card-region-name">${memberInfo.address1}</div>
-												<div class="card-counts">
-													<span> 채팅 <span class="badge badge-danger">3</span></span>
+								<input type="radio" name="tabmenu" id="tab01" value="tab01" checked>
+								<label for="tab01">대여하기</label>
+								<input type="radio" name="tabmenu" id="tab02" value="tab02">
+								<label for="tab02">대여요청</label>
+								<input type="radio" name="tabmenu" id="tab03" value="tab03">
+								<label for="tab03">재능등록</label>
+								<input type="radio" name="tabmenu" id="tab04" value="tab04">
+								<label for="tab04">재능요청</label>
+								
+								<!-- 대여하기 -->
+								<div class="conbox con1">
+									<div class="row">
+										<form action="/AllBoardList/lendList" id="frm1">
+											<input type="hidden" name="search" id="ldsearch" value="${search}">
+											<input type="hidden" name="category" value="${category}">
+											<input type="hidden" name="cpage" value="1">
+										</form>
+										<c:forEach var="ld" items="${ldList}">
+											<div class="col-sm-4">
+												<div class="card">
+													<div class="card-body">
+														<img src="..." class="card-img-top" alt="...">
+														<h5 class="card-title"><a href="/lend/detailView?seq=${ld.seq}">${ld.title}</a></h5>
+														<div class="card-address1">${ld.address1}</div>
+														
+													</div>
 												</div>
 											</div>
-										</div>
+										</c:forEach>
 									</div>
-									</c:forEach>
+									<!-- 페이징 네비바 -->
+									<div class="board_page">
+										<c:forEach var="ln" items="${ldNavi}" varStatus="s">
+											<c:choose>
+												<c:when test="${ln == '>'}">
+													<a href="/AllBoardList/lendList?cpage=${ldNavi[s.index-1]+1}&category=${category}&search=${search}">${ln}</a>
+												</c:when>
+												<c:when test="${ln == '<'}">
+													<a href="/AllBoardList/lendList?cpage=${ldNavi[s.index-1]+1}&category=${category}&search=${search}">${ln}</a>
+												</c:when>
+												<c:otherwise>
+													<a href="/AllBoardList/lendList?cpage=${ln}&category=${category}&search=${search}">${ln}</a>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</div>
 								</div>
-							</div>
-						
-							<!-- 재능요청 -->
-							<div class="tab_content">
-								<div class="row">
-								<c:forEach var="i" items="${sellinglist}">
-								<form action="/tBoard/userSelling" id="frm4">
-										<input type="hidden" name="id" value="${i.id}">
-								</form>
-									<div class="col-sm-4">
-										<div class="card">
-											<div class="card-body">
-											
-												<img src="..." class="card-img-top" alt="...">
-												<h5 class="card-title">${i.title}</h5>
-												<div class="card-price ">${i.price} 원</div>
-												<div class="card-region-name">${memberInfo.address1}</div>
-												<div class="card-counts">
-													<span> 채팅 <span class="badge badge-danger">3</span></span>
+								<!-- 대여요청 -->
+								<div class="conbox con2">
+									<div class="row" id="bwrow">
+										<form action="/AllBoardList/borrowList" id="frm2">
+											<input type="hidden" id="bwsearch" name="search" value="${search}">
+											<input type="hidden" name="category" value="${category}">
+											<input type="hidden" name="cpage" value="1">
+										</form>
+										<c:forEach var="bw" items="${bwList}">
+											<div class="col-sm-4">
+												<div class="card">
+													<div class="card-body">
+														<img src="..." class="card-img-top" alt="..." id="bwImg">
+														<h5 class="card-title" id="cbwTitle"><a href="/borrow/detailView?seq=${bw.seq}">${bw.title}</a></h5>
+														<div class="card-address1" id="bwAddress1">${bw.address1}</div>
+													</div>
 												</div>
 											</div>
-										</div>
+										</c:forEach>
 									</div>
-									</c:forEach>
+								<!-- 페이징 네비바 -->
+									<div class="board_page" id="bwpage">
+										<c:forEach var="bn" items="${bwNavi}" varStatus="s">
+											<c:choose>
+												<c:when test="${bn == '>'}">
+													<a href="/AllBoardList/borrowList?cpage=${bwNavi[s.index-1]+1}&category=${category}&search=${search}">${bn}</a>
+												</c:when>
+												<c:when test="${bn == '<'}">
+													<a href="/AllBoardList/borrowList?cpage=${bwNavi[s.index-1]+1}&category=${category}&search=${search}">${bn}</a>
+												</c:when>
+												<c:otherwise>
+													<a href="/AllBoardList/borrowList?cpage=${bn}&category=${category}&search=${search}">${bn}</a>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</div>
 								</div>
+								
+								<!-- 재능등록 -->
+								<div class="conbox con3">
+									<div class="row">
+										<c:forEach var="i" items="${sellinglist}">
+										<form action="/tBoard/userSelling" id="frm3">
+												<input type="hidden" name="id" value="${i.id}">
+										</form>
+											<div class="col-sm-4">
+												<div class="card">
+													<div class="card-body">
+													
+														<img src="..." class="card-img-top" alt="...">
+														<h5 class="card-title">${i.title}</h5>
+														<div class="card-price ">${i.price} 원</div>
+														<div class="card-region-name">${memberInfo.address1}</div>
+														<div class="card-counts">
+															<span> 채팅 <span class="badge badge-danger">3</span></span>
+														</div>
+													</div>
+												</div>
+											</div>
+										</c:forEach>
+									</div>
+								</div>
+								
+								<!-- 재능요청 -->
+								<div class="conbox con4">
+									<div class="row">
+										<c:forEach var="i" items="${sellinglist}">
+										<form action="/tBoard/userSelling" id="frm4">
+												<input type="hidden" name="id" value="${i.id}">
+										</form>
+											<div class="col-sm-4">
+												<div class="card">
+													<div class="card-body">
+													
+														<img src="..." class="card-img-top" alt="...">
+														<h5 class="card-title">${i.title}</h5>
+														<div class="card-price ">${i.price} 원</div>
+														<div class="card-region-name">${memberInfo.address1}</div>
+														<div class="card-counts">
+															<span> 채팅 <span class="badge badge-danger">3</span></span>
+														</div>
+													</div>
+												</div>
+											</div>
+										</c:forEach>
+									</div>
+								</div>
+								
 							</div>
-						</div>
-					</div>
-				</section>
 				<div class=" btn_wrap text-right ">
 					<button type="button" class="btn btn-outline-info" id="Tomain">메인으로 이동</button>
 				</div>
@@ -410,7 +381,7 @@ img {width: 100%;}
 		<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
 		<!-- JavaScript Libraries -->
-		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 		<script src="/lib/easing/easing.min.js"></script>
 

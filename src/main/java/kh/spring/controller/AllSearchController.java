@@ -1,16 +1,18 @@
 package kh.spring.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.Gson;
 
 import kh.spring.dto.BorrowDTO;
 import kh.spring.dto.LendDTO;
-import kh.spring.dto.TalentBoardDTO;
 import kh.spring.service.AllSearchService;
 
 
@@ -21,43 +23,32 @@ public class AllSearchController {
 	@Autowired
 	private AllSearchService service;
 	
-	@RequestMapping(value="lendList",produces="text/html;charset=utf8", method = RequestMethod.GET )	
+	@RequestMapping(value="lendList",produces="text/html;charset=utf8")	
 	public String lendList(String category, String search,String cpage, Model model) {
 		
-		System.out.println(category + " : " + search + " : " + cpage);
 		
 		List<String> ldPageNavi = service.getLdPageNavi(category, search,cpage);
-		
 		List<LendDTO> ldlist = service.getLdList(category, search,cpage); //대여하기 리스트 
-		
-//		int ldcount = service.lendCount(search); //대여하기 카운트
-		
+				
 		model.addAttribute("ldList", ldlist); //대여하기 리스트 		
-		model.addAttribute("ldNavi", ldPageNavi); //대여하기 카운트
+		model.addAttribute("navi", ldPageNavi); //대여하기 카운트
 		model.addAttribute("search", search); //검색어
 		model.addAttribute("category",category);
-		return "borrowBoard/borrowTabExam";
+		return "toBoard/lendList";
 		
 	}
 	
-	@RequestMapping(value="borrowList",produces="text/html;charset=utf8", method = RequestMethod.GET)	
+	@RequestMapping(value="borrowList",produces="text/html;charset=utf8")
 	public String borrowList(String category, String search,String cpage, Model model) {
-		
-//		int bwcount = service.borrowCount(search); //대여요청 카운트
-		
-		System.out.println(category + " : " + search + " : " + cpage);
-		
+				
 		List<String> bwPageNavi = service.getBwPageNavi(category, search,cpage);
-		
 		List<BorrowDTO> bwlist = service.getBwList(category, search,cpage);
-		 
 		
-		model.addAttribute("bwList", bwlist); //대여요청 리스트
-		model.addAttribute("bwNavi", bwPageNavi); //대여요청 카운트
+		model.addAttribute("navi", bwPageNavi);
+		model.addAttribute("bwList", bwlist);
 		model.addAttribute("search", search); //검색어
-		model.addAttribute("category",category);//카테고리
-		
-		return "borrowBoard/borrowTabExam";		
+		model.addAttribute("category",category);//카테고리		
+		return "toBoard/borrowList";		
 	}
 	
 //	@RequestMapping(value="",produces="text/html;charset=utf8")	

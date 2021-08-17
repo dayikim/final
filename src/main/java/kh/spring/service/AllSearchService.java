@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kh.spring.dao.BorrowDAO;
 import kh.spring.dao.LendDAO;
+import kh.spring.dao.TalentBoardDAO;
 import kh.spring.dto.BorrowDTO;
 import kh.spring.dto.LendDTO;
 
@@ -29,10 +30,6 @@ public class AllSearchService {
 	public List<LendDTO> getLdList(String category, String search, String cpage){
 		int currentPage = Integer.parseInt(cpage);
 		
-		System.out.println("서->디 : " + category + " : " + search);
-		
-		System.out.println("서->컨 : " + lddao.getList(category, search,currentPage));
-		
 		return lddao.getList(category, search,currentPage);
 	}
 	
@@ -45,13 +42,11 @@ public class AllSearchService {
 	
 	public List<BorrowDTO> getBwList(String category, String search, String cpage){
 		int currentPage = Integer.parseInt(cpage);
-		
-		System.out.println("서->디 : " + category + " : " + search);
-		
-		System.out.println("서->컨 : " + bwdao.getList(category, search,currentPage));
-		
+				
 		return bwdao.getList(category, search,currentPage);
 	}
+	
+	
 
 	
 	

@@ -18,9 +18,7 @@ public class LendDAO {
 	private SqlSessionTemplate mybatis;
 	
 	public List<LendDTO> getList(String category, String search,int cpage){
-		
-		System.out.println("디 : " + category + " : " + search);
-		
+				
 		if(search == null) {
 			search = "";
 		}
@@ -48,9 +46,7 @@ public class LendDAO {
 		}else {
 			list = mybatis.selectList("Lend.toList", map);
 		}
-		
-		System.out.println("디->서 : " + list);
-		
+				
 		return list;
 		
 	}
