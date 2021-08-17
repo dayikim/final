@@ -193,11 +193,12 @@ img {
 
 <script>
 	$(function() {
-		// 취소 버튼을 눌렀을 경우
+		// 예약 버튼을 눌렀을 경우
 		$(".cnum-btn1").on("click", function() {
 			let result = confirm("예약을 취소 하시겠습니까?");
 			if (result) {
-				$(".cnum-btn1").parent().parent().parent().empty();
+				$("#frm").attr("action","/my/bookingFail");
+				$("#frm").submit();
 			} else {
 				return false;
 			}
@@ -313,7 +314,7 @@ img {
 	<div class="container2">
 		<div>예약 내역 > 재능 요청</div>
 		<c:forEach var="i" items="${requestRental }">
-			<form action="" method="get">
+			<form action="" method="get" id=frm>
 				<div class="requestList">
 					<div class="row high">
 						<div class="col-8 information">
@@ -342,6 +343,9 @@ img {
 									<div class="col-8 right">${i.price}원</div>
 								</div>
 							</div>
+							<input type=hidden value=${i.writer } name=writer> 
+							<input type=hidden value=${i.booker } name=booker> 
+							<input type=hidden value=${i.parentseq } name=parent>
 
 						</div>
 						<div class="col-4">

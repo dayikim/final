@@ -91,7 +91,7 @@ public class MypageController {
 		return "/mypage/profileView";
 	}
 
-	// 포인트 충전내역 확인(완)
+	// 포인트 충전내역 확인
 	@RequestMapping(value="/pointChargeList", produces="text/html;charset=utf8")
 	public String pointChargeList(Model model) {
 		String sessionID = (String)session.getAttribute("loginID");
@@ -126,27 +126,44 @@ public class MypageController {
 	/////////////////////////////////////////////////////////////////////////////////////////// 거래 요청 목록 (판매자 입장)
 
 
-	// 거래 요청 목록 - 대여
+	// 거래 요청 목록 - 대여(미완)
 	@RequestMapping("/requestRentalProduct")
 	public String requestRental() {
 		return "/mypage/requestRentalProduct";
 	}
 
-	// 거래 요청 목록 - 재능(일단 이거먼저)
+	// 거래 요청 목록 - 재능
 	@RequestMapping("/requestRentalTalent")
 	public String requestRentalTalent(Model model) {
 		String sessionID = (String)session.getAttribute("loginID");
-		List<HashMap<String,String>> result = service.requestRentalTalent(sessionID);
+		List<HashMap<String,Object>> list = service.requestRentalTalent(sessionID);
 		
-		model.addAttribute("requestRental", result);
+		model.addAttribute("requestRental", list);
 		return "/mypage/requestRentalTalent";
+	}
+	
+	// 요청 거절 버튼을 눌렀을 때 - 재능
+	@RequestMapping("/dealFail")
+	public String dealFail(int parent) {
+		String sessionID = (String)session.getAttribute("loginID");
+		service.dealFail(sessionID,parent);
+		
+		return "redirect:/my/requestRentalTalent";
+	}
+	
+	// 거래 승인 완료 버튼 눌렀을 때 - 재능(미완)
+	@RequestMapping("/dealSuccess")
+	public String dealSuccess(Model model, String writer, String booker, int parent) {
+		service.dealSuccess(writer,booker,parent); // 결과값이 잘 들어갔으니 1이 나왔을것.. 하지만 어떻게 버튼의 형식을 바꾸지..?
+		
+		return "redirect:/requestRentalTalent";
 	}
 
 
 	////////////////////////////////////////////////////////////////////////////////////////// 예약 내역 목록(구매자 입장)
 
 
-	// 예약 내역 목록 - 대여
+	// 예약 내역 목록 - 대여(미완)
 	@RequestMapping("/buyRequestProduct")
 	public String buyRequestProduct() {
 		return "/mypage/buyRequestProduct";
@@ -156,34 +173,45 @@ public class MypageController {
 	@RequestMapping("buyRequestTalent")
 	public String buyRequestTalent(Model model) {
 		String sessionID = (String)session.getAttribute("loginID");
-		List<HashMap<String,String>> result = service.buyRequestTalent(sessionID);
+		List<HashMap<String,Object>> result = service.buyRequestTalent(sessionID);
 		
 		model.addAttribute("requestRental", result);
 		return "/mypage/buyRequestTalent";
+	}
+	
+	// 예약 취소 - 재능
+	@RequestMapping("/bookingFail")
+	public String bookingFail(int parent) {
+		String sessionID = (String)session.getAttribute("loginID");
+		service.bookingFail(sessionID,parent);
+		
+		return "redirect:/my/buyRequestTalent";
 	}
 
 
 	/////////////////////////////////////////////////////////////////////////////////////////// 내가 쓴 게시글 목록
 
-	// 내가 쓴 게시글 목록 - 판매글
+	// 내가 쓴 게시글 목록 - 판매글(미완)
 	@RequestMapping("/myRequestSellProduct")
 	public String myRequestSellProduct() {
 		return "/mypage/myRequestSellProduct";
 	}
 
-	// 내가 쓴 게시글 목록 - 대여요청
+	// 내가 쓴 게시글 목록 - 대여요청(미완)
 	@RequestMapping("/myRequestBuyProduct")
 	public String myRequestBuyProduct(){
 		return "/mypage/myRequestBuyProduct";
 	}
 
-	// 내가 쓴 게시글 목록 - 재능등록
+	// 내가 쓴 게시글 목록 - 재능등록(미완)
 	@RequestMapping("/myRequestSellTalent")
 	public String myRequestSellTalent(){
+		String sessionID = (String)session.getAttribute("loginID");
+//		service.myRequestSellTalent(sessionID);
 		return "/mypage/myRequestSellTalent";
 	}
 
-	// 내가 쓴 게시글 목록 = 재능요청
+	// 내가 쓴 게시글 목록 = 재능요청(미완)
 	@RequestMapping("/myRequestBuyTalent")
 	public String myRequestBuyTalent(){
 		return "/mypage/myRequestBuyTalent";
@@ -192,25 +220,25 @@ public class MypageController {
 
 	//////////////////////////////////////////////////////////////////////////////////////////// 거래 완료 목록
 
-	// 거래 완료 목록 출력 - 대여 판매완료
+	// 거래 완료 목록 출력 - 대여 판매완료(미완)
 	@RequestMapping(value="/dealEndProductSellList", produces="text/html;charset=utf8")
 	public String dealEndProductSellList() {
 		return "/mypage/dealEndProductSellList";
 	}
 
-	// 거래 완료 목록 출력 - 대여 구매완료
+	// 거래 완료 목록 출력 - 대여 구매완료(미완)
 	@RequestMapping(value="/dealEndProductBuyList", produces="text/html;charset=utf8")
 	public String dealEndProductBuyList() {
 		return "/mypage/dealEndProductBuyList";
 	}
 
-	// 거래 완료 목록 출력 - 재능 판매완료
+	// 거래 완료 목록 출력 - 재능 판매완료(미완)
 	@RequestMapping(value="/dealEndTalentSellList", produces="text/html;charset=utf8")
 	public String dealEndTalentSellList() {
 		return "/mypage/dealEndTalentSellList";
 	}
 
-	// 거래 완료 목록 출력 - 재능 구매완료
+	// 거래 완료 목록 출력 - 재능 구매완료(미완)
 	@RequestMapping(value="/dealEndTalentBuyList", produces="text/html;charset=utf8")
 	public String dealEndTalentBuyList() {
 		return "/mypage/dealEndTalentBuyList";
@@ -219,7 +247,7 @@ public class MypageController {
 
 	///////////////////////////////////////////////////////////////////////////////////////////// 커뮤
 
-	// 나의 커뮤니티 목록 출력(예정)
+	// 나의 커뮤니티 목록 출력(미완)
 	@RequestMapping(value="/selectMySns", produces="text/html;charset=utf8")
 	public String selectMySns(Model model) {
 		String sessionID = (String) session.getAttribute("loginID");
