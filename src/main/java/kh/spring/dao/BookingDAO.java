@@ -11,7 +11,7 @@ public class BookingDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 	public int booking(BookingDTO dto) {
-		return mybatis.insert("Booking,booking",dto);
+		return mybatis.insert("Booking.booking",dto);
 	}
 
 }

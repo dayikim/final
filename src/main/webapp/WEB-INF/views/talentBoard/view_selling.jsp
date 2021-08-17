@@ -433,9 +433,10 @@ $(function(){
 					<span id="region_name">${memberInfo.address1} </span>
 					<div class=" btn_wrap text-right">
 					
-					<form action="tBoard/booking" id="bookingform">
+					<form action="/tBoard/booking" id="bookingform">
 					<input type="hidden" name="seller" value="${tboard.writer}">
 					<input type="hidden" name="bookable" value="y">
+					<input type="hidden" name="booker" value="${loginID}">
 					<input type="hidden" name="parentseq" value="${tboard.seq}">
 						<button type="button" class="btn btn-secondary" value="y" id="booking">
 							예약하기</button>
