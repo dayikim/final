@@ -154,7 +154,11 @@ public class MypageController {
 
 	// 예약 내역 목록 - 재능
 	@RequestMapping("buyRequestTalent")
-	public String buyRequestTalent() {
+	public String buyRequestTalent(Model model) {
+		String sessionID = (String)session.getAttribute("loginID");
+		List<HashMap<String,String>> result = service.buyRequestTalent(sessionID);
+		
+		model.addAttribute("requestRental", result);
 		return "/mypage/buyRequestTalent";
 	}
 

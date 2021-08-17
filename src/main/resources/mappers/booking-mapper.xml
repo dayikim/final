@@ -24,4 +24,11 @@ insert into booking values(booking_seq.nextval,#{seller},#{booker},#{bookable},#
 	where booking.bookable=#{y} and booking.seller=#{id}
 </select>
 
+<!-- 구매자에게 들어온 예약 내역 출력 -->
+<select id="buyRequestTalent" resultMap="TalentBoard" resultType="HashMap">
+	select talentboard.writer,booking.booker,talentboard.price,talentboard.title 
+	from talentboard join booking on (talentboard.seq = booking.parentseq) 
+	where booking.bookable=#{y} and booking.booker=#{id}
+</select>
+
 </mapper>

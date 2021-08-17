@@ -97,7 +97,17 @@ public class MypageService {
    }
    
    
-   //////////////////////////////////////////////////////////////////////////////////////////////
+   ////////////////////////////////////////////////////////////////////////////////////////////// 예약 내역 (구매자 입장)
+   
+   // 예약 내역 목록 - 재능
+   public List<HashMap<String,String>> buyRequestTalent(String sessionID) {
+	   String y = "y";
+	   Map<String, String> param = new HashMap<>();
+	   param.put("y", y);
+	   param.put("id", sessionID);
+	   
+	   return bdao.buyRequestTalent(param);
+   }
    
    // 나의 커뮤니티 목록 출력
    public String selectMySns(String sessionID) {

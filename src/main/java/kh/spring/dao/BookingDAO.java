@@ -18,9 +18,14 @@ public class BookingDAO {
 		return mybatis.insert("Booking.booking",dto);
 	}
 	
-	// 거래 요청 목록 - 재능
+	// 거래 요청 목록 - 재능(판매자)
 	public List<HashMap<String,String>> requestRentalTalent(Map<String, String> param) {
 		return mybatis.selectList("Booking.requestRentalTalent", param);
+	}
+	
+	// 예약 내역 출력 - 재능(구매자)
+	public List<HashMap<String,String>> buyRequestTalent(Map<String, String> param) {
+		return mybatis.selectList("Booking.buyRequestTalent", param);
 	}
 
 }
