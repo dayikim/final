@@ -13,7 +13,7 @@
 <link href="img/favicon.ico" rel="icon">
 <!-- Google Font -->
 <link
-	href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"
+	href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"	
 	rel="stylesheet">
 <link
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
@@ -46,23 +46,22 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
 	integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
 	crossorigin="anonymous"></script>
-	
-	   <script src="/js/main.js"></script>
+
+<script src="/js/main.js"></script>
 
 
 <style>
-.navbar{
-position: absolute;
-top:8%;
-
+.navbar {
+	position: absolute;
+	top: 8%;
 }
 
-#SnSbody{
-position:absolute;
-top:20%;
-margin-left:4%;
-
+#SnSbody {
+	position: absolute;
+	top: 20%;
+	margin-left: 4%;
 }
+
 #titlename {
 	margin-top: 1%;
 	margin-bottom: 0;
@@ -152,7 +151,18 @@ style>body {
 			}
 		}));	
 
-
+		//글 삭제
+		$(document).on("click","#del",function(){
+			$.ajax({
+				url : "/sns/delete",
+				type : "POST",
+				data : {"seq":$(this).siblings("#hiddenseq").val()}
+			}).done(function(resp){
+				if(resp == 1){
+					alert('삭제가완료되었습니다')
+				}
+			})
+		})
 		
 		//댓글버튼눌렀을때
 		$(document).on("click","#commenticon",function(){
@@ -188,6 +198,7 @@ style>body {
 						delete_tag.text("삭제");
 						
 						let modify_tag = $("<a>");
+						modify_tag.attr("href","#");
 						modify_tag.attr("id","modicomm");
 						modify_tag.text("수정");
 											
@@ -455,7 +466,7 @@ style>body {
 									aria-controls="posts" aria-selected="true">글 작성</a></li>
 								<li class="nav-item"><a class="nav-link" id="images-tab"
 									data-toggle="tab" role="tab" aria-controls="images"
-									aria-selected="false" href="#images">파일첨부</a></li>
+									aria-selected="false" href="#images">사진첨부</a></li>
 							</ul>
 						</div>
 						<div class="card-body">
@@ -472,10 +483,7 @@ style>body {
 									aria-labelledby="images-tab">
 									<div class="form-group">
 										<div class="custom-file">
-											<input type=file name=file multiple>
-											<!--  <input type="file" class="custom-file-input" id="customFile">
-											<label class="custom-file-label" for="customFile">Upload
-												image</label>-->
+											<input type=file name=file accept=".gif, .jpg, .png" multiple>
 										</div>
 									</div>
 									<div class="py-4"></div>
@@ -510,12 +518,10 @@ style>body {
 									</div>
 									<div class="ml-2">
 										<div class="h5 m-0">
-											${item.id}
+											${item.id} <input type=hidden id=hiddenseq value=${item.seq }>
 											<c:choose>
 												<c:when test="${loginID == item.id }">
-													<a
-														href="${pageContext.request.contextPath}/sns/delete?seq=${item.seq }"
-														id=del>삭제</a>
+													<a href id=del>삭제</a>
 													<a
 														href="${pageContext.request.contextPath}/sns/modify?seq=${item.seq }"
 														id=modi>수정</a>
@@ -531,28 +537,32 @@ style>body {
 						<div class="card-body">
 							<div class="text-muted h7 mb-2">
 								<i class="fa fa-clock-o"></i>${item.category }
-							</div>						
-								<c:forEach var="file" items="${file}">
-									<c:choose>
-										<c:when test="${file.parent == item.seq }">	
-											<a href ="/Board/download?oriName=${file.oriName}&sysName=${file.sysName}"> <img src="/imgs/${file.oriName}"> </a>										
-											<img src="/imgs/${file.oriName}">
-										</c:when>
-									</c:choose>
-									
-								</c:forEach>
-							<p class="card-text">${item.contents }</p>							
+							</div>
+							<c:forEach var="file" items="${file}">
+								<c:choose>
+									<c:when test="${file.parent == item.seq }">
+										<a
+											href="/sns/download?oriName=${file.oriName}&sysName=${file.sysName}">
+											<img src="${Path}\\${file.sysName}">
+										</a>
+									</c:when>
+								</c:choose>
+
+							</c:forEach>
+							<p class="card-text">${item.contents }</p>
 						</div>
 						<div class="card-footer">
-								<c:choose>
-									<c:when test="${isLove.indexOf(String.valueOf(item.seq)) != -1}">
-										<a class="card-link" id=love style="color:#FF6B6B"><i class="fas fa-heart"></i>${item.love }</a>
-									</c:when>
-									<c:otherwise>
-										<a class="card-link" id=love style="color:#FDD2BF"><i class="far fa-heart"></i>${item.love }</a>
-									</c:otherwise>
-								</c:choose>
-							
+							<c:choose>
+								<c:when test="${isLove.indexOf(String.valueOf(item.seq)) != -1}">
+									<a class="card-link" id=love style="color: #FF6B6B"><i
+										class="fas fa-heart"></i>${item.love }</a>
+								</c:when>
+								<c:otherwise>
+									<a class="card-link" id=love style="color: #FDD2BF"><i
+										class="far fa-heart"></i>${item.love }</a>
+								</c:otherwise>
+							</c:choose>
+
 							<a class="card-link" id=commenticon><i
 								class="fas fa-comment-dots"></i>Comment</a>
 						</div>

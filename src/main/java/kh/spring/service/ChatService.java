@@ -31,6 +31,9 @@ import kh.spring.dto.MessageDTO;
 public class ChatService  implements InitializingBean {
 	
 	@Autowired
+	MessageService ms;
+	
+	@Autowired
 	ChatRoomDao crd;
 	
 	@Autowired
@@ -74,7 +77,15 @@ public class ChatService  implements InitializingBean {
 	//룸리스트에서 해당룸을 찾아, 그 안에 있는 세션 리스트에게 메세지를 보낸다. 
 	public void sendMessage(MessageDTO md) throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("a h:mm"); //날짜 형식
-		for(Session session :rs.get(md.getRoomid())) {
+		List<Session> sessionList = rs.get(md.getRoomid());
+		int unread_count =0;
+		if(sessionList.size()==1) {
+			unread_count = ms.getUnread_count(md.getRoomid(),md.getId());
+			System.out.println(md.getRoomid()+"에서 온" + unread_count +"개수");
+		}else {
+			unread_count=0;
+		}
+		for(Session session :sessionList) {
 			JsonObject json = new JsonObject();
 			json.addProperty("loginID", md.getId());
 			if(cr.findNaverRegx(md.getMessage()) != null) { // Naver해시태그를 가져온다.
@@ -87,6 +98,7 @@ public class ChatService  implements InitializingBean {
 				json.addProperty("search",cr.findlocationRegx(md.getMessage()).substring(2));
 			}
 			json.addProperty("message" ,md.getMessage());
+			json.addProperty("unreadcount", unread_count);
 			json.addProperty("trans_time" ,sdf.format(md.getReg_date()));
 			session.getBasicRemote().sendText(json.toString());
 		}

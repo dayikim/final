@@ -60,16 +60,20 @@ public class ChatController {
 //		md.addAttribute("regex",cr);
 //		return "chat/chat";
 //		 }
-	@RequestMapping("")
+	@RequestMapping("waitingroom")
 	public String chat(Model md) {
 		md.addAttribute("list", cs.getChatRoomlist((String)session.getAttribute("loginID")));
 		md.addAttribute("waiting", "true");
-		return "chat/chat";
+		return "chat/chatingRoom";
 	}
 	
-	@RequestMapping("toChat")
+	@RequestMapping("")
 	public String joinroom(String roomid, Model md) throws Exception {
-		session.setAttribute("roomid", roomid);
+		System.out.println("toChat으로 들어올때 확인된 roomid: "+roomid);
+		if(session.getAttribute(roomid) == null) session.setAttribute("roomid", roomid);
+		else {
+			session.setAttribute("roomid", roomid);
+		}
 		md.addAttribute("list", cs.getChatRoomlist((String)session.getAttribute("loginID")));
 		md.addAttribute("pastMessage", ms.pastMessage(roomid));
 		md.addAttribute("time", new SimpleDateFormat("a h:mm"));

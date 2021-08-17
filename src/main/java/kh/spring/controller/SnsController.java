@@ -4,8 +4,11 @@ import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,14 +36,17 @@ public class SnsController {
 	private HttpSession session;
 	
 	@RequestMapping("/main")
-	public String main(String id,Model model) {
-		String loginId= (String)session.getAttribute("loginID");
-		List<SnsDTO>list = service.selectAll();
+	public String main(Model model) {
+		String loginId= (String)session.getAttribute("loginID"); //글 목록
+		
+		List<SnsDTO>list = service.selectAll(loginId);
 		model.addAttribute("list", list);
 		
-		List<String> ldto = service.existlike(loginId);
+		List<String> ldto = service.existlike(loginId); //좋아요목록
 		model.addAttribute("isLove",ldto);
 		
+		String Path =  session.getServletContext().getRealPath("files"); //파일목록
+		model.addAttribute("Path", Path);
 		List<SnsFilesDTO>fdto = fservice.fileList();
 		model.addAttribute("file", fdto);
 		
@@ -55,12 +61,14 @@ public class SnsController {
 		dto.setId(id);
 		String region = service.region(id);
 		dto.setRegion(region);
-		if(file[0].getSize() ==0) {		
+		if(file[0].getSize() ==0) {		 //파일이 없을때
 			service.insert(seq ,dto);
-		}else {
-			service.insert(seq ,dto); //게시글  10	
+			 
+		}else {  //파일이 있을때
+			service.insert(seq ,dto); 	
 			String realPath = session.getServletContext().getRealPath("files");
 			File filesPath = new File(realPath);
+			
 			if(!filesPath.exists()) {filesPath.mkdir();}
 			for(MultipartFile tmp : file) {
 				String oriName = tmp.getOriginalFilename();
@@ -73,18 +81,26 @@ public class SnsController {
 	}
 	
 	@RequestMapping("/delete")
-	public String delete(int seq) {
-		service.delete(seq);
-		return "redirect:/sns/main";
+	@ResponseBody
+	public int delete(int seq) {
+		int result = service.delete(seq);
+		return result;
+	}
+	
+	@RequestMapping("/image")
+	public String showImage() {
+		
+		return "sns/main";
 	}
 	
 	@RequestMapping("/modify")
-	public String modify(int seq,Model model) {
+	public String modify(int seq, Model model) {
+		String id = (String)session.getAttribute("loginID");
 		String contents = service.select(seq);
 		model.addAttribute("contents", contents);
 		model.addAttribute("seq", seq);
 		
-		List<SnsDTO>list = service.selectAll();		
+		List<SnsDTO>list = service.selectAll(id);		
 		model.addAttribute("list", list);
 		return "sns/modify";
 	}
@@ -111,7 +127,7 @@ public class SnsController {
 		return "redirect:/sns/main";
 	}
 	
-	@RequestMapping("love")
+	@RequestMapping("love") //좋아요반영
 	@ResponseBody
 	public int love(int seq,int love) {
 		String id = (String)session.getAttribute("loginID");
@@ -135,5 +151,19 @@ public class SnsController {
 		}		
 		return resultcode;
 	}
-
+	
+	@RequestMapping("/download") //사진다운로드
+	public void download(String oriName, String sysName, HttpServletResponse resp) throws Exception{
+		String filesPath = session.getServletContext().getRealPath("files");
+		File targetFile = new File(filesPath + "/" + sysName);
+		
+		resp.setContentType("application/octet-stream; charset=utf-8");
+		resp.setHeader("content-Disposition", "attachment;filename=\""+ oriName + "\"");
+		
+		try(ServletOutputStream sos = resp.getOutputStream();){
+			FileUtils.copyFile(targetFile, sos);
+			sos.flush();
+		}
+	}
+		
 }
