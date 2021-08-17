@@ -5,7 +5,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>돈 빼고 다! 돈-고</title>
+        <title>돈 빼고 다! 돈-다</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="Free Website Template" name="keywords">
         <meta content="Free Website Template" name="description">
@@ -25,74 +25,108 @@
         <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
 
         <!-- Template Stylesheet -->
-        
         <link href="/css/style.css" rel="stylesheet">
-   <style>
-	#titlename{margin-top: 1%; margin-bottom: 0; font-size: 30px; font-family: 'Gugi', cursive; color:white;}
-/* img{ */
-/*     width: 100%; */
-/* } */
-	#search{width: 500px; position: relative;}
-	.Explanation{position: relative; top: 30%;}
-	.subject{color: #1d2434; text-align: center; font-size: 40px; font-weight: 800;}
-	.contents{margin-top: 5%; text-align: center; font-size: 25px; font-weight: bold;}
-	.Main{margin-top: 5%;}
-
-	*{box-sizing: inherit;}
-    div{display: block;}
-    .minicontainer{margin: auto; overflow: hidden;text-align: center; margin-top:120px; padding: 150px 80px;}
-    .minibody{padding:0 8px; overflow: hidden;}
-    img{border-radius: 20px;}
-    a{color: black; cursor: pointer; text-decoration: none;}
-    p{font-size: 1.1rem;}
+        <style>
+#titlename{
+    margin-top: 1%;
+    margin-bottom: 0;
+    font-size: 30px;
+    font-family: 'Gugi', cursive;
+    color:white;
+}
+img{
+    width: 100%;
+}
+#search{
+    width: 500px;
+    position: relative;
+}
+.Explanation{
+    position: relative;
+    top: 30%;
+}
+.subject{
+    color: #1d2434;
+    text-align: center;
+    font-size: 40px;
+    font-weight: 800;
+}
+.contents{
+    margin-top: 5%;
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+}
+.Main{
+    margin-top: 5%;
+}
+			*{box-sizing: inherit;}
+   			div{display: block;}
+    		.minicontainer{margin: auto; overflow: hidden;text-align: center; padding: 150px 80px;}
+    		.minibody{padding:0 8px; overflow: hidden;}
+    		img{border-radius: 20px;}
+    		a{color: black; cursor: pointer; text-decoration: none;}
+    		p{font-size: 1.1rem;}
     
-    .dropbtn {background-color: #1d2434; color: white;padding: 10px; font-size: 13px; border: none; cursor: pointer;border-radius: 3px;}
-    .dropdown {position: relative; display: inline-block;margin-bottom: 20px;}
-    .dropbtn:hover {background-color: skyblue}
-
-    .count {overflow: hidden; }
-    .count p{width: 3%; display: inline-block;text-align: end;}
-    .minibody{text-align: center;}
-    .reservation{overflow: hidden; font-size: 0.5rem; position: absolute;  transform: translate( 5%, -10%);}
-    .board{width: 25%;height: 300px; overflow: hidden; float: left; margin-right:30px; margin-bottom: 56px;}
-    .board img{width: 100%; height: 70%;} 
-    .seq {width: 10%; display: inline-block;}
-    .title {width: 50%; display: inline-block;}
-    .regdate {width: 20%; display: inline-block;}
-    .minibody a:hover{text-decoration: none;}
+    		.dropbtn {background-color: #1d2434; color: white;padding: 10px; font-size: 13px; border: none; cursor: pointer;border-radius: 3px;}
+    		.dropdown {position: relative; display: inline-block;margin-bottom: 40px;}
+    		.dropbtn:hover {background-color: skyblue}
+    		
+    		.lendBtn{color:#1d2434;background:none;font-size:1.2rem;font-weight:bold;}
+    		.browse{display:inline-block; text-align:end; width:70%; margin-bottom:40px;}
+    		.inp_slct{width:10%; height:28px; display:inline-block; margin-right:5px;}
+    		.inp_slct select{height:100%;}
+    		.browseBtn{width:40px;background-color:#1d2434;color:white;}
+    		.minibody{text-align: center;}
+    		.reservation{overflow: hidden; font-size: 0.5rem; position: absolute;  transform: translate( 5%, -10%);}
+    		.to-board{width: 25%;overflow: hidden; display:inline-block; margin-right:30px; margin-bottom: 56px;}
+    		.to-board img{width: 100%; height: 70%;} 
+    		.minibody a{color: black; cursor: pointer; text-decoration: none;}
+    		.minibody a:hover{color: black; text-decoration: none;}
+    		
+    		.write{width:80%; display:inline-block; text-align:end; margin-bottom:20px;}
+    		.writeBtn{background-color: #1d2434; color:white;}
     </style>
-    
-    <script>  
-    
-    $(function(){
-       $("#search").keyup(function(e){
-      		if(e.keyCode == 13){
-      			location.href="/AllBoardList/allList?search="+$("#search").val();
-           	}
-      	})
-	})
-	
-	$(function(){
-	 	$("#lendBtn").on("click",function(){
-	    	location.href="/lend/listAll?cpage=1";
-	    })
-	       
-	    $("#borrowBtn").on("click",function(){
-	    	location.href="/borrow/listAll?category=AllCategory&search=${search}&cpage=1";
-	    })
-	       
-	    $("#talentBtn").on("click",function(){
-	    	location.href="/tBoard/listAll?cpage=1";
-	    })
-	      	  
-	})
-       
-       
-    
-   
 
+	<script>
+		$(function() {
+			$("#search").keyup(function(e) {
+				if (e.keyCode == 13) {
+					location.href = "/AllBoardList/lendList?category=AllCategory&search="+$("#search").val()+"&cpage=1";
+				}
+			})
+			
+			$("#chat").on("click",function(){
+				location.href = "/chat";
+			})
+		})
+		
+		$(function(){
+	 		$("#lendBtn").on("click",function(){	
+	    		location.href="/AllBoardList/lendList?category=${category}&search=${search}&cpage=1";
+	    	})
+	       
+	    	$("#borrowBtn").on("click",function(){
+	    		location.href="/AllBoardList/borrowList?category=${category}&search=${search}&cpage=1";
+	    	})
+	       
+	    	$("#tlSellBtn").on("click",function(){
+	    		location.href="/AllBoardList/talentList?kind=재능등록&category=${category}&search=${search}&cpage=1";
+	    	})
+	    
+	    	$("#tlRequestBtn").on("click",function(){
+	    		location.href="/AllBoardList/talentList?kind=재능요청&category=${category}&search=${search}&cpage=1";
+	    	})
+	    
+	    	$("#writeBtn").on("click",function(){
+	    		location.href="/lendBoard/lendWrite";
+	    	})
+	      	  
+		})
 	</script>
-    </head>
+
+
+</head>
 
     <body>
         <!-- Top Bar Start -->
@@ -113,9 +147,9 @@
                     <div class="col-md-6">
                         <div class="top-bar-right">
                             <div class="social">
-                                <a href=""><i class="fab fa-twitter"></i></a>
-                                <a href=""><i class="fab fa-facebook-f"></i></a>
-                                <a href=""><i class="fab fa-instagram"></i></a>
+                                <a href="/sns/main"><i class="fab fa-twitter"></i></a>
+                                <a href="/sns/main"><i class="fab fa-facebook-f"></i></a>
+                                <a href="/sns/main"><i class="fab fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
@@ -127,12 +161,12 @@
         <!-- Nav Bar Start -->
         <div class="navbar navbar-expand-lg bg-dark navbar-dark">
             <div class="container-fluid">
-                <a href="index.html" class="navbar-brand"><p id= titlename>돈-다</a></p>
+                <a href="/" class="navbar-brand"><p id= titlename>돈-다</a></p>
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <c:choose>
-                	<c:when test="${loginID == null}">
+                	<c:when test="${loginID == null }">
                 		<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     	<div class="navbar-nav ml-auto">
                         	<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
@@ -146,7 +180,22 @@
                     		<div class="navbar-nav ml-auto">
                         		<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
                         		<a href="/person/logout" class="nav-item nav-link active">Logout</a> <!-- Logout -->
-                        		<a href="/my/mypageProc" class="nav-item nav-link">MyPage</a>  <!-- My Page 이동 -->
+                        		 <div class="collapse navbar-collapse" id="navbarNavDropdown">
+	                        		 <ul class="navbar-nav">
+	                        			<li class="nav-item dropdown">
+									        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									         Menu
+									        </a>
+									        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+									          <a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
+									          <a class="dropdown-item" href="/sns/main">SNS</a>
+									          <a class="dropdown-item" href="#">My page</a>
+									          <a class="dropdown-item" href="#">Charging</a>
+									        </div>
+								      	</li>
+								      </ul>
+								      <button type="button" class="btn btn-outline-warning" id="chat">Chatting</button>
+							      </div>
                     		</div>
                 		</div>
                 	</c:otherwise>
@@ -155,111 +204,78 @@
             </div>
         </div>
         <!-- Nav Bar End -->
-        
-	<!-- Search All List Start -->
-	 <div class="minicontainer">
-        <div class="miniheader">
+
+	<div class="minicontainer">
+		<div class="miniheader">
         	<!-- 카테고리별 버튼 누를시 그 카테고리로 이동한다 -->
             <div class="dropdown">
-                <button class="dropbtn" id="lendBtn">대여하기</button>
+                <button class="dropbtn lendBtn" id="lendBtn">대여하기</button>
             </div>
             <div class="dropdown">
-                <button class="dropbtn" id="borrowBtn">대여요청하기</button>
+                <button class="dropbtn borrowBtn" id="borrowBtn">대여요청</button>
             </div>
             <div class="dropdown">
-                <button class="dropbtn" id="tlSellBtn">재능등록</button>
+                <button class="dropbtn tlSellBtn" id="tlSellBtn">재능등록</button>
             </div>
             <div class="dropdown">
-                <button class="dropbtn" id="tlRequestBtn">재능요청</button>
+                <button class="dropbtn tlSellBtn" id="tlRequestBtn">재능요청</button>
             </div>
-        </div>
-        
-        <!-- 게시판 최신순으로 5개씩 나옴 -->
-       <div class="minibody">
-       
-       		<!-- 대여하기 -->
-       		<input type="hidden" id="search2" value="${search}">
-            <div id="count" class="count">대여하기 총<p>${ldCount}</p>개</div> 
-            <c:choose>
-           		<c:when test="${ldCount != 0}">
-					<c:forEach var="ld" items="${ldList}">
-						<div class="borrow-board">
-							<div id="ldseq" class="seq" name="ldseq" >${ld.seq}</div>
-							<a href="/lend/detailView?seq=${ld.seq}" id="ldtitle" class="title" name="title">${ld.title}</a>
-							<p id="ldregdate" class="regdate" name="address1">${ld.regdate}</p>
-						</div>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-					<p>검색 결과가 없습니다</p>
-				</c:otherwise>
-			</c:choose>
-            <br>
-            <a href="/lend/listAll?category=AllCategory&search=${search}&cpage=1">더보기</a>
-            <hr>
-            
-            <!-- 대여요청 하기 -->
-            <div id="count" class="count">대여요청 총<p>${bwCount}</p>개</div>
-            <c:choose>
-            	<c:when test="${bwCount != 0}">
-					<c:forEach var="bw" items="${bwList}">
-						<div class="borrow-board">
-							<div id="bwseq" class="seq" name="bwsleq" >${bw.seq}</div>
-							<a href="/borrow/detailView?seq=${bw.seq}" id="bwtitle" class="title" name="bwtitle">${bw.title}</a>
-							<p id="bwregdate" class="regdate" name="bwregdate">${bw.regdate}</p>
-						</div>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-					<p>검색 결과가 없습니다</p>
-				</c:otherwise>
-			</c:choose>
-            <br>
-            <a href="/borrow/listAll?category=AllCategory&search=${search}&cpage=1">더보기</a>
-            <hr>
-            
-            <!-- 재능등록 하기 -->
-            <div id="count" class="count">재능등록 총<p>${tlsCount}</p>개</div>
-            <c:choose>
-            	<c:when test="${tlsCount != 0}">
-					<c:forEach var="tls" items="${tlsList}">
-						<div class="borrow-board">
-							<div id="tlseq" class="seq" name="tltlseq" >${tls.seq}</div>
-							<a href="/tBoard/detailView?seq=${tls.seq}" id="tltitle" class="title" name="tltitle">${tls.title}</a>
-							<p id="tlregdate" class="regdate" name="tlregdate">${tls.regDate}</p>
-						</div>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-					<p>검색 결과가 없습니다</p>
-				</c:otherwise>
-			</c:choose>
-            <br>
-            <a href="/tBoard/list?kind=재능등록&category=AllCategory&search=${search}&cpage=1">더보기</a>
-            <hr>
-            
-            <!-- 재능요청 하기 -->
-            <div id="count" class="count">재능요청 총<p>${tlrCount}</p>개</div>
-            <c:choose>
-            	<c:when test="${tlrCount != 0}">
-					<c:forEach var="tlr" items="${tlrList}">
-						<div class="borrow-board">
-							<div id="tlseq" class="seq" name="tltlseq" >${tlr.seq}</div>
-							<a href="/tBoard/detailView?seq=${tlr.seq}" id="tltitle" class="title" name="tltitle">${tlr.title}</a>
-							<p id="tlregdate" class="regdate" name="tlregdate">${tlr.regDate}</p>
-						</div>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-					<p>검색 결과가 없습니다</p>
-				</c:otherwise>
-			</c:choose>
-            <br>
-            <a href="/tBoard/list?kind=재능요청&category=AllCategory&search=${search}&cpage=1">더보기</a>
-            <hr>
 		</div>
+		
+		<!-- 검색 -->
+		<form action="/AllBoardList/lendList" method="post">
+			<div class="browse">
+				<input type="hidden" name="cpage" value=1> 
+				<div class="inp_slct">
+					<select name="category">
+						<option value="AllCategory">전체</option>
+						<option value="title">제목</option>
+						<option value="address1">지역</option>
+						<option value="contents">내용</option>
+					</select>
+				</div>
+				<input type="text" name="search" class="inpform" placeholder="검색을 입력하세요.">
+				<button class="browseBtn" id="browseBtn">검색</button>
+			</div>
+		</form>
+		
+		<!-- 검색결과 리스트 -->
+		<div class="minibody">
+		<input type="hidden" value="${search}" name=search>
+			<c:forEach var="ld" items="${ldList}">
+				<div class="to-board">					
+					<img src="ittaketwo.jpg" alt="#"> 
+					<input type="hidden" value="${ld.seq}" id="seq" name="seq">
+					<a href="/borrow/detailView?seq=${ld.seq}" id="title" class="title" name="title">${ld.title}</a>
+					<p id="address1" name="address1">${ld.address1}</p>
+				</div>
+			</c:forEach>
 		</div>
-		<!-- Search All List End -->
+		
+		<!-- 글쓰기 버튼 -->
+		<c:if test="${loginID != null}">
+			<div class="write" id="write">		
+				<button type="button" class="writeBtn" id="writeBtn">글쓰기</button>
+			</div>
+		</c:if>
+		
+		<!-- 페이징 네비바 -->
+		<div class="board_page">
+			<c:forEach var="i" items="${navi}" varStatus="s">
+				<c:choose>
+					<c:when test="${i == '>'}">
+						<a href="/AllBoardList/lendList?cpage=${navi[s.index-1]+1}&category=${category}&search=${search}">${i}</a>
+					</c:when>
+					<c:when test="${i == '<'}">
+						<a href="/AllBoardList/lendList?cpage=${navi[s.index-1]+1}&category=${category}&search=${search}">${i}</a>
+					</c:when>
+					<c:otherwise>
+						<a href="/AllBoardList/lendList?cpage=${i}&category=${category}&search=${search}">${i}</a>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+		</div>
+	</div>
 
 
 	<!-- Footer Start -->

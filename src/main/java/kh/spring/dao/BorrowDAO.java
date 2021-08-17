@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import kh.spring.config.BoardConfig;
 import kh.spring.dto.BorrowDTO;
+import kh.spring.dto.TalentBoardDTO;
 
 @Component
 public class BorrowDAO {
@@ -17,10 +18,18 @@ public class BorrowDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 	
+	//게시글 번호
+	public int getSeq(){
+		return mybatis.selectOne("Borrow.getSeq");
+	}
+	
+	public int boardWrite(BorrowDTO dto) {
+		return mybatis.insert("Borrow.insert",dto);
+	}
+	
+	//게시글 리스트
 	public List<BorrowDTO> getList(String category, String search,int cpage){
-		
-		System.out.println("디 : " + category + " : " + search);
-		
+				
 		if(search == null) {
 			search = "";
 		}
@@ -48,8 +57,6 @@ public class BorrowDAO {
 		}else {
 			list = mybatis.selectList("Borrow.toList", map);
 		}
-		
-		System.out.println("디->서 : " + list);
 		
 		return list;
 		
