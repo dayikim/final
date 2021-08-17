@@ -45,6 +45,10 @@ public class MessageService {
 		return md.getSeq();
 	}
 	
+	public int getUnread_count(String roomid, String id) {
+		return md.unreadCount(roomid,id);
+	}
+	
 	public Map<String, List<Object>> pastMessage(String roomid) throws Exception{
 		Map<String, List<Object>> temp = new HashMap<String, List<Object>>();
 		SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");

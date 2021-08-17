@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Message">
 	<insert id="insert">
-		insert into message values(#{seq},#{roomid},#{id},#{message},sysdate)
+		insert into message values(#{seq},#{roomid},#{id},#{message},sysdate,'Y')
 	</insert>
 	
 	<select id="getMessage" resultType="kh.spring.dto.MessageDTO">
@@ -16,8 +16,11 @@
 	</select>
 	
 	<select id="pastMessage" resultType="kh.spring.dto.MessageDTO">
-		select * from (select * from message order by seq asc) where roomid = #{value} 
+		select * from message where roomid = #{value} order by seq
 	</select>
 
+	<select id="unreadCount" resultType ="Integer">
+		select count(*) from message where unread_message = 'Y' and roomid= '${roomid}' and id ='${id}'
+	</select>
 	
 </mapper>

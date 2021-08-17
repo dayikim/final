@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -105,6 +106,18 @@ background-color:rgba(0, 0, 0,0.5);
     margin-left: 16px
 }
 
+#unread{
+
+width:25px;
+height: 25px;
+font-size: 12px;
+text-align: center;
+line-height: 25px;
+position: absolute;
+left: 85%;
+}
+
+
 #chat-image{
 width:100%;
 height:100%;
@@ -155,11 +168,11 @@ function doNotReload(){
       event.keyCode = 0;
       event.cancelBubble = true;
       event.returnValue = false;
- alert("새로고침 방지");
+ alert("새로고침");
     }
 }
 document.onkeydown = doNotReload;
-
+let ws = new WebSocket("ws://192.168.35.97/chat"); 
 $(function(){
 	
 	let loginID;
@@ -167,21 +180,24 @@ $(function(){
 	let isfile;
 	let sendfiles;
 	let location_count=0;
-	let ws = new WebSocket("ws://192.168.35.97/chat"); 
-	var drag_uploadfiles=[];
-	var input_uploadfiles=[];
+	let drag_uploadfiles=[];
+	let input_uploadfiles=[];
 	ws.onmessage = function(event){
-		
-		/*
-			text.loginID //세션 아이디.
-			text.message // 메세지.
-			text.trans_time // 보낸 시간.
 			
-		*/
-		
 		let text = JSON.parse(event.data);
 		
+		
+		
+		
 		if(text.isCheck != "true"){
+			
+			for(let i=0; i<$(".user").length; i++){
+				if($($(".user")[i]).attr("id") == $("#roomid").val()){
+					console.log("찾긴하냐!");
+					$($(".user")[i]).children("#unread").text(text.unreadcount);
+				}
+			}
+			
 			if(text.isNaver == "true"){
 				let hashimage = JSON.parse(text.HashImage);
 				let hashblog = JSON.parse(text.HashBlog);
@@ -726,10 +742,11 @@ $(function(){
 		})
 
 })
+
 </script>
 <body oncontextmenu="return false">
 
-
+<input type="hidden" id=roomid value = ${roomid }>
 <div class="container">
     <!-- Page header start -->
     <div class="page-title">
@@ -779,12 +796,12 @@ $(function(){
                                     </li> -->
                                     <c:forEach var="item" items="${list }">
 		                                  <li class="person" data-chat="person1">
-		                                       <div class="user">
+		                                       <div class="user" id =${item.roomid } >
+		                                       	   <div class="rounded-circle badge-danger" id="unread"></div>
 		                                           <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin"> <!-- 판매라는 이미지 십입-->
-		                                           <span class="status busy"></span> <!-- 상태 표시가 가능함!-->
 		                                        </div>
 		                                        <p class="name-time">
-		                                           <span class="title"><a href = "/chat/toChat?roomid=${item.roomid }" >${item.title }</a></span>
+		                                           <span class="title"><a href = "/chat?roomid=${item.roomid }" >${item.title }</a></span>
 		                                        </p>
 		                                   </li>
                                     </c:forEach>
