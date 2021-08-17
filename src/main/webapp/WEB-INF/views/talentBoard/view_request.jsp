@@ -376,7 +376,7 @@
                 <section id="user-profile">
                     <div id="nickname_box">
                         <h2 id="nickname">
-                            <a href="/tBoard/userProfile?id=${tboard.id}"><b>${memberInfo.name}</b>님</a>
+                            <a href="/profilie/userProfile?id=${tboard.writer}"><b>${memberInfo.name}</b>님</a>
                         </h2>
 
                     </div>

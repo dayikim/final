@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SnsFile">
+	
+	<insert id="file">
+		insert into snsfiles values(snsfiles_seq.nextval,#{oriName},#{sysName},#{parent},sysdate,#{id})
+	</insert>
+	
+	<select id="fileList" resultType="kh.spring.dto.SnsFilesDTO">
+		select * from snsfiles
+	</select>
+</mapper>
