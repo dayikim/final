@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import kh.spring.dao.BookingDAO;
 import kh.spring.dao.MypageDAO;
 import kh.spring.dao.PointDAO;
 import kh.spring.dao.ProfileFilesDAO;
@@ -29,7 +30,7 @@ public class MypageService {
    @Autowired
    private PointDAO ppdao; // 포인트
    @Autowired
-   private TalentBoardDAO tdao; // 재능
+   private BookingDAO bdao; // 재능 예약
    @Autowired
    private SnsDAO sdao; // 커뮤니티
 
@@ -86,13 +87,13 @@ public class MypageService {
    ////////////////////////////////////////////////////////////////////////////////////////////// 거래 요청 목록(판매자 입장)
    
    // 거래 요청 목록 - 재능
-   public String requestRentalTalent(String sessionID) {
+   public List<HashMap<String,String>> requestRentalTalent(String sessionID) {
 	   String y = "y";
 	   Map<String, String> param = new HashMap<>();
 	   param.put("y", y);
 	   param.put("id", sessionID);
 	   
-	   return "";
+	   return bdao.requestRentalTalent(param);
    }
    
    

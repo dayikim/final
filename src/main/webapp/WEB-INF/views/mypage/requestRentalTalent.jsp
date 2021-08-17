@@ -322,14 +322,14 @@ img {
 	<div class="container2">
 		<div>거래 요청 내역 > 재능 요청</div>
 		<!-- forEach문 사용 -->
-		<%-- <c:forEach var="i" items="${requestRental }"> --%>
+		<c:forEach var="i" items="${requestRental }">
 		<form action="" method="get">
 			<div class="requestList">
 				<div class="row high">
 					<div class="col-8 information">
 						<div class="title">
 							<h4>
-								<b>칼질 잘 합니다</b>
+								<b>${i.title }</b>
 							</h4>
 						</div>
 						<div class=content>
@@ -337,19 +337,19 @@ img {
 								<div class="col-4 left">
 									<b>대여자</b>
 								</div>
-								<div class="col-8 right">이희정</div>
+								<div class="col-8 right">${i.writer }</div>
 							</div>
 							<div class="row">
 								<div class="col-4 left">
 									<b>구매요청자</b>
 								</div>
-								<div class="col-8 right">아무개</div>
+								<div class="col-8 right">${i.booker }</div>
 							</div>
 							<div class="row">
 								<div class="col-4 left">
 									<b>제시 가격</b>
 								</div>
-								<div class="col-8 right">100원</div>
+								<div class="col-8 right">${i.price }</div>
 							</div>
 						</div>
 
@@ -367,7 +367,7 @@ img {
 				</div>
 			</div>
 		</form>
-		<%-- </c:forEach> --%>
+		</c:forEach>
 
 	</div>
 

@@ -1,7 +1,9 @@
 package kh.spring.controller;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -134,9 +136,9 @@ public class MypageController {
 	@RequestMapping("/requestRentalTalent")
 	public String requestRentalTalent(Model model) {
 		String sessionID = (String)session.getAttribute("loginID");
-		service.requestRentalTalent(sessionID);
+		List<HashMap<String,String>> result = service.requestRentalTalent(sessionID);
 		
-		
+		model.addAttribute("requestRental", result);
 		return "/mypage/requestRentalTalent";
 	}
 
