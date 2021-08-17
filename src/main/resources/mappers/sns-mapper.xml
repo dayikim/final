@@ -16,7 +16,7 @@
 	</insert>
 	
 	<select id="selectAll" resultType="kh.spring.dto.SnsDTO">
-		select * from snsBoard order by 1 desc
+		select * from snsBoard where region=(select SUBSTR(address1,1,2) from person where id=#{value}) order by 1 desc
 	</select>
 	
 	<delete id="delete">
@@ -48,7 +48,7 @@
 	</select>
 	
 	<insert id="pluslove">
-		insert into liketo values(liketo_seq.nextval,#{id},#{parentSeq},1)
+		insert into liketo values(liketo_seq.nextval,#{id},#{parentSeq},1,sysdate)
 	</insert>
 	
 	<update id="cancellove">
