@@ -249,6 +249,41 @@ p {
 	margin-bottom: 10px;
 }
 </style>
+<script>
+$(function(){
+
+		$("#deleteBtn").on("click",function () { //게시글 삭제
+					let check = confirm("정말 게시글을 삭제하겠습니까?");
+					if (check) {
+						location.href = "tBoard/delete?seq="
+							+ $("#deleteBtn").val(); //게시글 삭제 확인 팝업
+					} else {
+						return;
+					}
+				});
+
+		$("#modifyBtn").on("click",function () { //게시글 수정
+					let check = confirm("정말 게시글을 수정하겠습니까?");
+					if (check) {
+						location.href = "tBoard/modify?seq="
+							+ $("#modifyBtn").val(); //게시글 수정 확인 팝업
+					} else {
+						return;
+					}
+				});
+
+	$("#booking").on("click",function(){ //예약 하기 
+		let check = confirm("정말 예약하시겠습니까?");
+		if (check) {
+			alert("예약된 내역은 마이페이지에 예약내역에서 확인하세요.");
+			$("#bookingform").submit();
+		}else{
+			return;
+		}
+	})	
+	
+})
+</script>
 </head>
 
 <body>
@@ -329,15 +364,13 @@ p {
 	<section id="body">
 		<div class="container">
 			<div class="btn_box btn_wrap text-right ">
-				<button type="button" class="btn btn-info" id="Tomain">
+				<button type="button" class="btn btn-info" value="${tboard.seq}" id="deleteBtn">
 					<i class="fas fa-trash-restore"> 삭제</i>
 				</button>
-				<button type="button" class="btn btn-info" id="Tomain">수정</button>
+				<button type="button" class="btn btn-info" value="${tboard.seq}" id="modifyBtn">수정</button>
 			</div>									
 			
 			<div class="form-control wrapper">
-<%-- 			<c:forEach var="i" items="${tboard}">
- --%>
 				<div class="board_title">
 
 					<a href="#" class="badge badge-info">재능 판매</a>
@@ -393,14 +426,21 @@ p {
 				<section id="user-profile">
 					<div id="nickname_box">
 						<h2 id="nickname">
-							<a href="/tBoard/userProfile?id=${tboard.id}"><b>${memberInfo.name}</b>님</a>
+							<a href="/profile/userProfile?writer=${tboard.writer}"><b>${memberInfo.name}</b>님</a>
 						</h2>
 
 					</div>
 					<span id="region_name">${memberInfo.address1} </span>
 					<div class=" btn_wrap text-right">
-						<button type="button" class="btn btn-secondary" id="booking">
+					
+					<form action="/tBoard/booking" id="bookingform">
+					<input type="hidden" name="seller" value="${tboard.writer}">
+					<input type="hidden" name="bookable" value="y">
+					<input type="hidden" name="booker" value="${loginID}">
+					<input type="hidden" name="parentseq" value="${tboard.seq}">
+						<button type="button" class="btn btn-secondary" value="y" id="booking">
 							예약하기</button>
+					</form>
 					</div>
 					<span class="align-baseline" id="price">${tboard.price} 상추</span>
 

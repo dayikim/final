@@ -478,6 +478,34 @@ hr {
 </head>
 
 <body>
+<!-- Top Bar Start -->
+	<div class="top-bar d-none d-md-block">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="top-bar-left">
+						<div class="text">
+							<h2>AM 9:00 - PM 7:00</h2>
+						</div>
+						<div class="text">
+							<h2>02 123 4567</h2>
+							<p>고객 센터</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="top-bar-right">
+						<div class="social">
+							<a href=""><i class="fab fa-twitter"></i></a> <a href=""><i
+								class="fab fa-facebook-f"></i></a> <a href=""><i
+								class="fab fa-instagram"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Top Bar End -->
  <!-- Nav Bar Start -->
         <div class="navbar navbar-expand-lg bg-dark navbar-dark">
             <div class="container-fluid">

@@ -1,7 +1,6 @@
 package kh.spring.service;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,9 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import kh.spring.dao.BookingDAO;
 import kh.spring.dao.PersonDAO;
 import kh.spring.dao.TBoardFilesDAO;
 import kh.spring.dao.TalentBoardDAO;
+import kh.spring.dto.BookingDTO;
 import kh.spring.dto.PersonDTO;
 import kh.spring.dto.TBoardFilesDTO;
 import kh.spring.dto.TalentBoardDTO;
@@ -23,7 +24,7 @@ import kh.spring.dto.TalentBoardDTO;
 public class TalentBoardService {
 
 	@Autowired
-	private TalentBoardDAO dao;
+	private TalentBoardDAO tdao;
 
 	@Autowired
 	private PersonDAO pdao;
@@ -31,20 +32,20 @@ public class TalentBoardService {
 	@Autowired
 	private TBoardFilesDAO fdao;
 
+	@Autowired
+	private BookingDAO bdao;
+	
 	public PersonDTO memberInfoById(String id) {
 		return pdao.memberInfoById(id);
 
 	}
 	public TalentBoardDTO detailView(int seq) {
-		return dao.detailView(seq);
+		return tdao.detailView(seq);
 	}
-
-	
-
 
 	@Transactional //DML: insert,delete,update 트렌젝션에 영향을 받음!
 	public void boardwrite(TalentBoardDTO dto,String realPath, TBoardFilesDTO fdto, MultipartFile[] file)throws Exception{
-		dao.boardWrite(dto);
+		tdao.boardWrite(dto);
 		File filesPath = new File(realPath);
 		if(!filesPath.exists()) {filesPath.mkdir();}
 		for(MultipartFile temp:file) {
@@ -55,6 +56,7 @@ public class TalentBoardService {
 				fdto.setSysName(sysName);
 				fdto.setParentSeq(dto.getSeq()-1);
 				if(fdao.upload(fdto)>0) {
+					System.out.println(filesPath.getAbsolutePath() +"/" + sysName);
 					temp.transferTo(new File(filesPath.getAbsolutePath() +"/" + sysName));
 				}
 			}
@@ -62,12 +64,17 @@ public class TalentBoardService {
 	}
 
 	public int getSeq() {
-		return dao.getSeq();
+		return tdao.getSeq();
 	}
 	public List<TalentBoardDTO> getAllList() {
-		return dao.getAllList();
+		return tdao.getAllList();
 	}
-
+	public int delete(int seq) {
+		return tdao.delete(seq);
+	}
+	public int booking(BookingDTO dto) {
+			return bdao.booking(dto);
+	}
 
 
 }

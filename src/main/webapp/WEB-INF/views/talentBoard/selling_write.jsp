@@ -307,6 +307,34 @@
 		</head>
 
 		<body>
+		<!-- Top Bar Start -->
+	<div class="top-bar d-none d-md-block">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="top-bar-left">
+						<div class="text">
+							<h2>AM 9:00 - PM 7:00</h2>
+						</div>
+						<div class="text">
+							<h2>02 123 4567</h2>
+							<p>고객 센터</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="top-bar-right">
+						<div class="social">
+							<a href=""><i class="fab fa-twitter"></i></a> <a href=""><i
+								class="fab fa-facebook-f"></i></a> <a href=""><i
+								class="fab fa-instagram"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Top Bar End -->
  <!-- Nav Bar Start -->
         <div class="navbar navbar-expand-lg bg-dark navbar-dark">
             <div class="container-fluid">
@@ -396,13 +424,11 @@
 									<!-- <img id="img"/> -->
 								</div>
 
-								
-								
 								<!-- onchange="javascript:document.getElementById('fileName').value = this.value" -->
 								
 									<div class="custom-file">
 										<input type="file" name="file" class="upload-hidden" id="file"  onchange="javascript:document.getElementById('fileName').value = this.value"  multiple>
-										<input type=text class="custom-file-label"  id="fileName" name="filename" style="width: 380px;">
+										<input type=text class="custom-file-label"  id="fileName" name="filename" style="width: 980px;">
 																		</div>
 									<div class="input-group-append">
 										<button class="btn btn-outline-secondary" type="button" onclick="filesUpload();"class="uploadBtn">업로드</button>
@@ -425,7 +451,7 @@
 							</div>
 
 							<div class="input-group mb-3 col-md-12">
-								<input type="text" class="form-control" id="Input3" placeholder="위치" readonly>
+								<input type="text" class="form-control" id="Input3" value="${myInfo.address1}" readonly>
 							</div>
 							<div class="input-group mb-3 col-md-12">
 								<textarea class="form-control" aria-label="With textarea" placeholder="세부 설명을 입력해주세요"

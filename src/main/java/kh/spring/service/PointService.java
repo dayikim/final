@@ -21,10 +21,4 @@ public class PointService {
 	public int amount(String sessionID) {
 		return dao.amount(sessionID);
 	}
-
-	public int isempty(String sessionID) {
-		return dao.isempty(sessionID);
-	}
-
-	
 }
