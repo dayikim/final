@@ -5,7 +5,7 @@ import java.sql.Date;
 public class BookingDTO {
  private int seq;
  private String seller;
- private String buyer;
+ private String booker;
  private String bookable;
  private int parentseq;
  private Date bookingdate;
@@ -14,11 +14,11 @@ public class BookingDTO {
 	super();
 	// TODO Auto-generated constructor stub
 }
-public BookingDTO(int seq, String seller, String buyer, String bookable, int parentseq, Date bookingdate) {
+public BookingDTO(int seq, String seller, String booker, String bookable, int parentseq, Date bookingdate) {
 	super();
 	this.seq = seq;
 	this.seller = seller;
-	this.buyer = buyer;
+	this.booker = booker;
 	this.bookable = bookable;
 	this.parentseq = parentseq;
 	this.bookingdate = bookingdate;
@@ -30,8 +30,8 @@ public int getSeq() {
 public String getSeller() {
 	return seller;
 }
-public String getBuyer() {
-	return buyer;
+public String getBooker() {
+	return booker;
 }
 public String getBookable() {
 	return bookable;
@@ -48,8 +48,8 @@ public void setSeq(int seq) {
 public void setSeller(String seller) {
 	this.seller = seller;
 }
-public void setBuyer(String buyer) {
-	this.buyer = buyer;
+public void setBooker(String booker) {
+	this.booker = booker;
 }
 public void setBookable(String bookable) {
 	this.bookable = bookable;

@@ -131,7 +131,7 @@ public class TalentBoardController {
 	@RequestMapping("booking") //예약 글
 	public String booking(BookingDTO dto) throws Exception {
 		String sessionID = (String) session.getAttribute("loginID");
-        dto.setBuyer(sessionID);
+        dto.setBooker(sessionID);
 		int result =TBoardService.booking(dto);
 		
 		if(result<0) {

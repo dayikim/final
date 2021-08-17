@@ -6,7 +6,7 @@
 <mapper namespace="Booking">
 
 <insert id="booking">
-insert into booking values(booking_seq.nextval,#{seller},#{buyer},#{bookable},#{parentseq},sysdate);
+insert into booking values(booking_seq.nextval,#{seller},#{booker},#{bookable},#{parentseq},sysdate)
 
 </insert>
 
