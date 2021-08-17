@@ -26,8 +26,8 @@ public class SnsService {
 		return dao.seq();
 	}
 	
-	public List<SnsDTO> selectAll(){
-		return dao.selectAll();
+	public List<SnsDTO> selectAll(String loginId){
+		return dao.selectAll(loginId);
 	}
 	
 	public int getLove(int seq) {

@@ -221,10 +221,10 @@
 				alert("가입시 형식에 맞게 기입하셨는지 확인해주세요.");
 				return false;
 			}
-			/*if(count <= 0){
+			if(count <= 0){
 				alert("핸드폰인증을 진행해주세요.")
 				return false;
-			}*/
+			}
 		})
 		 
 	})
