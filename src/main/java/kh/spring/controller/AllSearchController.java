@@ -26,43 +26,29 @@ public class AllSearchController {
 	@RequestMapping(value="lendList",produces="text/html;charset=utf8")	
 	public String lendList(String category, String search,String cpage, Model model) {
 		
-		System.out.println(category + " : " + search + " : " + cpage);
 		
 		List<String> ldPageNavi = service.getLdPageNavi(category, search,cpage);
-		
 		List<LendDTO> ldlist = service.getLdList(category, search,cpage); //대여하기 리스트 
-		
-//		int ldcount = service.lendCount(search); //대여하기 카운트
-		
+				
 		model.addAttribute("ldList", ldlist); //대여하기 리스트 		
-		model.addAttribute("ldNavi", ldPageNavi); //대여하기 카운트
+		model.addAttribute("navi", ldPageNavi); //대여하기 카운트
 		model.addAttribute("search", search); //검색어
 		model.addAttribute("category",category);
-		return "borrowBoard/borrowTabExam";
+		return "toBoard/lendList";
 		
 	}
 	
 	@RequestMapping(value="borrowList",produces="text/html;charset=utf8")
-	@ResponseBody
 	public String borrowList(String category, String search,String cpage, Model model) {
-		
-//		int bwcount = service.borrowCount(search); //대여요청 카운트
-		
-		System.out.println(category + " : " + search + " : " + cpage);
-		
+				
 		List<String> bwPageNavi = service.getBwPageNavi(category, search,cpage);
-		
 		List<BorrowDTO> bwlist = service.getBwList(category, search,cpage);
-		 
-		HashMap<String,Object> map = new HashMap<>();
-		map.put("bwList", bwlist); //대여요청 리스트
-		map.put("bwNavi", bwPageNavi); //대여요청 카운트
-		map.put("search", search); //검색어
-		map.put("category",category);//카테고리
 		
-		Gson g = new Gson();
-		
-		return g.toJson(map);		
+		model.addAttribute("navi", bwPageNavi);
+		model.addAttribute("bwList", bwlist);
+		model.addAttribute("search", search); //검색어
+		model.addAttribute("category",category);//카테고리		
+		return "toBoard/borrowList";		
 	}
 	
 //	@RequestMapping(value="",produces="text/html;charset=utf8")	

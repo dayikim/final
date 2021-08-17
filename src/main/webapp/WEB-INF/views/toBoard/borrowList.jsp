@@ -5,7 +5,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>돈 빼고 다! 돈-고</title>
+        <title>돈 빼고 다! 돈-다</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="Free Website Template" name="keywords">
         <meta content="Free Website Template" name="description">
@@ -25,21 +25,17 @@
         <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
 
         <!-- Template Stylesheet -->
-        
         <link href="/css/style.css" rel="stylesheet">
         <style>
 			#titlename{margin-top: 1%; margin-bottom: 0; font-size: 30px; font-family: 'Gugi', cursive; color:white;}
-/* img{ */
-/*     width: 100%; */
-/* } */
+			img{width: 100%;}
 			#search{width: 500px; position: relative;}
 			.Explanation{position: relative; top: 30%;}
 			.subject{color: #1d2434; text-align: center; font-size: 40px; font-weight: 800;}
 			.contents{margin-top: 5%; text-align: center; font-size: 25px; font-weight: bold;}
 			.Main{margin-top: 5%;}
 
-
-    		*{box-sizing: inherit;}
+			*{box-sizing: inherit;}
    			div{display: block;}
     		.minicontainer{margin: auto; overflow: hidden;text-align: center; padding: 150px 80px;}
     		.minibody{padding:0 8px; overflow: hidden;}
@@ -51,60 +47,61 @@
     		.dropdown {position: relative; display: inline-block;margin-bottom: 40px;}
     		.dropbtn:hover {background-color: skyblue}
     		
+    		.borrowBtn{color:#1d2434;background:none;font-size:1.2rem;font-weight:bold;}
     		.browse{display:inline-block; text-align:end; width:70%; margin-bottom:40px;}
     		.inp_slct{width:10%; height:28px; display:inline-block; margin-right:5px;}
     		.inp_slct select{height:100%;}
     		.browseBtn{width:40px;background-color:#1d2434;color:white;}
-
     		.minibody{text-align: center;}
     		.reservation{overflow: hidden; font-size: 0.5rem; position: absolute;  transform: translate( 5%, -10%);}
-    		.borrow-board{width: 25%;overflow: hidden; display:inline-block; margin-right:30px; margin-bottom: 56px;}
-    		.borrow-board img{width: 100%; height: 70%;} 
+    		.to-board{width: 25%;overflow: hidden; display:inline-block; margin-right:30px; margin-bottom: 56px;}
+    		.to-board img{width: 100%; height: 70%;} 
     		.minibody a{color: black; cursor: pointer; text-decoration: none;}
     		.minibody a:hover{color: black; text-decoration: none;}
     		
     		.write{width:80%; display:inline-block; text-align:end; margin-bottom:20px;}
     		.writeBtn{background-color: #1d2434; color:white;}
-
     </style>
-    
-    <script>  
-    
-    $(function(){
-      	 $("#search").keyup(function(e){
-      		 if(e.keyCode == 13){
-      				location.href="/AllBoardList/allList?search="+$("#search").val();
-           	}
-      	 }) 
-    })
-       
-	$(function(){
-	 	$("#lendBtn").on("click",function(){
-	    	location.href="/lend/listAll?cpage=1";
-	    })
-	       
-	    $("#borrowBtn").on("click",function(){
-	    	location.href="/borrow/listAll?category=AllCategory&search=${search}&cpage=1";
-	    })
-	       
-	    $("#tlSellBtn").on("click",function(){
-	    	location.href="/tBoard/listAll?kind=재능등록&cpage=1";
-	    })
-	    
-	    $("#tlRequestBtn").on("click",function(){
-	    	location.href="/tBoard/listAll?kind=재능등록&cpage=1";
-	    })
-	    
-	    $("#writeBtn").on("click",function(){
-	    	location.href="/borrowBoard/borrowWrite";
-	    })
-	      	  
-	})
-    
-   
 
+	<script>
+		$(function() {
+			$("#search").keyup(function(e) {
+				if (e.keyCode == 13) {
+					location.href = "/AllBoardList/lendList?category=AllCategory&search="+$("#search").val()+"&cpage=1";
+				}
+			})
+			
+			$("#chat").on("click",function(){
+				location.href = "/chat";
+			})
+		})
+		
+		$(function(){
+	 		$("#lendBtn").on("click",function(){
+	    		location.href="/AllBoardList/lendList?category=${category}&search=${search}&cpage=1";
+	    	})
+	       
+	    	$("#borrowBtn").on("click",function(){
+	    		location.href="/AllBoardList/borrowList?category=${category}&search=${search}&cpage=1";
+	    	})
+	       
+	    	$("#tlSellBtn").on("click",function(){
+	    		location.href="/AllBoardList/talentList?kind=재능등록&category=${category}&search=${search}&cpage=1";
+	    	})
+	    
+	    	$("#tlRequestBtn").on("click",function(){
+	    		location.href="/AllBoardList/talentList?kind=재능요청&category=${category}&search=${search}&cpage=1";
+	    	})
+	    
+	    	$("#writeBtn").on("click",function(){
+	    		location.href="/borrowBoard/borrowWrite";
+	    	})
+	      	  
+		})
 	</script>
-    </head>
+
+
+</head>
 
     <body>
         <!-- Top Bar Start -->
@@ -125,9 +122,9 @@
                     <div class="col-md-6">
                         <div class="top-bar-right">
                             <div class="social">
-                                <a href=""><i class="fab fa-twitter"></i></a>
-                                <a href=""><i class="fab fa-facebook-f"></i></a>
-                                <a href=""><i class="fab fa-instagram"></i></a>
+                                <a href="/sns/main"><i class="fab fa-twitter"></i></a>
+                                <a href="/sns/main"><i class="fab fa-facebook-f"></i></a>
+                                <a href="/sns/main"><i class="fab fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
@@ -139,7 +136,7 @@
         <!-- Nav Bar Start -->
         <div class="navbar navbar-expand-lg bg-dark navbar-dark">
             <div class="container-fluid">
-                <a href="index.html" class="navbar-brand"><p id= titlename>돈-다</a></p>
+                <a href="/" class="navbar-brand"><p id= titlename>돈-다</a></p>
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -158,7 +155,22 @@
                     		<div class="navbar-nav ml-auto">
                         		<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
                         		<a href="/person/logout" class="nav-item nav-link active">Logout</a> <!-- Logout -->
-                        		<a href="/my/mypageProc" class="nav-item nav-link">MyPage</a>  <!-- My Page 이동 -->
+                        		 <div class="collapse navbar-collapse" id="navbarNavDropdown">
+	                        		 <ul class="navbar-nav">
+	                        			<li class="nav-item dropdown">
+									        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									         Menu
+									        </a>
+									        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+									          <a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
+									          <a class="dropdown-item" href="/sns/main">SNS</a>
+									          <a class="dropdown-item" href="#">My page</a>
+									          <a class="dropdown-item" href="#">Charging</a>
+									        </div>
+								      	</li>
+								      </ul>
+								      <button type="button" class="btn btn-outline-warning" id="chat">Chatting</button>
+							      </div>
                     		</div>
                 		</div>
                 	</c:otherwise>
@@ -172,21 +184,21 @@
 		<div class="miniheader">
         	<!-- 카테고리별 버튼 누를시 그 카테고리로 이동한다 -->
             <div class="dropdown">
-                <button class="dropbtn" id="lendBtn">대여하기</button>
+                <button class="dropbtn lendBtn" id="lendBtn">대여하기</button>
             </div>
             <div class="dropdown">
-                <button class="dropbtn" id="borrowBtn">대여요청하기</button>
+                <button class="dropbtn borrowBtn" id="borrowBtn">대여요청</button>
             </div>
             <div class="dropdown">
-                <button class="dropbtn" id="tlSellBtn">재능등록</button>
+                <button class="dropbtn tlSellBtn" id="tlSellBtn">재능등록</button>
             </div>
             <div class="dropdown">
-                <button class="dropbtn" id="tlRequestBtn">재능요청</button>
+                <button class="dropbtn tlRequestBtn" id="tlRequestBtn">재능요청</button>
             </div>
 		</div>
 		
 		<!-- 검색 -->
-		<form action="/borrow/listAll" method="get">
+		<form action="//AllBoardList/lendList" method="post">
 			<div class="browse">
 				<input type="hidden" name="cpage" value=1> 
 				<div class="inp_slct">
@@ -204,10 +216,11 @@
 		
 		<!-- 검색결과 리스트 -->
 		<div class="minibody">
-		<input type="hidden" value="${search}" id=search2>
+		<input type="hidden" value="${search}" name=search>
+		<input type="hidden" value="${category}" name=category>
 			<c:forEach var="bw" items="${bwList}">
-				<div class="borrow-board">					
-					<img src="ittaketwo.jpg" alt="#"> 
+				<div class="to-board">					
+					<img src="..." alt="#"> 
 					<input type="hidden" value="${bw.seq}" id="seq" name="seq">
 					<a href="/borrow/detailView?seq=${bw.seq}" id="bwtitle" class="title" name="bwtitle">${bw.title}</a>
 					<p id="address1" name="address1">${bw.address1}</p>
@@ -216,24 +229,24 @@
 		</div>
 		
 		<!-- 글쓰기 버튼 -->
-<%-- 		<c:if test="${loginID != null}"> --%>
+		<c:if test="${loginID != null}">
 			<div class="write" id="write">		
 				<button type="button" class="writeBtn" id="writeBtn">글쓰기</button>
 			</div>
-<%-- 		</c:if> --%>
+		</c:if>
 		
 		<!-- 페이징 네비바 -->
 		<div class="board_page">
 			<c:forEach var="i" items="${navi}" varStatus="s">
 				<c:choose>
 					<c:when test="${i == '>'}">
-						<a href="/borrow/listAll?cpage=${navi[s.index-1]+1}&category=${category}&search=${search}">${i}</a>
+						<a href="/AllBoardList/borrowList?cpage=${navi[s.index-1]+1}&category=${category}&search=${search}">${i}</a>
 					</c:when>
 					<c:when test="${i == '<'}">
-						<a href="/borrow/listAll?cpage=${navi[s.index-1]+1}&category=${category}&search=${search}">${i}</a>
+						<a href="/AllBoardList/borrowList?cpage=${navi[s.index-1]+1}&category=${category}&search=${search}">${i}</a>
 					</c:when>
 					<c:otherwise>
-						<a href="/borrow/listAll?cpage=${i}&category=${category}&search=${search}">${i}</a>
+						<a href="/AllBoardList/borrowList?cpage=${i}&category=${category}&search=${search}">${i}</a>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>

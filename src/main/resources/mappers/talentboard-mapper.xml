@@ -24,7 +24,6 @@
 		update TalentBoard set title=#{title}, category =#{category}, contents =#{contents}, price=#{price} REGDATE = sysdate
 		where seq=#{seq}
 	</update>
-     
 	
 	<select id="getSeq" resultType="int">
 		select TalentBoard_seq.nextval from dual

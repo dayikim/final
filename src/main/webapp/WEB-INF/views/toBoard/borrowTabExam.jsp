@@ -69,31 +69,33 @@ input[id="tab04"]:checked ~ .con4 {display:block;}
 		})	
 	})
 	
-	$(function(){
-		$("#tab02").on("click",function(){
+// 	$(function(){
+// 		$("#tab02").on("click",function(){
 						
-			$.ajax({
-				type: "post",
-				url:"/AllBoardList/borrowList?category=${category}&search=${search}&cpage=1",
-				dataType:"json"
-			}).done(function(res){
-				console.log(res);
-// 				let json=JSON.parse(res.bwList);
+// 			$.ajax({
+// 				type: "post",
+// 				url:"/AllBoardList/borrowList?category=${category}&search=${search}&cpage=1",
+// 				dataType:"json"
+// 			}).done(function(r){
+// 				console.log(r);
+// 				let json=JSON.parse(r.bwList);
 // 				let res="";
 // 				for(let i=0;i<json.length;i++)
 //                 {
-//                      res+="<div>"
-//                       +"<td>"
-//                       +"<img src=http://www.kobis.or.kr"+json[i].thumbUrl+" width=30 height=30>"
-//                       +"</td>"
-//                       +"<td>"+json[i].movieNm+"</td>"
-//                       +"<td>"+json[i].director+"</td>"
-//                       +"<td>"+json[i].genre+"</td>"
-//                       +"<td>"+json[i].watchGradeNm+"</td></tr>";
+//                     res+="<div class='col-sm-4'>";
+//                     res+="<div class='card'>";
+//                     res+="<div class='card-body'>";
+//                     res+="<img src='' class='card-img-top'>";
+//                     res+="<h5 class='card-title'>";
+//                     res+="<a href='/borrow/detailView?seq='"+json[i].seq+"'>"+json[i].title+"</a></h5>";
+//                    	res+="<div class='card-address1'>"+json[i].address1;
+//                     res+="</div></div></div></div>";
 //                 }
-			})
-		})
-	})
+				
+// 				$(".con2").append(res);
+// 			})
+// 		})
+// 	})
 	
 </script>
 
