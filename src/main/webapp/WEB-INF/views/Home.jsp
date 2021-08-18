@@ -141,7 +141,7 @@ img{
 									          <a class="dropdown-item" href="/AllBoardList/lendList?choice=Allchoice&search=&cpage=1">Board</a>
 									          <a class="dropdown-item" href="/sns/main">SNS</a>
 									          <a class="dropdown-item" href="#">My page</a>
-									          <a class="dropdown-item" href="#">Charging</a>
+									          <a class="dropdown-item" href="/point/ToCharging">Charging</a>
 									        </div>
 								      	</li>
 								      </ul>

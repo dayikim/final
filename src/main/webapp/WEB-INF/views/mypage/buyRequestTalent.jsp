@@ -154,7 +154,7 @@ img {
 }
 
 .content {
-	margin-top: 30px;
+	margin-top: 40px;
 }
 
 /* 버튼 */
@@ -164,7 +164,7 @@ img {
 	margin-top: 10px;
 }
 
-#cancel {
+.cnum-btn1 {
 	/* 취소 */
 	border-radius: 5px;
 	width: 45%;
@@ -177,8 +177,8 @@ img {
 	cursor: pointer;
 }
 
-#approval {
-	/* 거래승인 */
+.cnum-btn2 {
+	/* 수정 */
 	border-radius: 5px;
 	width: 45%;
 	height: 50px;
@@ -192,28 +192,18 @@ img {
 </style>
 
 <script>
-	$(function() {		
-		// 요청 거절 버튼을 눌렀을 경우
-		$(".cnum-btn1").on("click",function(){
-			let result = confirm("요청을 거절하시겠습니까?");
-			if(result) {
-				$("#frm").attr("action","/my/dealFail");
-				$("#frm").submit();
-			}else {
-				return false;
-			}
-		})
-
-		// 거래 승인 버튼을 눌렀을 경우
-		$(".cnum-btn2").on("click", function() {
-			let result = confirm("거래 승인 하시겠습니까?");
+	$(function() {
+		// 예약 버튼을 눌렀을 경우
+		$(".cnum-btn1").on("click", function() {
+			let result = confirm("예약을 취소 하시겠습니까?");
 			if (result) {
-				$("#frm").attr("action","/my/dealSuccess");
+				$("#frm").attr("action","/my/bookingFail");
 				$("#frm").submit();
 			} else {
 				return false;
 			}
 		})
+
 	})
 </script>
 
@@ -309,11 +299,11 @@ img {
 	<!-- 네비바 -->
 	<div class="navi">
 		<div class="requestProduct">
-			<a href="/my/requestRentalProduct"> <b>대여 요청</b>
+			<a href="/my/buyRequestProduct"> <b>대여 요청</b>
 			</a>
 		</div>
 		<div class="requestTalent">
-			<a href="/my/requestRentalTalent"> <b>재능 요청</b>
+			<a href="/my/buyRequestTalent"> <b>재능 요청</b>
 			</a>
 		</div>
 	</div>
@@ -322,9 +312,7 @@ img {
 
 	<!-- 대여 요청 내역 -->
 	<div class="container2">
-		<div>거래 요청 내역 > 재능 요청</div>
-
-
+		<div>예약 내역 > 재능 요청</div>
 		<c:forEach var="i" items="${requestRental }">
 			<form action="" method="get" id=frm>
 				<div class="requestList">
@@ -335,25 +323,24 @@ img {
 									<b>${i.title }</b>
 								</h4>
 							</div>
-
-							<div class=content>
+							<div class="content">
 								<div class="row">
 									<div class="col-4 left">
 										<b>대여자</b>
 									</div>
-									<div class="col-8 right">${i.writer }</div>
+									<div class="col-8 right">${i.writer}</div>
 								</div>
 								<div class="row">
 									<div class="col-4 left">
-										<b>구매요청자</b>
+										<b>대여요청자</b>
 									</div>
-									<div class="col-8 right">${i.booker }</div>
+									<div class="col-8 right">${i.booker}</div>
 								</div>
 								<div class="row">
 									<div class="col-4 left">
-										<b>제시 가격</b>
+										<b>결제 내역</b>
 									</div>
-									<div class="col-8 right">${i.price }원</div>
+									<div class="col-8 right">${i.price}원</div>
 								</div>
 							</div>
 							<input type=hidden value=${i.writer } name=writer> 
@@ -368,16 +355,10 @@ img {
 
 						</div>
 					</div>
-					
-					
 					<div class="under">
-						<button type=button id=cancel class="cnum-btn1">요청 거절</button>
-						<button type=button id=approval class="cnum-btn2">거래 승인</button>
+						<input type=button id=cancel class="cnum-btn1" value="예약 취소">
+						<button type=button id=approval class="cnum-btn2" disabled='disabled'>승인 대기 중</button>
 					</div>
-
-
-
-
 				</div>
 			</form>
 		</c:forEach>

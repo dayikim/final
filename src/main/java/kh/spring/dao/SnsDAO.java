@@ -24,8 +24,8 @@ public class SnsDAO {
 		return mybatis.selectOne("Sns.seq");
 	}
 	
-	public List<SnsDTO>selectAll(){
-		return mybatis.selectList("Sns.selectAll");
+	public List<SnsDTO>selectAll(String loginId){
+		return mybatis.selectList("Sns.selectAll",loginId);
 	}
 	
 	public int getLove(int seq) {

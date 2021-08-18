@@ -275,7 +275,7 @@ $(function(){
 	$("#booking").on("click",function(){ //예약 하기 
 		let check = confirm("정말 예약하시겠습니까?");
 		if (check) {
-			alert("예약된 내역은 마이페이지에 예약내역에서 확인하세요.");
+			alert("마이페이지에서 예약내역을 확인하세요.");
 			$("#bookingform").submit();
 		}else{
 			return;
@@ -345,9 +345,9 @@ $(function(){
 									        </a>
 									        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 									          <a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
-									          <a class="dropdown-item" href="#">SNS</a>
+									          <a class="dropdown-item" href="/sns/main">SNS</a>
 									          <a class="dropdown-item" href="/my/mypageProc">My page</a>
-									          <a class="dropdown-item" href="#">Charging</a>
+									          <a class="dropdown-item" href="/point/ToCharging">Charging</a>
 									        </div>
 								      	</li>
 								      </ul>
@@ -426,11 +426,11 @@ $(function(){
 				<section id="user-profile">
 					<div id="nickname_box">
 						<h2 id="nickname">
-							<a href="/profile/userProfile?writer=${tboard.writer}"><b>${memberInfo.name}</b>님</a>
+							<a href="/profile/userProfile?id=${tboard.writer}"><b>${writerInfo.name}</b>님</a>
 						</h2>
 
 					</div>
-					<span id="region_name">${memberInfo.address1} </span>
+					<span id="region_name">${tboard.address} </span>
 					<div class=" btn_wrap text-right">
 					
 					<form action="/tBoard/booking" id="bookingform">
@@ -438,7 +438,7 @@ $(function(){
 					<input type="hidden" name="bookable" value="y">
 					<input type="hidden" name="booker" value="${loginID}">
 					<input type="hidden" name="parentseq" value="${tboard.seq}">
-						<button type="button" class="btn btn-secondary" value="y" id="booking">
+						<button type="button" class="btn btn-secondary" id="booking">
 							예약하기</button>
 					</form>
 					</div>
@@ -448,10 +448,10 @@ $(function(){
 						<!-- 프로필 이미지 -->
 							<c:choose>
 					<c:when test="${profile != null}">
-						<a href="/tBoard/userProfile"><img src="/imgs/mypage/${profile.sysName }" id=profile></a>
+						<a href="/profilie/userProfile?id=${tboard.writer}"><img src="/imgs/mypage/${profile.sysName }" id=profile></a>
 					</c:when>
 					<c:otherwise>
-						<a href="/tBoard/userProfile"><img src="/imgs/nomalProfile.jpg" id=profile></a>
+						<a href="/profilie/userProfile?id=${tboard.writer}"><img src="/imgs/nomalProfile.jpg" id=profile></a>
 					</c:otherwise>
 				</c:choose>
 					</div>

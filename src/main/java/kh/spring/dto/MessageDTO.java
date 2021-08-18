@@ -9,16 +9,18 @@ public class MessageDTO implements Comparable<ChatFileDTO> {
 	private String id;
 	private String message;
 	private Date reg_date;
+	private String unread_message;
 	
 	public MessageDTO() {}
 
-	public MessageDTO(int seq, String roomid, String id, String message, Date reg_date) {
+	public MessageDTO(int seq, String roomid, String id, String message, Date reg_date, String unread_message) {
 		super();
 		this.seq = seq;
 		this.roomid = roomid;
 		this.id = id;
 		this.message = message;
 		this.reg_date = reg_date;
+		this.unread_message = unread_message;
 	}
 	
 	public MessageDTO(int seq,String roomid, String id, String message) {
@@ -63,6 +65,13 @@ public class MessageDTO implements Comparable<ChatFileDTO> {
 	}
 	public void setReg_date(Date reg_date) {
 		this.reg_date = reg_date;
+	}
+	public String getUnread_message() {
+		return unread_message;
+	}
+
+	public void setUnread_message(String unread_message) {
+		this.unread_message = unread_message;
 	}
 
 	@Override

@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="TBoard">
 	<insert id="insert">
-		insert into TalentBoard values(#{seq},#{writer},#{kind},#{title},#{category},#{contents},#{price},sysdate)
+		insert into TalentBoard values(#{seq},#{writer},#{kind},#{title},#{category},#{contents},#{price},sysdate,#{address})
 	</insert>
 	
 	<select id="detailView" resultType="kh.spring.dto.TalentBoardDTO">
@@ -16,7 +16,7 @@
 	</select>
 	
 	<select id="getId" resultType="String">
-	select id from TalentBoard 
+	select writer from TalentBoard 
 	</select>
 	
 	<delete id="delete">
@@ -26,10 +26,6 @@
 	<update id="updateBoard">
 		update TalentBoard set title=#{title}, category =#{category}, contents =#{contents}, price=#{price} REGDATE = sysdate
 		where seq=#{seq}
-	</update>
-	
-	<update id="booking">
-		update TalentBoard set bookable=#{bookable}	where seq=#{seq}
 	</update>
 	
 	<select id="getSeq" resultType="int">

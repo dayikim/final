@@ -83,36 +83,37 @@ img {
 /* 네비바 */
 .navi>div {
 	float: left;
-	width: 50%;
+	width: 25%;
 	text-align: center;
 }
 
 .navi {
 	margin: auto;
 	margin-top: 115px;
-	width: 500px;
+	width: 900px;
 	height: 60px;
 	border: 1px solid black;
 	border-radius: 7px;
 	overflow: hidden;
 }
 
-.requestTalent { /* 재능요청 네비 */
+.requestBuyTalent { /* 재능요청 네비 */
 	height: 100%;
 	background-color: #334257;
 }
 
-.requestTalent>a>b {
+.requestBuyTalent>a>b {
 	color: white;
 	font-size: 30px;
 	line-height: 60px;
 }
 
-.requestProduct { /* 대여요청 네비 */
+.requestSellProduct, .requestSellTalent, .requestBuyProduct {
+	/* 대여하기 제외한 나머지 네비 */
 	height: 100%;
 }
 
-.requestProduct>a>b {
+.requestSellProduct, .requestSellTalent, .requestBuyProduct>a>b {
 	font-size: 30px;
 	line-height: 60px;
 }
@@ -135,26 +136,12 @@ img {
 	margin-top: 20px;
 }
 
-.image {
-	width: 200px;
-	height: 200px;
-	overflow: hidden;
-	padding-top: 10px;
-}
-
-img {
-	width: 200px;
-	height: 200px;
-	border-radius: 5px;
-}
-
 .information {
 	padding-top: 40px;
 	padding-left: 40px;
 }
-
-.content {
-	margin-top: 30px;
+.content{
+	margin-top:30px;
 }
 
 /* 버튼 */
@@ -164,23 +151,11 @@ img {
 	margin-top: 10px;
 }
 
-#cancel {
-	/* 취소 */
+/* 게시물 삭제 */
+.cnum-btn2 {
+	margin: auto;
 	border-radius: 5px;
-	width: 45%;
-	height: 50px;
-	background-color: white;
-	border: 1px solid #334257;
-	color: #334257;
-	font-size: 15px;
-	outline: none;
-	cursor: pointer;
-}
-
-#approval {
-	/* 거래승인 */
-	border-radius: 5px;
-	width: 45%;
+	width: 20%;
 	height: 50px;
 	background-color: #334257;
 	border: none;
@@ -192,26 +167,14 @@ img {
 </style>
 
 <script>
-	$(function() {		
-		// 요청 거절 버튼을 눌렀을 경우
-		$(".cnum-btn1").on("click",function(){
-			let result = confirm("요청을 거절하시겠습니까?");
-			if(result) {
-				$("#frm").attr("action","/my/dealFail");
-				$("#frm").submit();
-			}else {
-				return false;
-			}
-		})
-
-		// 거래 승인 버튼을 눌렀을 경우
+	$(function() {
+		// 게시물 삭제
 		$(".cnum-btn2").on("click", function() {
-			let result = confirm("거래 승인 하시겠습니까?");
+			let result = confirm("정말 삭제하시겠습니까?");
 			if (result) {
-				$("#frm").attr("action","/my/dealSuccess");
 				$("#frm").submit();
 			} else {
-				return false;
+				$(".cnum-btn1").parent().parent().parent().empty();
 			}
 		})
 	})
@@ -308,79 +271,76 @@ img {
 
 	<!-- 네비바 -->
 	<div class="navi">
-		<div class="requestProduct">
-			<a href="/my/requestRentalProduct"> <b>대여 요청</b>
+		<div class="requestSellProduct">
+			<a href="/my/myRequestSellProduct"> <b>대여 하기</b>
 			</a>
 		</div>
-		<div class="requestTalent">
-			<a href="/my/requestRentalTalent"> <b>재능 요청</b>
+		<div class="requestBuyProduct">
+			<a href="/my/myRequestBuyProduct"> <b>대여 요청</b>
 			</a>
 		</div>
+		<div class="requestSellTalent">
+			<a href="/my/myRequestSellTalent"> <b>재능 등록</b>
+			</a>
+		</div>
+		<div class="requestBuyTalent">
+			<a href="/my/myRequestBuyTalent"> <b>재능 요청</b>
+			</a>
+		</div>
+
 	</div>
 
 
 
 	<!-- 대여 요청 내역 -->
 	<div class="container2">
-		<div>거래 요청 내역 > 재능 요청</div>
-
-
-		<c:forEach var="i" items="${requestRental }">
-			<form action="" method="get" id=frm>
-				<div class="requestList">
-					<div class="row high">
-						<div class="col-8 information">
-							<div class="title">
-								<h4>
-									<b>${i.title }</b>
-								</h4>
-							</div>
-
-							<div class=content>
-								<div class="row">
-									<div class="col-4 left">
-										<b>대여자</b>
-									</div>
-									<div class="col-8 right">${i.writer }</div>
-								</div>
-								<div class="row">
-									<div class="col-4 left">
-										<b>구매요청자</b>
-									</div>
-									<div class="col-8 right">${i.booker }</div>
-								</div>
-								<div class="row">
-									<div class="col-4 left">
-										<b>제시 가격</b>
-									</div>
-									<div class="col-8 right">${i.price }원</div>
-								</div>
-							</div>
-							<input type=hidden value=${i.writer } name=writer> 
-							<input type=hidden value=${i.booker } name=booker> 
-							<input type=hidden value=${i.parentseq } name=parent>
-
+		<div>나의 게시물 > 재능 요청</div>
+		<!-- forEach문 사용 -->
+		<%-- <c:forEach var="i" items="${requestRental }"> --%>
+		<form action="" method="get">
+			<div class="requestList">
+				<div class="row high">
+					<div class="col-12 information">
+						<div class="title">
+							<h4>
+								<b>저희집 바퀴벌레 잡아주실 분 구해요ㅠㅜㅠㅜㅠㅜㅠㅜㅠㅜ</b>
+							</h4>
 						</div>
-						<div class="col-4">
-							<div class="image">
-								<img src="">
+						<div class="content">
+							<div class="row">
+								<div class="col-4 left">
+									<b>재능요청자</b>
+								</div>
+								<div class="col-8 right">shoowghjk</div>
 							</div>
-
+							<div class="row">
+								<div class="col-4 left">
+									<b>주소</b>
+								</div>
+								<div class="col-8 right">서울특별시 동대문구</div>
+							</div>
+							<div class="row">
+								<div class="col-4 left">
+									<b>제시 금액</b>
+								</div>
+								<div class="col-8 right">15000000000000원</div>
+							</div>
+							<div class="row">
+								<div class="col-4 left">
+									<b>게시물 등록일</b>
+								</div>
+								<div class="col-8 right">2021-08-16</div>
+							</div>
 						</div>
+
 					</div>
-					
-					
-					<div class="under">
-						<button type=button id=cancel class="cnum-btn1">요청 거절</button>
-						<button type=button id=approval class="cnum-btn2">거래 승인</button>
-					</div>
-
-
-
-
 				</div>
-			</form>
-		</c:forEach>
+				<div class="under">
+					<button type=button id=delete class="cnum-btn2">게시물 삭제</button>
+				</div>
+			</div>
+		</form>
+		<%-- </c:forEach> --%>
 
 	</div>
 

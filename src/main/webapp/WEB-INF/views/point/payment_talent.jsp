@@ -360,7 +360,7 @@
 		</div>
 	</div>
 	<!-- Top Bar End -->
- <!-- Nav Bar Start -->
+  <!-- Nav Bar Start -->
         <div class="navbar navbar-expand-lg bg-dark navbar-dark">
             <div class="container-fluid">
                 <a href="/" class="navbar-brand"><p id= titlename>돈-다</a></p>
@@ -390,9 +390,9 @@
 									        </a>
 									        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 									          <a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
-									          <a class="dropdown-item" href="#">SNS</a>
+									          <a class="dropdown-item" href="/sns/main">SNS</a>
 									          <a class="dropdown-item" href="/my/mypageProc">My page</a>
-									          <a class="dropdown-item" href="#">Charging</a>
+									          <a class="dropdown-item" href="/point/ToCharging">Charging</a>
 									        </div>
 								      	</li>
 								      </ul>
@@ -406,7 +406,6 @@
             </div>
         </div>
         <!-- Nav Bar End -->
-
     <section id="body">
         <div class="container">
             <div class="container-fluid card-header">
