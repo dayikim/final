@@ -24,6 +24,10 @@ public class SnsDAO {
 		return mybatis.selectOne("Sns.seq");
 	}
 	
+	public List<SnsDTO> page(Map<String,Object> param){
+		return mybatis.selectList("Sns.page", param);
+	}
+	
 	public List<SnsDTO>selectAll(String loginId){
 		return mybatis.selectList("Sns.selectAll",loginId);
 	}

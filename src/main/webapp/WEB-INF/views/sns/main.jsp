@@ -131,22 +131,27 @@ style>body {
 	display: none;
 	font-size: 50px;
 }
+
+#photo{
+	max-width : 300px;
+	max-height : 400px;
+}
 </style>
 <script>
 	$(function() {
 		
 		//무한스크롤
-		var count = 3;
+		var count = 1;
 		var isScroll = true;
 		let loadNewPage = $(window).on("scroll",(function() {
 			if (((window.innerHeight + window.scrollY) >= document.body.offsetHeight)&& isScroll) {
 				$.ajax({
-					url : "",
+					url : "/sns/page",
 					type : "get",
-					data : {"count" : count},
+					data : {"count" : count++},
 					dataType : "json"
-				}).done(function(){
-					
+				}).done(function(e){
+					console.log(e);
 				})
 			}
 		}));	
@@ -187,7 +192,6 @@ style>body {
 						
 						let comment_head = $("<div>");
 						comment_head.attr("class","comment-heading");
-						
 						
 						let comment_writer = $("<h6>");
 						comment_writer.text(resp[i].id);
@@ -541,9 +545,8 @@ style>body {
 							<c:forEach var="file" items="${file}">
 								<c:choose>
 									<c:when test="${file.parent == item.seq }">
-										<a
-											href="/sns/download?oriName=${file.oriName}&sysName=${file.sysName}">
-											<img src="${Path}\\${file.sysName}">
+										<a href="/sns/download?oriName=${file.oriName}&sysName=${file.sysName}">
+											<img src="data:image/png;base64,${file.sysName}" id=photo>
 										</a>
 									</c:when>
 								</c:choose>

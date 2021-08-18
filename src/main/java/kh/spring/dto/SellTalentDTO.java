@@ -18,7 +18,7 @@ public class SellTalentDTO {
 	}
 	public SellTalentDTO(int seq, String writer, String title, String category, String contents, String price,
 			String address, Date regDate) {
-		super();
+		//super();
 		this.seq = seq;
 		this.writer = writer;
 		this.title = title;

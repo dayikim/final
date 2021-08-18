@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
+
 import kh.spring.dto.SnsDTO;
 import kh.spring.dto.SnsFilesDTO;
 import kh.spring.service.SnsCommentService;
@@ -36,7 +38,7 @@ public class SnsController {
 	private HttpSession session;
 	
 	@RequestMapping("/main")
-	public String main(Model model) {
+	public String main(Model model) throws Exception {
 		String loginId= (String)session.getAttribute("loginID"); //글 목록
 		
 		List<SnsDTO>list = service.selectAll(loginId);
@@ -44,14 +46,22 @@ public class SnsController {
 		
 		List<String> ldto = service.existlike(loginId); //좋아요목록
 		model.addAttribute("isLove",ldto);
-		
-		String Path =  session.getServletContext().getRealPath("files"); //파일목록
-		model.addAttribute("Path", Path);
-		List<SnsFilesDTO>fdto = fservice.fileList();
-		model.addAttribute("file", fdto);
-		
 
+		List<SnsFilesDTO>fdto = fservice.sendList(session); //파일목록
+		model.addAttribute("file", fdto);
 		return "sns/main";
+	}
+	
+	@RequestMapping("/page")
+	@ResponseBody
+	public String page(int count) {
+		String id = (String)session.getAttribute("loginID");
+		int viewcount = 10;
+		List<SnsDTO>list = service.page(id,viewcount,count);
+		Gson g = new Gson();
+		String result = g.toJson(list);
+		return result;
+		
 	}
 	
 	@RequestMapping("/write")
@@ -69,7 +79,9 @@ public class SnsController {
 			String realPath = session.getServletContext().getRealPath("files");
 			File filesPath = new File(realPath);
 			
-			if(!filesPath.exists()) {filesPath.mkdir();}
+			if(!filesPath.exists()) {
+				filesPath.mkdir();
+			}
 			for(MultipartFile tmp : file) {
 				String oriName = tmp.getOriginalFilename();
 				String sysName = UUID.randomUUID().toString().replaceAll("-", "")+ "_"+oriName;
@@ -85,12 +97,6 @@ public class SnsController {
 	public int delete(int seq) {
 		int result = service.delete(seq);
 		return result;
-	}
-	
-	@RequestMapping("/image")
-	public String showImage() {
-		
-		return "sns/main";
 	}
 	
 	@RequestMapping("/modify")
