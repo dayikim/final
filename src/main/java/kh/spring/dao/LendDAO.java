@@ -17,7 +17,7 @@ public class LendDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 	
-	public List<LendDTO> getList(String category, String search,int cpage){
+	public List<LendDTO> getList(String choice, String search,int cpage){
 				
 		if(search == null) {
 			search = "";
@@ -34,14 +34,16 @@ public class LendDAO {
 		List<LendDTO> list = null;
 		
 		if(!search.equals("")) {
-			if(category.equals("AllCategory")) {
+			if(choice.equals("Allchoice")) {
 				list = mybatis.selectList("Lend.toSearch", map);
-			}else if(category.equals("address1")) {
-				list = mybatis.selectList("Lend.toAddress1", map);
-			}else if(category.equals("title")) {
+			}else if(choice.equals("address")) {
+				list = mybatis.selectList("Lend.toAddress", map);
+			}else if(choice.equals("title")) {
 				list = mybatis.selectList("Lend.toTitle", map);
-			}else if(category.equals("contents")) {
+			}else if(choice.equals("contents")) {
 				list = mybatis.selectList("Lend.toContents", map);
+			}else if(choice.equals("category")) {
+				list = mybatis.selectList("Lend.toCategory", map);
 			}										
 		}else {
 			list = mybatis.selectList("Lend.toList", map);
@@ -51,7 +53,7 @@ public class LendDAO {
 		
 	}
 
-	public List<String> getPageNavi(String category, String search, int currentPage) { // 페이지
+	public List<String> getPageNavi(String choice, String search, int currentPage) { // 페이지
 		int recordTotalCount = 0;
 		// 공지사항 게시글 리스트 페이지
 		
@@ -60,14 +62,16 @@ public class LendDAO {
 		}
 
 		if (!search.equals("")) {
-			if(category.equals("AllCategory")) {
+			if(choice.equals("Allchoice")) {
 				recordTotalCount = mybatis.selectOne("Lend.numAllList", search);
-			}else if(category.equals("address1")) {
-				recordTotalCount = mybatis.selectOne("Lend.numAddress1", search);
-			}else if(category.equals("title")) {
+			}else if(choice.equals("address")) {
+				recordTotalCount = mybatis.selectOne("Lend.numAddress", search);
+			}else if(choice.equals("title")) {
 				recordTotalCount = mybatis.selectOne("Lend.numTitle", search);
-			}else if(category.equals("contents")) {
+			}else if(choice.equals("contents")) {
 				recordTotalCount = mybatis.selectOne("Lend.numContents", search);
+			}else if(choice.equals("category")) {
+				recordTotalCount = mybatis.selectOne("Lend.numCategory", search);
 			} // 전체 레코드개수 (원래는 커넥션으로 카운트해서 가져옴)
 		} else {
 			recordTotalCount = mybatis.selectOne("Lend.allList");

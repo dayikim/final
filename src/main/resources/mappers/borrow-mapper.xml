@@ -5,7 +5,7 @@
   
 <mapper namespace="Borrow">
 	<insert id="insert">
-		insert into TalentBoard values(#{seq},#{id},#{title},#{loanmoney},#{category},sysdate,#{address1},#{contents})
+		insert into borrowboard values(#{seq},#{writer},#{title},#{category},#{contents},#{price},#{address},sysdate)
 	</insert>
 
 	<!-- 게시글 번호 -->
@@ -15,12 +15,12 @@
   
 	<!-- 전체 검색 지역 & 타이틀 & 내용 -->
 	<select id="toSearch" resultType="kh.spring.dto.BorrowDTO">
-		<![CDATA[select * from (select rownum as rnum, A.* from (select * from borrowboard where address1 like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+		<![CDATA[select * from (select rownum as rnum, A.* from (select * from borrowboard where address like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
 	</select>
 	
 	<!-- 주소 검색 -->
-	<select id="toAddress1" resultType="kh.spring.dto.BorrowDTO">
-		<![CDATA[select * from (select rownum as rnum, A.* from (select * from borrowboard where address1 like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	<select id="toAddress" resultType="kh.spring.dto.BorrowDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select * from borrowboard where #{choice} like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
 	</select>
 	
 	<!-- 타이틀 검색 -->
@@ -29,11 +29,16 @@
 	</select>
 	
 	<!-- 컨텐츠 검색 -->
+	<select id="toCategory" resultType="kh.spring.dto.BorrowDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select * from borrowboard where category like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	</select>
+	
+	<!-- 컨텐츠 검색 -->
 	<select id="toContents" resultType="kh.spring.dto.BorrowDTO">
 		<![CDATA[select * from (select rownum as rnum, A.* from (select * from borrowboard where contents like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
 	</select>
 	
-	<!-- 검색이 null일 경우 전체목록 나오게 -->
+	<!-- 검색값이 null일 경우 전체목록 나오게 -->
 	<select id="toList" resultType="kh.spring.dto.BorrowDTO">
 		<![CDATA[select * from (select rownum as rnum, A.* from (select * from borrowboard order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
 	</select>
@@ -45,22 +50,27 @@
 		
 	<!-- 검색 지역 & 타이틀 & 컨텐츠 카운트 -->
 	<select id="numAllList" resultType="int">
-		select count(*) from borrowboard where address1 like '%'||#{value}||'%' or title like '%'||#{value}||'%' or contents like '%'||#{value}||'%'
+		select count(*) from borrowboard where address like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%' or category like '%'||#{search}||'%'
 	</select>
 	
 	<!-- 검색 지역 카운트 -->
-	<select id="numAddress1" resultType="int">
-		select count(*) from borrowboard where address1 like '%'||#{value}||'%' 
+	<select id="numAddress" resultType="int">
+		select count(*) from borrowboard where address like '%'||#{search}||'%' 
+	</select>
+	
+	<!-- 검색 지역 카운트 -->
+	<select id="numCategory" resultType="int">
+		select count(*) from borrowboard where category like '%'||#{search}||'%' 
 	</select>
 	
 	<!-- 검색 타이틀 카운트 -->
 	<select id="numTitle" resultType="int">
-		select count(*) from borrowboard where title like '%'||#{value}||'%'
+		select count(*) from borrowboard where title like '%'||#{search}||'%'
 	</select>
 	
 	<!-- 검색 컨텐츠 카운트 -->
 	<select id="numContents" resultType="int">
-		select count(*) from borrowboard where contents like '%'||#{value}||'%'
+		select count(*) from borrowboard where contents like '%'||#{search}||'%'
 	</select>
 	
 </mapper>

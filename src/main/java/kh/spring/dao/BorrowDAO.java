@@ -28,7 +28,7 @@ public class BorrowDAO {
 	}
 	
 	//게시글 리스트
-	public List<BorrowDTO> getList(String category, String search,int cpage){
+	public List<BorrowDTO> getList(String choice, String search,int cpage){
 				
 		if(search == null) {
 			search = "";
@@ -38,51 +38,69 @@ public class BorrowDAO {
 		int startNum = endNum - (BoardConfig.RECORD_COUNT_PER_PAGE-1);
 		
 		HashMap<String, Object> map = new HashMap<>();
+		map.put("choice",choice);
 		map.put("search",search);
 		map.put("endNum", endNum);
 		map.put("startNum", startNum);
 				
 		List<BorrowDTO> list = null;
 		
+		System.out.println(map.containsKey("choice"));
+		System.out.println(map.containsKey("search"));
+		
 		if(!search.equals("")) {
-			if(category.equals("AllCategory")) {
+			if(choice.equals("Allchoice")) {
 				list = mybatis.selectList("Borrow.toSearch", map);
-			}else if(category.equals("address1")) {
-				list = mybatis.selectList("Borrow.toAddress1", map);
-			}else if(category.equals("title")) {
+			}else if(choice.equals("address")) {
+				list = mybatis.selectList("Borrow.toAddress", map);
+			}else if(choice.equals("category")) {
+				list = mybatis.selectList("Borrow.toCategory", map);
+			}else if(choice.equals("title")) {
 				list = mybatis.selectList("Borrow.toTitle", map);
-			}else if(category.equals("contents")) {
+			}else if(choice.equals("contents")) {
 				list = mybatis.selectList("Borrow.toContents", map);
 			}										
 		}else {
 			list = mybatis.selectList("Borrow.toList", map);
 		}
 		
+		if(list == null) {
+			list = mybatis.selectList("Borrow.toList", map);
+		}
+		
+		System.out.println(list);
+		
 		return list;
 		
 	}
 
-	public List<String> getPageNavi(String category, String search, int currentPage) { // 페이지
+	public List<String> getPageNavi(String choice, String search, int currentPage) { // 페이지
 		int recordTotalCount = 0;
 		// 공지사항 게시글 리스트 페이지
 		
 		if(search == null) {
 			search = "";
 		}
+		
+		
 
 		if (!search.equals("")) {
-			if(category.equals("AllCategory")) {
+			if(choice.equals("Allchoice")) {
 				recordTotalCount = mybatis.selectOne("Borrow.numAllList", search);
-			}else if(category.equals("address1")) {
-				recordTotalCount = mybatis.selectOne("Borrow.numAddress1", search);
-			}else if(category.equals("title")) {
-				recordTotalCount = mybatis.selectOne("Borrow.numTitle", search);
-			}else if(category.equals("contents")) {
+			}else if(choice.equals("address")){
+				recordTotalCount = mybatis.selectOne("Borrow.numAddress", search);
+			}else if(choice.equals("contents")){
 				recordTotalCount = mybatis.selectOne("Borrow.numContents", search);
-			} // 전체 레코드개수 (원래는 커넥션으로 카운트해서 가져옴)
+			}else if(choice.equals("title")){
+				recordTotalCount = mybatis.selectOne("Borrow.numTitle", search);
+			}else if(choice.equals("category")){
+				recordTotalCount = mybatis.selectOne("Borrow.numCategory", search);
+			}// 전체 레코드개수 (원래는 커넥션으로 카운트해서 가져옴)
+					
 		} else {
 			recordTotalCount = mybatis.selectOne("Borrow.allList");
 		}
+		System.out.println(recordTotalCount);
 		
 		int recordCountPerPage = BoardConfig.RECORD_COUNT_PER_PAGE; // 한 페이지 당 보여줄 게시글의 개수
 		int naviCountPerPage = BoardConfig.NAVI_COUNT_PER_PAGE; // 내 위치 페이지를 기준으로 시작으로부터 끝까지의 페이지가 총 몇개인지.

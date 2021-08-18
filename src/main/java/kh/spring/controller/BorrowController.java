@@ -27,7 +27,7 @@ public class BorrowController {
 		String id = (String) session.getAttribute("loginID");
 		String realPath = session.getServletContext().getRealPath("files");
 		dto.setSeq(seq);
-		dto.setId(id);
+		dto.setWriter(id);
 		service.boardwrite(dto,realPath,fdto,file);
 
 		return "redirect:/";

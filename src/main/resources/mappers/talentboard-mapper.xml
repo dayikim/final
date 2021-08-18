@@ -36,4 +36,64 @@
 		select TalentBoard_seq.nextval from dual
 	</select>
 	
+	<!-- 전체 검색 지역 & 타이틀 & 내용 -->
+	<select id="toSearch" resultType="kh.spring.dto.LendDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select * from talentboard where kind like #{kind} and address like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	</select>
+	
+	<!-- 주소 검색 -->
+	<select id="toAddress1" resultType="kh.spring.dto.LendDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select * from talentboard where kind like #{kind} and address like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	</select>
+	
+	<!-- 타이틀 검색 -->
+	<select id="toTitle" resultType="kh.spring.dto.LendDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select * from talentboard where kind like #{kind} and title like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	</select>
+	
+	<!-- 컨텐츠 검색 -->
+	<select id="toContents" resultType="kh.spring.dto.LendDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select * from talentboard where kind like #{kind} and contents like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	</select>
+	
+	<!-- 카테고리 검색 -->
+	<select id="toContents" resultType="kh.spring.dto.LendDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select * from talentboard where kind like #{kind} and category like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	</select>
+	
+	<!-- 검색이 null일 경우 전체목록 나오게 -->
+	<select id="toList" resultType="kh.spring.dto.LendDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select * from talentboard where kind like #{kind} and order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	</select>
+		
+	<!-- 검색 지역 & 타이틀 & 컨텐츠 카운트 -->
+	<select id="allList" resultType="int">
+		select count(*) from talentboard where kind like #{kind}
+	</select>
+	
+	<!-- 검색 지역 & 타이틀 & 컨텐츠 카운트 -->
+	<select id="numAllList" resultType="int">
+		select count(*) from talentboard where kind like #{kind} and address like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%' or category like '%'||#{search}||'%'
+	</select>
+	
+	<!-- 검색 지역 카운트 -->
+	<select id="numAddress1" resultType="int">
+		select count(*) from talentboard where kind like #{kind} and address like '%'||#{search}||'%' 
+	</select>
+	
+	<!-- 검색 타이틀 카운트 -->
+	<select id="numTitle" resultType="int">
+		select count(*) from talentboard where kind like #{kind} and title like '%'||#{search}||'%'
+	</select>
+	
+	<!-- 검색 컨텐츠 카운트 -->
+	<select id="numContents" resultType="int">
+		select count(*) from talentboard where kind like #{kind} and contents like '%'||#{search}||'%'
+	</select>
+	
+	<!-- 검색 컨텐츠 카운트 -->
+	<select id="numCategory" resultType="int">
+		select count(*) from talentboard where kind like #{kind} and category like '%'||#{value}||'%'
+	</select>
+	
 	</mapper>

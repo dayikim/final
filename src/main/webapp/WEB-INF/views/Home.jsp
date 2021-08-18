@@ -66,7 +66,7 @@ img{
 		$(function() {
 			$("#search").keyup(function(e) {
 				if (e.keyCode == 13) {
-					location.href = "/AllBoardList/lendList?category=AllCategory&search="+$("#search").val()+"&cpage=1";
+					location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
 				}
 			})
 			
@@ -138,7 +138,7 @@ img{
 									         Menu
 									        </a>
 									        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-									          <a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
+									          <a class="dropdown-item" href="/AllBoardList/lendList?choice=Allchoice&search=&cpage=1">Board</a>
 									          <a class="dropdown-item" href="/sns/main">SNS</a>
 									          <a class="dropdown-item" href="#">My page</a>
 									          <a class="dropdown-item" href="#">Charging</a>

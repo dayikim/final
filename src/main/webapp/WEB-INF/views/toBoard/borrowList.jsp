@@ -34,14 +34,13 @@
 			.subject{color: #1d2434; text-align: center; font-size: 40px; font-weight: 800;}
 			.contents{margin-top: 5%; text-align: center; font-size: 25px; font-weight: bold;}
 			.Main{margin-top: 5%;}
-
-			*{box-sizing: inherit;}
+			
+			/*list style */
+   			*{box-sizing: border-box;}
    			div{display: block;}
     		.minicontainer{margin: auto; overflow: hidden;text-align: center; padding: 150px 80px;}
     		.minibody{padding:0 8px; overflow: hidden;}
-    		img{border-radius: 20px;}
-    		a{color: black; cursor: pointer; text-decoration: none;}
-    		p{font-size: 1.1rem;}
+    		.minibody p{font-size: 1.1rem;}
     
     		.dropbtn {background-color: #1d2434; color: white;padding: 10px; font-size: 13px; border: none; cursor: pointer;border-radius: 3px;}
     		.dropdown {position: relative; display: inline-block;margin-bottom: 40px;}
@@ -51,11 +50,11 @@
     		.browse{display:inline-block; text-align:end; width:70%; margin-bottom:40px;}
     		.inp_slct{width:10%; height:28px; display:inline-block; margin-right:5px;}
     		.inp_slct select{height:100%;}
-    		.browseBtn{width:40px;background-color:#1d2434;color:white;}
+    		.browseBtn{width:60px;background-color:#1d2434;color:white;}
     		.minibody{text-align: center;}
     		.reservation{overflow: hidden; font-size: 0.5rem; position: absolute;  transform: translate( 5%, -10%);}
     		.to-board{width: 25%;overflow: hidden; display:inline-block; margin-right:30px; margin-bottom: 56px;}
-    		.to-board img{width: 100%; height: 70%;} 
+    		.to-board img{width: 100%; height: 70%; border-radius: 20px;} 
     		.minibody a{color: black; cursor: pointer; text-decoration: none;}
     		.minibody a:hover{color: black; text-decoration: none;}
     		
@@ -67,7 +66,7 @@
 		$(function() {
 			$("#search").keyup(function(e) {
 				if (e.keyCode == 13) {
-					location.href = "/AllBoardList/lendList?category=AllCategory&search="+$("#search").val()+"&cpage=1";
+					location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
 				}
 			})
 			
@@ -78,21 +77,21 @@
 		
 		$(function(){
 	 		$("#lendBtn").on("click",function(){
-	    		location.href="/AllBoardList/lendList?category=${category}&search=${search}&cpage=1";
+	    		location.href="/AllBoardList/lendList?choice=${choice}&search=${search}&cpage=1";
 	    	})
 	       
 	    	$("#borrowBtn").on("click",function(){
-	    		location.href="/AllBoardList/borrowList?category=${category}&search=${search}&cpage=1";
+	    		location.href="/AllBoardList/borrowList?choice=${choice}&search=${search}&cpage=1";
 	    	})
 	       
 	    	$("#tlSellBtn").on("click",function(){
-	    		location.href="/AllBoardList/talentList?kind=재능등록&category=${category}&search=${search}&cpage=1";
+	    		location.href="/AllBoardList/tlSellList?kind=재능등록&choice=${choice}&search=${search}&cpage=1";
 	    	})
 	    
 	    	$("#tlRequestBtn").on("click",function(){
-	    		location.href="/AllBoardList/talentList?kind=재능요청&category=${category}&search=${search}&cpage=1";
+	    		location.href="/AllBoardList/tlRequestList?kind=재능요청&choice=${choice}&search=${search}&cpage=1";
 	    	})
-	    
+	    	
 	    	$("#writeBtn").on("click",function(){
 	    		location.href="/borrowBoard/borrowWrite";
 	    	})
@@ -162,7 +161,7 @@
 									         Menu
 									        </a>
 									        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-									          <a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
+									          <a class="dropdown-item" href="/AllBoardList/lendList?choice=Allchoice&search=&cpage=1">Board</a>
 									          <a class="dropdown-item" href="/sns/main">SNS</a>
 									          <a class="dropdown-item" href="#">My page</a>
 									          <a class="dropdown-item" href="#">Charging</a>
@@ -198,58 +197,65 @@
 		</div>
 		
 		<!-- 검색 -->
-		<form action="//AllBoardList/lendList" method="post">
-			<div class="browse">
-				<input type="hidden" name="cpage" value=1> 
-				<div class="inp_slct">
-					<select name="category">
-						<option value="AllCategory">전체</option>
-						<option value="title">제목</option>
-						<option value="address1">지역</option>
-						<option value="contents">내용</option>
-					</select>
+		<div class="miniboard">
+			<h1>대여요청</h1>
+			<form action="/AllBoardList/borrowList" method="post">
+				<div class="browse">
+					<input type="hidden" name="cpage" value=1> 
+					<div class="inp_slct">
+						<select name="choice">
+							<option value="Allchoice">전체</option>
+							<option value="title">제목</option>
+							<option value="category">카테고리</option>
+							<option value="address">지역</option>
+							<option value="contents">내용</option>
+						</select>
+					</div>
+					<input type="text" name="search" class="inpform" placeholder="검색을 입력하세요.">
+					<button class="browseBtn" id="browseBtn">검색</button>
 				</div>
-				<input type="text" name="search" class="inpform" placeholder="검색을 입력하세요.">
-				<button class="browseBtn" id="browseBtn">검색</button>
+			</form>
+			
+			<!-- 검색결과 리스트 -->
+			<div class="minibody">
+			<input type="hidden" value="${search}" name=search>
+			<input type="hidden" value="${choice}" name=choice>
+				<c:forEach var="bw" items="${bwList}">
+					<div class="to-board">
+						<a href="/borrow/detailView?seq=${bw.seq}" id="bwtitle" class="title">				
+							<img src="..." alt="#"> 
+							<input type="hidden" value="${bw.seq}" id="seq" name="seq">
+							<h2 id=title>${bw.title}</h2>
+							<h4 id="category">${bw.category}</h4>
+							<h4 id="address">${bw.address}</h4>
+						</a>
+					</div>
+				</c:forEach>
 			</div>
-		</form>
-		
-		<!-- 검색결과 리스트 -->
-		<div class="minibody">
-		<input type="hidden" value="${search}" name=search>
-		<input type="hidden" value="${category}" name=category>
-			<c:forEach var="bw" items="${bwList}">
-				<div class="to-board">					
-					<img src="..." alt="#"> 
-					<input type="hidden" value="${bw.seq}" id="seq" name="seq">
-					<a href="/borrow/detailView?seq=${bw.seq}" id="bwtitle" class="title" name="bwtitle">${bw.title}</a>
-					<p id="address1" name="address1">${bw.address1}</p>
+			
+			<!-- 글쓰기 버튼 -->
+			<c:if test="${loginID != null}">
+				<div class="write" id="write">		
+					<button type="button" class="writeBtn" id="writeBtn">글쓰기</button>
 				</div>
-			</c:forEach>
-		</div>
-		
-		<!-- 글쓰기 버튼 -->
-		<c:if test="${loginID != null}">
-			<div class="write" id="write">		
-				<button type="button" class="writeBtn" id="writeBtn">글쓰기</button>
+			</c:if>
+			
+			<!-- 페이징 네비바 -->
+			<div class="board_page">
+				<c:forEach var="i" items="${navi}" varStatus="s">
+					<c:choose>
+						<c:when test="${i == '>'}">
+							<a href="/AllBoardList/borrowList?cpage=${navi[s.index-1]+1}&choice=${choice}&search=${search}">${i}</a>
+						</c:when>
+						<c:when test="${i == '<'}">
+							<a href="/AllBoardList/borrowList?cpage=${navi[s.index-1]+1}&choice=${choice}&search=${search}">${i}</a>
+						</c:when>
+						<c:otherwise>
+							<a href="/AllBoardList/borrowList?cpage=${i}&choice=${choice}&search=${search}">${i}</a>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
 			</div>
-		</c:if>
-		
-		<!-- 페이징 네비바 -->
-		<div class="board_page">
-			<c:forEach var="i" items="${navi}" varStatus="s">
-				<c:choose>
-					<c:when test="${i == '>'}">
-						<a href="/AllBoardList/borrowList?cpage=${navi[s.index-1]+1}&category=${category}&search=${search}">${i}</a>
-					</c:when>
-					<c:when test="${i == '<'}">
-						<a href="/AllBoardList/borrowList?cpage=${navi[s.index-1]+1}&category=${category}&search=${search}">${i}</a>
-					</c:when>
-					<c:otherwise>
-						<a href="/AllBoardList/borrowList?cpage=${i}&category=${category}&search=${search}">${i}</a>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
 		</div>
 	</div>
 

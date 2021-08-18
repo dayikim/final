@@ -60,13 +60,13 @@ img{
 .Main{
     margin-top: 5%;
 }
-			*{box-sizing: inherit;}
+			
+			/*list style */
+			*{box-sizing: border-box;}
    			div{display: block;}
     		.minicontainer{margin: auto; overflow: hidden;text-align: center; padding: 150px 80px;}
     		.minibody{padding:0 8px; overflow: hidden;}
-    		img{border-radius: 20px;}
-    		a{color: black; cursor: pointer; text-decoration: none;}
-    		p{font-size: 1.1rem;}
+    		.minibody p{font-size: 1.1rem;}
     
     		.dropbtn {background-color: #1d2434; color: white;padding: 10px; font-size: 13px; border: none; cursor: pointer;border-radius: 3px;}
     		.dropdown {position: relative; display: inline-block;margin-bottom: 40px;}
@@ -76,11 +76,11 @@ img{
     		.browse{display:inline-block; text-align:end; width:70%; margin-bottom:40px;}
     		.inp_slct{width:10%; height:28px; display:inline-block; margin-right:5px;}
     		.inp_slct select{height:100%;}
-    		.browseBtn{width:40px;background-color:#1d2434;color:white;}
+    		.browseBtn{width:60px;background-color:#1d2434;color:white;}
     		.minibody{text-align: center;}
     		.reservation{overflow: hidden; font-size: 0.5rem; position: absolute;  transform: translate( 5%, -10%);}
     		.to-board{width: 25%;overflow: hidden; display:inline-block; margin-right:30px; margin-bottom: 56px;}
-    		.to-board img{width: 100%; height: 70%;} 
+    		.to-board img{width: 100%; height: 70%; border-radius: 20px;} 
     		.minibody a{color: black; cursor: pointer; text-decoration: none;}
     		.minibody a:hover{color: black; text-decoration: none;}
     		
@@ -92,7 +92,7 @@ img{
 		$(function() {
 			$("#search").keyup(function(e) {
 				if (e.keyCode == 13) {
-					location.href = "/AllBoardList/lendList?category=AllCategory&search="+$("#search").val()+"&cpage=1";
+					location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
 				}
 			})
 			
@@ -103,19 +103,19 @@ img{
 		
 		$(function(){
 	 		$("#lendBtn").on("click",function(){
-	    		location.href="/AllBoardList/lendList?category=${category}&search=${search}&cpage=1";
+	    		location.href="/AllBoardList/lendList?choice=${choice}&search=${search}&cpage=1";
 	    	})
 	       
 	    	$("#borrowBtn").on("click",function(){
-	    		location.href="/AllBoardList/borrowList?category=${category}&search=${search}&cpage=1";
+	    		location.href="/AllBoardList/borrowList?choice=${choice}&search=${search}&cpage=1";
 	    	})
 	       
 	    	$("#tlSellBtn").on("click",function(){
-	    		location.href="/AllBoardList/talentList?kind=재능등록&category=${category}&search=${search}&cpage=1";
+	    		location.href="/AllBoardList/tlSellList?kind=재능등록&choice=${choice}&search=${search}&cpage=1";
 	    	}) 
 	    
 	    	$("#tlRequestBtn").on("click",function(){
-	    		location.href="/AllBoardList/talentList?kind=재능요청&category=${category}&search=${search}&cpage=1";
+	    		location.href="/AllBoardList/tlRequestList?kind=재능요청&choice=${choice}&search=${search}&cpage=1";
 	    	})
 	    
 	    	$("#writeBtn").on("click",function(){
@@ -187,7 +187,7 @@ img{
 									         Menu
 									        </a>
 									        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-									          <a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
+									          <a class="dropdown-item" href="/AllBoardList/lendList?choice=Allchoice&search=&cpage=1">Board</a>
 									          <a class="dropdown-item" href="/sns/main">SNS</a>
 									          <a class="dropdown-item" href="#">My page</a>
 									          <a class="dropdown-item" href="#">Charging</a>
@@ -225,12 +225,14 @@ img{
 		<!-- 검색 -->
 		<form action="/AllBoardList/tlSellList" method="post">
 			<div class="browse">
-				<input type="hidden" name="cpage" value=1> 
+				<input type="hidden" name="cpage" value=1>
+				<input type="hidden" name="kind" value="재능대여"> 
 				<div class="inp_slct">
-					<select name="category">
-						<option value="AllCategory">전체</option>
+					<select name="choice">
+						<option value="Allchoice">전체</option>
 						<option value="title">제목</option>
 						<option value="category">카테고리</option>
+						<option value="address">지역</option>
 						<option value="contents">내용</option>
 					</select>
 				</div>
@@ -241,7 +243,9 @@ img{
 		
 		<!-- 검색결과 리스트 -->
 		<div class="minibody">
-		<input type="hidden" value="${search}" name=search>
+			<input type="hidden" value="${search}" name=search>
+			<input type="hidden" value="${choice}" name=choice>
+			
 			<c:forEach var="tls" items="${tlsList}">
 				<div class="to-board">					
 					<img src="ittaketwo.jpg" alt="#"> 
@@ -264,13 +268,13 @@ img{
 			<c:forEach var="i" items="${navi}" varStatus="s">
 				<c:choose>
 					<c:when test="${i == '>'}">
-						<a href="/AllBoardList/lendList?cpage=${navi[s.index-1]+1}&category=${category}&search=${search}">${i}</a>
+						<a href="/AllBoardList/lendList?cpage=${navi[s.index-1]+1}&kind=재능등록&choice=${choice}&search=${search}">${i}</a>
 					</c:when>
 					<c:when test="${i == '<'}">
-						<a href="/AllBoardList/lendList?cpage=${navi[s.index-1]+1}&category=${category}&search=${search}">${i}</a>
+						<a href="/AllBoardList/lendList?cpage=${navi[s.index-1]+1}&kind=재능등록&choice=${choice}&search=${search}">${i}</a>
 					</c:when>
 					<c:otherwise>
-						<a href="/AllBoardList/lendList?cpage=${i}&category=${category}&search=${search}">${i}</a>
+						<a href="/AllBoardList/lendList?cpage=${i}&kind=재능등록&choice=${choice}&search=${search}">${i}</a>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
