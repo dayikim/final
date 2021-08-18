@@ -2,57 +2,37 @@ package kh.spring.dto;
 
 import java.sql.Date;
 
-public class TalentBoardDTO {
+public class SellTalentDTO {
 	private int seq;
 	private String writer;
-	private String kind;
 	private String title;
 	private String category;
 	private String contents;
 	private String price;
-	private Date regDate;
 	private String address;
-		
-	public TalentBoardDTO(int seq, String writer, String kind, String title, String category, String contents,
-			String price, Date regDate, String address) {
-		super();
-		this.seq = seq;
-		this.writer = writer;
-		this.kind = kind;
-		this.title = title;
-		this.category = category;
-		this.contents = contents;
-		this.price = price;
-		this.regDate = regDate;
-		this.address = address;
-	}
-
-
-	public TalentBoardDTO() {
-			}
+	private Date regDate;
 	
-	public TalentBoardDTO(int seq, String writer, String kind, String title, String category,
-			String contents, String price, Date regDate) {
+	public SellTalentDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public SellTalentDTO(int seq, String writer, String title, String category, String contents, String price,
+			String address, Date regDate) {
 		super();
 		this.seq = seq;
 		this.writer = writer;
-		this.kind = kind;
 		this.title = title;
 		this.category = category;
 		this.contents = contents;
 		this.price = price;
+		this.address = address;
 		this.regDate = regDate;
-
 	}
 	public int getSeq() {
 		return seq;
 	}
 	public String getWriter() {
 		return writer;
-	}
-	
-	public String getKind() {
-		return kind;
 	}
 	public String getTitle() {
 		return title;
@@ -66,24 +46,17 @@ public class TalentBoardDTO {
 	public String getPrice() {
 		return price;
 	}
+	public String getAddress() {
+		return address;
+	}
 	public Date getRegDate() {
 		return regDate;
 	}
-	
 	public void setSeq(int seq) {
 		this.seq = seq;
 	}
-	
 	public void setWriter(String writer) {
 		this.writer = writer;
-	}
-	
-	public void getWriter(String writer) {
-		this.writer = writer;
-	}
-	
-	public void setKind(String kind) {
-		this.kind = kind;
 	}
 	public void setTitle(String title) {
 		this.title = title;
@@ -97,17 +70,11 @@ public class TalentBoardDTO {
 	public void setPrice(String price) {
 		this.price = price;
 	}
-	public void setRegDate(Date regDate) {
-		this.regDate = regDate;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
+	}
 
 }

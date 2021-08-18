@@ -1,9 +1,7 @@
 package kh.spring.service;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,18 +11,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kh.spring.dao.BookingDAO;
 import kh.spring.dao.PersonDAO;
+import kh.spring.dao.SellTalentDAO;
 import kh.spring.dao.TBoardFilesDAO;
-import kh.spring.dao.TalentBoardDAO;
 import kh.spring.dto.BookingDTO;
 import kh.spring.dto.PersonDTO;
+import kh.spring.dto.SellTalentDTO;
 import kh.spring.dto.TBoardFilesDTO;
-import kh.spring.dto.TalentBoardDTO;
 
 @Service
-public class TalentBoardService {
+public class SellTalentService {
 
 	@Autowired
-	private TalentBoardDAO tdao;//삭제 예정
+	private SellTalentDAO stdao;
 	
 	@Autowired
 	private PersonDAO pdao;
@@ -40,13 +38,13 @@ public class TalentBoardService {
 		return pdao.memberInfoById(id);
 
 	}
-	public TalentBoardDTO detailView(int seq) {
-		return tdao.detailView(seq);
+	public SellTalentDTO detailView(int seq) {
+		return stdao.detailView(seq);
 	}
 
 	@Transactional //DML: insert,delete,update 트렌젝션에 영향을 받음!
-	public void boardwrite(TalentBoardDTO dto,String realPath, TBoardFilesDTO fdto, MultipartFile[] file)throws Exception{
-		tdao.boardWrite(dto);
+	public void sellingWrite(SellTalentDTO stdto,String realPath, TBoardFilesDTO fdto, MultipartFile[] file)throws Exception{
+		stdao.boardWrite(stdto);
 		File filesPath = new File(realPath);
 		if(!filesPath.exists()) {filesPath.mkdir();}
 		for(MultipartFile temp:file) {
@@ -55,7 +53,7 @@ public class TalentBoardService {
 				String sysName = UUID.randomUUID().toString().replaceAll("-", "")+"_"+oriName;
 				fdto.setOriName(oriName);
 				fdto.setSysName(sysName);
-				fdto.setParentSeq(dto.getSeq()-1);
+				fdto.setParentSeq(stdto.getSeq()-1);
 				if(fdao.upload(fdto)>0) {
 					System.out.println(filesPath.getAbsolutePath() +"/" + sysName);
 					temp.transferTo(new File(filesPath.getAbsolutePath() +"/" + sysName));
@@ -65,17 +63,20 @@ public class TalentBoardService {
 	}
 
 	public int getSeq() {
-		return tdao.getSeq();
+		return stdao.getSeq();
 	}
-	public List<TalentBoardDTO> getAllList() {
-		return tdao.getAllList();
+	
+	public List<SellTalentDTO> getAllList() {
+		return stdao.getAllList();
 	}
 	public int delete(int seq) {
-		return tdao.delete(seq);
+		return stdao.delete(seq);
 	}
 	public int booking(BookingDTO dto) {
-			return bdao.booking(dto);
+		return bdao.booking(dto);
+}
+	public String getId() {
+		return stdao.getId();
 	}
-
-
+	
 }

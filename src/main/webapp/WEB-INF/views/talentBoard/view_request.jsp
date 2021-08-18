@@ -249,6 +249,34 @@
         }
 
     </style>
+    <script type="text/javascript">
+    $(function(){
+    	$("#request").on("click",function(){
+    		location.href = "tBoard/toRequest"
+    	})
+    	
+		$("#deleteBtn").on("click",function () { //게시글 삭제
+					let check = confirm("정말 게시글을 삭제하겠습니까?");
+					if (check) {
+						location.href = "tBoard/delete?seq="
+							+ $("#deleteBtn").val(); //게시글 삭제 확인 팝업
+					} else {
+						return;
+					}
+				});
+
+		$("#modifyBtn").on("click",function () { //게시글 수정
+					let check = confirm("정말 게시글을 수정하겠습니까?");
+					if (check) {
+						location.href = "tBoard/modify?seq="
+							+ $("#modifyBtn").val(); //게시글 수정 확인 팝업
+					} else {
+						return;
+					}
+				});
+
+    })
+    </script>
 </head>
 
 <body>
@@ -278,7 +306,7 @@
             </div>
         </div>
     </div>
-    <!-- Nav Bar Start -->
+ <!-- Nav Bar Start -->
         <div class="navbar navbar-expand-lg bg-dark navbar-dark">
             <div class="container-fluid">
                 <a href="/" class="navbar-brand"><p id= titlename>돈-다</a></p>
@@ -308,9 +336,9 @@
 									        </a>
 									        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 									          <a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
-									          <a class="dropdown-item" href="#">SNS</a>
+									          <a class="dropdown-item" href="/sns/main">SNS</a>
 									          <a class="dropdown-item" href="/my/mypageProc">My page</a>
-									          <a class="dropdown-item" href="#">Charging</a>
+									          <a class="dropdown-item" href="/point/ToCharging">Charging</a>
 									        </div>
 								      	</li>
 								      </ul>
@@ -327,8 +355,8 @@
     <section id="body">
         <div class="container">
             <div class="btn_box btn_wrap text-right ">
-                <button type="button" class="btn btn-info" id="Tomain"><i class="fas fa-trash-restore"> 삭제</i></button>
-                <button type="button" class="btn btn-info" id="Tomain">수정</button>
+                <button type="button" class="btn btn-info" id="deleteBtn"><i class="fas fa-trash-restore"> 삭제</i></button>
+                <button type="button" class="btn btn-info" id="modifyBtn">수정</button>
             </div>
             <div class="form-control wrapper">
                 <div class="board_title">
@@ -376,11 +404,11 @@
                 <section id="user-profile">
                     <div id="nickname_box">
                         <h2 id="nickname">
-                            <a href="/profilie/userProfile?id=${tboard.writer}"><b>${memberInfo.name}</b>님</a>
+                            <a href="/profilie/userProfile?id=${tboard.writer}"><b>${writerName}</b>님</a>
                         </h2>
 
                     </div>
-                    <span id="region_name">${memberInfo.address1}</span>
+                    <span id="region_name">${tboard.address}</span>
                     <div class=" btn_wrap text-right">
                         <!-- <button type="button" class="btn btn-secondary" id="booking">
                             예약하기</i></button> -->
@@ -391,10 +419,10 @@
                         <!-- 프로필 이미지 -->
                         <c:choose>
 					<c:when test="${profile != null}">
-						<a href="/tBoard/userProfile"><img src="/imgs/mypage/${profile.sysName }" id=profile></a>
+						<a href="/profilie/userProfile?id=${tboard.writer}"><img src="/imgs/mypage/${profile.sysName}" id=profile></a>
 					</c:when>
 					<c:otherwise>
-						<a href="/tBoard/userProfile"><img src="/imgs/nomalProfile.jpg" id=profile></a>
+						<a href="/profilie/userProfile?id=${tboard.writer}"><img src="/imgs/nomalProfile.jpg" id=profile></a>
 					</c:otherwise>
 				</c:choose>
                     </div>
