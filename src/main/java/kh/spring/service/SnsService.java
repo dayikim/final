@@ -26,6 +26,14 @@ public class SnsService {
 		return dao.seq();
 	}
 	
+	public List<SnsDTO> page(String id, int viewcount, int count){
+		Map<String,Object> param = new HashMap();
+		param.put("id", id);
+		param.put("viewcount", viewcount);
+		param.put("count", count);
+		return dao.page(param);
+	}
+	
 	public List<SnsDTO> selectAll(String loginId){
 		return dao.selectAll(loginId);
 	}
