@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Requesttalent">
+	<insert id="write">
+		insert into requesttalent values(#{seq},#{writer},#{title},#{category},#{contents},#{price},#{address},sysdate)
+	</insert>
+	<select id="detailView" resultType="kh.spring.dto.SellTalentDTO">
+		select * from requesttalent
+		where seq =#{seq}
+	</select>
+
+	<select id="getAllList" resultType="kh.spring.dto.SellTalentDTO">
+		select * from requesttalent
+	</select>
+
+	<select id="getId" resultType="String">
+		select writer from requesttalent
+	</select>
+
+	<delete id="delete">
+		delete from requesttalent where seq=#{seq}
+	</delete>
+
+	<select id="getSeq" resultType="int">
+		select requesttalent_seq.nextval
+		from dual
+	</select>
+</mapper>
+

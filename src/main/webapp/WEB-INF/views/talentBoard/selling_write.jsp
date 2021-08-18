@@ -335,7 +335,7 @@
 		</div>
 	</div>
 	<!-- Top Bar End -->
- <!-- Nav Bar Start -->
+  <!-- Nav Bar Start -->
         <div class="navbar navbar-expand-lg bg-dark navbar-dark">
             <div class="container-fluid">
                 <a href="/" class="navbar-brand"><p id= titlename>돈-다</a></p>
@@ -365,9 +365,9 @@
 									        </a>
 									        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 									          <a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
-									          <a class="dropdown-item" href="#">SNS</a>
+									          <a class="dropdown-item" href="/sns/main">SNS</a>
 									          <a class="dropdown-item" href="/my/mypageProc">My page</a>
-									          <a class="dropdown-item" href="#">Charging</a>
+									          <a class="dropdown-item" href="/point/ToCharging">Charging</a>
 									        </div>
 								      	</li>
 								      </ul>
@@ -383,9 +383,8 @@
         <!-- Nav Bar End -->
 			<section>
 				<div class="container">
-					<form action="/tBoard/boardWrite" method="post" id="writeform" enctype="multipart/form-data">
-						<input type="hidden" name="kind" value="재능판매" id="talentreg">
-						<div class="form-control wrapper ">
+					<form action="/tBoard/sellingWrite" method="post" id="writeform" enctype="multipart/form-data">
+]						<div class="form-control wrapper ">
 
 							<div class="title">
 								<h2>
@@ -451,7 +450,7 @@
 							</div>
 
 							<div class="input-group mb-3 col-md-12">
-								<input type="text" class="form-control" id="Input3" value="${myInfo.address1}" readonly>
+								<input type="text" class="form-control" id="Input3" name="address" value="${myInfo.address1}" readonly>
 							</div>
 							<div class="input-group mb-3 col-md-12">
 								<textarea class="form-control" aria-label="With textarea" placeholder="세부 설명을 입력해주세요"

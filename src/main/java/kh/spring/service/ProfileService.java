@@ -17,20 +17,25 @@ public class ProfileService {
 	private ProfileDAO pdao;
 
 	
-	public int sellingCount(String kind,String sessionID ) { //판매목록 갯수
-		 Map<String,Object> param = new HashMap<>();
-		param.put("kind",kind );
-	    param.put("id", sessionID);
-		return pdao.sellingCount(param);
+	public int sellingCount1(String id) { //판매목록 갯수1
+		return pdao.sellingCount1(id);
 	}
 	
-	public List<TalentBoardDTO> getSellingList(String kind,String sessionID){//판매목록 리스트
-		 Map<String,Object> param = new HashMap<>();
-			param.put("kind",kind );
-		    param.put("id", sessionID);
-				return pdao.getSellingList(param);
+public int sellingCount2(String id) { //판매목록 갯수2
+		
+		return pdao.sellingCount2(id);
+	}
+	
+	public List<HashMap<String,String>> sellingList(String id){//(lend,selltalent)판매목록 리스트
+	return pdao.sellingList(id);
 
 	}
+
+	
+//	public List<HashMap<String,String>> sellingList2(String writer){//판매목록 리스트(마이 프로필)
+//		return pdao.sellingList2(writer);
+//
+//}
 	
 
 }
