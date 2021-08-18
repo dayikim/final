@@ -7,11 +7,11 @@
   
 	<!-- 전체 검색 지역 & 타이틀 & 내용 -->
 	<select id="toSearch" resultType="kh.spring.dto.LendDTO">
-		<![CDATA[select * from (select rownum as rnum, A.* from (select * from lendboard where address like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+		<![CDATA[select * from (select rownum as rnum, A.* from (select * from lendboard where address like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%' or category like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
 	</select>
 	
 	<!-- 주소 검색 -->
-	<select id="toAddress1" resultType="kh.spring.dto.LendDTO">
+	<select id="toAddress" resultType="kh.spring.dto.LendDTO">
 		<![CDATA[select * from (select rownum as rnum, A.* from (select * from lendboard where address like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
 	</select>
 	
@@ -26,7 +26,7 @@
 	</select>
 	
 	<!-- 카테고리 검색 -->
-	<select id="toContents" resultType="kh.spring.dto.LendDTO">
+	<select id="toCategory" resultType="kh.spring.dto.LendDTO">
 		<![CDATA[select * from (select rownum as rnum, A.* from (select * from lendboard where category like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
 	</select>
 	
@@ -46,7 +46,7 @@
 	</select>
 	
 	<!-- 검색 지역 카운트 -->
-	<select id="numAddress1" resultType="int">
+	<select id="numAddress" resultType="int">
 		select count(*) from lendboard where address like '%'||#{value}||'%' 
 	</select>
 	

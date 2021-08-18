@@ -111,15 +111,15 @@ img{
 	    	})
 	       
 	    	$("#tlSellBtn").on("click",function(){
-	    		location.href="/AllBoardList/tlSellList?kind=재능등록&choice=${choice}&search=${search}&cpage=1";
+	    		location.href="/AllBoardList/tlSellList?choice=${choice}&search=${search}&cpage=1";
 	    	}) 
 	    
 	    	$("#tlRequestBtn").on("click",function(){
-	    		location.href="/AllBoardList/tlRequestList?kind=재능요청&choice=${choice}&search=${search}&cpage=1";
+	    		location.href="/AllBoardList/tlRequestList?choice=${choice}&search=${search}&cpage=1";
 	    	})
 	    
 	    	$("#writeBtn").on("click",function(){
-	    		location.href="/tBoard/Towrite";
+	    		location.href="/tBoard/sellingWrite";
 	    	})
 	      	  
 		})
@@ -218,7 +218,7 @@ img{
                 <button class="dropbtn tlSellBtn" id="tlSellBtn">재능등록</button>
             </div>
             <div class="dropdown">
-                <button class="dropbtn tlSellBtn" id="tlRequestBtn">재능요청</button>
+                <button class="dropbtn tlRequestBtn" id="tlRequestBtn">재능요청</button>
             </div>
 		</div>
 		
@@ -226,7 +226,6 @@ img{
 		<form action="/AllBoardList/tlSellList" method="post">
 			<div class="browse">
 				<input type="hidden" name="cpage" value=1>
-				<input type="hidden" name="kind" value="재능대여"> 
 				<div class="inp_slct">
 					<select name="choice">
 						<option value="Allchoice">전체</option>
@@ -247,11 +246,13 @@ img{
 			<input type="hidden" value="${choice}" name=choice>
 			
 			<c:forEach var="tls" items="${tlsList}">
-				<div class="to-board">					
-					<img src="ittaketwo.jpg" alt="#"> 
-					<input type="hidden" value="${tls.seq}" id="seq" name="seq">
-					<a href="/borrow/detailView?seq=${tls.seq}" id="title" class="title" name="title">${tls.title}</a>
-					<p id="address1" name="address1">${tls.address1}</p>
+				<div class="to-board">
+					<a href="/borrow/detailView?seq=${tls.seq}" id="tlshttp" class="tlshttp" >					
+						<img src="ittaketwo.jpg" alt="#"> 
+						<input type="hidden" value="${tls.seq}" id="seq" name="seq">
+						<p class="title" name="title">${tls.title}</p>
+						<p id="address" name="address">${tls.address}</p>
+					</a>
 				</div>
 			</c:forEach>
 		</div>
@@ -268,13 +269,13 @@ img{
 			<c:forEach var="i" items="${navi}" varStatus="s">
 				<c:choose>
 					<c:when test="${i == '>'}">
-						<a href="/AllBoardList/lendList?cpage=${navi[s.index-1]+1}&kind=재능등록&choice=${choice}&search=${search}">${i}</a>
+						<a href="/AllBoardList/lendList?cpage=${navi[s.index-1]+1}&choice=${choice}&search=${search}">${i}</a>
 					</c:when>
 					<c:when test="${i == '<'}">
-						<a href="/AllBoardList/lendList?cpage=${navi[s.index-1]+1}&kind=재능등록&choice=${choice}&search=${search}">${i}</a>
+						<a href="/AllBoardList/lendList?cpage=${navi[s.index-1]+1}&&choice=${choice}&search=${search}">${i}</a>
 					</c:when>
 					<c:otherwise>
-						<a href="/AllBoardList/lendList?cpage=${i}&kind=재능등록&choice=${choice}&search=${search}">${i}</a>
+						<a href="/AllBoardList/lendList?cpage=${i}&choice=${choice}&search=${search}">${i}</a>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>

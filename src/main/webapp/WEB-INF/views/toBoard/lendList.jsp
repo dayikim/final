@@ -111,11 +111,11 @@ img{
 	    	})
 	       
 	    	$("#tlSellBtn").on("click",function(){
-	    		location.href="/AllBoardList/tlSellList?kind=재능등록&choice=${choice}&search=${search}&cpage=1";
+	    		location.href="/AllBoardList/tlSellList?choice=${choice}&search=${search}&cpage=1";
 	    	})
 	    
 	    	$("#tlRequestBtn").on("click",function(){
-	    		location.href="/AllBoardList/tlRequestList?kind=재능요청&choice=${choice}&search=${search}&cpage=1";
+	    		location.href="/AllBoardList/tlRequestList?choice=${choice}&search=${search}&cpage=1";
 	    	})
 	    
 	    	$("#writeBtn").on("click",function(){
@@ -248,12 +248,12 @@ img{
 			<input type="hidden" value="${choice}" name=choice>
 				<c:forEach var="ld" items="${ldList}">
 					<div class="to-board">					
-						<a href="/borrow/detailView?seq=${ld.seq}" id="bwtitle" class="title">				
+						<a href="/borrow/detailView?seq=${ld.seq}" id="ldhhtp" class="ldhhtp">				
 							<img src="..." alt="#"> 
 							<input type="hidden" value="${ld.seq}" id="seq" name="seq">
-							<h2 id=title>${ld.title}</h2>
-							<h4 id="category">${ld.category}</h4>
-							<h4 id="address">${ld.address}</h4>
+							<p id=title>${ld.title}</p>
+							<p id="category">${ld.category}</p>
+							<p id="address">${ld.address}</p>
 						</a>
 					</div>
 				</c:forEach>

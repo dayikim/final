@@ -7,10 +7,13 @@ import org.springframework.stereotype.Service;
 
 import kh.spring.dao.BorrowDAO;
 import kh.spring.dao.LendDAO;
+import kh.spring.dao.RequestTalentDAO;
+import kh.spring.dao.SellTalentDAO;
 import kh.spring.dao.TBoardFilesDAO;
-import kh.spring.dao.TalentBoardDAO;
 import kh.spring.dto.BorrowDTO;
 import kh.spring.dto.LendDTO;
+import kh.spring.dto.RequestTalentDTO;
+import kh.spring.dto.SellTalentDTO;
 
 @Service
 public class AllSearchService {
@@ -22,14 +25,16 @@ public class AllSearchService {
 	private BorrowDAO bwdao;
 	
 	@Autowired
-	private TalentBoardDAO tldao;
-	
-	@Autowired
 	private TBoardFilesDAO fldao;
 	
+	@Autowired
+	private SellTalentDAO tlsdao;
+	
+	@Autowired
+	private RequestTalentDAO tlrdao;
+	
+	
 	public List<String> getLdPageNavi(String choice, String search, String cpage) {
-		
-		System.out.println(choice);
 		
 		int currentPage = Integer.parseInt(cpage);
 		
@@ -37,9 +42,8 @@ public class AllSearchService {
 	}
 	
 	public List<LendDTO> getLdList(String choice, String search, String cpage){
-		int currentPage = Integer.parseInt(cpage);
 		
-		System.out.println(choice);
+		int currentPage = Integer.parseInt(cpage);
 		
 		return lddao.getList(choice, search,currentPage);
 	}
@@ -59,17 +63,40 @@ public class AllSearchService {
 		return bwdao.getList(choice, search,currentPage);
 	}
 	
-	public List<String> getTlPageNavi(String kind, String choice, String search, String cpage) {
+	public List<String> getTlsPageNavi(String choice, String search, String cpage) {
 		
 		int currentPage = Integer.parseInt(cpage);
 		
-		return tldao.getPageNavi(kind, choice, search, currentPage);
+		System.out.println(choice);
+		
+		return tlsdao.getPageNavi(choice, search, currentPage);
 	}
 	
-	public List<BorrowDTO> getTlList(String kind, String choice, String search, String cpage){
+	public List<SellTalentDTO> getTlsList(String choice, String search, String cpage){
+		
 		int currentPage = Integer.parseInt(cpage);
+		
+		System.out.println(choice);
 				
-		return tldao.getList(kind, choice, search,currentPage);
+		return tlsdao.getList(choice, search,currentPage);
+	}
+	
+	public List<String> getTlrPageNavi(String choice, String search, String cpage) {
+		
+		int currentPage = Integer.parseInt(cpage);
+		
+		System.out.println(choice);
+		
+		return tlrdao.getPageNavi(choice, search, currentPage);
+	}
+	
+	public List<RequestTalentDTO> getTlrList(String choice, String search, String cpage){
+		
+		int currentPage = Integer.parseInt(cpage);
+		
+		System.out.println(choice);
+				
+		return tlrdao.getList(choice, search,currentPage);
 	}
 	
 	

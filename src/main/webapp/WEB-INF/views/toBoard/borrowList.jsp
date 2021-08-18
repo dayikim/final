@@ -85,11 +85,11 @@
 	    	})
 	       
 	    	$("#tlSellBtn").on("click",function(){
-	    		location.href="/AllBoardList/tlSellList?kind=재능등록&choice=${choice}&search=${search}&cpage=1";
+	    		location.href="/AllBoardList/tlSellList?choice=${choice}&search=${search}&cpage=1";
 	    	})
 	    
 	    	$("#tlRequestBtn").on("click",function(){
-	    		location.href="/AllBoardList/tlRequestList?kind=재능요청&choice=${choice}&search=${search}&cpage=1";
+	    		location.href="/AllBoardList/tlRequestListchoice=${choice}&search=${search}&cpage=1";
 	    	})
 	    	
 	    	$("#writeBtn").on("click",function(){
@@ -222,12 +222,12 @@
 			<input type="hidden" value="${choice}" name=choice>
 				<c:forEach var="bw" items="${bwList}">
 					<div class="to-board">
-						<a href="/borrow/detailView?seq=${bw.seq}" id="bwtitle" class="title">				
+						<a href="/borrow/detailView?seq=${bw.seq}" id="bwhttp" class="bwhttp">				
 							<img src="..." alt="#"> 
 							<input type="hidden" value="${bw.seq}" id="seq" name="seq">
-							<h2 id=title>${bw.title}</h2>
-							<h4 id="category">${bw.category}</h4>
-							<h4 id="address">${bw.address}</h4>
+							<p id=title>${bw.title}</p>
+							<p id="category">${bw.category}</p>
+							<p id="address">${bw.address}</p>
 						</a>
 					</div>
 				</c:forEach>

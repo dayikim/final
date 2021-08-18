@@ -48,7 +48,11 @@ public class LendDAO {
 		}else {
 			list = mybatis.selectList("Lend.toList", map);
 		}
-				
+		
+		if(list.isEmpty()) {
+			list = mybatis.selectList("Lend.toList", map);
+		}
+			
 		return list;
 		
 	}
@@ -74,6 +78,10 @@ public class LendDAO {
 				recordTotalCount = mybatis.selectOne("Lend.numCategory", search);
 			} // 전체 레코드개수 (원래는 커넥션으로 카운트해서 가져옴)
 		} else {
+			recordTotalCount = mybatis.selectOne("Lend.allList");
+		}
+		
+		if(recordTotalCount == 0) {
 			recordTotalCount = mybatis.selectOne("Lend.allList");
 		}
 		

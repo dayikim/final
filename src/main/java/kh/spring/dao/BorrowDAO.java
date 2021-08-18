@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import kh.spring.config.BoardConfig;
 import kh.spring.dto.BorrowDTO;
-import kh.spring.dto.TalentBoardDTO;
 
 @Component
 public class BorrowDAO {
@@ -38,15 +37,12 @@ public class BorrowDAO {
 		int startNum = endNum - (BoardConfig.RECORD_COUNT_PER_PAGE-1);
 		
 		HashMap<String, Object> map = new HashMap<>();
-		map.put("choice",choice);
 		map.put("search",search);
 		map.put("endNum", endNum);
 		map.put("startNum", startNum);
 				
 		List<BorrowDTO> list = null;
 		
-		System.out.println(map.containsKey("choice"));
-		System.out.println(map.containsKey("search"));
 		
 		if(!search.equals("")) {
 			if(choice.equals("Allchoice")) {
@@ -64,11 +60,9 @@ public class BorrowDAO {
 			list = mybatis.selectList("Borrow.toList", map);
 		}
 		
-		if(list == null) {
+		if(list.isEmpty()) {
 			list = mybatis.selectList("Borrow.toList", map);
 		}
-		
-		System.out.println(list);
 		
 		return list;
 		
@@ -82,8 +76,6 @@ public class BorrowDAO {
 			search = "";
 		}
 		
-		
-
 		if (!search.equals("")) {
 			if(choice.equals("Allchoice")) {
 				recordTotalCount = mybatis.selectOne("Borrow.numAllList", search);
@@ -100,7 +92,10 @@ public class BorrowDAO {
 		} else {
 			recordTotalCount = mybatis.selectOne("Borrow.allList");
 		}
-		System.out.println(recordTotalCount);
+		
+		if(recordTotalCount == 0) {
+			recordTotalCount = mybatis.selectOne("Borrow.allList");
+		}
 		
 		int recordCountPerPage = BoardConfig.RECORD_COUNT_PER_PAGE; // 한 페이지 당 보여줄 게시글의 개수
 		int naviCountPerPage = BoardConfig.NAVI_COUNT_PER_PAGE; // 내 위치 페이지를 기준으로 시작으로부터 끝까지의 페이지가 총 몇개인지.
