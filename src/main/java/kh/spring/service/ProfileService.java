@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kh.spring.dao.ProfileDAO;
-import kh.spring.dto.TalentBoardDTO;
 
 @Service
 public class ProfileService {
@@ -29,6 +28,14 @@ public int sellingCount2(String id) { //판매목록 갯수2
 	public List<HashMap<String,String>> sellingList(String id){//(lend,selltalent)판매목록 리스트
 	return pdao.sellingList(id);
 
+	}
+
+	public List<HashMap<Object, Object>> sellingView(int seq, String writer) {
+	   Map<Object, Object> param = new HashMap<>();
+	       param.put("seq",seq);
+		   param.put("writer", writer);
+		
+		return pdao.sellingView(param);
 	}
 
 	
