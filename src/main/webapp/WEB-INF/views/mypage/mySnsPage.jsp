@@ -51,7 +51,8 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
 	integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
 	crossorigin="anonymous">
-    </script>
+	
+</script>
 
 <!-- icon css -->
 <link rel="stylesheet"
@@ -110,7 +111,7 @@ img {
 
 .container2 {
 	margin: auto;
-	margin-top:108px;
+	margin-top: 108px;
 	height: 1000px;
 	width: 1000px;
 	overflow: hidden;
@@ -279,8 +280,24 @@ style>body {
 								placeholder="물품, 지역을 검색해주세요." id=search aria-label="Search">
 							<a href="/person/logout" class="nav-item nav-link active">Logout</a>
 							<!-- Logout -->
-							<a href="/my/mypageProc" class="nav-item nav-link">MyPage</a>
-							<!-- My Page 이동 -->
+							<div class="collapse navbar-collapse" id="navbarNavDropdown">
+								<ul class="navbar-nav">
+									<li class="nav-item dropdown"><a
+										class="nav-link dropdown-toggle" href="#"
+										id="navbarDropdownMenuLink" role="button"
+										data-toggle="dropdown" aria-haspopup="true"
+										aria-expanded="false"> Menu </a>
+										<div class="dropdown-menu"
+											aria-labelledby="navbarDropdownMenuLink">
+											<a class="dropdown-item"
+												href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
+											<a class="dropdown-item" href="/sns/main">SNS</a> <a
+												class="dropdown-item" href="/my/mypageProc">My page</a> <a
+												class="dropdown-item" href="/point/ToCharging">Charging</a>
+										</div></li>
+								</ul>
+								<button type="button" class="btn btn-outline-warning" id="chat">Chatting</button>
+							</div>
 						</div>
 					</div>
 				</c:otherwise>
@@ -288,6 +305,7 @@ style>body {
 
 		</div>
 	</div>
+	<!-- Nav Bar End -->
 
 
 	<!-- 커뮤니티 -->

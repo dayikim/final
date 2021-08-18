@@ -192,28 +192,43 @@ img {
 </style>
 
 <script>
-	$(function() {		
+	$(function() {
 		// 요청 거절 버튼을 눌렀을 경우
-		$(".cnum-btn1").on("click",function(){
+		$(".cnum-btn1").on("click", function() {
 			let result = confirm("요청을 거절하시겠습니까?");
-			if(result) {
-				$("#frm").attr("action","/my/dealFail");
-				$("#frm").submit();
-			}else {
-				return false;
-			}
-		})
-
-		// 거래 승인 버튼을 눌렀을 경우
-		$(".cnum-btn2").on("click", function() {
-			let result = confirm("거래 승인 하시겠습니까?");
 			if (result) {
-				$("#frm").attr("action","/my/dealSuccess");
+				$("#frm").attr("action", "/my/dealFail");
 				$("#frm").submit();
 			} else {
 				return false;
 			}
 		})
+
+		// 거래 승인 버튼을 눌렀을 경우(DB에 거래승인 insert하기)
+		$(".cnum-btn2").on("click", function() {
+			let result = confirm("거래 승인 하시겠습니까?");
+			if (result) {
+				$.ajax({
+					url:"/my/dealSuccess",
+					data:{writer:$("#writer").val(), booker:$("#booker").val(), parent:$("#parent").val()}
+				}).done(function(resp){
+					if(resp=="1"){
+						$("#approval").text("거래 완료");
+						$("#cancel").text("거래 취소")
+					}else{
+						return false;
+					}
+				})
+			} else {
+				return false;
+			}
+		})
+		
+		/* // 거래 승인 버튼 눌렀을 때 버튼 바꾸기
+		$(".cnum-btn2").on("click", function() {
+			const btnElement = document.getElementById('approval');
+			btnElement.innerText = '거래 완료';
+		} */
 	})
 </script>
 
@@ -356,9 +371,9 @@ img {
 									<div class="col-8 right">${i.price }원</div>
 								</div>
 							</div>
-							<input type=hidden value=${i.writer } name=writer> 
-							<input type=hidden value=${i.booker } name=booker> 
-							<input type=hidden value=${i.parentseq } name=parent>
+							<input type=hidden value=${i.writer } id=writer name=writer>
+							<input type=hidden value=${i.booker } id=booker name=booker>
+							<input type=hidden value=${i.parentseq } id=parent name=parent>
 
 						</div>
 						<div class="col-4">
@@ -369,12 +384,12 @@ img {
 						</div>
 					</div>
 					
-					
-					<div class="under">
-						<button type=button id=cancel class="cnum-btn1">요청 거절</button>
-						<button type=button id=approval class="cnum-btn2">거래 승인</button>
-					</div>
-
+				
+							<div class="under">
+								<button type=button id=cancel class="cnum-btn1">요청 거절</button>
+								<button type=button id=approval class="cnum-btn2">거래 승인</button>
+							</div>
+						
 
 
 
