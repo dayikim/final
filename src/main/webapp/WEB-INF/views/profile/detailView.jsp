@@ -364,6 +364,7 @@ $(function(){
 	<section id="body">
 		<div class="container">
 			<div class="btn_box btn_wrap text-right ">
+				<c:forEach var="board" items="${board}">
 				<button type="button" class="btn btn-info" value="${board.seq}" id="deleteBtn">
 					<i class="fas fa-trash-restore"> 삭제</i>
 				</button>
@@ -373,7 +374,7 @@ $(function(){
 			<div class="form-control wrapper">
 				<div class="board_title">
 
-					<a href="#" class="badge badge-info">재능 판매</a>
+					<a href="#" class="badge badge-info">${boardName}</a>					
 					
 				
 
@@ -464,6 +465,7 @@ $(function(){
 					<div class="col-12 md-5 contents_input">
 						<p class="target">${board.contents }</p>
 					</div>
+		</c:forEach>
 					<div class="btn_wrap">
 						<button type="button" class="btn btn-outline-info btn btn-lg"
 							id="chat">

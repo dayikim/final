@@ -340,9 +340,8 @@ li {
 							<div class="col-sm-4">
 								<div class="card">
 									<div class="card-body">
-
-										<img src="..." class="card-img-top" alt="...">
-										<h5 class="card-title">${i.title}</h5>
+										<a href="/profile/sellingViewByUser?seq =${i.seq}&id=${writer}"><img src="..." class="card-img-top" alt="..."></a>
+										<h5 class="card-title"><a href="/profile/sellingViewByUser?seq =${i.seq}&id=${writer}">${i.title}</a></h5>
 										<div class="card-price ">${i.price}상추</div>
 										<div class="card-region-name">${i.address}</div>
 										<div class="card-counts">

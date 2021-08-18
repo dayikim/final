@@ -324,7 +324,7 @@ li {
 
 					<ul class="nav justify-content-center list">
 						<li class="nav-item"><a class="nav-link active" id="selling"
-							aria-current="page" href="/profile/myselling?id=${loginID}">내
+							aria-current="page" href="/profile/myselling?writer=${loginID}">내
 								판매 목록<span class="badge badge-pill badge-dark">${sellingCount}</span>
 						</a></li>
 						<li class="nav-item"><a class="nav-link"
@@ -341,9 +341,9 @@ li {
 							<div class="col-sm-4">
 								<div class="card">
 									<div class="card-body">
-
-										<img src="..." class="card-img-top" alt="...">
-										<h5 class="card-title">${i.title}</h5>
+										<div class="card-category">[${i.category}]</div>
+										<a href="/profile/sellingViewByMe?seq=${i.seq}"><img src="..." class="card-img-top" alt="..."></a>
+										<h5 class="card-title"><a href="/profile/sellingViewByMe?seq=${i.seq}">${i.title}</a></h5>
 										<div class="card-price ">${i.price}상추</div>
 										<div class="card-region-name">${i.address}</div>
 										<div class="card-counts">

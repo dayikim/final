@@ -118,4 +118,8 @@ public class LendDAO {
 		return pageNavi;
 	}
 
+	public LendDTO detailview(int seq) {
+		return mybatis.selectOne("Lend.detailView", seq);
+	}
+
 }

@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import kh.spring.dto.BookingDTO;
+import kh.spring.dto.LendDTO;
 import kh.spring.dto.PersonDTO;
 import kh.spring.dto.ProfileFilesDTO;
 import kh.spring.dto.RequestTalentDTO;
 import kh.spring.dto.SellTalentDTO;
 import kh.spring.dto.TBoardFilesDTO;
-import kh.spring.dto.TalentBoardDTO;
+import kh.spring.service.LendService;
 import kh.spring.service.MypageService;
 import kh.spring.service.RequestTalentService;
 import kh.spring.service.SellTalentService;
@@ -34,7 +35,7 @@ public class TalentBoardController {
 	
 	@Autowired
 	private SellTalentService STService;
-	
+		
 	@Autowired
 	private RequestTalentService RTService;
     
@@ -100,34 +101,35 @@ public class TalentBoardController {
 		return "/talentBoard/temp_boardlist";
 	}
 	
-	@RequestMapping("sellingView") //판매글 상세보기 
-	public String sellingView(String id, int seq, Model model) throws Exception {
+	@RequestMapping("sellingView") //판매글 상세보기
+	public String sellingViewByMe(String id, int seq, Model model) throws Exception {
 		System.out.println(seq);
 		String sessionID = (String) session.getAttribute("loginID");
 		
-		ProfileFilesDTO pfdto = MypageService.profileSelect(sessionID); // 내 프사 출력
-		
+		ProfileFilesDTO pfdto = MypageService.profileSelect(id); // 프사 출력
 		model.addAttribute("profile",pfdto); //프로필
 
 		PersonDTO writerInfo = STService.memberInfoById(id);//글 작성자 정보(이름,주소)
 		model.addAttribute("writerInfo",writerInfo);
+        SellTalentDTO dto = STService.detailView(seq);
 
-		SellTalentDTO dto = STService.detailView(seq);
-		model.addAttribute("tboard",dto);
-
+		 model.addAttribute("board",dto);
 		////		List<TalentFilesDTO> fileList = F_Service.selectAll(seq); //첨부파일 목록 출력   
 		//        System.out.println("파일이 비어 있나요?? "+fileList.isEmpty());//파일이 있나요?
 		//        model.addAttribute("filelist", fileList);//파일리스트를 request애 담는다.
-		//		
+		//
+		
+		
 		return "/talentBoard/view_selling";
 	}
 	
+
 	@RequestMapping("RequestView") //요청글 상세보기 
 	public String RequestView(String id, int seq,Model model) throws Exception {
 		System.out.println(seq);
 		String sessionID = (String) session.getAttribute("loginID");
-		PersonDTO pdto = MypageService.mypageList(sessionID); // 내 정보 출력
-		ProfileFilesDTO pfdto = MypageService.profileSelect(sessionID); // 내 프사 출력
+		PersonDTO pdto = MypageService.mypageList(id); // 내 정보 출력
+		ProfileFilesDTO pfdto = MypageService.profileSelect(id); // 내 프사 출력
 		session.setAttribute("myInfo", pdto); // 내 정보
 		model.addAttribute("profile",pfdto); //프로필
 
@@ -153,9 +155,7 @@ public class TalentBoardController {
 			return "redirect:/";
 
 		}
-		
 	}
-		
 		@RequestMapping("RequestDelete") //요청 게시글 삭제
 		public String requestDelete(int seq) throws Exception {
 			int result =RTService.delete(seq);

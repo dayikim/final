@@ -55,4 +55,10 @@
 		select count(*) from lendboard where contents like '%'||#{value}||'%'
 	</select>
 	
+	<!-- 글 상세보기 -->
+	<select id="detailView" resultType="kh.spring.dto.SellTalentDTO">
+		select * from lendboard
+		where seq =#{seq}
+	</select>
+	
 </mapper>

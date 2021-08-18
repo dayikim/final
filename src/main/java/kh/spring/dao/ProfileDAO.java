@@ -39,4 +39,9 @@ public class ProfileDAO {
 	public List<HashMap<String, String>> sellingList(String id) { //판매리스트(유저 프로필)
 		return mybatis.selectList("Profile.sellinglist",id);
 	}
+
+	public List<HashMap<Object, Object>> sellingView(Map<Object, Object> param) {
+		return mybatis.selectList("Profile.sellingView",param);
+
+	}
 }
