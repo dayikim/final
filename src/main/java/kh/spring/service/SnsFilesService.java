@@ -32,6 +32,18 @@ public class SnsFilesService {
 		dao.insert(param);
 	}
 	
+	public void delete(int seq) {
+		dao.delete(seq);
+	}
+	
+	public int deleteFile(int seq) {
+		return dao.deleteFile(seq);
+	}
+	
+	public List<SnsFilesDTO> modiFile(int parent){
+		return dao.modiFile(parent);
+	}
+	
 	public List<SnsFilesDTO> fileList(){
 		return dao.fileList();
 	}

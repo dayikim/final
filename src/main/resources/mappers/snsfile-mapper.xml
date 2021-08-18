@@ -11,4 +11,17 @@
 	<select id="fileList" resultType="kh.spring.dto.SnsFilesDTO">
 		select * from snsfiles
 	</select>
+	
+	<delete id="delete">
+		delete from snsfiles where parent=#{value}
+	</delete>
+	
+	<delete id="deleteFile">
+		delete from snsfiles where seq = #{seq}
+	</delete>
+	
+	<select id="modiFile" resultType="kh.spring.dto.SnsFilesDTO">
+		select * from snsfiles where parent=#{value}
+	</select>
+	
 </mapper>
