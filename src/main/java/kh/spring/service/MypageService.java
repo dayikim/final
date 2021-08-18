@@ -100,6 +100,11 @@ public class MypageService {
 	   return bdao.requestRentalTalent(param);
    }
    
+   // 거래 완료 버튼 뽑기 - 재능
+   public int dealSuccessSelect() {
+	   return adao.dealSuccessSelect();
+   }
+   
    // 요청 거절을 눌렀을 경우 - 재능
    public int dealFail(String sessionID, int parent) {
 	   HashMap<String, Object> param = new HashMap<>();

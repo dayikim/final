@@ -15,5 +15,10 @@ public class ApprovalDAO {
 	public int dealSuccess(ApprovalDTO dto) {
 		return mybatis.insert("Approval.dealSuccess", dto);
 	} 
+	
+	// 거래 승인된 애들만 목록 출력(결제 완료 버튼을 위해)
+	public int dealSuccessSelect() {
+		return mybatis.selectOne("Approval.dealSuccessSelect");
+	}
 
 }

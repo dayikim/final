@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
@@ -137,8 +138,10 @@ public class MypageController {
 	public String requestRentalTalent(Model model) {
 		String sessionID = (String)session.getAttribute("loginID");
 		List<HashMap<String,Object>> list = service.requestRentalTalent(sessionID);
+//		int result = service.dealSuccessSelect();
 		
-		model.addAttribute("requestRental", list);
+//		model.addAttribute("result", result);  //  거래 승인 유무(여기서 1이 나오게 출력하고 싶은데...)
+		model.addAttribute("requestRental", list);  // 들어온 예약 리스트
 		return "/mypage/requestRentalTalent";
 	}
 	
@@ -152,11 +155,13 @@ public class MypageController {
 	}
 	
 	// 거래 승인 완료 버튼 눌렀을 때 - 재능(미완)
+	@ResponseBody
 	@RequestMapping("/dealSuccess")
-	public String dealSuccess(Model model, String writer, String booker, int parent) {
-		service.dealSuccess(writer,booker,parent); // 결과값이 잘 들어갔으니 1이 나왔을것.. 하지만 어떻게 버튼의 형식을 바꾸지..?
+	public String dealSuccess(String writer, String booker, int parent) {
+		System.out.println(writer + booker + parent);
+		int result = service.dealSuccess(writer,booker,parent); 
 		
-		return "redirect:/requestRentalTalent";
+		return String.valueOf(result);
 	}
 
 

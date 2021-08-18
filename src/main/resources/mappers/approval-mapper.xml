@@ -9,5 +9,10 @@
 	<insert id="dealSuccess">
 		insert into approval values(approval_seq.nextval,#{seller},#{buyer},#{approval},${parentseq},sysdate)
 	</insert>
+	
+	<!-- 거래 승인된 애들 출력 -->
+	<select id="dealSuccessSelect" resultType="int">
+		select * from approval where approval='y'
+	</select>
 
 </mapper>
