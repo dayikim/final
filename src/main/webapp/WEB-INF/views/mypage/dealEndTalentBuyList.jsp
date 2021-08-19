@@ -34,7 +34,6 @@
 <!-- Template Stylesheet -->
 <link href="/css/style.css" rel="stylesheet">
 <style>
-
 #titlename {
 	margin-top: 1%;
 	margin-bottom: 0;
@@ -82,43 +81,45 @@ img {
 }
 
 /* 네비바 */
-.navi{
+.navi {
 	margin: auto;
 	margin-top: 115px;
 	width: 500px;
-	height:60px;
-	border:1px solid black;
+	height: 60px;
+	border: 1px solid black;
 	border-radius: 7px;
 }
-.navi1,.navi2 {
+
+.navi1, .navi2 {
 	float: left;
 	width: 50%;
-	height:100%;
+	height: 100%;
 	text-align: center;
 }
-.navi2{  /* 재능등록 네비 */
-	height:100%;
-	background-color:#334257;
+
+.navi2 { /* 재능등록 네비 */
+	height: 100%;
+	background-color: #334257;
 }
-.dropdown-toggle2>b{
+
+.dropdown-toggle2>b {
 	color: white;
-	font-size:20px;
-	line-height:40px;
+	font-size: 20px;
+	line-height: 40px;
 }
-.dropdown-toggle1>b{
+
+.dropdown-toggle1>b {
 	color: black;
-	font-size:20px;
-	line-height:40px;
+	font-size: 20px;
+	line-height: 40px;
 }
-
-
 
 /* 시작 */
 .container2 {
 	margin: auto;
 	width: 1000px;
 	padding: 50px;
-	padding-top:10px;
+	padding-top: 10px;
 }
 
 /* 판매 완료 리스트 */
@@ -173,29 +174,59 @@ img {
 	color: orange;
 }
 
+.review_title {
+	display: block;
+	margin: 0;
+	font-weight: 800;
+	text-align: start;
+}
 
+.review_text {
+	display: block;
+	margin: 0;
+	text-align: start;
+}
+
+.review_form img {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	margin-bottom: 10px;
+	width: 100px;
+	overflow: hidden;
+}
+
+.writer {
+	display: block;
+	text-align: start;
+}
+
+.modalBtn {
+	display: inline-block;
+	margin-left: 10px;
+}
+
+.send {
+	display: inline-block;
+}
+
+form {
+	margin: 0;
+}
 </style>
 <script>
 
         $(function () {
-            let tabList = document.querySelectorAll('.tab_list_wrap .tab_list')
-            Array.prototype.forEach.call(tabList, function (list) {
-                list.children[0].addEventListener('click', function (e) {
-                    e.preventDefault()
-                    let tabContent = document.querySelectorAll('.tab_container .tab_content')
-                    let tabNum = this.parentElement.getAttribute('data-tabnum')
-                    Array.prototype.forEach.call(tabContent, function (cont, i) {
-                        cont.style.display = 'none'
-                        tabList[i].className = 'tab_list'
-                    })
-                    tabContent[tabNum].style.display = 'block'
-                    if (list.className.indexOf('tab_active') == -1) {
-                        list.className = 'tab_list tab_active'
-                    }
-                })
+            $(".send").on("click", function () {
+                let message = ("#message-text");
+                if (message.val() == "") {
+                    alert("메세지를 입력해주세요.");
+                    message.focus();
+                    return false;
+                }
+                $("#reviewForm").submit();
+
             })
-
-
 
 
         });
@@ -206,117 +237,135 @@ img {
 
 <body>
 	<!-- Top Bar Start -->
-        <div class="top-bar d-none d-md-block">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="top-bar-left">
-                            <div class="text">
-                                <h2>AM 9:00 - PM 7:00</h2>
-                            </div>
-                            <div class="text">
-                                <h2>02 123 4567</h2>
-                                <p>고객 센터</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="top-bar-right">
-                            <div class="social">
-                                <a href="/sns/main"><i class="fab fa-twitter"></i></a>
-                                <a href="/sns/main"><i class="fab fa-facebook-f"></i></a>
-                                <a href="/sns/main"><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Top Bar End -->
+	<div class="top-bar d-none d-md-block">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="top-bar-left">
+						<div class="text">
+							<h2>AM 9:00 - PM 7:00</h2>
+						</div>
+						<div class="text">
+							<h2>02 123 4567</h2>
+							<p>고객 센터</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="top-bar-right">
+						<div class="social">
+							<a href="/sns/main"><i class="fab fa-twitter"></i></a> <a
+								href="/sns/main"><i class="fab fa-facebook-f"></i></a> <a
+								href="/sns/main"><i class="fab fa-instagram"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Top Bar End -->
 
-        <!-- Nav Bar Start -->
-        <div class="navbar navbar-expand-lg bg-dark navbar-dark">
-            <div class="container-fluid">
-                <a href="/" class="navbar-brand"><p id= titlename>돈-다</a></p>
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <c:choose>
-                	<c:when test="${loginID == null }">
-                		<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                    	<div class="navbar-nav ml-auto">
-                        	<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
-                        	<a href="/person/login" class="nav-item nav-link active">Login</a> <!-- Login Page 이동 -->
-                        	<a href="/person/join" class="nav-item nav-link">Sign Up</a>  <!-- SignUp Page 이동 -->
-                    	</div>
-                		</div>
-                	</c:when>
-                	<c:otherwise>
-                		<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                    		<div class="navbar-nav ml-auto">
-                        		<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
-                        		<a href="/person/logout" class="nav-item nav-link active">Logout</a> <!-- Logout -->
-                        		 <div class="collapse navbar-collapse" id="navbarNavDropdown">
-	                        		 <ul class="navbar-nav">
-	                        			<li class="nav-item dropdown">
-									        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									         Menu
-									        </a>
-									        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-									          <a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a> <a
-												class="dropdown-item" href="/sns/main">SNS</a> <a
+	<!-- Nav Bar Start -->
+	<div class="navbar navbar-expand-lg bg-dark navbar-dark">
+		<div class="container-fluid">
+			<a href="/" class="navbar-brand"><p id=titlename>돈-다</a>
+			</p>
+			<button type="button" class="navbar-toggler" data-toggle="collapse"
+				data-target="#navbarCollapse">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<c:choose>
+				<c:when test="${loginID == null }">
+					<div class="collapse navbar-collapse justify-content-between"
+						id="navbarCollapse">
+						<div class="navbar-nav ml-auto">
+							<input class="form-control mr-sm-5" type="search"
+								placeholder="물품, 지역을 검색해주세요." id=search aria-label="Search">
+							<a href="/person/login" class="nav-item nav-link active">Login</a>
+							<!-- Login Page 이동 -->
+							<a href="/person/join" class="nav-item nav-link">Sign Up</a>
+							<!-- SignUp Page 이동 -->
+						</div>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div class="collapse navbar-collapse justify-content-between"
+						id="navbarCollapse">
+						<div class="navbar-nav ml-auto">
+							<input class="form-control mr-sm-5" type="search"
+								placeholder="물품, 지역을 검색해주세요." id=search aria-label="Search">
+							<a href="/person/logout" class="nav-item nav-link active">Logout</a>
+							<!-- Logout -->
+							<div class="collapse navbar-collapse" id="navbarNavDropdown">
+								<ul class="navbar-nav">
+									<li class="nav-item dropdown"><a
+										class="nav-link dropdown-toggle" href="#"
+										id="navbarDropdownMenuLink" role="button"
+										data-toggle="dropdown" aria-haspopup="true"
+										aria-expanded="false"> Menu </a>
+										<div class="dropdown-menu"
+											aria-labelledby="navbarDropdownMenuLink">
+											<a class="dropdown-item"
+												href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
+											<a class="dropdown-item" href="/sns/main">SNS</a> <a
 												class="dropdown-item" href="/my/mypageProc">My page</a> <a
 												class="dropdown-item" href="/point/ToCharging">Charging</a>
-									        </div>
-								      	</li>
-								      </ul>
-								      <button type="button" class="btn btn-outline-warning" id="chat">Chatting</button>
-							      </div>
-                    		</div>
-                		</div>
-                	</c:otherwise>
-                </c:choose>
+										</div></li>
+								</ul>
+								<button type="button" class="btn btn-outline-warning" id="chat">Chatting</button>
+							</div>
+						</div>
+					</div>
+				</c:otherwise>
+			</c:choose>
 
-            </div>
-        </div>
-        <!-- Nav Bar End -->
+		</div>
+	</div>
+	<!-- Nav Bar End -->
 
 	<!-- 네비바 -->
 	<div class="navi">
 		<div class="navi1">
 			<ul class="navbar-nav">
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle1" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <b>물품대여 ▼</b> </a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-					<a class="dropdown-item" href="/my/dealEndProductSellList">판매 완료</a> 
-					<a class="dropdown-item" href="/my/dealEndProductBuyList">구매 완료</a> 
-				</div>
-			</li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle1" href="#"
+					id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false"> <b>물품대여 ▼</b>
+				</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="/my/dealEndProductSellList">판매
+							완료</a> <a class="dropdown-item" href="/my/dealEndProductBuyList">구매
+							완료</a>
+					</div></li>
 			</ul>
 		</div>
-		
+
 		<div class=navi2>
 			<ul class="navbar-nav">
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle2" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <b>재능등록 ▼</b> </a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-					<a class="dropdown-item" href="/my/dealEndTalentSellList">판매 완료</a> 
-					<a class="dropdown-item" href="/my/dealEndTalentBuyList">구매 완료</a> 
-				</div>
-			</li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle2" href="#"
+					id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false"> <b>재능등록 ▼</b>
+				</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="/my/dealEndTalentSellList">판매
+							완료</a> <a class="dropdown-item" href="/my/dealEndTalentBuyList">구매
+							완료</a>
+					</div></li>
 			</ul>
 		</div>
-		
-		
-	</div><br>
+
+
+	</div>
+	<br>
 
 
 	<div class="container2">
-	
+
 		<div class="margin">
 			<div>재능 등록 > 구매 완료</div>
 		</div>
-	
+
 		<!---------forEach 사용 구간------------------------------------------------------------------------------>
 
 		<!-- 판매 완료 출력 -->
@@ -349,14 +398,52 @@ img {
 
 			<!-- 거래 후기 링크 걸기 -->
 			<div class="review">
-				<a href="">거래후기 보내기</a>
+
+				<a href="" data-toggle="modal" data-target="#exampleModal"
+					id="other">거래후기 보내기</a>
+
+				<div class="modal fade modal_box" id="exampleModal" tabindex="-1"
+					aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">거래후기 보내기</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<div class="form-group">
+									<form action="/profile/review" id="reviewForm">
+
+										<div class="mb-3 review_form">
+											<label class="col-form-label review_title">거래 경험이
+												좋으셨나요?</label> <label class="col-form-label review_text">00님에게
+												감사인사 남겨보세요.</label> <img src="이미지.png">
+
+
+										</div>
+										<hr>
+										<div class="mb-3">
+											<textarea class="form-control" name="contents"
+												id="message-text" placeholder="거래 후기 남겨주세요"></textarea>
+										</div>
+								</div>
+								<input type="hidden" name="id" value="${seller}"> <input
+									type="hidden" name="reviewable" value="y">
+								<button type="button" class="btn btn-dark modalBtn"
+									data-dismiss="modal">취소</button>
+								<button type="button"
+									class="btn btn-outline-warning modalBtn send">보내기</button>
+								</form>
+
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 
-
 	</div>
-
-
 
 	<footer>
 		<!-- Footer Start -->

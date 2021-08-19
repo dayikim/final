@@ -173,28 +173,61 @@ img {
 	color: orange;
 }
 
+.review_title {
+	display: block;
+	margin: 0;
+	font-weight: 800;
+	text-align: start;
+}
+
+.review_text {
+	display: block;
+	margin: 0;
+	text-align: start;
+}
+
+.review_form img {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	margin-bottom: 10px;
+	width: 100px;
+	overflow: hidden;
+}
+
+.writer {
+	display: block;
+	text-align: start;
+}
+
+.modalBtn {
+	display: inline-block;
+	margin-left: 10px;
+}
+
+.send {
+	display: inline-block;
+}
+
+form {
+	margin: 0;
+}
+
 
 </style>
 <script>
 
         $(function () {
-            let tabList = document.querySelectorAll('.tab_list_wrap .tab_list')
-            Array.prototype.forEach.call(tabList, function (list) {
-                list.children[0].addEventListener('click', function (e) {
-                    e.preventDefault()
-                    let tabContent = document.querySelectorAll('.tab_container .tab_content')
-                    let tabNum = this.parentElement.getAttribute('data-tabnum')
-                    Array.prototype.forEach.call(tabContent, function (cont, i) {
-                        cont.style.display = 'none'
-                        tabList[i].className = 'tab_list'
-                    })
-                    tabContent[tabNum].style.display = 'block'
-                    if (list.className.indexOf('tab_active') == -1) {
-                        list.className = 'tab_list tab_active'
-                    }
-                })
-            })
+        	$(".send").on("click", function () {
+                let message = ("#message-text");
+                if (message.val() == "") {
+                    alert("메세지를 입력해주세요.");
+                    message.focus();
+                    return false;
+                }
+                $("#reviewForm").submit();
 
+            })
 
 
 
@@ -348,10 +381,52 @@ img {
 
 			<!-- 거래 후기 링크 걸기 -->
 			<div class="review">
-				<a href="">거래후기 보내기</a>
+
+				<a href="" data-toggle="modal" data-target="#exampleModal"
+					id="other">거래후기 보내기</a>
+
+				<div class="modal fade modal_box" id="exampleModal" tabindex="-1"
+					aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">거래후기 보내기</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<div class="form-group">
+
+
+									<div class="mb-3 review_form">
+										<label class="col-form-label review_title">거래 경험이
+											좋으셨나요?</label> <label class="col-form-label review_text">00님에게
+											감사인사 남겨보세요.</label> <img src="이미지.png">
+
+
+									</div>
+									<hr>
+									<div class="mb-3">
+										<form action="/profile/review" id="reviewForm">
+											<textarea class="form-control" name="contents"
+												id="message-text" placeholder="거래 후기 남겨주세요"></textarea>
+									</div>
+
+								</div>
+								<input type="hidden" name="id" value="${seller}"> <input
+									type="hidden" name="reviewable" value="y">
+								<button type="button" class="btn btn-dark modalBtn"
+									data-dismiss="modal">취소</button>
+								<button type="button"
+									class="btn btn-outline-warning modalBtn send">보내기</button>
+								</form>
+
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-
 
 	</div>
 

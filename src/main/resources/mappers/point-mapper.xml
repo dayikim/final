@@ -3,9 +3,23 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Point">
+
+
+<!-- 충전하기 -->
 <insert id ="charge">
-insert into point values(point_seq.nextval,#{id},#{pointAmount},sysdate)
+insert into charging values(charging_seq.nextval,#{id},#{amount},sysdate)
 </insert>
+
+<!-- 결제하기 -->
+<insert id="payment">
+
+</insert>
+
+<!-- 잔액 확인 -->
+<select id="amount" resultType="int">
+select nvl(sum(),0) from point where id=#{value}
+</select>
+
 <select id="amount" resultType="int">
 select nvl(sum(pointAmount),0) from point where id=#{value}
 </select>

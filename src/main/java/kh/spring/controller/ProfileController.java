@@ -214,36 +214,31 @@ public class ProfileController {
 		return "/profile/detailView";
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	@RequestMapping("Review")//거래 후기
-	public String Review() {
+		
+	@RequestMapping("review")//거래 후기 작성
+	public String Review(ReviewDTO dto, Model model) {
+		String sessionID = (String) session.getAttribute("loginID");
+		dto.setReviewID(sessionID);
+		RService.write(dto);
 		return "/profile/review_UerProfile";
 	}
 	
-	@RequestMapping("review") //거래후기 from selling_view
+	@RequestMapping("review") //거래후기 for userprofile
 	public String Review(String id, Model model) {
+		
 //	PersonDTO pd = TBoardService.memberInfoById(id);//글 작성자 정보(이름,주소)
 //	model.addAttribute("memberInfo",pd);
-		System.out.println("id 받기" +id);
-		String sessionID = (String) session.getAttribute("loginID");
+		
+String sessionID = (String) session.getAttribute("loginID");
 		List<ReviewDTO> reviewList= RService.getAllList(sessionID);
-		System.out.println(reviewList.isEmpty());
-		System.out.println(reviewList.size());
-		model.addAttribute("reviewlist",reviewList);
+		System.out.println("id 받기" +id);
+		
+		
 		return "/profile/review_MyProfile";
 	}
 }
 	
-//	@RequestMapping("review") //거래후기 from request_view
+//	@RequestMapping("review") //거래후기 from myprofile
 //	public String Review2(String id, Model model) {
 ////	PersonDTO pd = TBoardService.memberInfoById(id);//글 작성자 정보(이름,주소)
 ////	model.addAttribute("memberInfo",pd);
