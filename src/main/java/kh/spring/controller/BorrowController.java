@@ -12,7 +12,7 @@ import kh.spring.dto.BorrowDTO;
 import kh.spring.service.BorrowService;
 
 @Controller
-@RequestMapping("/borrow")
+@RequestMapping("/borrowBoard")
 public class BorrowController {
 	
 	@Autowired

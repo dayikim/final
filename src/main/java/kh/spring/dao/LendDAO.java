@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import kh.spring.config.BoardConfig;
 import kh.spring.dto.LendDTO;
+import kh.spring.dto.SellTalentDTO;
 
 @Component
 public class LendDAO {
@@ -17,6 +18,22 @@ public class LendDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 	
+	//게시글 번호
+	public int getSeq(){
+		return mybatis.selectOne("Lend.getSeq");
+	}
+	
+	//게시글 글쓰기
+	public int boardWrite(LendDTO dto) {
+		return mybatis.insert("Lend.write",dto);
+	}
+
+	//게시글 상세보기
+	public LendDTO detailview(int seq) {
+		return mybatis.selectOne("Lend.detailView", seq);
+	}
+	
+	//게시글 리스트 가져오기
 	public List<LendDTO> getList(String choice, String search,int cpage){
 				
 		if(search == null) {
@@ -57,6 +74,7 @@ public class LendDAO {
 		
 	}
 
+	//게시글 네비
 	public List<String> getPageNavi(String choice, String search, int currentPage) { // 페이지
 		int recordTotalCount = 0;
 		// 공지사항 게시글 리스트 페이지
@@ -128,10 +146,6 @@ public class LendDAO {
 		if(needNext) {pageNavi.add(">");}
 
 		return pageNavi;
-	}
-
-	public LendDTO detailview(int seq) {
-		return mybatis.selectOne("Lend.detailView", seq);
 	}
 
 }

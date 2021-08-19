@@ -249,7 +249,7 @@ img{
             <div class="container copyright">
                 <div class="row">
                     <div class="col-12" style="text-align: center;">
-                        <p id=titlename>&copy; <a href="#">돈-다</a>, All Right Reserved.</p>
+                        <p id=titlename>&copy; <a href="/">돈-다</a>, All Right Reserved.</p>
                     </div>
                 </div>
             </div>

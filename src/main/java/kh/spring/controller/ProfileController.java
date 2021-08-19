@@ -209,7 +209,7 @@ public class ProfileController {
 		//게시판의 시작 번호을 다르게(lendboard seq=1/selltalent seq=1001)
 		System.out.println(seq);
         if(seq<1001) {
-      	  LendDTO dto = LService.deatilview(seq);
+      	  LendDTO dto = LService.detailView(seq);
       	  model.addAttribute("lendboard",dto);
         }else {
           SellTalentDTO dto = STService.detailView(seq);

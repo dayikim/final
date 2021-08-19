@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="LendFiles">
+
+	<insert id="upload">
+		insert into lendfiles values(lendfiles_seq.nextval,#{oriName},#{sysName},#{parentSeq},sysdate)
+	</insert>
+
+	<select id="selectOne" parameterType="hashmap" resultType="kh.spring.dto.LendFilesDTO">
+		select rownum, A.* from(select * from lendfiles where 
+		<foreach collection="parentSeq" item="seq" open="(" close=")" separator="or">
+		 	parentseq = #{seq.value}
+		 </foreach>
+		  order by seq asc) A where rownum = 1
+	</select>
+
+</mapper>

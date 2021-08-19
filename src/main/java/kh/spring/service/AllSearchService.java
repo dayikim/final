@@ -7,11 +7,13 @@ import org.springframework.stereotype.Service;
 
 import kh.spring.dao.BorrowDAO;
 import kh.spring.dao.LendDAO;
+import kh.spring.dao.LendFilesDAO;
 import kh.spring.dao.RequestTalentDAO;
 import kh.spring.dao.SellTalentDAO;
 import kh.spring.dao.TBoardFilesDAO;
 import kh.spring.dto.BorrowDTO;
 import kh.spring.dto.LendDTO;
+import kh.spring.dto.LendFilesDTO;
 import kh.spring.dto.RequestTalentDTO;
 import kh.spring.dto.SellTalentDTO;
 
@@ -20,6 +22,9 @@ public class AllSearchService {
 	
 	@Autowired
 	private LendDAO lddao;
+	
+	@Autowired
+	private LendFilesDAO ldfdao;
 	
 	@Autowired
 	private BorrowDAO bwdao;
@@ -33,7 +38,7 @@ public class AllSearchService {
 	@Autowired
 	private RequestTalentDAO tlrdao;
 	
-	
+	//대여하기 리스트 네비
 	public List<String> getLdPageNavi(String choice, String search, String cpage) {
 		
 		int currentPage = Integer.parseInt(cpage);
@@ -41,6 +46,7 @@ public class AllSearchService {
 		return lddao.getPageNavi(choice, search, currentPage);
 	}
 	
+	//대여하기 리스트
 	public List<LendDTO> getLdList(String choice, String search, String cpage){
 		
 		int currentPage = Integer.parseInt(cpage);
@@ -48,6 +54,12 @@ public class AllSearchService {
 		return lddao.getList(choice, search,currentPage);
 	}
 	
+	//대여하기 파일리스트
+//	public List<LendFilesDTO> getFiles(List<LendDTO> ldlist){
+//		return ldfdao.getFiles(ldlist);
+//	}
+	
+	//대여요청 리스트 네비
 	public List<String> getBwPageNavi(String choice, String search, String cpage) {
 		
 		int currentPage = Integer.parseInt(cpage);
@@ -55,6 +67,8 @@ public class AllSearchService {
 		return bwdao.getPageNavi(choice, search, currentPage);
 	}
 	
+	
+	//대여요청 리스트
 	public List<BorrowDTO> getBwList(String choice, String search, String cpage){
 		int currentPage = Integer.parseInt(cpage);
 		
@@ -63,6 +77,7 @@ public class AllSearchService {
 		return bwdao.getList(choice, search,currentPage);
 	}
 	
+	//재능대여 리스트 네비
 	public List<String> getTlsPageNavi(String choice, String search, String cpage) {
 		
 		int currentPage = Integer.parseInt(cpage);
@@ -72,6 +87,7 @@ public class AllSearchService {
 		return tlsdao.getPageNavi(choice, search, currentPage);
 	}
 	
+	//재능대여 리스트
 	public List<SellTalentDTO> getTlsList(String choice, String search, String cpage){
 		
 		int currentPage = Integer.parseInt(cpage);
@@ -81,6 +97,7 @@ public class AllSearchService {
 		return tlsdao.getList(choice, search,currentPage);
 	}
 	
+	//재능요청 리스트 네비
 	public List<String> getTlrPageNavi(String choice, String search, String cpage) {
 		
 		int currentPage = Integer.parseInt(cpage);
@@ -90,6 +107,7 @@ public class AllSearchService {
 		return tlrdao.getPageNavi(choice, search, currentPage);
 	}
 	
+	//재능요청 리스트
 	public List<RequestTalentDTO> getTlrList(String choice, String search, String cpage){
 		
 		int currentPage = Integer.parseInt(cpage);

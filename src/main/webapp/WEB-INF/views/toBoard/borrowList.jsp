@@ -36,30 +36,34 @@
 			.Main{margin-top: 5%;}
 			
 			/*list style */
-   			*{box-sizing: border-box;}
+			*{box-sizing: border-box;}
    			div{display: block;}
-    		.minicontainer{margin: auto; overflow: hidden;text-align: center; padding: 150px 80px;}
-    		.minibody{padding:0 8px; overflow: hidden;}
-    		.minibody p{font-size: 1.1rem;}
-    
+    		.minicontainer{margin: auto; overflow: hidden;text-align: center; padding: 150px 80px; max-width:1100px}
+    		.miniboard{text-align: center; overflow: hidden; border:1px solid #1d2434; border-radius:20px}
+    		.minibody{text-align: center;padding:30px 8px; overflow: hidden;}
+    		    
     		.dropbtn {background-color: #1d2434; color: white;padding: 10px; font-size: 13px; border: none; cursor: pointer;border-radius: 3px;}
     		.dropdown {position: relative; display: inline-block;margin-bottom: 40px;}
     		.dropbtn:hover {background-color: skyblue}
     		
     		.borrowBtn{color:#1d2434;background:none;font-size:1.2rem;font-weight:bold;}
-    		.browse{display:inline-block; text-align:end; width:70%; margin-bottom:40px;}
+    		.browse{display:inline-block; text-align:end; width:100%; margin-bottom:40px;}
     		.inp_slct{width:10%; height:28px; display:inline-block; margin-right:5px;}
     		.inp_slct select{height:100%;}
     		.browseBtn{width:60px;background-color:#1d2434;color:white;}
-    		.minibody{text-align: center;}
     		.reservation{overflow: hidden; font-size: 0.5rem; position: absolute;  transform: translate( 5%, -10%);}
     		.to-board{width: 25%;overflow: hidden; display:inline-block; margin-right:30px; margin-bottom: 56px;}
     		.to-board img{width: 100%; height: 70%; border-radius: 20px;} 
     		.minibody a{color: black; cursor: pointer; text-decoration: none;}
     		.minibody a:hover{color: black; text-decoration: none;}
+    		.minibody p{font-size: 16px;margin:0px;}
+    		.minibody p:first-child{font-weight:600;}
     		
-    		.write{width:80%; display:inline-block; text-align:end; margin-bottom:20px;}
-    		.writeBtn{background-color: #1d2434; color:white;}
+    		.board_page {margin-bottom:10px}
+    		.board_page a{font-size:1.2rem}
+    		.write{width:75%; display:inline-block; text-align:end; margin-bottom:20px;background:none;}
+    		.writeBtn{background: none;border:none;}
+    		.writeBtn i{font-size:18px;}
     </style>
 
 	<script>
@@ -197,25 +201,24 @@
 		</div>
 		
 		<!-- 검색 -->
-		<div class="miniboard">
-			<h1>대여요청</h1>
-			<form action="/AllBoardList/borrowList" method="post">
-				<div class="browse">
-					<input type="hidden" name="cpage" value=1> 
-					<div class="inp_slct">
-						<select name="choice">
-							<option value="Allchoice">전체</option>
-							<option value="title">제목</option>
-							<option value="category">카테고리</option>
-							<option value="address">지역</option>
-							<option value="contents">내용</option>
-						</select>
-					</div>
-					<input type="text" name="search" class="inpform" placeholder="검색을 입력하세요.">
-					<button class="browseBtn" id="browseBtn">검색</button>
+		<form action="/AllBoardList/borrowList" method="post">
+			<div class="browse">
+				<input type="hidden" name="cpage" value=1> 
+				<div class="inp_slct">
+					<select name="choice">
+						<option value="Allchoice">전체</option>
+						<option value="title">제목</option>
+						<option value="category">카테고리</option>
+						<option value="address">지역</option>
+						<option value="contents">내용</option>
+					</select>
 				</div>
-			</form>
-			
+				<input type="text" name="search" class="inpform" placeholder="검색을 입력하세요.">
+				<button class="browseBtn" id="browseBtn">검색</button>
+			</div>
+		</form>
+		
+		<div class="miniboard">			
 			<!-- 검색결과 리스트 -->
 			<div class="minibody">
 			<input type="hidden" value="${search}" name=search>
@@ -223,7 +226,7 @@
 				<c:forEach var="bw" items="${bwList}">
 					<div class="to-board">
 						<a href="/borrow/detailView?seq=${bw.seq}" id="bwhttp" class="bwhttp">				
-							<img src="..." alt="#"> 
+							<img src="..."> 
 							<input type="hidden" value="${bw.seq}" id="seq" name="seq">
 							<p id=title>${bw.title}</p>
 							<p id="category">${bw.category}</p>
@@ -236,7 +239,9 @@
 			<!-- 글쓰기 버튼 -->
 			<c:if test="${loginID != null}">
 				<div class="write" id="write">		
-					<button type="button" class="writeBtn" id="writeBtn">글쓰기</button>
+					<button type="button" class="writeBtn" id="writeBtn">
+						<i class="fas fa-pen-square">글쓰기</i>
+					</button>
 				</div>
 			</c:if>
 			
@@ -303,7 +308,7 @@
             <div class="container copyright">
                 <div class="row">
                     <div class="col-12" style="text-align: center;">
-                        <p id=titlename>&copy; <a href="#">돈-다</a>, All Right Reserved.</p>
+                        <p id=titlename>&copy; <a href="/">돈-다</a>, All Right Reserved.</p>
                     </div>
                 </div>
             </div>
@@ -313,7 +318,7 @@
         <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
         <!-- JavaScript Libraries -->
-<!--         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
         <script src="/lib/easing/easing.min.js"></script>
         
