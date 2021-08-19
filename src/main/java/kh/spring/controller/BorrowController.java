@@ -50,7 +50,7 @@ public class BorrowController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping(value="lendView",produces="text/html;charset=utf8") //대여하기 상세보기
+	@RequestMapping(value="borrowView",produces="text/html;charset=utf8") //대여하기 상세보기
 	public String sellingViewByMe(String id, int seq, Model model) throws Exception {
 		System.out.println(seq);
 		String sessionID = (String) session.getAttribute("loginID");

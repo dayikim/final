@@ -219,7 +219,7 @@ img{
                 <button class="dropbtn borrowBtn" id="borrowBtn">대여요청</button>
             </div>
             <div class="dropdown">
-                <button class="dropbtn tlSellBtn" id="tlSellBtn">재능등록</button>
+                <button class="dropbtn tlSellBtn" id="tlSellBtn">재능판매</button>
             </div>
             <div class="dropdown">
                 <button class="dropbtn tlRequestBtn" id="tlRequestBtn">재능요청</button>
@@ -250,7 +250,7 @@ img{
 			<input type="hidden" value="${choice}" name=choice>
 				<c:forEach var="i" items="${list}">
 					<div class="to-board">					
-						<a href="/lendBoard/lendView?id=${i.writer}&seq=${i.seq}" id="list_hhtp" class="list_hhtp">				
+						<a href="/tBoard/RequestView?id=${i.writer}&seq=${i.seq}" id="list_hhtp" class="list_hhtp">				
 <%-- 							<c:choose> --%>
 <%-- 								<c:when test="${flist != null}"> --%>
 <%-- 									<img src="/imgs/lend/${flist.sysName}" id=fimg> --%>

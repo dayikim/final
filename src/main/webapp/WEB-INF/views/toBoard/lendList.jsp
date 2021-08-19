@@ -219,7 +219,7 @@ img{
                 <button class="dropbtn borrowBtn" id="borrowBtn">대여요청</button>
             </div>
             <div class="dropdown">
-                <button class="dropbtn tlSellBtn" id="tlSellBtn">재능등록</button>
+                <button class="dropbtn tlSellBtn" id="tlSellBtn">재능판매</button>
             </div>
             <div class="dropdown">
                 <button class="dropbtn tlRequestBtn" id="tlRequestBtn">재능요청</button>
