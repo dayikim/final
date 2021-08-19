@@ -30,7 +30,7 @@ public class AllSearchController {
 		
 //		List<LendFilesDTO> flist = service.getFiles(ldlist);
 				
-		model.addAttribute("ldList", ldlist); //대여하기 리스트 
+		model.addAttribute("list", ldlist); //대여하기 리스트 
 //		model.addAttribute("flist",flist);
 		model.addAttribute("navi", ldPageNavi); //대여하기 카운트
 		model.addAttribute("search", search); //검색어
@@ -46,7 +46,7 @@ public class AllSearchController {
 		List<BorrowDTO> bwlist = service.getBwList(choice, search,cpage);
 		
 		model.addAttribute("navi", bwPageNavi);
-		model.addAttribute("bwList", bwlist);
+		model.addAttribute("list", bwlist);
 		model.addAttribute("search", search); //검색어
 		model.addAttribute("choice",choice);//카테고리		
 		return "toBoard/borrowList";		
@@ -61,7 +61,7 @@ public class AllSearchController {
 		List<SellTalentDTO> tlslist = service.getTlsList(choice, search,cpage);
 		
 		model.addAttribute("navi", tlsPageNavi);
-		model.addAttribute("tlsList", tlslist);
+		model.addAttribute("list", tlslist);
 		model.addAttribute("search", search); //검색어
 		model.addAttribute("choice",choice);//카테고리		
 		return "toBoard/tlSellList";		
@@ -76,7 +76,7 @@ public class AllSearchController {
 		List<RequestTalentDTO> tlrlist = service.getTlrList(choice, search,cpage);
 		
 		model.addAttribute("navi", tlrPageNavi);
-		model.addAttribute("tlrList", tlrlist);
+		model.addAttribute("list", tlrlist);
 		model.addAttribute("search", search); //검색어
 		model.addAttribute("choice",choice);//카테고리		
 		return "toBoard/tlRequestList";		

@@ -1,5 +1,7 @@
 package kh.spring.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,6 @@ import kh.spring.dto.LendDTO;
 import kh.spring.dto.LendFilesDTO;
 import kh.spring.dto.PersonDTO;
 import kh.spring.dto.ProfileFilesDTO;
-import kh.spring.dto.SellTalentDTO;
 import kh.spring.service.LendService;
 import kh.spring.service.MypageService;
 
@@ -62,13 +63,12 @@ public class LendController {
         model.addAttribute("writerInfo",writerInfo);
         model.addAttribute("board",dto);		 
 		 
-		////		List<TalentFilesDTO> fileList = F_Service.selectAll(seq); //첨부파일 목록 출력   
+		List<LendFilesDTO> fileList = service.selectAll(seq); //첨부파일 목록 출력   
 		//        System.out.println("파일이 비어 있나요?? "+fileList.isEmpty());//파일이 있나요?
-		//        model.addAttribute("filelist", fileList);//파일리스트를 request애 담는다.
-		//
+		model.addAttribute("filelist", fileList);//파일리스트를 request애 담는다.
 		
 		
-		return "/talentBoard/view_selling";
+		return "/toBoard/lend_view";
 	}
 
 }

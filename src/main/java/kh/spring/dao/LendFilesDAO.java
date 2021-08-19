@@ -21,6 +21,10 @@ public class LendFilesDAO {
 		return mybatis.insert("LendFiles.upload",dto);
 	}
 	
+	public List<LendFilesDTO> selectAll(int seq){
+		return mybatis.selectList("LendFiles.selectAll",seq);
+	}
+	
 	public List<LendFilesDTO> getFiles(List<LendDTO> ldlist){
 		
 		
@@ -32,6 +36,9 @@ public class LendFilesDAO {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("parentSeq", parentSeq);
 		System.out.println(parentSeq);
+		
+		List<LendFilesDTO> lflist = mybatis.selectList("LendFiles.selectOne", map);
+		System.out.println(lflist.get(0).getSysName());
 		
 		return mybatis.selectList("LendFiles.selectOne", map);
 	}

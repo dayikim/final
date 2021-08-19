@@ -1,6 +1,7 @@
 package kh.spring.service;
 
 import java.io.File;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,11 @@ public class LendService {
 	//글쓰기 번호
 	public int getSeq() {
 		return dao.getSeq();
+	}
+	
+	//파일찾아오기
+	public List<LendFilesDTO> selectAll(int seq){
+		return fdao.selectAll(seq);
 	}
 	
 	//글쓰기 및 이미지

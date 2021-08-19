@@ -248,21 +248,21 @@ img{
 			<div class="minibody">
 			<input type="hidden" value="${search}" name=search>
 			<input type="hidden" value="${choice}" name=choice>
-				<c:forEach var="ld" items="${ldList}">
+				<c:forEach var="i" items="${list}">
 					<div class="to-board">					
-						<a href="/lendBoard/lendView?seq=${ld.seq}" id="ldhhtp" class="ldhhtp">				
+						<a href="/lendBoard/lendView?id=${i.writer}&seq=${i.seq}" id="list_hhtp" class="list_hhtp">				
 <%-- 							<c:choose> --%>
-<%-- 								<c:when test="${flist != null}"> --%>
+<%-- 								<c:when test="${flist.parentseq == i.seq}"> --%>
 <%-- 									<img src="/imgs/lend/${flist.sysName}" id=fimg> --%>
 <%-- 								</c:when> --%>
 <%-- 								<c:otherwise> --%>
 									<img src="/imgs/lend/noimage.jpg" id=fimg>
 <%-- 								</c:otherwise> --%>
 <%-- 							</c:choose> --%>
-							<input type="hidden" value="${ld.seq}" id="seq" name="seq">
-							<p id=title class="title">${ld.title}</p>
-							<p id="category">${ld.category}</p>
-							<p id="address">${ld.address}</p>
+							<input type="hidden" value="${i.seq}" id="seq" name="seq">
+							<p id=title class="title">${i.title}</p>
+							<p id="category">${i.category}</p>
+							<p id="address">${i.address}</p>
 						</a>
 					</div>
 				</c:forEach>

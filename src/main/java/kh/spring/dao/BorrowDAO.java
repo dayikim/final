@@ -22,9 +22,15 @@ public class BorrowDAO {
 		return mybatis.selectOne("Borrow.getSeq");
 	}
 	
+	//게시글 글쓰기
 	public int boardWrite(BorrowDTO dto) {
 		return mybatis.insert("Borrow.insert",dto);
 	}
+	
+	//게시글 상세보기
+		public BorrowDTO detailview(int seq) {
+			return mybatis.selectOne("Borrow.detailView", seq);
+		}
 	
 	//게시글 리스트
 	public List<BorrowDTO> getList(String choice, String search,int cpage){

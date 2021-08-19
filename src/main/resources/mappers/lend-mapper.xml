@@ -6,7 +6,7 @@
 <mapper namespace="Lend">
 
 	<!-- 게시글 상세보기 -->
-	<select id="detailView" resultType="kh.spring.dto.SellTalentDTO">
+	<select id="detailView" resultType="kh.spring.dto.LendDTO">
 		select * from lendboard where seq =#{seq}
 	</select>
 	

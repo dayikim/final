@@ -10,8 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kh.spring.dao.BorrowDAO;
 import kh.spring.dao.BwBoardFilesDAO;
+import kh.spring.dao.PersonDAO;
 import kh.spring.dto.BorrowBoardFilesDTO;
 import kh.spring.dto.BorrowDTO;
+import kh.spring.dto.PersonDTO;
 
 @Service
 public class BorrowService {
@@ -21,6 +23,17 @@ public class BorrowService {
 
 	@Autowired
 	private BwBoardFilesDAO fdao;
+	
+	@Autowired
+	private PersonDAO pdao;
+	
+	public PersonDTO memberInfoById(String id) {
+		return pdao.memberInfoById(id);
+
+	}
+	public BorrowDTO detailView(int seq) {
+		return dao.detailview(seq);
+	}
 	
 	public int getSeq() {
 		return dao.getSeq();

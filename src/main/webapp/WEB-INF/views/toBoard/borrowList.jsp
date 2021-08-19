@@ -223,14 +223,21 @@
 			<div class="minibody">
 			<input type="hidden" value="${search}" name=search>
 			<input type="hidden" value="${choice}" name=choice>
-				<c:forEach var="bw" items="${bwList}">
+				<c:forEach var="i" items="${list}">
 					<div class="to-board">
-						<a href="/borrow/detailView?seq=${bw.seq}" id="bwhttp" class="bwhttp">				
-							<img src="..."> 
-							<input type="hidden" value="${bw.seq}" id="seq" name="seq">
-							<p id=title>${bw.title}</p>
-							<p id="category">${bw.category}</p>
-							<p id="address">${bw.address}</p>
+						<a href="/borrow/detailView?id=${i.writer}&seq=${i.seq}" id="list_http" class="list_http">				
+<%-- 							<c:choose> --%>
+<%-- 								<c:when test="${flist != null}"> --%>
+<%-- 									<img src="/imgs/lend/${flist.sysName}" id=fimg> --%>
+<%-- 								</c:when> --%>
+<%-- 								<c:otherwise> --%>
+									<img src="/imgs/lend/noimage.jpg" id=fimg>
+<%-- 								</c:otherwise> --%>
+<%-- 							</c:choose> --%>
+							<input type="hidden" value="${i.seq}" id="seq" name="seq">
+							<p id=title>${i.title}</p>
+							<p id="category">${i.category}</p>
+							<p id="address">${i.address}</p>
 						</a>
 					</div>
 				</c:forEach>

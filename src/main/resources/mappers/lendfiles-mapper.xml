@@ -11,11 +11,13 @@
 	</insert>
 
 	<select id="selectOne" parameterType="hashmap" resultType="kh.spring.dto.LendFilesDTO">
-		select rownum, A.* from(select * from lendfiles where 
 		<foreach collection="parentSeq" item="seq" open="(" close=")" separator="or">
-		 	parentseq = #{seq.value}
-		 </foreach>
-		  order by seq asc) A where rownum = 1
+		select * from (select rownum, A.* from(select * from lendfiles where parentseq = #{seq.value} order by seq asc) A where rownum = 1) order by seq desc
+		</foreach>
+	</select> 
+	
+	<select id="selectAll" resultType="kh.spring.dto.LendFilesDTO">
+		select * from lendfiles where parentSeq=#{value} order by seq asc
 	</select>
 
 </mapper>
