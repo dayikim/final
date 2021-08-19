@@ -85,7 +85,7 @@
 
         /* 프로필,상세보기 */
         #body {
-            padding-top: 60px;
+            padding-top: 100px;
             padding-bottom: 30px;
 
         }
@@ -252,13 +252,13 @@
     <script type="text/javascript">
     $(function(){
     	$("#request").on("click",function(){
-    		location.href = "tBoard/toRequest"
+    		location.href = "/tBoard/toRequest"
     	})
     	
 		$("#deleteBtn").on("click",function () { //게시글 삭제
 					let check = confirm("정말 게시글을 삭제하겠습니까?");
 					if (check) {
-						location.href = "tBoard/delete?seq="
+						location.href = "/tBoard/RequestDelete?seq="
 							+ $("#deleteBtn").val(); //게시글 삭제 확인 팝업
 					} else {
 						return;
@@ -268,7 +268,7 @@
 		$("#modifyBtn").on("click",function () { //게시글 수정
 					let check = confirm("정말 게시글을 수정하겠습니까?");
 					if (check) {
-						location.href = "tBoard/modify?seq="
+						location.href = "/tBoard/modify?seq="
 							+ $("#modifyBtn").val(); //게시글 수정 확인 팝업
 					} else {
 						return;
@@ -354,15 +354,20 @@
         <!-- Nav Bar End -->
     <section id="body">
         <div class="container">
+        <c:choose>
+                <c:when test="${loginID == board.writer}">
             <div class="btn_box btn_wrap text-right ">
                 <button type="button" class="btn btn-info" id="deleteBtn"><i class="fas fa-trash-restore"> 삭제</i></button>
                 <button type="button" class="btn btn-info" id="modifyBtn">수정</button>
             </div>
+            </c:when>
+            </c:choose>
+            
             <div class="form-control wrapper">
                 <div class="board_title">
                     <a href="#" class="badge badge-info">재능 요청</a>
-                    <span id="category">${tboard.category}</span>
-                    <h2 class="title_msg"><b>${tboard.title}<b></h2>
+                    <span id="category">${board.category}</span>
+                    <h2 class="title_msg"><b>${board.title}<b></h2>
                 </div>
                 <div class="row col-12 carousel">
                     <!-- Carousel -->
@@ -404,25 +409,25 @@
                 <section id="user-profile">
                     <div id="nickname_box">
                         <h2 id="nickname">
-                            <a href="/profilie/userProfile?id=${tboard.writer}"><b>${writerName}</b>님</a>
+                            <a href="/profilie/userProfile?id=${board.writer}"><b>${writer.name}</b>님</a>
                         </h2>
 
                     </div>
-                    <span id="region_name">${tboard.address}</span>
+                    <span id="region_name">${board.address}</span>
                     <div class=" btn_wrap text-right">
                         <!-- <button type="button" class="btn btn-secondary" id="booking">
                             예약하기</i></button> -->
                     </div>
-                    <span class="align-baseline" id="price">${tboard.price} 상추</span>
+                    <span class="align-baseline" id="price">${board.price} 상추</span>
                     
                     <div id="profile-image">
                         <!-- 프로필 이미지 -->
                         <c:choose>
 					<c:when test="${profile != null}">
-						<a href="/profilie/userProfile?id=${tboard.writer}"><img src="/imgs/mypage/${profile.sysName}" id=profile></a>
+						<a href="/profilie/userProfile?id=${board.writer}"><img src="/imgs/mypage/${profile.sysName}" id=profile></a>
 					</c:when>
 					<c:otherwise>
-						<a href="/profilie/userProfile?id=${tboard.writer}"><img src="/imgs/nomalProfile.jpg" id=profile></a>
+						<a href="/profilie/userProfile?id=${board.writer}"><img src="/imgs/nomalProfile.jpg" id=profile></a>
 					</c:otherwise>
 				</c:choose>
                     </div>
@@ -437,7 +442,7 @@
                     <div class="btn_wrap text-right">
                         <button type="button" class="btn btn-outline-info btn btn-lg" id="chat"><i class="far fa-comment-dots"></i>
                             1:1 채팅</button>
-                            <a href="/tBoard/ToRegister"><button type="button" class="btn btn-outline-info btn btn-lg" id="request"><i class="far fa-comment-dots"></i>
+                            <a href="/tBoard/toSelling"><button type="button" class="btn btn-outline-info btn btn-lg" id="request">
                                 재능 판매</button></a>
                     </div>
 

@@ -51,10 +51,9 @@ public class PointController {
 			pointdto.setPointAmount(Integer.parseInt(amount));//충전금액
 			PointService.charging(pointdto);//포인트 적립
 			int pointAmount =PointService.amount(sessionID);//잔고금액
-			
 			//포인트 충전-> 포인트 잔고 insert(seq,id=sessionID,pointAmount=amount,'0','0','포인트충전',sysdate)
 //			PointService.add()
-			
+	
 			
 		PersonDTO pdto = MypageService.mypageList(sessionID); // 내 정보 출력
 		ProfileFilesDTO pfdto = MypageService.profileSelect(sessionID); // 내 프사 출력
