@@ -8,6 +8,7 @@
 	<insert id="upload">
 		insert into borrowboardpicturefiles values(borrowboardpicturefiles_seq.nextval,#{oriName},#{sysName},#{parentSeq},sysdate)
 	</insert>
-
+	
+	
 
 </mapper>
