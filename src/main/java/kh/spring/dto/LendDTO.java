@@ -4,23 +4,26 @@ import java.sql.Date;
 
 public class LendDTO {
 	private int seq;
-	private String id;
+	private String writer;
 	private String title;
-	private Date regdate;
-	private String address1;
-	private int loanmoney;
+	private String category;
 	private String contents;
+	private int price;
+	private String address;
+	private Date regdate;
 	
 	public LendDTO() {}
 	
-	public LendDTO(int seq, String id, String title, Date regdate, String address1, int loanmoney, String contents) {
+	public LendDTO(int seq, String writer, String title, String category, String contents, int price, String address,
+			Date regdate) {
 		this.seq = seq;
-		this.id = id;
+		this.writer = writer;
 		this.title = title;
-		this.regdate = regdate;
-		this.address1 = address1;
-		this.loanmoney = loanmoney;
+		this.category = category;
 		this.contents = contents;
+		this.price = price;
+		this.address = address;
+		this.regdate = regdate;
 	}
 
 	public int getSeq() {
@@ -31,12 +34,12 @@ public class LendDTO {
 		this.seq = seq;
 	}
 
-	public String getId() {
-		return id;
+	public String getWriter() {
+		return writer;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setWriter(String writer) {
+		this.writer = writer;
 	}
 
 	public String getTitle() {
@@ -47,28 +50,12 @@ public class LendDTO {
 		this.title = title;
 	}
 
-	public Date getRegdate() {
-		return regdate;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setRegdate(Date regdate) {
-		this.regdate = regdate;
-	}
-
-	public String getAddress1() {
-		return address1;
-	}
-
-	public void setAddress1(String address1) {
-		this.address1 = address1;
-	}
-
-	public int getLoanmoney() {
-		return loanmoney;
-	}
-
-	public void setLoanmoney(int loanmoney) {
-		this.loanmoney = loanmoney;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public String getContents() {
@@ -78,6 +65,32 @@ public class LendDTO {
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Date getRegdate() {
+		return regdate;
+	}
+
+	public void setRegdate(Date regdate) {
+		this.regdate = regdate;
+	}
+	
+	
 
 	
 }

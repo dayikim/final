@@ -31,5 +31,6 @@
 	<select id="getSeq" resultType="int">
 		select TalentBoard_seq.nextval from dual
 	</select>
+	
 		
 	</mapper>

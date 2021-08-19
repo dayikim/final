@@ -61,12 +61,12 @@ img{
     margin-top: 5%;
 }
     </style>
-
+    
 	<script>
 		$(function() {
 			$("#search").keyup(function(e) {
 				if (e.keyCode == 13) {
-					location.href = "/AllBoardList/lendList?category=AllCategory&search="+$("#search").val()+"&cpage=1";
+					location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
 				}
 			})
 			
@@ -75,7 +75,7 @@ img{
 			})
 		})
 	</script>
-
+	
 
 </head>
 
@@ -138,7 +138,7 @@ img{
 									         Menu
 									        </a>
 									        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-									          <a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
+									          <a class="dropdown-item" href="/AllBoardList/lendList?choice=Allchoice&search=&cpage=1">Board</a>
 									          <a class="dropdown-item" href="/sns/main">SNS</a>
 									          <a class="dropdown-item" href="/my/mypageProc">My page</a>
 									          <a class="dropdown-item" href="/point/ToCharging">Charging</a>
@@ -249,7 +249,7 @@ img{
             <div class="container copyright">
                 <div class="row">
                     <div class="col-12" style="text-align: center;">
-                        <p id=titlename>&copy; <a href="#">돈-다</a>, All Right Reserved.</p>
+                        <p id=titlename>&copy; <a href="/">돈-다</a>, All Right Reserved.</p>
                     </div>
                 </div>
             </div>

@@ -4,66 +4,91 @@ import java.sql.Date;
 
 public class BorrowDTO {
 	private int seq;
-	private String id;
+	private String writer;
 	private String title;
-	private int loanmoney;
-	private Date regdate;
-	private String address1;
+	private String category;
 	private String contents;
+	private int price;
+	private String address;
+	private Date regdate;
 	
 	public BorrowDTO() {}
-
-	public BorrowDTO(int seq, String id, String title, int loanmoney, Date regdate, String address1, String contents) {
-		this.seq = seq;
-		this.id = id;
-		this.title = title;
-		this.loanmoney = loanmoney;
-		this.regdate = regdate;
-		this.address1 = address1;
-		this.contents = contents;
-	}
 	
+	public BorrowDTO(int seq, String writer, String title, String category, String contents, int price, String address,
+			Date regdate) {
+		this.seq = seq;
+		this.writer = writer;
+		this.title = title;
+		this.category = category;
+		this.contents = contents;
+		this.price = price;
+		this.address = address;
+		this.regdate = regdate;
+	}
+
 	public int getSeq() {
 		return seq;
 	}
+
 	public void setSeq(int seq) {
 		this.seq = seq;
 	}
-	public String getId() {
-		return id;
+
+	public String getWriter() {
+		return writer;
 	}
-	public void setId(String id) {
-		this.id = id;
+
+	public void setWriter(String writer) {
+		this.writer = writer;
 	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public int getLoanmoney() {
-		return loanmoney;
+
+	public String getCategory() {
+		return category;
 	}
-	public void setLoanmoney(int loanmoney) {
-		this.loanmoney = loanmoney;
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
-	public Date getRegdate() {
-		return regdate;
-	}
-	public void setRegdate(Date regdate) {
-		this.regdate = regdate;
-	}
-	public String getAddress1() {
-		return address1;
-	}
-	public void setAddress1(String address1) {
-		this.address1 = address1;
-	}
+
 	public String getContents() {
 		return contents;
 	}
+
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
 
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Date getRegdate() {
+		return regdate;
+	}
+
+	public void setRegdate(Date regdate) {
+		this.regdate = regdate;
+	}
+	
+	
 }

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import kh.spring.config.BoardConfig;
 import kh.spring.dto.BorrowDTO;
-import kh.spring.dto.TalentBoardDTO;
 
 @Component
 public class BorrowDAO {
@@ -23,12 +22,18 @@ public class BorrowDAO {
 		return mybatis.selectOne("Borrow.getSeq");
 	}
 	
+	//게시글 글쓰기
 	public int boardWrite(BorrowDTO dto) {
 		return mybatis.insert("Borrow.insert",dto);
 	}
 	
+	//게시글 상세보기
+		public BorrowDTO detailview(int seq) {
+			return mybatis.selectOne("Borrow.detailView", seq);
+		}
+	
 	//게시글 리스트
-	public List<BorrowDTO> getList(String category, String search,int cpage){
+	public List<BorrowDTO> getList(String choice, String search,int cpage){
 				
 		if(search == null) {
 			search = "";
@@ -44,17 +49,24 @@ public class BorrowDAO {
 				
 		List<BorrowDTO> list = null;
 		
+		
 		if(!search.equals("")) {
-			if(category.equals("AllCategory")) {
+			if(choice.equals("Allchoice")) {
 				list = mybatis.selectList("Borrow.toSearch", map);
-			}else if(category.equals("address1")) {
-				list = mybatis.selectList("Borrow.toAddress1", map);
-			}else if(category.equals("title")) {
+			}else if(choice.equals("address")) {
+				list = mybatis.selectList("Borrow.toAddress", map);
+			}else if(choice.equals("category")) {
+				list = mybatis.selectList("Borrow.toCategory", map);
+			}else if(choice.equals("title")) {
 				list = mybatis.selectList("Borrow.toTitle", map);
-			}else if(category.equals("contents")) {
+			}else if(choice.equals("contents")) {
 				list = mybatis.selectList("Borrow.toContents", map);
 			}										
 		}else {
+			list = mybatis.selectList("Borrow.toList", map);
+		}
+		
+		if(list.isEmpty()) {
 			list = mybatis.selectList("Borrow.toList", map);
 		}
 		
@@ -62,25 +74,32 @@ public class BorrowDAO {
 		
 	}
 
-	public List<String> getPageNavi(String category, String search, int currentPage) { // 페이지
+	public List<String> getPageNavi(String choice, String search, int currentPage) { // 페이지
 		int recordTotalCount = 0;
 		// 공지사항 게시글 리스트 페이지
 		
 		if(search == null) {
 			search = "";
 		}
-
+		
 		if (!search.equals("")) {
-			if(category.equals("AllCategory")) {
+			if(choice.equals("Allchoice")) {
 				recordTotalCount = mybatis.selectOne("Borrow.numAllList", search);
-			}else if(category.equals("address1")) {
-				recordTotalCount = mybatis.selectOne("Borrow.numAddress1", search);
-			}else if(category.equals("title")) {
-				recordTotalCount = mybatis.selectOne("Borrow.numTitle", search);
-			}else if(category.equals("contents")) {
+			}else if(choice.equals("address")){
+				recordTotalCount = mybatis.selectOne("Borrow.numAddress", search);
+			}else if(choice.equals("contents")){
 				recordTotalCount = mybatis.selectOne("Borrow.numContents", search);
-			} // 전체 레코드개수 (원래는 커넥션으로 카운트해서 가져옴)
+			}else if(choice.equals("title")){
+				recordTotalCount = mybatis.selectOne("Borrow.numTitle", search);
+			}else if(choice.equals("category")){
+				recordTotalCount = mybatis.selectOne("Borrow.numCategory", search);
+			}// 전체 레코드개수 (원래는 커넥션으로 카운트해서 가져옴)
+					
 		} else {
+			recordTotalCount = mybatis.selectOne("Borrow.allList");
+		}
+		
+		if(recordTotalCount == 0) {
 			recordTotalCount = mybatis.selectOne("Borrow.allList");
 		}
 		
