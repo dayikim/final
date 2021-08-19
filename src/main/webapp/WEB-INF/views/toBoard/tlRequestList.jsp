@@ -72,7 +72,7 @@ img{
     		.dropdown {position: relative; display: inline-block;margin-bottom: 40px;}
     		.dropbtn:hover {background-color: skyblue}
     		
-    		.lendBtn{color:#1d2434;background:none;font-size:1.2rem;font-weight:bold;}
+    		.tlRequestBtn{color:#1d2434;background:none;font-size:1.2rem;font-weight:bold;}
     		.browse{display:inline-block; text-align:end; width:100%; margin-bottom:40px;}
     		.inp_slct{width:10%; height:28px; display:inline-block; margin-right:5px;}
     		.inp_slct select{height:100%;}
@@ -123,7 +123,7 @@ img{
 	    	})
 	    
 	    	$("#writeBtn").on("click",function(){
-	    		location.href="/lendBoard/toLend";
+	    		location.href="/tBoard/toRequest";
 	    	})
 	      	  
 		})
@@ -227,7 +227,7 @@ img{
 		</div>
 		
 		<!-- 검색 -->
-		<form action="/AllBoardList/lendList" method="post">
+		<form action="/AllBoardList/tlRequestList" method="post">
 			<div class="browse">
 				<input type="hidden" name="cpage" value=1> 
 				<div class="inp_slct">
@@ -252,7 +252,7 @@ img{
 					<div class="to-board">					
 						<a href="/lendBoard/lendView?id=${i.writer}&seq=${i.seq}" id="list_hhtp" class="list_hhtp">				
 <%-- 							<c:choose> --%>
-<%-- 								<c:when test="${flist.parentseq == i.seq}"> --%>
+<%-- 								<c:when test="${flist != null}"> --%>
 <%-- 									<img src="/imgs/lend/${flist.sysName}" id=fimg> --%>
 <%-- 								</c:when> --%>
 <%-- 								<c:otherwise> --%>

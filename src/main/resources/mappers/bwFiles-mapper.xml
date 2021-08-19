@@ -8,6 +8,9 @@
 	<insert id="upload">
 		insert into borrowboardpicturefiles values(borrowboardpicturefiles_seq.nextval,#{oriName},#{sysName},#{parentSeq},sysdate)
 	</insert>
-
+	
+	<select id="selectAll" resultType="kh.spring.dto.BorrowBoardFilesDTO">
+		select * from borrowboardpicturefiles where parentSeq=#{value} order by seq asc
+	</select>
 
 </mapper>

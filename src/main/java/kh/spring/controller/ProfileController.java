@@ -194,7 +194,7 @@ public class ProfileController {
 
 		PersonDTO writerInfo = STService.memberInfoById(writer);//글 작성자 정보(이름,주소)
 		model.addAttribute("writerInfo",writerInfo);
-		
+
 		List<HashMap<Object, Object>> sellingView;
 		sellingView =PService.sellingView(seq,writer);//판매목록 상세보기
 				

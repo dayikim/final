@@ -174,7 +174,19 @@ img {
 </style>
 
 <script>
-	$(function(){		
+	$(function(){	
+		// 게시물 검색
+		$("#search").keyup(function(e) {
+			if (e.keyCode == 13) {
+				location.href = "/AllBoardList/lendList?category=AllCategory&search="+$("#search").val()+"&cpage=1";
+			}
+		})
+		
+		// 채팅
+		$("#chat").on("click",function(){
+			location.href = "/chat";
+		})
+		
 		// 게시물 삭제
 		$(".cnum-btn2").on("click",function(){
 			let result = confirm("정말 삭제하시겠습니까?");

@@ -60,39 +60,43 @@ img{
 .Main{
     margin-top: 5%;
 }
-			*{box-sizing: inherit;}
+			
+			/*list style */
+			*{box-sizing: border-box;}
    			div{display: block;}
-    		.minicontainer{margin: auto; overflow: hidden;text-align: center; padding: 150px 80px;}
-    		.minibody{padding:0 8px; overflow: hidden;}
-    		img{border-radius: 20px;}
-    		a{color: black; cursor: pointer; text-decoration: none;}
-    		p{font-size: 1.1rem;}
-    
+    		.minicontainer{margin: auto; overflow: hidden;text-align: center; padding: 150px 80px; max-width:1100px}
+    		.miniboard{text-align: center; overflow: hidden; border:1px solid #1d2434; border-radius:20px}
+    		.minibody{text-align: center;padding:30px 8px; overflow: hidden;}
+    		    
     		.dropbtn {background-color: #1d2434; color: white;padding: 10px; font-size: 13px; border: none; cursor: pointer;border-radius: 3px;}
     		.dropdown {position: relative; display: inline-block;margin-bottom: 40px;}
     		.dropbtn:hover {background-color: skyblue}
     		
     		.tlSellBtn{color:#1d2434;background:none;font-size:1.2rem;font-weight:bold;}
-    		.browse{display:inline-block; text-align:end; width:70%; margin-bottom:40px;}
+    		.browse{display:inline-block; text-align:end; width:100%; margin-bottom:40px;}
     		.inp_slct{width:10%; height:28px; display:inline-block; margin-right:5px;}
     		.inp_slct select{height:100%;}
-    		.browseBtn{width:40px;background-color:#1d2434;color:white;}
-    		.minibody{text-align: center;}
+    		.browseBtn{width:60px;background-color:#1d2434;color:white;}
     		.reservation{overflow: hidden; font-size: 0.5rem; position: absolute;  transform: translate( 5%, -10%);}
     		.to-board{width: 25%;overflow: hidden; display:inline-block; margin-right:30px; margin-bottom: 56px;}
-    		.to-board img{width: 100%; height: 70%;} 
+    		.to-board img{width: 100%; height: 70%; border-radius: 20px;} 
     		.minibody a{color: black; cursor: pointer; text-decoration: none;}
     		.minibody a:hover{color: black; text-decoration: none;}
+    		.minibody p{font-size: 16px;margin:0px;}
+    		.minibody p:first-child{font-weight:600;}
     		
-    		.write{width:80%; display:inline-block; text-align:end; margin-bottom:20px;}
-    		.writeBtn{background-color: #1d2434; color:white;}
+    		.board_page {margin-bottom:10px}
+    		.board_page a{font-size:1.2rem}
+    		.write{width:75%; display:inline-block; text-align:end; margin-bottom:20px;background:none;}
+    		.writeBtn{background: none;border:none;}
+    		.writeBtn i{font-size:18px;}
     </style>
 
 	<script>
 		$(function() {
 			$("#search").keyup(function(e) {
 				if (e.keyCode == 13) {
-					location.href = "/AllBoardList/lendList?category=AllCategory&search="+$("#search").val()+"&cpage=1";
+					location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
 				}
 			})
 			
@@ -103,23 +107,23 @@ img{
 		
 		$(function(){
 	 		$("#lendBtn").on("click",function(){
-	    		location.href="/AllBoardList/lendList?category=${category}&search=${search}&cpage=1";
+	    		location.href="/AllBoardList/lendList?choice=${choice}&search=${search}&cpage=1";
 	    	})
 	       
 	    	$("#borrowBtn").on("click",function(){
-	    		location.href="/AllBoardList/borrowList?category=${category}&search=${search}&cpage=1";
+	    		location.href="/AllBoardList/borrowList?choice=${choice}&search=${search}&cpage=1";
 	    	})
 	       
 	    	$("#tlSellBtn").on("click",function(){
-	    		location.href="/AllBoardList/talentList?kind=재능등록&category=${category}&search=${search}&cpage=1";
+	    		location.href="/AllBoardList/tlSellList?choice=${choice}&search=${search}&cpage=1";
 	    	}) 
 	    
 	    	$("#tlRequestBtn").on("click",function(){
-	    		location.href="/AllBoardList/talentList?kind=재능요청&category=${category}&search=${search}&cpage=1";
+	    		location.href="/AllBoardList/tlRequestList?choice=${choice}&search=${search}&cpage=1";
 	    	})
 	    
 	    	$("#writeBtn").on("click",function(){
-	    		location.href="/tBoard/Towrite";
+	    		location.href="/tBoard/toSelling";
 	    	})
 	      	  
 		})
@@ -187,7 +191,7 @@ img{
 									         Menu
 									        </a>
 									        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-									          <a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
+									          <a class="dropdown-item" href="/AllBoardList/lendList?choice=Allchoice&search=&cpage=1">Board</a>
 									          <a class="dropdown-item" href="/sns/main">SNS</a>
 									          <a class="dropdown-item" href="#">My page</a>
 									          <a class="dropdown-item" href="#">Charging</a>
@@ -218,19 +222,20 @@ img{
                 <button class="dropbtn tlSellBtn" id="tlSellBtn">재능등록</button>
             </div>
             <div class="dropdown">
-                <button class="dropbtn tlSellBtn" id="tlRequestBtn">재능요청</button>
+                <button class="dropbtn tlRequestBtn" id="tlRequestBtn">재능요청</button>
             </div>
 		</div>
 		
 		<!-- 검색 -->
 		<form action="/AllBoardList/tlSellList" method="post">
 			<div class="browse">
-				<input type="hidden" name="cpage" value=1> 
+				<input type="hidden" name="cpage" value=1>
 				<div class="inp_slct">
-					<select name="category">
-						<option value="AllCategory">전체</option>
+					<select name="choice">
+						<option value="Allchoice">전체</option>
 						<option value="title">제목</option>
 						<option value="category">카테고리</option>
+						<option value="address">지역</option>
 						<option value="contents">내용</option>
 					</select>
 				</div>
@@ -241,36 +246,50 @@ img{
 		
 		<!-- 검색결과 리스트 -->
 		<div class="minibody">
-		<input type="hidden" value="${search}" name=search>
-			<c:forEach var="tls" items="${tlsList}">
-				<div class="to-board">					
-					<img src="ittaketwo.jpg" alt="#"> 
-					<input type="hidden" value="${tls.seq}" id="seq" name="seq">
-					<a href="/borrow/detailView?seq=${tls.seq}" id="title" class="title" name="title">${tls.title}</a>
-					<p id="address1" name="address1">${tls.address1}</p>
+			<input type="hidden" value="${search}" name=search>
+			<input type="hidden" value="${choice}" name=choice>
+			
+			<c:forEach var="i" items="${list}">
+				<div class="to-board">
+					<a href="/borrow/detailView?id=${i.writer}&seq=${i.seq}" id="list_http" class="list_http" >					
+<%-- 						<c:choose> --%>
+<%-- 							<c:when test="${flist != null}"> --%>
+<%-- 								<img src="/imgs/lend/${flist.sysName}" id=fimg> --%>
+<%-- 							</c:when> --%>
+<%-- 							<c:otherwise> --%>
+								<img src="/imgs/lend/noimage.jpg" id=fimg>
+<%-- 							</c:otherwise> --%>
+<%-- 						</c:choose>  --%>
+						<input type="hidden" value="${i.seq}" id="seq" name="seq">
+						<p id=title class="title">${i.title}</p>
+						<p id="category">${i.category}</p>
+						<p id="address">${i.address}</p>
+					</a>
 				</div>
 			</c:forEach>
 		</div>
 		
 		<!-- 글쓰기 버튼 -->
-		<c:if test="${loginID != null}">
-			<div class="write" id="write">		
-				<button type="button" class="writeBtn" id="writeBtn">글쓰기</button>
-			</div>
-		</c:if>
+			<c:if test="${loginID != null}">
+				<div class="write" id="write">		
+					<button type="button" class="writeBtn" id="writeBtn">
+						<i class="fas fa-pen-square">글쓰기</i>
+					</button>
+				</div>
+			</c:if>
 		
 		<!-- 페이징 네비바 -->
 		<div class="board_page">
 			<c:forEach var="i" items="${navi}" varStatus="s">
 				<c:choose>
 					<c:when test="${i == '>'}">
-						<a href="/AllBoardList/lendList?cpage=${navi[s.index-1]+1}&category=${category}&search=${search}">${i}</a>
+						<a href="/AllBoardList/lendList?cpage=${navi[s.index-1]+1}&choice=${choice}&search=${search}">${i}</a>
 					</c:when>
 					<c:when test="${i == '<'}">
-						<a href="/AllBoardList/lendList?cpage=${navi[s.index-1]+1}&category=${category}&search=${search}">${i}</a>
+						<a href="/AllBoardList/lendList?cpage=${navi[s.index-1]+1}&&choice=${choice}&search=${search}">${i}</a>
 					</c:when>
 					<c:otherwise>
-						<a href="/AllBoardList/lendList?cpage=${i}&category=${category}&search=${search}">${i}</a>
+						<a href="/AllBoardList/lendList?cpage=${i}&choice=${choice}&search=${search}">${i}</a>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
@@ -321,7 +340,7 @@ img{
             <div class="container copyright">
                 <div class="row">
                     <div class="col-12" style="text-align: center;">
-                        <p id=titlename>&copy; <a href="#">돈-다</a>, All Right Reserved.</p>
+                        <p id=titlename>&copy; <a href="/">돈-다</a>, All Right Reserved.</p>
                     </div>
                 </div>
             </div>
@@ -331,7 +350,7 @@ img{
         <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
         <!-- JavaScript Libraries -->
-<!--         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
         <script src="/lib/easing/easing.min.js"></script>
         
