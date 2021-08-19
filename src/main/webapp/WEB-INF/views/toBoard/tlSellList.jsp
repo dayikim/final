@@ -82,8 +82,8 @@ img{
     		.to-board img{width: 100%; height: 70%; border-radius: 20px;} 
     		.minibody a{color: black; cursor: pointer; text-decoration: none;}
     		.minibody a:hover{color: black; text-decoration: none;}
-    		.minibody p{font-size: 16px;margin:0px;}
-    		.minibody p:first-child{font-weight:600;}
+    		.minibody p{font-size: 18px;margin:0px;}
+    		.title{font-weight:600;}
     		
     		.board_page {margin-bottom:10px}
     		.board_page a{font-size:1.2rem}
@@ -219,7 +219,7 @@ img{
                 <button class="dropbtn borrowBtn" id="borrowBtn">대여요청</button>
             </div>
             <div class="dropdown">
-                <button class="dropbtn tlSellBtn" id="tlSellBtn">재능등록</button>
+                <button class="dropbtn tlSellBtn" id="tlSellBtn">재능판매</button>
             </div>
             <div class="dropdown">
                 <button class="dropbtn tlRequestBtn" id="tlRequestBtn">재능요청</button>
@@ -251,7 +251,7 @@ img{
 			
 			<c:forEach var="i" items="${list}">
 				<div class="to-board">
-					<a href="/borrow/detailView?id=${i.writer}&seq=${i.seq}" id="list_http" class="list_http" >					
+					<a href="/tBoard/sellingView?id=${i.writer}&seq=${i.seq}" id="list_http" class="list_http" >					
 <%-- 						<c:choose> --%>
 <%-- 							<c:when test="${flist != null}"> --%>
 <%-- 								<img src="/imgs/lend/${flist.sysName}" id=fimg> --%>
