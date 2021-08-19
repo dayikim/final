@@ -216,23 +216,36 @@ form {
 }
 </style>
 <script>
+	$(function() {
+		// 게시물 검색
+		$("#search")
+				.keyup(
+						function(e) {
+							if (e.keyCode == 13) {
+								location.href = "/AllBoardList/lendList?category=AllCategory&search="
+										+ $("#search").val() + "&cpage=1";
+							}
+						})
 
-                $(function () {
-                       $(".send").on("click", function () {
-                        let message = ("#message-text");
-                        if (message.val() == "") {
-                            alert("메세지를 입력해주세요.");
-                            message.focus();
-                            return false;
-                        }
-                        $("#reviewForm").submit();
+		// 채팅
+		$("#chat").on("click", function() {
+			location.href = "/chat";
+		})
 
-                    })
+		// 후기
+		$(".send").on("click", function() {
+			let message = ("#message-text");
+			if (message.val() == "") {
+				alert("메세지를 입력해주세요.");
+				message.focus();
+				return false;
+			}
+			$("#reviewForm").submit();
 
+		})
 
-
-                });
-            </script>
+	});
+</script>
 
 
 </head>

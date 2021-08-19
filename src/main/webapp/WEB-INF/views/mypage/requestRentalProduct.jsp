@@ -192,6 +192,18 @@ img {
 
 <script>
 	$(function() {
+		// 게시물 검색
+		$("#search").keyup(function(e) {
+			if (e.keyCode == 13) {
+				location.href = "/AllBoardList/lendList?category=AllCategory&search="+$("#search").val()+"&cpage=1";
+			}
+		})
+		
+		// 채팅
+		$("#chat").on("click",function(){
+			location.href = "/chat";
+		})
+		
 		// 취소 버튼을 눌렀을 경우
 		$(".cnum-btn1").on("click", function() {
 			let result = confirm("요청을 거절 하시겠습니까?");
