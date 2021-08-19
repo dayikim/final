@@ -34,8 +34,8 @@ public class SnsService {
 		return dao.page(param);
 	}
 	
-	public List<SnsDTO> selectAll(String loginId){
-		return dao.selectAll(loginId);
+	public List<SnsDTO> selectAll(String id){
+		return dao.selectAll(id);
 	}
 	
 	public int getLove(int seq) {
@@ -114,8 +114,8 @@ public class SnsService {
 		dao.updatecount(param);
 	}
 	
-	public List<String> existlike(String loginId){
-		return dao.existlike(loginId);
+	public List<String> existlike(String id){
+		return dao.existlike(id);
 	}
 	
 }

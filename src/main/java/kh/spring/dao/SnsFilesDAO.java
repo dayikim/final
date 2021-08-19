@@ -22,5 +22,17 @@ public class SnsFilesDAO {
 	public List<SnsFilesDTO> fileList(){
 		return mybatis.selectList("SnsFile.fileList");
 	} 
+	
+	public void delete(int seq) {
+		mybatis.delete("SnsFile.delete", seq);
+	}
+	
+	public int deleteFile(int seq) {
+		return mybatis.delete("SnsFile.deleteFile", seq);
+	}
+	
+	public List<SnsFilesDTO> modiFile(int parent){
+		return mybatis.selectList("SnsFile.modiFile", parent);
+	}
 
 }

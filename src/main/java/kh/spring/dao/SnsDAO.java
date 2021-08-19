@@ -28,8 +28,8 @@ public class SnsDAO {
 		return mybatis.selectList("Sns.page", param);
 	}
 	
-	public List<SnsDTO>selectAll(String loginId){
-		return mybatis.selectList("Sns.selectAll",loginId);
+	public List<SnsDTO>selectAll(String id){
+		return mybatis.selectList("Sns.selectAll",id);
 	}
 	
 	public int getLove(int seq) {
@@ -84,7 +84,7 @@ public class SnsDAO {
 		mybatis.update("Sns.updatecount", param);
 	}
 	
-	public List<String> existlike(String loginId){
-		return mybatis.selectList("Sns.existlike", loginId);
+	public List<String> existlike(String id){
+		return mybatis.selectList("Sns.existlike", id);
 	}
 }

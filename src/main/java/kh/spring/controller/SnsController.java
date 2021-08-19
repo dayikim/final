@@ -39,17 +39,25 @@ public class SnsController {
 	
 	@RequestMapping("/main")
 	public String main(Model model) throws Exception {
-		String loginId= (String)session.getAttribute("loginID"); //글 목록
+		String id= (String)session.getAttribute("loginID"); //글 목록
 		
-		List<SnsDTO>list = service.selectAll(loginId);
+		List<SnsDTO>list = service.selectAll(id);
 		model.addAttribute("list", list);
 		
-		List<String> ldto = service.existlike(loginId); //좋아요목록
+		List<String> ldto = service.existlike(id); //좋아요목록
 		model.addAttribute("isLove",ldto);
 
 		List<SnsFilesDTO>fdto = fservice.sendList(session); //파일목록
 		model.addAttribute("file", fdto);
 		return "sns/main";
+	}
+	
+	@RequestMapping("/modifyfile")
+	@ResponseBody
+	public String modifyfile(int parent) {
+		List<SnsFilesDTO>list = fservice.modiFile(parent);
+		Gson gs = new Gson();
+		return gs.toJson(list);
 	}
 	
 	@RequestMapping("/page")
@@ -93,14 +101,21 @@ public class SnsController {
 	}
 	
 	@RequestMapping("/delete")
+	public String delete(int seq) {
+		service.delete(seq);
+		fservice.delete(seq);
+		return "redirect:/sns/main";
+	}
+	
+	@RequestMapping("/delfile")
 	@ResponseBody
-	public int delete(int seq) {
-		int result = service.delete(seq);
+	public int delfile(int seq) {
+		int result = fservice.deleteFile(seq);
 		return result;
 	}
 	
 	@RequestMapping("/modify")
-	public String modify(int seq, Model model) {
+	public String modify(int seq, Model model) throws Exception {
 		String id = (String)session.getAttribute("loginID");
 		String contents = service.select(seq);
 		model.addAttribute("contents", contents);
@@ -108,6 +123,13 @@ public class SnsController {
 		
 		List<SnsDTO>list = service.selectAll(id);		
 		model.addAttribute("list", list);
+		
+		List<String> ldto = service.existlike(id); //좋아요목록
+		model.addAttribute("isLove",ldto);
+		
+		List<SnsFilesDTO>fdto = fservice.sendList(session); //파일목록
+		model.addAttribute("file", fdto);
+
 		return "sns/modify";
 	}
 	
@@ -118,17 +140,24 @@ public class SnsController {
 		int parent = dto.getSeq();
 		String contents = dto.getContents();
 
-		service.modify(dto);
-		
-		String realPath = session.getServletContext().getRealPath("files");
-		File filesPath = new File(realPath);
-		if(!filesPath.exists()) {filesPath.mkdir();}
-		for(MultipartFile tmp : file) {
-			String oriName = tmp.getOriginalFilename();
-			String sysName = UUID.randomUUID().toString().replaceAll("-", "")+ "_"+oriName;
-			fservice.insert(oriName, sysName, parent,id);
-			tmp.transferTo(new File(filesPath.getAbsolutePath()+"/"+sysName));
+		if(file[0].getSize() == 0) {
+			service.modify(dto);
+		}else {
+			service.modify(dto);
+			String realPath = session.getServletContext().getRealPath("files");
+			File filesPath = new File(realPath);
+			
+			if(!filesPath.exists()) {
+				filesPath.mkdir();
+			}
+			for(MultipartFile tmp : file) {
+				String oriName = tmp.getOriginalFilename();
+				String sysName = UUID.randomUUID().toString().replaceAll("-", "")+ "_"+oriName;
+				fservice.insert(oriName, sysName, parent,id);
+				tmp.transferTo(new File(filesPath.getAbsolutePath()+"/"+sysName));
+			}
 		}
+		
 		
 		return "redirect:/sns/main";
 	}
