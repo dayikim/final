@@ -168,25 +168,39 @@ li {
 }
 
 .container a {
-	border: 1px solid black;
 	color: black;
 	font-weight: bold;
 }
-
+/* 내 판매목록 */
 #selling {
-	background-color: rgb(0, 139, 7);
+	background-color: grey;
+	width:250px;
+	text-align:center;
+border: solid 1px black;
+}
+
+.card{
+margin:10px;
+}
+
+/* 거래후기 */
+#review{
+width:250px;
+text-align:center;
+border: solid 1px black;
+
 }
 
 .list li a:hover {
-	/* color: #43c4a4; */
-	background-color: rgb(0, 139, 7);
+/* 	color: black;
+ */	/* 	background-color: rgb(0, 139, 7);
+ */
 }
 
 .list li a:after {
 	display: block;
 	content: '';
-	/* 						border-bottom: solid 3px #39d9c8;
-*/
+border-bottom: solid 3px #39d9c8;
 	transform: scaleX(0);
 	background-color: greenyellow;
 	transition: transform 250ms ease-in-out;
@@ -209,7 +223,7 @@ li {
 	margin: auto;
 	margin-bottom: 20px;
 	border-radius: 5px;
-	border: 1px solid black;
+	border: 1px solid grey;
 	width: 90%;
 	height: auto;
 	margin-bottom: 20px;
@@ -217,11 +231,10 @@ li {
 </style>
 
 <script>
-					$(function () {
-					
-					});
+	$(function() {
 
-				</script>
+	});
+</script>
 </head>
 
 <body>
@@ -254,52 +267,63 @@ li {
 	</div>
 	<!-- Top Bar End -->
 
-	 <!-- Nav Bar Start -->
-        <div class="navbar navbar-expand-lg bg-dark navbar-dark">
-            <div class="container-fluid">
-                <a href="/" class="navbar-brand"><p id= titlename>돈-다</a></p>
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <c:choose>
-                	<c:when test="${loginID == null }">
-                		<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                    	<div class="navbar-nav ml-auto">
-                        	<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
-                        	<a href="/person/login" class="nav-item nav-link active">Login</a> <!-- Login Page 이동 -->
-                        	<a href="/person/join" class="nav-item nav-link">Sign Up</a>  <!-- SignUp Page 이동 -->
-                    	</div>
-                		</div>
-                	</c:when>
-                	<c:otherwise>
-                		<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                    		<div class="navbar-nav ml-auto">
-                        		<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
-                        		<a href="/person/logout" class="nav-item nav-link active">Logout</a> <!-- Logout -->
-                        		 <div class="collapse navbar-collapse" id="navbarNavDropdown">
-	                        		 <ul class="navbar-nav">
-	                        			<li class="nav-item dropdown">
-									        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									         Menu
-									        </a>
-									        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-									          <a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
-									          <a class="dropdown-item" href="/sns/main">SNS</a>
-									          <a class="dropdown-item" href="/my/mypageProc">My page</a>
-									          <a class="dropdown-item" href="/point/ToCharging">Charging</a>
-									        </div>
-								      	</li>
-								      </ul>
-								      <button type="button" class="btn btn-outline-warning" id="chat">Chatting</button>
-							      </div>
-                    		</div>
-                		</div>
-                	</c:otherwise>
-                </c:choose>
+	<!-- Nav Bar Start -->
+	<div class="navbar navbar-expand-lg bg-dark navbar-dark">
+		<div class="container-fluid">
+			<a href="/" class="navbar-brand"><p id=titlename>돈-다</a>
+			</p>
+			<button type="button" class="navbar-toggler" data-toggle="collapse"
+				data-target="#navbarCollapse">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<c:choose>
+				<c:when test="${loginID == null }">
+					<div class="collapse navbar-collapse justify-content-between"
+						id="navbarCollapse">
+						<div class="navbar-nav ml-auto">
+							<input class="form-control mr-sm-5" type="search"
+								placeholder="물품, 지역을 검색해주세요." id=search aria-label="Search">
+							<a href="/person/login" class="nav-item nav-link active">Login</a>
+							<!-- Login Page 이동 -->
+							<a href="/person/join" class="nav-item nav-link">Sign Up</a>
+							<!-- SignUp Page 이동 -->
+						</div>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div class="collapse navbar-collapse justify-content-between"
+						id="navbarCollapse">
+						<div class="navbar-nav ml-auto">
+							<input class="form-control mr-sm-5" type="search"
+								placeholder="물품, 지역을 검색해주세요." id=search aria-label="Search">
+							<a href="/person/logout" class="nav-item nav-link active">Logout</a>
+							<!-- Logout -->
+							<div class="collapse navbar-collapse" id="navbarNavDropdown">
+								<ul class="navbar-nav">
+									<li class="nav-item dropdown"><a
+										class="nav-link dropdown-toggle" href="#"
+										id="navbarDropdownMenuLink" role="button"
+										data-toggle="dropdown" aria-haspopup="true"
+										aria-expanded="false"> Menu </a>
+										<div class="dropdown-menu"
+											aria-labelledby="navbarDropdownMenuLink">
+											<a class="dropdown-item"
+												href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
+											<a class="dropdown-item" href="/sns/main">SNS</a> <a
+												class="dropdown-item" href="/my/mypageProc">My page</a> <a
+												class="dropdown-item" href="/point/ToCharging">Charging</a>
+										</div></li>
+								</ul>
+								<button type="button" class="btn btn-outline-warning" id="chat">Chatting</button>
+							</div>
+						</div>
+					</div>
+				</c:otherwise>
+			</c:choose>
 
-            </div>
-        </div>
-        <!-- Nav Bar End -->
+		</div>
+	</div>
+	<!-- Nav Bar End -->
 
 	<section id="body">
 		<div class="container">
@@ -324,10 +348,10 @@ li {
 
 					<ul class="nav justify-content-center list">
 						<li class="nav-item"><a class="nav-link active" id="selling"
-							aria-current="page" href="/profile/myselling?writer=${loginID}">내
+							aria-current="page" href="/profile/myselling?writer=${loginID}">
 								판매 목록<span class="badge badge-pill badge-dark">${sellingCount}</span>
 						</a></li>
-						<li class="nav-item"><a class="nav-link"
+						<li class="nav-item"><a class="nav-link" id="review"
 							href="/profile/review?reviewID=${loginID}">거래후기<span
 								class="badge badge-pill badge-dark">0</span></a></li>
 					</ul>
@@ -342,8 +366,11 @@ li {
 								<div class="card">
 									<div class="card-body">
 										<div class="card-category">[${i.category}]</div>
-										<a href="/profile/sellingViewByMe?seq=${i.seq}"><img src="..." class="card-img-top" alt="..."></a>
-										<h5 class="card-title"><a href="/profile/sellingViewByMe?seq=${i.seq}">${i.title}</a></h5>
+										<a href="/profile/sellingViewByMe?seq=${i.seq}"><img
+											src="..." class="card-img-top" alt="..."></a>
+										<h5 class="card-title">
+											<a href="/profile/sellingViewByMe?seq=${i.seq}">${i.title}</a>
+										</h5>
 										<div class="card-price ">${i.price}상추</div>
 										<div class="card-region-name">${i.address}</div>
 										<div class="card-counts">

@@ -152,7 +152,7 @@ public class ProfileController {
 	
 	
 	@RequestMapping("sellingViewByMe") //판매글 상세보기 (마이 프로필)
-	public String sellingViewByMe( int seq, Model model) throws Exception {
+	public String sellingViewByMe(int seq, Model model) throws Exception {
 		System.out.println(seq);
 		String writer = (String) session.getAttribute("loginID");
 		
@@ -162,16 +162,6 @@ public class ProfileController {
 		PersonDTO writerInfo = STService.memberInfoById(writer);//글 작성자 정보(이름,주소)
 		model.addAttribute("writerInfo",writerInfo);
 		
-		//상세보기 
-		//게시판의 시작 번호을 다르게(lendboard seq=1/selltalent seq=1001)
-		
-       /* if(seq<1001) {
-      	  LendDTO dto = LService.deatilview(seq);
-      	  model.addAttribute("lendboard",dto);
-        }else {
-          SellTalentDTO dto = STService.detailView(seq);*/
-		
-//	}    
 		List<HashMap<Object, Object>> sellingView;
 		sellingView =PService.sellingView(seq,writer);//판매목록 상세보기
 		
@@ -193,29 +183,35 @@ public class ProfileController {
 	
 	
 	@RequestMapping("sellingViewByUser") //판매글 상세보기 (유저 프로필)
-	public String sellingViewByUser(String id, int seq, Model model) throws Exception {
+	public String sellingViewByUser(String writer, int seq, Model model) throws Exception {
 		System.out.println(seq);
 		String sessionID = (String) session.getAttribute("loginID");
 		
-		model.addAttribute("writer",id);
+		model.addAttribute("writer",writer);
 
-		ProfileFilesDTO pfdto = MypageService.profileSelect(id); // 프사 출력
+		ProfileFilesDTO pfdto = MypageService.profileSelect(writer); // 프사 출력
 		model.addAttribute("profile",pfdto); //프로필
 
-		PersonDTO writerInfo = STService.memberInfoById(id);//글 작성자 정보(이름,주소)
+		PersonDTO writerInfo = STService.memberInfoById(writer);//글 작성자 정보(이름,주소)
 		model.addAttribute("writerInfo",writerInfo);
-		
-		//상세보기 
-		//게시판의 시작 번호을 다르게(lendboard seq=1/selltalent seq=1001)
-		System.out.println(seq);
-        if(seq<1001) {
-      	  LendDTO dto = LService.detailView(seq);
-      	  model.addAttribute("lendboard",dto);
-        }else {
-          SellTalentDTO dto = STService.detailView(seq);
-          model.addAttribute("tboard",dto);
-        }
-		return "/talentBoard/view_selling";
+
+		List<HashMap<Object, Object>> sellingView;
+		sellingView =PService.sellingView(seq,writer);//판매목록 상세보기
+				
+		if(seq<1001) {
+			String boardName="대여하기";
+			model.addAttribute("boardName",boardName);
+		}else {
+			String boardName="재능판매";
+			model.addAttribute("boardName",boardName);
+		}
+          model.addAttribute("board",sellingView);
+       
+		////		List<TalentFilesDTO> fileList = F_Service.selectAll(seq); //첨부파일 목록 출력   
+		//        System.out.println("파일이 비어 있나요?? "+fileList.isEmpty());//파일이 있나요?
+		//        model.addAttribute("filelist", fileList);//파일리스트를 request애 담는다.
+		//		
+		return "/profile/detailView";
 	}
 	
 	

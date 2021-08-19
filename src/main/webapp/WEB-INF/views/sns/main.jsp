@@ -131,38 +131,63 @@ style>body {
 	display: none;
 	font-size: 50px;
 }
+
+#photo{
+	max-width : 300px;
+	max-height : 400px;
+}
 </style>
 <script>
 	$(function() {
 		
 		//무한스크롤
-		var count = 3;
+		var count = 1;
 		var isScroll = true;
 		let loadNewPage = $(window).on("scroll",(function() {
 			if (((window.innerHeight + window.scrollY) >= document.body.offsetHeight)&& isScroll) {
 				$.ajax({
-					url : "",
+					url : "/sns/page",
 					type : "get",
-					data : {"count" : count},
+					data : {"count" : count++},
 					dataType : "json"
-				}).done(function(){
-					
+				}).done(function(e){
+					//console.log(e);
 				})
 			}
 		}));	
+		
+		//파일명출력
+	     $('#file').change(function(){	            
+	            var files=$('input[name="file"]')[0].files;
+	            
+	            for(var i= 0; i<files.length; i++){
+	            	let name = files[i].name
+	            	
+	            	let delDiv = $("<div>");
+	                let delBtn = $("<button>");
+	                delBtn.addClass("delfile");
+	                delBtn.text("-")
+	                delDiv.append(delBtn);
 
-		//글 삭제
-		$(document).on("click","#del",function(){
-			$.ajax({
-				url : "/sns/delete",
-				type : "POST",
-				data : {"seq":$(this).siblings("#hiddenseq").val()}
-			}).done(function(resp){
-				if(resp == 1){
-					alert('삭제가완료되었습니다')
-				}
-			})
-		})
+	                let rowDiv = $("<div>");
+	                rowDiv.addClass("row");
+
+	                rowDiv.append(name);
+	                rowDiv.append(delDiv);
+	            	
+	            	let br = $("<br>");
+	            	
+	            	$("#upload").append(rowDiv);
+	            	$("#upload").append(br);
+	            }
+	            
+	        });
+	     
+		//출력한 파일 삭제
+	     document.getElementById
+         $("#upload").on("click", ".delfile", function(){ //동적바인딩
+             $(this).closest(".row").remove();
+         })
 		
 		//댓글버튼눌렀을때
 		$(document).on("click","#commenticon",function(){
@@ -187,7 +212,6 @@ style>body {
 						
 						let comment_head = $("<div>");
 						comment_head.attr("class","comment-heading");
-						
 						
 						let comment_writer = $("<h6>");
 						comment_writer.text(resp[i].id);
@@ -235,7 +259,7 @@ style>body {
 		
 		//댓글수정
 		$(document).on("click","#modicomm",function(){
-			console.log($(this).parents(".comment-heading").siblings("#comment").attr("contenteditable") );
+			console.log($(this).parents(".comment-heading").siblings("#comment").attr("contenteditable"));
 			console.log($(this).parent().siblings("#commentseq").text());
 			if($(this).parents(".comment-heading").siblings("#comment").attr("contenteditable") === "false" || $(this).parents(".comment-heading").siblings("#comment").attr("contenteditable") == undefined  ){ // 첫 클릭 했을 때 
 				$(this).parents(".comment-heading").siblings("#comment").attr("contenteditable","true");
@@ -258,7 +282,7 @@ style>body {
 		
 		//댓글작성
 		$(document).on("click","#sendcomment",function(){
-//			let hidden_comment = $(this).parents("#hiddencomment");
+			let hidden_comment = $(this).parents("#hiddencomment");
 			if(${loginID == null}){
 	            alert('로그인 후 이용해주세요')
 	         }else{
@@ -271,7 +295,7 @@ style>body {
 	                  alert('댓글작성완료!')
 	                  $(this).parents("#hiddencomment").load(window.location.href + $(this).parents("#hiddencomment"));
 //	                  let ul = $("<ul>")
-//						ul.attr("class","comment-list");
+//					ul.attr("class","comment-list");
 //						ul.attr("id", "commentList");
 //						
 //						let body_div = $("<div>");
@@ -308,9 +332,9 @@ style>body {
 //						body_div.append(comment_head);
 //						body_div.append(comment);												
 //						
-//						ul.append(body_div);
-//						
-//						$(hidden_comment).prepend(ul);                
+//						ul.append(body_div);					
+//						$(#hidden_comment).prepend(ul);     
+						
 	               }else{
 	                  alert('작성실패')
 	               }
@@ -483,7 +507,8 @@ style>body {
 									aria-labelledby="images-tab">
 									<div class="form-group">
 										<div class="custom-file">
-											<input type=file name=file accept=".gif, .jpg, .png" multiple>
+											<input type=file name=file id=file accept=".gif, .jpg, .png" multiple>
+											<div id=upload></div>
 										</div>
 									</div>
 									<div class="py-4"></div>
@@ -521,10 +546,8 @@ style>body {
 											${item.id} <input type=hidden id=hiddenseq value=${item.seq }>
 											<c:choose>
 												<c:when test="${loginID == item.id }">
-													<a href id=del>삭제</a>
-													<a
-														href="${pageContext.request.contextPath}/sns/modify?seq=${item.seq }"
-														id=modi>수정</a>
+													<a href="${pageContext.request.contextPath}/sns/delete?seq=${item.seq }" id=del>삭제</a>
+													<a href="${pageContext.request.contextPath}/sns/modify?seq=${item.seq }" id=modi>수정</a>
 												</c:when>
 											</c:choose>
 										</div>
@@ -541,9 +564,8 @@ style>body {
 							<c:forEach var="file" items="${file}">
 								<c:choose>
 									<c:when test="${file.parent == item.seq }">
-										<a
-											href="/sns/download?oriName=${file.oriName}&sysName=${file.sysName}">
-											<img src="${Path}\\${file.sysName}">
+										<a href="/sns/download?oriName=${file.oriName}&sysName=${file.sysName}">
+											<img src="data:image/png;base64,${file.sysName}" id=photo>
 										</a>
 									</c:when>
 								</c:choose>

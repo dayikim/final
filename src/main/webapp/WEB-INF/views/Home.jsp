@@ -61,7 +61,7 @@ img{
     margin-top: 5%;
 }
     </style>
-
+    
 	<script>
 		$(function() {
 			$("#search").keyup(function(e) {
@@ -75,7 +75,7 @@ img{
 			})
 		})
 	</script>
-
+	
 
 </head>
 
@@ -140,7 +140,7 @@ img{
 									        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 									          <a class="dropdown-item" href="/AllBoardList/lendList?choice=Allchoice&search=&cpage=1">Board</a>
 									          <a class="dropdown-item" href="/sns/main">SNS</a>
-									          <a class="dropdown-item" href="#">My page</a>
+									          <a class="dropdown-item" href="/my/mypageProc">My page</a>
 									          <a class="dropdown-item" href="/point/ToCharging">Charging</a>
 									        </div>
 								      	</li>

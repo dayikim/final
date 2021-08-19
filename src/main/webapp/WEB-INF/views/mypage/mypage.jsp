@@ -85,7 +85,7 @@ img{
 /**************************************************************************/
 
 /* 마이페이지 시작 */
-.container {
+.container2 {
 	margin: auto;
 	margin-top:75px;
 	width: 1200px;
@@ -363,10 +363,10 @@ img{
 										aria-expanded="false"> Menu </a>
 										<div class="dropdown-menu"
 											aria-labelledby="navbarDropdownMenuLink">
-											<a class="dropdown-item" href="#">Board</a> <a
-												class="dropdown-item" href="#">SNS</a> <a
-												class="dropdown-item" href="#">My page</a> <a
-												class="dropdown-item" href="#">Charging</a>
+											<a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a> <a
+												class="dropdown-item" href="/sns/main">SNS</a> <a
+												class="dropdown-item" href="/my/mypageProc">My page</a> <a
+												class="dropdown-item" href="/point/ToCharging">Charging</a>
 										</div></li>
 								</ul>
 								<button type="button" class="btn btn-outline-warning" id="chat">Chatting</button>
@@ -382,7 +382,7 @@ img{
 	
 
 	<!-- 왼쪽 레이아웃 -->
-	<div class="row container">
+	<div class="row container2">
 		<div class="col-12 col-sm-12 col-md-4 left">
 			<div class="row header">
 				<div class="col-6" align=left>
@@ -546,29 +546,6 @@ img{
 						</div>
 					</div>
 				</div>
-				
-				
-				
-				<!-- 내가 쓴 게시글 보기 -->
-				<div class="col-12 list">
-					<div class="row go">
-						<div class="col-10 titleDiv">
-							<div class="title">
-								<h3>
-									<b>나의 게시물</b>
-								</h3>
-							</div>
-							<div class="stitle">
-								<b>홈페이지에 작성한 나의 게시글 모아보기</b>
-							</div>
-						</div>
-						<div class="col-2 buttonDiv">
-							<a href="/my/myRequestSellProduct"><button type=button class="okBtn">확인</button></a>
-						</div>
-					</div>
-				</div>
-
-
 
 
 				<!-- 거래 완료 목록 -->
@@ -586,6 +563,26 @@ img{
 						</div>
 						<div class="col-2 buttonDiv">
 							<a href="/my/dealEndProductSellList"><button type=button class="okBtn">확인</button></a>
+						</div>
+					</div>
+				</div>
+				
+				
+				<!-- 내가 쓴 게시글 보기 -->
+				<div class="col-12 list">
+					<div class="row go">
+						<div class="col-10 titleDiv">
+							<div class="title">
+								<h3>
+									<b>나의 게시물</b>
+								</h3>
+							</div>
+							<div class="stitle">
+								<b>홈페이지에 작성한 나의 게시글 모아보기</b>
+							</div>
+						</div>
+						<div class="col-2 buttonDiv">
+							<a href="/my/myRequestSellProduct"><button type=button class="okBtn">확인</button></a>
 						</div>
 					</div>
 				</div>

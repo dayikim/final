@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
+
 import kh.spring.dto.SnsDTO;
 import kh.spring.dto.SnsFilesDTO;
 import kh.spring.service.SnsCommentService;
@@ -36,22 +38,38 @@ public class SnsController {
 	private HttpSession session;
 	
 	@RequestMapping("/main")
-	public String main(Model model) {
-		String loginId= (String)session.getAttribute("loginID"); //글 목록
+	public String main(Model model) throws Exception {
+		String id= (String)session.getAttribute("loginID"); //글 목록
 		
-		List<SnsDTO>list = service.selectAll(loginId);
+		List<SnsDTO>list = service.selectAll(id);
 		model.addAttribute("list", list);
 		
-		List<String> ldto = service.existlike(loginId); //좋아요목록
+		List<String> ldto = service.existlike(id); //좋아요목록
 		model.addAttribute("isLove",ldto);
-		
-		String Path =  session.getServletContext().getRealPath("files"); //파일목록
-		model.addAttribute("Path", Path);
-		List<SnsFilesDTO>fdto = fservice.fileList();
-		model.addAttribute("file", fdto);
-		
 
+		List<SnsFilesDTO>fdto = fservice.sendList(session); //파일목록
+		model.addAttribute("file", fdto);
 		return "sns/main";
+	}
+	
+	@RequestMapping("/modifyfile")
+	@ResponseBody
+	public String modifyfile(int parent) {
+		List<SnsFilesDTO>list = fservice.modiFile(parent);
+		Gson gs = new Gson();
+		return gs.toJson(list);
+	}
+	
+	@RequestMapping("/page")
+	@ResponseBody
+	public String page(int count) {
+		String id = (String)session.getAttribute("loginID");
+		int viewcount = 10;
+		List<SnsDTO>list = service.page(id,viewcount,count);
+		Gson g = new Gson();
+		String result = g.toJson(list);
+		return result;
+		
 	}
 	
 	@RequestMapping("/write")
@@ -69,7 +87,9 @@ public class SnsController {
 			String realPath = session.getServletContext().getRealPath("files");
 			File filesPath = new File(realPath);
 			
-			if(!filesPath.exists()) {filesPath.mkdir();}
+			if(!filesPath.exists()) {
+				filesPath.mkdir();
+			}
 			for(MultipartFile tmp : file) {
 				String oriName = tmp.getOriginalFilename();
 				String sysName = UUID.randomUUID().toString().replaceAll("-", "")+ "_"+oriName;
@@ -81,20 +101,21 @@ public class SnsController {
 	}
 	
 	@RequestMapping("/delete")
+	public String delete(int seq) {
+		service.delete(seq);
+		fservice.delete(seq);
+		return "redirect:/sns/main";
+	}
+	
+	@RequestMapping("/delfile")
 	@ResponseBody
-	public int delete(int seq) {
-		int result = service.delete(seq);
+	public int delfile(int seq) {
+		int result = fservice.deleteFile(seq);
 		return result;
 	}
 	
-	@RequestMapping("/image")
-	public String showImage() {
-		
-		return "sns/main";
-	}
-	
 	@RequestMapping("/modify")
-	public String modify(int seq, Model model) {
+	public String modify(int seq, Model model) throws Exception {
 		String id = (String)session.getAttribute("loginID");
 		String contents = service.select(seq);
 		model.addAttribute("contents", contents);
@@ -102,6 +123,13 @@ public class SnsController {
 		
 		List<SnsDTO>list = service.selectAll(id);		
 		model.addAttribute("list", list);
+		
+		List<String> ldto = service.existlike(id); //좋아요목록
+		model.addAttribute("isLove",ldto);
+		
+		List<SnsFilesDTO>fdto = fservice.sendList(session); //파일목록
+		model.addAttribute("file", fdto);
+
 		return "sns/modify";
 	}
 	
@@ -112,17 +140,24 @@ public class SnsController {
 		int parent = dto.getSeq();
 		String contents = dto.getContents();
 
-		service.modify(dto);
-		
-		String realPath = session.getServletContext().getRealPath("files");
-		File filesPath = new File(realPath);
-		if(!filesPath.exists()) {filesPath.mkdir();}
-		for(MultipartFile tmp : file) {
-			String oriName = tmp.getOriginalFilename();
-			String sysName = UUID.randomUUID().toString().replaceAll("-", "")+ "_"+oriName;
-			fservice.insert(oriName, sysName, parent,id);
-			tmp.transferTo(new File(filesPath.getAbsolutePath()+"/"+sysName));
+		if(file[0].getSize() == 0) {
+			service.modify(dto);
+		}else {
+			service.modify(dto);
+			String realPath = session.getServletContext().getRealPath("files");
+			File filesPath = new File(realPath);
+			
+			if(!filesPath.exists()) {
+				filesPath.mkdir();
+			}
+			for(MultipartFile tmp : file) {
+				String oriName = tmp.getOriginalFilename();
+				String sysName = UUID.randomUUID().toString().replaceAll("-", "")+ "_"+oriName;
+				fservice.insert(oriName, sysName, parent,id);
+				tmp.transferTo(new File(filesPath.getAbsolutePath()+"/"+sysName));
+			}
 		}
+		
 		
 		return "redirect:/sns/main";
 	}
