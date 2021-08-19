@@ -166,6 +166,12 @@
                 }
 
                 /* 거래후기 */
+                
+                #selling{
+                   width: 250px;
+                   text-align: center;
+                    border: solid 1px black;
+                }
                 #review {
                     background-color: grey;
                     width: 250px;
@@ -288,16 +294,16 @@
                 }
 
                 .CommentBox .comment_list .CommentItem {
-                    margin-left: 46px;
+                    
                     padding-left: 0;
                     margin: auto;
                 }
 
                 .comment_box {
-                    border: 1px solid black;
-                    margin-left: 10px;
+                    border: 1px solid grey;
+                    margin-left: 20px;
                     width: 800px;
-                    padding-right: 20;
+                 
                     margin: auto;
                 }
 
@@ -445,74 +451,40 @@
                                             <!-- 거래 후기 작성자 프로필 -->
                                             <section id="small_user-profile">
                                                 <h2 id="small_nickname">
-                                                    <a href="/users/2736355">${i.id}</a> <span
-                                                        id="small_region_name">송파구 잠실2동</span>
+                                                    <a href="/profile/userProfile?id=${i.id}">${i.name} 님</a> <span
+                                                        id="small_region_name">${i.address}</span>
                                                 </h2>
-
-                                                <div id="small_profile-image">
+                                                 <c:forEach var="sys" items="${sysName}">
+                                                      <div id="small_profile-image">
                                                     <c:choose>
-                                                        <c:when test="${profile != null}">
-                                                            <img src="/imgs/mypage/${profile.sysName }" id=profile>
+                                                        <c:when test="${sys != null}">
+                                                            <img src="/imgs/mypage/${sys }" id=profile>
                                                         </c:when>
                                                         <c:otherwise>
                                                             <img src="/imgs/nomalProfile.jpg" id=profile>
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </div>
-
+												</c:forEach>
                                             </section>
                                         </div>
                                         <div class="comment_text">
                                             <p class="text_view">
-                                                <span class="modify_option" id="com">${i.comments}</span>
+                                                <span class="modify_option" id="com">${i.contents}</span>
                                             </p>
                                         </div>
 
                                         <div class="commentInfo">
                                             <span>
-                                                날짜
+                                              ${i.regdate}
                                             </span>
                                         </div>
 
                                     </div>
                                 </li>
                             </ul>
+                            </c:forEach>
                             <hr>
-
-                            <ul class="comment_list">
-                                <li class="commentItem">
-                                    <!-- 거래 후기 출력 -->
-                                    <div class="col-12 d-md-block comment_box">
-                                        <div class="comment_writerInfo">
-                                            <section id="small_user-profile">
-                                                <h2 id="small_nickname">
-                                                    <a href="/users/2736355">cjy3037</a> <span
-                                                        id="small_region_name">송파구 잠실2동</span>
-                                                </h2>
-
-                                                <div id="small_profile-image">
-
-                                                    <img alt="써니사이드"
-                                                        src="https://d1unjqcospf8gs.cloudfront.net/assets/users/default_profile_80-7e50c459a71e0e88c474406a45bbbdce8a3bf2ed4f2efcae59a064e39ea9ff30.png">
-                                                </div>
-
-                                            </section>
-                                        </div>
-                                        <div class="comment_text">
-                                            <p class="text_view">
-                                                <span class="modify_option" id="com">${i.comments}</span>
-                                            </p>
-                                        </div>
-
-                                        <div class="commentInfo">
-                                            <span>
-                                                날짜
-                                            </span>
-                                        </div>
-
-                                    </div>
-                                </li>
-                            </ul>
                         </section>
                         <div class="text-right">
                             <input type=button class="btn btn-secondary" value="메인으로" id="back">

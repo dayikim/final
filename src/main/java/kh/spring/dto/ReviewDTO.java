@@ -4,8 +4,8 @@ import java.sql.Date;
 
 public class ReviewDTO {
 	private int seq;
-	private String id;
-	private String reviewID;
+	private String reviewer;
+	private String recipient;
 	private int parentseq;
 	private String contents;
 	private String reviewable;
@@ -13,35 +13,38 @@ public class ReviewDTO {
 
 	public ReviewDTO() {
 	}
-	
-	public ReviewDTO(int seq, String id, String reviewID, int parentseq, String contents, String reviewable, Date regdate) {
+	public ReviewDTO(int seq, String reviewer, String recipient, int parentseq, String contents, String reviewable,
+			Date regdate) {
 		super();
 		this.seq = seq;
-		this.id = id;
-		this.reviewID = reviewID;
+		this.reviewer = reviewer;
+		this.recipient = recipient;
 		this.parentseq = parentseq;
 		this.contents = contents;
 		this.reviewable = reviewable;
 		Regdate = regdate;
 	}
-
 	public int getSeq() {
 		return seq;
 	}
 	public void setSeq(int seq) {
 		this.seq = seq;
 	}
-	public String getId() {
-		return id;
+		
+	public String getReviewer() {
+		return reviewer;
 	}
-	public void setId(String id) {
-		this.id = id;
+
+	public String getRecipient() {
+		return recipient;
 	}
-	public String getReviewID() {
-		return reviewID;
+
+	public void setReviewer(String reviewer) {
+		this.reviewer = reviewer;
 	}
-	public void setReviewID(String reviewID) {
-		this.reviewID = reviewID;
+
+	public void setRecipient(String recipient) {
+		this.recipient = recipient;
 	}
 	public int getParentseq() {
 		return parentseq;

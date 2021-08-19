@@ -255,7 +255,7 @@ $(function(){
 		$("#deleteBtn").on("click",function () { //게시글 삭제
 					let check = confirm("정말 게시글을 삭제하겠습니까?");
 					if (check) {
-						location.href = "tBoard/delete?seq="
+						location.href = "/profile/sellingDelete?seq="
 							+ $("#deleteBtn").val(); //게시글 삭제 확인 팝업
 					} else {
 						return;
@@ -265,7 +265,7 @@ $(function(){
 		$("#modifyBtn").on("click",function () { //게시글 수정
 					let check = confirm("정말 게시글을 수정하겠습니까?");
 					if (check) {
-						location.href = "tBoard/modify?seq="
+						location.href = "/profile/sellingModify?seq="
 							+ $("#modifyBtn").val(); //게시글 수정 확인 팝업
 					} else {
 						return;
@@ -361,16 +361,20 @@ $(function(){
             </div>
         </div>
         <!-- Nav Bar End -->
+        <c:forEach var="board" items="${board}">
 	<section id="body">
 		<div class="container">
+		<c:choose>
+                <c:when test="${loginID == board.writer}">
 			<div class="btn_box btn_wrap text-right ">
-				<c:forEach var="board" items="${board}">
+				
 				<button type="button" class="btn btn-info" value="${board.seq}" id="deleteBtn">
 					<i class="fas fa-trash-restore"> 삭제</i>
 				</button>
 				<button type="button" class="btn btn-info" value="${board.seq}" id="modifyBtn">수정</button>
 			</div>									
-			
+			</c:when>
+			</c:choose>
 			<div class="form-control wrapper">
 				<div class="board_title">
 

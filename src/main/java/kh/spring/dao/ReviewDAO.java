@@ -1,5 +1,6 @@
 package kh.spring.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -30,8 +31,17 @@ public class ReviewDAO {
 
 	}
 
-	public PersonDTO memberInfoById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+
+	public String reviewerInfoByRecipient(String id) {
+		return  mybatis.selectOne("Review.reviewerInfo",id);
+	}
+
+	public List<HashMap<Object, Object>> reviewList(String id) {
+		return mybatis.selectList("Review.reviewList",id);
+
+	}
+
+	public List<HashMap<Object, Object>> sysName(String id) {
+		return mybatis.selectList("Review.sysName",id);
 	}
 }
