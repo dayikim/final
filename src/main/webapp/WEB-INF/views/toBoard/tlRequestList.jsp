@@ -123,7 +123,7 @@ img{
 	    	})
 	    
 	    	$("#writeBtn").on("click",function(){
-	    		location.href="/lendBoard/toLend";
+	    		location.href="/tBoard/toRequest";
 	    	})
 	      	  
 		})
@@ -222,7 +222,7 @@ img{
                 <button class="dropbtn tlSellBtn" id="tlSellBtn">재능등록</button>
             </div>
             <div class="dropdown">
-                <button class="dropbtn tlSellBtn" id="tlRequestBtn">재능요청</button>
+                <button class="dropbtn tlRequestBtn" id="tlRequestBtn">재능요청</button>
             </div>
 		</div>
 		

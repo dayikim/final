@@ -28,10 +28,13 @@ public class LendService {
 	@Autowired
 	private PersonDAO pdao;
 	
+	//프로파일
 	public PersonDTO memberInfoById(String id) {
 		return pdao.memberInfoById(id);
 
 	}
+	
+	//게시글 보기
 	public LendDTO detailView(int seq) {
 		return dao.detailview(seq);
 	}
@@ -41,7 +44,7 @@ public class LendService {
 		return dao.getSeq();
 	}
 	
-	//파일찾아오기
+	//사진리스트
 	public List<LendFilesDTO> selectAll(int seq){
 		return fdao.selectAll(seq);
 	}

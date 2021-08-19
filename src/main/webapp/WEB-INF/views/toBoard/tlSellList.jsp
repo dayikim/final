@@ -261,8 +261,9 @@ img{
 <%-- 							</c:otherwise> --%>
 <%-- 						</c:choose>  --%>
 						<input type="hidden" value="${i.seq}" id="seq" name="seq">
-						<p class="title" name="title">${i.title}</p>
-						<p id="address" name="address">${i.address}</p>
+						<p id=title class="title">${i.title}</p>
+						<p id="category">${i.category}</p>
+						<p id="address">${i.address}</p>
 					</a>
 				</div>
 			</c:forEach>

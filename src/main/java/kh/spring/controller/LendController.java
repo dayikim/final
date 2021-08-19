@@ -30,7 +30,8 @@ public class LendController {
 	@Autowired
 	private LendService service;
 	
-	@RequestMapping(value="toLend",produces="text/html;charset=utf8")//대여하기 글쓰기 폼으로
+	//대여하기 글쓰기 폼으로
+	@RequestMapping(value="toLend",produces="text/html;charset=utf8")
 	public String sellingWrite() {
 		String sessionID = (String) session.getAttribute("loginID");
 		PersonDTO pdto = MypageService.mypageList(sessionID); // 내 정보 출력
@@ -38,7 +39,8 @@ public class LendController {
 		return "/toBoard/lend_write";
 	}
 	
-	@RequestMapping(value="lendWrite",produces="text/html;charset=utf8")//대여하기 글쓰기 데이터 받기
+	//대여하기 글쓰기 데이터 받기
+	@RequestMapping(value="lendWrite",produces="text/html;charset=utf8")
 	public String sellingWrite(LendDTO dto,LendFilesDTO fdto, MultipartFile[] file) throws Exception {
 		int seq =service.getSeq();
 		String sessionID = (String) session.getAttribute("loginID");
@@ -49,7 +51,8 @@ public class LendController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping(value="lendView",produces="text/html;charset=utf8") //대여하기 상세보기
+	//대여하기 상세보기
+	@RequestMapping(value="lendView",produces="text/html;charset=utf8") 
 	public String sellingViewByMe(String id, int seq, Model model) throws Exception {
 		System.out.println(seq);
 		String sessionID = (String) session.getAttribute("loginID");
