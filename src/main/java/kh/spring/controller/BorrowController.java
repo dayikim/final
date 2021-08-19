@@ -30,7 +30,8 @@ public class BorrowController {
 	@Autowired
 	private HttpSession session;
 	
-	@RequestMapping(value="toBorrow",produces="text/html;charset=utf8")//대여하기 글쓰기 폼으로
+	//대여요청 글쓰기 폼으로
+	@RequestMapping(value="toBorrow",produces="text/html;charset=utf8")
 	public String sellingWrite() {
 		String sessionID = (String) session.getAttribute("loginID");
 		PersonDTO pdto = MypageService.mypageList(sessionID); // 내 정보 출력
@@ -38,19 +39,21 @@ public class BorrowController {
 		return "/toBoard/lend_write";
 	}
 	
-	@RequestMapping("boardWrite")
+	//대여요청 글쓰기 데이터
+	@RequestMapping(value="boardWrite",produces="text/html;charset=utf8")
 	public String boardWrite(BorrowDTO dto,BorrowBoardFilesDTO fdto, MultipartFile[] file) throws Exception {
 		int seq =service.getSeq();
-		String id = (String) session.getAttribute("loginID");
+		String sessionID = (String) session.getAttribute("loginID");
 		String realPath = session.getServletContext().getRealPath("files");
 		dto.setSeq(seq);
-		dto.setWriter(id);
+		dto.setWriter(sessionID);
 		service.boardwrite(dto,realPath,fdto,file);
 
 		return "redirect:/";
 	}
 	
-	@RequestMapping(value="borrowView",produces="text/html;charset=utf8") //대여하기 상세보기
+	//대여하기 상세보기	
+	@RequestMapping(value="borrowView",produces="text/html;charset=utf8") 
 	public String sellingViewByMe(String id, int seq, Model model) throws Exception {
 		System.out.println(seq);
 		String sessionID = (String) session.getAttribute("loginID");
@@ -58,15 +61,16 @@ public class BorrowController {
 		ProfileFilesDTO pfdto = MypageService.profileSelect(id); // 프사 출력
 		
 		PersonDTO writerInfo = service.memberInfoById(id);//글 작성자 정보(이름,주소)
-        BorrowDTO dto = service.detailView(seq);
+		
+        BorrowDTO dto = service.detailView(seq);//글상세보기
         
         model.addAttribute("profile",pfdto); //프로필
-        model.addAttribute("writerInfo",writerInfo);
-        model.addAttribute("board",dto);		 
+        model.addAttribute("writerInfo",writerInfo);//작성자정보
+        model.addAttribute("board",dto); //글내용	 
 		 
 		List<BorrowBoardFilesDTO> fileList = service.selectAll(seq); //첨부파일 목록 출력   
-		//        System.out.println("파일이 비어 있나요?? "+fileList.isEmpty());//파일이 있나요?
-		 model.addAttribute("filelist", fileList);//파일리스트를 request애 담는다.
+//      System.out.println("파일이 비어 있나요?? "+fileList.isEmpty());//파일이 있나요?
+		model.addAttribute("filelist", fileList);//파일리스트를 request애 담는다.
 		
 		
 		return "/toBoard/lend_view";
