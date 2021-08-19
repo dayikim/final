@@ -217,6 +217,22 @@ style>body {
 	font-size: 50px;
 }
 </style>
+<script>
+	$(function(){
+		// 게시물 검색
+		$("#search").keyup(function(e) {
+			if (e.keyCode == 13) {
+				location.href = "/AllBoardList/lendList?category=AllCategory&search="+$("#search").val()+"&cpage=1";
+			}
+		})
+		
+		// 채팅
+		$("#chat").on("click",function(){
+			location.href = "/chat";
+		})
+		
+	})
+</script>
 
 </head>
 <body>
