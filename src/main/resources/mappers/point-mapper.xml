@@ -7,7 +7,7 @@
 insert into point values(point_seq.nextval,#{id},#{pointAmount},sysdate)
 </insert>
 <select id="amount" resultType="int">
-select nvl(sum(pointAmount),0) from point where id=#{id}
+select nvl(sum(pointAmount),0) from point where id=#{value}
 </select>
 
 <!-- 포인트 충전 내역 출력 -->

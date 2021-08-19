@@ -7,6 +7,7 @@
 <resultMap type="HashMap" id="selling">
 <result column="title" property="title"/> 
     <result column="seq" property="seq"/>
+      <result column="writer" property="writer"/>
 	<result column="category" property="category"/>
 	<result column="contents" property="contents"/> 
 	<result column="price" property="price"/> 
@@ -16,6 +17,7 @@
 <resultMap type="HashMap" id="sellingView">
 <result column="title" property="title"/> 
     <result column="seq" property="seq"/>
+     <result column="writer" property="writer"/>
 	<result column="category" property="category"/>
 	<result column="contents" property="contents"/> 
 	<result column="price" property="price"/> 
