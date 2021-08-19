@@ -218,6 +218,19 @@ form {
 <script>
 
         $(function () {
+        	// 게시물 검색
+    		$("#search").keyup(function(e) {
+    			if (e.keyCode == 13) {
+    				location.href = "/AllBoardList/lendList?category=AllCategory&search="+$("#search").val()+"&cpage=1";
+    			}
+    		})
+    		
+    		// 채팅
+    		$("#chat").on("click",function(){
+    			location.href = "/chat";
+    		})
+    		
+    		// 후기
         	$(".send").on("click", function () {
                 let message = ("#message-text");
                 if (message.val() == "") {
@@ -285,28 +298,33 @@ form {
                 		</div>
                 	</c:when>
                 	<c:otherwise>
-                		<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                    		<div class="navbar-nav ml-auto">
-                        		<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
-                        		<a href="/person/logout" class="nav-item nav-link active">Logout</a> <!-- Logout -->
-                        		 <div class="collapse navbar-collapse" id="navbarNavDropdown">
-	                        		 <ul class="navbar-nav">
-	                        			<li class="nav-item dropdown">
-									        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									         Menu
-									        </a>
-									        <a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a> <a
+					<div class="collapse navbar-collapse justify-content-between"
+						id="navbarCollapse">
+						<div class="navbar-nav ml-auto">
+							<input class="form-control mr-sm-5" type="search"
+								placeholder="물품, 지역을 검색해주세요." id=search aria-label="Search">
+							<a href="/person/logout" class="nav-item nav-link active">Logout</a>
+							<!-- Logout -->
+							<div class="collapse navbar-collapse" id="navbarNavDropdown">
+								<ul class="navbar-nav">
+									<li class="nav-item dropdown"><a
+										class="nav-link dropdown-toggle" href="#"
+										id="navbarDropdownMenuLink" role="button"
+										data-toggle="dropdown" aria-haspopup="true"
+										aria-expanded="false"> Menu </a>
+										<div class="dropdown-menu"
+											aria-labelledby="navbarDropdownMenuLink">
+											<a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a> <a
 												class="dropdown-item" href="/sns/main">SNS</a> <a
 												class="dropdown-item" href="/my/mypageProc">My page</a> <a
 												class="dropdown-item" href="/point/ToCharging">Charging</a>
-									        </div>
-								      	</li>
-								      </ul>
-								      <button type="button" class="btn btn-outline-warning" id="chat">Chatting</button>
-							      </div>
-                    		</div>
-                		</div>
-                	</c:otherwise>
+										</div></li>
+								</ul>
+								<button type="button" class="btn btn-outline-warning" id="chat">Chatting</button>
+							</div>
+						</div>
+					</div>
+				</c:otherwise>
                 </c:choose>
 
             </div>

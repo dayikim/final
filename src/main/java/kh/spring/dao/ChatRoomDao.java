@@ -35,5 +35,8 @@ public class ChatRoomDao {
 		return mybatis.selectOne("Chat.FindById",roomid);
 	}
 	
+	public String findFriendId(Map<String,String> temp) {	
+	return mybatis.selectOne("Chat.FindByFriendId",temp);
+	}
 	
 }

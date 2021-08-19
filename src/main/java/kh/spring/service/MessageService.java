@@ -3,6 +3,9 @@ package kh.spring.service;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.io.File;
 import java.io.FileInputStream;
 import java.sql.Date;
@@ -14,6 +17,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+
 
 import kh.spring.dao.ChatFileDAO;
 import kh.spring.dao.MessageDao;
@@ -32,8 +37,8 @@ public class MessageService {
 	@Autowired
 	HttpSession session;
 	
-	public int insertMessage(int seq,String roomid,String id, String message) {
-		return md.insert(new MessageDTO(seq,roomid, id, message));
+	public int insertMessage(int seq,String roomid,String id, String message, String unread) {
+		return md.insert(new MessageDTO(seq,roomid, id, message,unread));
 	}
 	
 	public MessageDTO getMessage(int seq) {
@@ -93,6 +98,10 @@ public class MessageService {
 			e.printStackTrace();
 		}
 			return data;
+	}
+	
+	public int readTounread(String roomid, String id) {
+		return md.readTounread(roomid);
 	}
 	
 }

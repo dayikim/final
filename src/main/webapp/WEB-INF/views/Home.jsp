@@ -71,7 +71,7 @@ img{
 			})
 			
 			$("#chat").on("click",function(){
-				location.href = "/chat";
+				location.href = "/chat/waitingroom";
 			})
 		})
 	</script>
