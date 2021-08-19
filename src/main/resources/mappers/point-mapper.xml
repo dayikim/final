@@ -16,8 +16,8 @@ insert into charging values(charging_seq.nextval,#{id},#{amount},sysdate)
 </insert>
 
 <!-- 잔액 확인 -->
-<select id="amount" resultType="int">
-select nvl(sum(),0) from point where id=#{value}
+<select id="pointAmount" resultType="int">
+select nvl(sum(amount),0) from pointAccount where id=#{value}
 </select>
 
 <select id="amount" resultType="int">
