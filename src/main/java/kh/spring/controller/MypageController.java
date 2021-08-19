@@ -138,29 +138,29 @@ public class MypageController {
 	public String requestRentalTalent(Model model) {
 		String sessionID = (String)session.getAttribute("loginID");
 		List<HashMap<String,Object>> list = service.requestRentalTalent(sessionID);
-//		int result = service.dealSuccessSelect();
-		
-//		model.addAttribute("result", result);  //  거래 승인 유무(여기서 1이 나오게 출력하고 싶은데...)
+		//		int result = service.dealSuccessSelect();
+
+		//		model.addAttribute("result", result);  //  거래 승인 유무(여기서 1이 나오게 출력하고 싶은데...)
 		model.addAttribute("requestRental", list);  // 들어온 예약 리스트
 		return "/mypage/requestRentalTalent";
 	}
-	
+
 	// 요청 거절 버튼을 눌렀을 때 - 재능
 	@RequestMapping("/dealFail")
 	public String dealFail(int parent) {
 		String sessionID = (String)session.getAttribute("loginID");
 		service.dealFail(sessionID,parent);
-		
+
 		return "redirect:/my/requestRentalTalent";
 	}
-	
+
 	// 거래 승인 완료 버튼 눌렀을 때 - 재능(미완)
 	@ResponseBody
 	@RequestMapping("/dealSuccess")
 	public String dealSuccess(String writer, String booker, int parent) {
 		System.out.println(writer + booker + parent);
 		int result = service.dealSuccess(writer,booker,parent); 
-		
+
 		return String.valueOf(result);
 	}
 
@@ -179,47 +179,18 @@ public class MypageController {
 	public String buyRequestTalent(Model model) {
 		String sessionID = (String)session.getAttribute("loginID");
 		List<HashMap<String,Object>> result = service.buyRequestTalent(sessionID);
-		
+
 		model.addAttribute("requestRental", result);
 		return "/mypage/buyRequestTalent";
 	}
-	
+
 	// 예약 취소 - 재능
 	@RequestMapping("/bookingFail")
 	public String bookingFail(int parent) {
 		String sessionID = (String)session.getAttribute("loginID");
 		service.bookingFail(sessionID,parent);
-		
+
 		return "redirect:/my/buyRequestTalent";
-	}
-
-
-	/////////////////////////////////////////////////////////////////////////////////////////// 내가 쓴 게시글 목록
-
-	// 내가 쓴 게시글 목록 - 판매글(미완)
-	@RequestMapping("/myRequestSellProduct")
-	public String myRequestSellProduct() {
-		return "/mypage/myRequestSellProduct";
-	}
-
-	// 내가 쓴 게시글 목록 - 대여요청(미완)
-	@RequestMapping("/myRequestBuyProduct")
-	public String myRequestBuyProduct(){
-		return "/mypage/myRequestBuyProduct";
-	}
-
-	// 내가 쓴 게시글 목록 - 재능등록(미완)
-	@RequestMapping("/myRequestSellTalent")
-	public String myRequestSellTalent(){
-		String sessionID = (String)session.getAttribute("loginID");
-//		service.myRequestSellTalent(sessionID);
-		return "/mypage/myRequestSellTalent";
-	}
-
-	// 내가 쓴 게시글 목록 = 재능요청(미완)
-	@RequestMapping("/myRequestBuyTalent")
-	public String myRequestBuyTalent(){
-		return "/mypage/myRequestBuyTalent";
 	}
 
 
@@ -247,6 +218,35 @@ public class MypageController {
 	@RequestMapping(value="/dealEndTalentBuyList", produces="text/html;charset=utf8")
 	public String dealEndTalentBuyList() {
 		return "/mypage/dealEndTalentBuyList";
+	}
+
+
+	/////////////////////////////////////////////////////////////////////////////////////////// 내가 쓴 게시글 목록
+
+	// 내가 쓴 게시글 목록 - 판매글(미완)
+	@RequestMapping("/myRequestSellProduct")
+	public String myRequestSellProduct() {
+		return "/mypage/myRequestSellProduct";
+	}
+
+	// 내가 쓴 게시글 목록 - 대여요청(미완)
+	@RequestMapping("/myRequestBuyProduct")
+	public String myRequestBuyProduct(){
+		return "/mypage/myRequestBuyProduct";
+	}
+
+	// 내가 쓴 게시글 목록 - 재능등록(미완)
+	@RequestMapping("/myRequestSellTalent")
+	public String myRequestSellTalent(){
+		String sessionID = (String)session.getAttribute("loginID");
+		//service.myRequestSellTalent(sessionID);
+		return "/mypage/myRequestSellTalent";
+	}
+
+	// 내가 쓴 게시글 목록 = 재능요청(미완)
+	@RequestMapping("/myRequestBuyTalent")
+	public String myRequestBuyTalent(){
+		return "/mypage/myRequestBuyTalent";
 	}
 
 
