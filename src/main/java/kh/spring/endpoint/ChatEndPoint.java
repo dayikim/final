@@ -50,7 +50,7 @@ public class ChatEndPoint {
 				chatService.joinroom(create_roomid, session);
 			}
 		chatService.joinroom(roomid, session);
-		// 여기서 읽지 않은 메세지 처리 해야함. update message set unread_message ='N' where not id = session값 
+		messageService.readTounread(roomid,(String) hsession.getAttribute("loginID"));
 		}
 		
 		
@@ -60,10 +60,10 @@ public class ChatEndPoint {
 	public void onMessage(Session self, String message, boolean last) throws Exception { // 자기 자신의 메세지를 받을 수있다.
 
 		int seq = messageService.getSeq();
+		String unread = chatService.getRoomList().get((String) hsession.getAttribute("roomid")).size() ==1 ? "Y":"N";
 		messageService.insertMessage(seq, (String) hsession.getAttribute("roomid"),
-										  (String) hsession.getAttribute("loginID"),message);	
-		// insert 처리에서 읽지 않은 메시지 Y,N을 판단함 여기서.. 안해도 되고 인서트에서 해도 됨.
-		chatService.sendMessage(messageService.getMessage(seq));
+										  (String) hsession.getAttribute("loginID"),message,unread);
+		chatService.sendMessage(messageService.getMessage(seq),hsession);
 	}
 		
 	  @OnMessage(maxMessageSize =10485760)
