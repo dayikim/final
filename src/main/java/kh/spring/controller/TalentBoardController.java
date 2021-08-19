@@ -111,8 +111,8 @@ public class TalentBoardController {
 
 		PersonDTO writerInfo = STService.memberInfoById(id);//글 작성자 정보(이름,주소)
 		model.addAttribute("writerInfo",writerInfo);
-        SellTalentDTO dto = STService.detailView(seq);
-
+		
+        SellTalentDTO dto = STService.detailView(seq);//글 상세보기
 		 model.addAttribute("board",dto);
 		////		List<TalentFilesDTO> fileList = F_Service.selectAll(seq); //첨부파일 목록 출력   
 		//        System.out.println("파일이 비어 있나요?? "+fileList.isEmpty());//파일이 있나요?

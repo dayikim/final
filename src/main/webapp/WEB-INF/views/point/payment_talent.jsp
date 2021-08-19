@@ -417,15 +417,15 @@
 
                     <div class="lend_period">
                         <h4>
-                            <b> 재능 판매상품</b>
+                            <b> 재능 판매</b>
                         </h4>
                         <hr>
                         <h2 id="product">
-                            <b> 자소서 참삭해드립니다. </b>
+                            <b> ${board.title} </b>
                         </h2>
-                        <span class="align-baseline" id="price"><b class="final_price">1000</b> 상추</span>
+                        <span class="align-baseline" id="price"><b class="final_price">${board.price}</b> 상추</span>
                         <div id="profile-image">
-                            <!-- 프로필 이미지 -->
+                            <!-- 사진 이미지 -->
                             <img src="/imgs/nomalProfile.jpg">
                         </div>
                         <hr>
@@ -437,15 +437,23 @@
 
                         <div id="nickname_box">
                             <h9 id="nickname">
-                                <b>김다이</b>님
+                                <b>${myInfo.name}</b>님
                                 </h2>
                         </div>
 
                     </div>
 
                     <div id="small_profile-image">
-                        <!-- 프로필 이미지 -->
-                        <img src="자유게시판 수정.PNG">
+                        <c:choose>
+					<c:when test="${profile != null}">
+						<a href="/profile/myProfile"><img
+							src="/imgs/mypage/${profile.sysName }" id=profile></a>
+					</c:when>
+					<c:otherwise>
+						<a href="/profile/myProfile"><img src="/imgs/nomalProfile.jpg"
+							id=profile></a>
+					</c:otherwise>
+				</c:choose>
                     </div>
                 </section>
 
@@ -469,11 +477,11 @@
                         </h4>
                         <hr>
                         <span id="remain_point"><b>현재 보유 포인트 : </b> <span
-                                class="align-baseline pointAmount">1000</span>
+                                class="align-baseline pointAmount">${point}</span>
                             <b id="point1">상추</b></span>
-                        <span id="use_point"><b id="use">사용 포인트 : </b> <input class="amount"> <b id="point2">상추</b>
-                            <button type="button" class=" all btn-outline-info btn btn-sm">
-                                사용</i></button></span>
+                        <span id="use_point"><b id="use">사용 포인트 : </b> <input class="amount" name="point"> <b id="point2">상추</b>
+                            <button type="button" class=" all btn-outline-info btn btn-sm" onclick="pointcheck(this.form.point.value)">
+                                입력</i></button></span>
 
                         <span class="alertPoint">
                             보유 포인트 이상~~~
@@ -481,7 +489,7 @@
                     </div>
                     <div class="pay_box">
                         <span id="pay_amount">
-                            <h5><b>결제 금액 : <b class="final_price">100</b> <b id="point1">상추</b></b></h4>
+                            <h5><b>결제 금액 : <b class="final_price">${board.price}</b> <b id="point1">상추</b></b></h4>
                         </span>
                     </div>
                 </section>

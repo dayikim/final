@@ -168,25 +168,40 @@ li {
 }
 
 .container a {
-	border: 1px solid black;
 	color: black;
 	font-weight: bold;
 }
 
+/* 내 판매목록 */
 #selling {
-	background-color: rgb(0, 139, 7);
+	background-color: grey;
+	width:250px;
+	text-align:center;
+border: solid 1px black;
 }
+.card{
+margin:10px;
+}
+
+
+/* 거래후기 */
+#review{
+width:250px;
+text-align:center;
+border: solid 1px black;
+
+}
+
 
 .list li a:hover {
 	/* color: #43c4a4; */
-	background-color: rgb(0, 139, 7);
-}
+/* 	background-color: rgb(0, 139, 7);
+ */}
 
 .list li a:after {
 	display: block;
 	content: '';
-	/* 						border-bottom: solid 3px #39d9c8;
-*/
+border-bottom: solid 3px #39d9c8;
 	transform: scaleX(0);
 	background-color: greenyellow;
 	transition: transform 250ms ease-in-out;
@@ -209,7 +224,7 @@ li {
 	margin: auto;
 	margin-bottom: 20px;
 	border-radius: 5px;
-	border: 1px solid black;
+	border: 1px solid grey;
 	width: 90%;
 	height: auto;
 	margin-bottom: 20px;
@@ -324,24 +339,23 @@ li {
 					<ul class="nav justify-content-center list">
 						<li class="nav-item"><a class="nav-link active" id="selling"
 							aria-current="page" href="/profile/userSelling?id=${writer}">
-								판매 목록<span class="badge badge-pill badge-dark">${sellingCount}</span>
+								판매 목록<span class="badge badge-pill badge-dark"> ${sellingCount}</span>
 						</a></li>
-						<li class="nav-item"><a class="nav-link"
+						<li class="nav-item"><a class="nav-link" id="review"
 							href="/profile/review?reviewID=${writer}">거래후기<span
 								class="badge badge-pill badge-dark">0</span></a></li>
 					</ul>
 				</section>
+				<!-- 판매 목록 -->
 				<section id="table_menu">
 					<div class="row">
 						<c:forEach var="i" items="${sellinglist}">
-							<%-- <form action="/profile/myselling" id="frm">
-													<input type="hidden" name="id" value="${i.writer}">
-												</form> --%>
 							<div class="col-sm-4">
 								<div class="card">
 									<div class="card-body">
-										<a href="/profile/sellingViewByUser?seq =${i.seq}&id=${writer}"><img src="..." class="card-img-top" alt="..."></a>
-										<h5 class="card-title"><a href="/profile/sellingViewByUser?seq =${i.seq}&id=${writer}">${i.title}</a></h5>
+										<div class="card-category">[${i.category}]</div>
+									    <a href="/profile/sellingViewByUser?writer=${writer}&seq=${i.seq}"><img src="..." class="card-img-top" alt="..."></a>
+										<h5 class="card-title"><a href="/profile/sellingViewByUser?writer=${writer}&seq=${i.seq}">${i.title}</a></h5>
 										<div class="card-price ">${i.price}상추</div>
 										<div class="card-region-name">${i.address}</div>
 										<div class="card-counts">

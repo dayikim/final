@@ -434,7 +434,7 @@ hr {
 							pg: 'kakao',
 							merchant_uid: 'merchant_' + new Date().getTime(),
 
-							name: '돈다 : 돈다 포인트 충전',
+							name: '돈다 : 돈다 포인트(상추) 충전',
 							amount: money,
 							buyer_email: '${myInfo.email}',
 							buyer_name: '${myInfo.name}',
