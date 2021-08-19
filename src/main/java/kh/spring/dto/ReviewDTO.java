@@ -7,14 +7,23 @@ public class ReviewDTO {
    private String id;
    private String reviewID;
    private String contents;
+   private String reviewable;
    private Date Regdate;
-   
-
 
 public ReviewDTO() {
-	super();
-	// TODO Auto-generated constructor stub
+	
 }
+
+   public ReviewDTO(int seq, String id, String reviewID, String contents, String reviewable, Date regdate) {
+	super();
+	this.seq = seq;
+	this.id = id;
+	this.reviewID = reviewID;
+	this.contents = contents;
+	this.reviewable = reviewable;
+	Regdate = regdate;
+}
+
 
 public ReviewDTO(int seq, String id, String reviewID, String contents,Date Regdate ) {
 	super();
@@ -47,6 +56,14 @@ public String getContents() {
 }
 public void setContents(String contents) {
 	this.contents = contents;
+}
+
+public String getReviewable() {
+	return reviewable;
+}
+
+public void setReviewable(String reviewable) {
+	this.reviewable = reviewable;
 }
 
 public Date getRegdate() {
