@@ -1,6 +1,7 @@
 package kh.spring.service;
 
 import java.io.File;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +28,23 @@ public class BorrowService {
 	@Autowired
 	private PersonDAO pdao;
 	
+	//프로파일
 	public PersonDTO memberInfoById(String id) {
 		return pdao.memberInfoById(id);
 
 	}
+	
+	//게시글보기
 	public BorrowDTO detailView(int seq) {
 		return dao.detailview(seq);
 	}
 	
+	//사진리스트
+	public List<BorrowBoardFilesDTO> selectAll(int seq){
+		return fdao.selectAll(seq);
+	}
+	
+	//글 번호
 	public int getSeq() {
 		return dao.getSeq();
 	}

@@ -17,10 +17,13 @@ public class LendFilesDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 	
+	//사진 업로드
 	public int upload(LendFilesDTO dto) {
 		return mybatis.insert("LendFiles.upload",dto);
 	}
 	
+	
+	//사진 리스트
 	public List<LendFilesDTO> selectAll(int seq){
 		return mybatis.selectList("LendFiles.selectAll",seq);
 	}

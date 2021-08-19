@@ -56,8 +56,8 @@
     		.to-board img{width: 100%; height: 70%; border-radius: 20px;} 
     		.minibody a{color: black; cursor: pointer; text-decoration: none;}
     		.minibody a:hover{color: black; text-decoration: none;}
-    		.minibody p{font-size: 16px;margin:0px;}
-    		.minibody p:first-child{font-weight:600;}
+    		.minibody p{font-size: 18px;margin:0px;}
+    		.title{font-weight:600;}
     		
     		.board_page {margin-bottom:10px}
     		.board_page a{font-size:1.2rem}
@@ -97,7 +97,7 @@
 	    	})
 	    	
 	    	$("#writeBtn").on("click",function(){
-	    		location.href="/borrowBoard/borrowWrite";
+	    		location.href="/borrowBoard/toBorrow";
 	    	})
 	      	  
 		})
