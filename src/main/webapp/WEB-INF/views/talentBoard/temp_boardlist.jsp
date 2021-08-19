@@ -450,7 +450,7 @@ $(function(){
 							value="${boardAll.seq}">
 						<div class="num">${boardAll.seq}</div>
 						<div class="title">
-							<a href="/tBoard/sellingView?seq=${boardAll.seq}&id=${boardAll.writer}">${boardAll.title}</a>
+							<a href="/tBoard/RequestView?seq=${boardAll.seq}&id=${boardAll.writer}">${boardAll.title}</a>
 						</div>
 					</div>
 				</c:forEach>

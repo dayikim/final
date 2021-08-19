@@ -6,8 +6,12 @@
 
 
 <!-- 충전하기 -->
-<insert id ="charge">
+<insert id ="charge1">
 insert into charging values(charging_seq.nextval,#{id},#{amount},sysdate)
+</insert>
+
+<insert id ="charge">
+insert into point values(point_seq.nextval,#{id},#{amount},sysdate)
 </insert>
 
 <!-- 결제하기 -->

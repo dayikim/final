@@ -75,8 +75,8 @@
 					background-color: #f5f6f7;
 				}
 
-				section {
-					padding-top: 80px;
+				#write {
+					padding-top: 100px;
 					padding-bottom: 30px;
 				}
 
@@ -172,10 +172,6 @@
 				}
 
 
-				/* footer */
-				footer {
-					margin-top: 20px;
-				}
 			</style>
 			<script>
 
@@ -203,10 +199,6 @@
 						$(this).siblings("fileName").val(filename);
 					});
 					
-					/* document.on("click","selProductFile",function(){
-						$(this).
-					}) */
-
 
 					let title = $("#title_input");
 					let contents = $("#contents");
@@ -215,7 +207,7 @@
 
 
 					$("#submitBtn").on("click", function () { //글 작성 전 제목 내용 입력여부 확인
-						let priceReg = /[0-9]/g;
+						let priceReg = /^[0-9]/g;
 						let resultprice = priceReg.test(price.val());
 
 						if (title.val() == "") {
@@ -240,7 +232,7 @@
 
 						} else if (resultprice) {
 							if (price.val() < 100) {
-								alert("최소금액은 100원입니다. 가격을 다시 입력해주세요.");
+								alert("최소 가격은 100 상추입니다. 가격을 다시 입력해주세요.");
 								price.val("");
 								price.focus();
 								return false;
@@ -277,7 +269,10 @@
 					let index = 0;
 					filesArr.forEach(function (f) {
 						if (!f.type.match("image.*")) {
+							$("#fileName").val("");
+							$("#file").val("");
 							alert("확장자는 이미지 확장자만 가능합니다.");
+							$("#fileName").val("");
 							return;
 						}
 						preview_files.push(f);
@@ -389,7 +384,7 @@
         </div>
         <!-- Nav Bar End -->
 
-			<section>
+			<section id="write">
 				<div class="container">
 					<form action="/tBoard/requestWrite" method="post" id="writeform" enctype="multipart/form-data">
 						<div class="form-control wrapper ">
@@ -447,9 +442,9 @@
 								<!-- <input
 							type="text" class="form-control" placeholder="가격 (ex: 100 상추/최소 금액은 100원)"
 							id="price" name="price" required onkeypress="inNumber();" /> -->
-								<input type="text" class="form-control" placeholder="(ex: 100 상추/최소 금액은 100 상추)"
-									id="price" name="price" required
-									onKeyup="this.value=this.value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');" />
+								<input type="number" class="form-control" placeholder="(ex: 100 상추/최소 금액은 100 상추)"
+									id="price" name="price" required>
+						
 
 							</div>
 

@@ -86,20 +86,6 @@ public class TalentBoardController {
 		RTService.requestWrite(dto,realPath,fdto,file);
 		return "redirect:/";
 	}
-		
-//	@RequestMapping("talentList")//재능 리스트
-//	 public String talentList(Model model) throws Exception {
-//		List<TalentBoardDTO> list = TBoardService.getAllList();
-//	      model.addAttribute("boardAll",list);
-//		return "/talentBoard/temp_boardlist";
-//	}
-	
-	@RequestMapping("boardlist")//임시 리스트
-	 public String boardlist(Model model) throws Exception {
-		List<SellTalentDTO> list = STService.getAllList();
-	      model.addAttribute("boardAll",list);
-		return "/talentBoard/temp_boardlist";
-	}
 	
 	@RequestMapping("sellingView") //판매글 상세보기
 	public String sellingViewByMe(String id, int seq, Model model) throws Exception {
@@ -134,10 +120,10 @@ public class TalentBoardController {
 		model.addAttribute("profile",pfdto); //프로필
 
 		PersonDTO writerInfo = RTService.memberInfoById(id);//글 작성자 정보(이름,주소)
-		model.addAttribute("writerName",writerInfo);
+		model.addAttribute("writer",writerInfo);
 
 		RequestTalentDTO dto = RTService.detailView(seq);
-		model.addAttribute("tboard",dto);
+		model.addAttribute("board",dto);
 
 		////		List<TalentFilesDTO> fileList = F_Service.selectAll(seq); //첨부파일 목록 출력   
 		//        System.out.println("파일이 비어 있나요?? "+fileList.isEmpty());//파일이 있나요?
@@ -152,7 +138,7 @@ public class TalentBoardController {
 		if(result<0) {
 			return null ;
 		}else {
-			return "redirect:/";
+			return "/AllBoardList/lendList?choice=Allchoice&search=&cpage=1";
 
 		}
 	}
@@ -162,13 +148,13 @@ public class TalentBoardController {
 			if(result<0) {
 				return null ;
 			}else {
-				return "redirect:/";
+				return "/AllBoardList/lendList?choice=Allchoice&search=&cpage=1";
 
 			}
 		
 	}
 	
-	@RequestMapping("Booking") //판매 예약 글
+	@RequestMapping("booking") //판매 예약 글
 	public String Booking(BookingDTO dto) throws Exception {
 		String sessionID = (String) session.getAttribute("loginID");
         dto.setBooker(sessionID);
@@ -177,9 +163,8 @@ public class TalentBoardController {
 			return null ;
 		}else {
 			return "redirect:/";
+
 		}
 		
 	}
-	
-	
 }

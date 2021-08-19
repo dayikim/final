@@ -419,7 +419,7 @@ form {
 									<div class="mb-3 review_form">
 										<label class="col-form-label review_title">거래 경험이
 											좋으셨나요?</label> <label class="col-form-label review_text">00님에게
-											감사인사 남겨보세요.</label> <img src="이미지.png">
+											감사인사 남겨보세요.</label> <img src="imgs/letter.png">
 
 
 									</div>

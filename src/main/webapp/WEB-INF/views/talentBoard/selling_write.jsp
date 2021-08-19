@@ -75,8 +75,8 @@
 					background-color: #f5f6f7;
 				}
 
-				section {
-					padding-top: 80px;
+				#write {
+					padding-top: 100px;
 					padding-bottom: 30px;
 				}
 
@@ -170,12 +170,10 @@
 					margin-right: 10px;
 					margin-bottom: 10px;
 				}
+				
+				.footer{
+				margin:0}
 
-
-				/* footer */
-				footer {
-					margin-top: 20px;
-				}
 			</style>
 			<script>
 
@@ -185,10 +183,12 @@
 				$(function () {
 					$("#file").on("change", preview)
 
-					$("#file").change(function() { $("#fileName").val(this.files && this.files.length ? this.files[0].name : this.value.replace(/^C:\\fakepath\\/i, '')); })
+					$("#file").change(function() { 
+						$("#fileName").val(this.files && this.files.length ? this.files[0].name : this.value.replace(/^C:\\fakepath\\/i, '')); })
 
 
-					let fileTarget = $('.upload-hidden'); fileTarget.on('change', function () { // 값이 변경되면
+					let fileTarget = $('.upload-hidden');
+					fileTarget.on('change', function () { // 값이 변경되면
 						if (window.FileReader) { // modern browser
 							var filename = this.files[0].name;
 						}
@@ -200,14 +200,15 @@
 					});
 
 
-					let title = $("#title_input");
-					let contents = $("#contents");
-					let category = $("#category");
-					let price = $("#price");
-
 
 					$("#submitBtn").on("click", function () { //글 작성 전 제목 내용 입력여부 확인
-						let priceReg = /[0-9]/g;
+
+						let title = $("#title_input");
+						let contents = $("#contents");
+						let category = $("#category");
+						let price = $("#price");
+
+						let priceReg = /^[0-9]/g;
 						let resultprice = priceReg.test(price.val());
 
 						if (title.val() == "") {
@@ -232,7 +233,7 @@
 
 						} else if (resultprice) {
 							if (price.val() < 100) {
-								alert("최소금액은 100원입니다. 가격을 다시 입력해주세요.");
+								alert("최소 가격은 100 상추입니다. 가격을 다시 입력해주세요.");
 								price.val("");
 								price.focus();
 								return false;
@@ -269,8 +270,11 @@
 					let index = 0;
 					filesArr.forEach(function (f) {
 						if (!f.type.match("image.*")) {
+							$("#fileName").val("");
+							$("#file").val("");
 							alert("확장자는 이미지 확장자만 가능합니다.");
 							return;
+							
 						}
 						preview_files.push(f);
 
@@ -295,11 +299,10 @@
 				function deleteImage(index) {
 					console.log("index : " + index);
 					preview_files.splice(index, 1);
-
 					let img_id = "#img_id_" + index;
 					$(img_id).remove();
-					$("file").remove()
-
+					$("#fileName").val("");
+					$("#file").val("");
 					console.log(preview_files);
 				}
 
@@ -381,10 +384,10 @@
             </div>
         </div>
         <!-- Nav Bar End -->
-			<section>
+			<section id="write">
 				<div class="container">
 					<form action="/tBoard/sellingWrite" method="post" id="writeform" enctype="multipart/form-data">
-]						<div class="form-control wrapper ">
+						<div class="form-control wrapper ">
 
 							<div class="title">
 								<h2>
@@ -443,9 +446,9 @@
 								<!-- <input
 							type="text" class="form-control" placeholder="가격 (ex: 100 상추/최소 금액은 100원)"
 							id="price" name="price" required onkeypress="inNumber();" /> -->
-								<input type="text" class="form-control" placeholder="(ex: 100 상추/최소 금액은 100 상추)"
+								<input type="number" class="form-control" placeholder="(ex: 100 상추/최소 금액은 100 상추)"
 									id="price" name="price" required
-									onKeyup="this.value=this.value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');" />
+									 />
 
 							</div>
 
@@ -457,8 +460,8 @@
 									rows="10" id="contents" name="contents" required></textarea>
 							</div>
 							<div class="btn_wrap text-right">
-								<button type="button" class="btn btn-primary" id="submitBtn">등록</button>
-								<button type="reset" id="cancel" class="btn btn-dark">취소</button>
+								<button type="button" class="btn btn-primary btn-lg" id="submitBtn">등록</button>
+								<button type="reset" id="cancel" class="btn btn-secondary btn-lg">취소</button>
 
 							</div>
 						</div>
