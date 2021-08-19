@@ -19,5 +19,9 @@
 	<select id="FindById" resultType="kh.spring.dto.ChatRoomDto">
 		select * from ChatRoom where roomid = #{roomid}
 	</select>
+	
+	<select id="FindByFriendId" resultType="String">
+		select sessions from ChatRoom where roomid = #{roomid} and not sessions = #{id}
+	</select>
 
 </mapper>

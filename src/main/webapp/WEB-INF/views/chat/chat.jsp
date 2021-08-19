@@ -157,6 +157,9 @@ height:100%;
 	width:100%;
 	height:100%;
 }
+.content-wrapper{
+background-color: #FAFAFA;
+}
 
 </style>
 
@@ -186,16 +189,10 @@ $(function(){
 			
 		let text = JSON.parse(event.data);
 		
-		
-		
-		
 		if(text.isCheck != "true"){
 			
-			for(let i=0; i<$(".user").length; i++){
-				if($($(".user")[i]).attr("id") == $("#roomid").val()){
-					console.log("찾긴하냐!");
-					$($(".user")[i]).children("#unread").text(text.unreadcount);
-				}
+			if(text.unreadcount != null){
+				window.parent.postMessage(text.unreadcount+":"+text.roomid,'http://192.168.35.97/chat/waitingroom');
 			}
 			
 			if(text.isNaver == "true"){
@@ -262,7 +259,12 @@ $(function(){
 				chat_hour.text(text.trans_time);
 				chat_text.text(text.message);
 				chat_avatar_name.text(text.loginID);
-				chat_avatar_img.attr("src","https://www.bootdey.com/img/Content/avatar/avatar3.png");
+				console.log(text.profile_image+"이건 뭘까.");
+				if(text.profile_image != null){
+					chat_avatar_img.attr("src","data:image/png;base64,"+text.profile_image);
+				}else{
+					chat_avatar_img.attr("src","/imgs/nomalProfile.jpg")
+				}
 				
 				chat_avatar.append(chat_avatar_img);
 				chat_avatar.append(chat_avatar_name);
@@ -329,7 +331,11 @@ $(function(){
 								"color":"dodgerblue",
 								"font-weight":"bolder"});
 				chat_avatar_name.text(text.loginID);
-				chat_avatar_img.attr("src","https://www.bootdey.com/img/Content/avatar/avatar3.png");
+				if(text.profile_image != null){
+					chat_avatar_img.attr("src","data:image/png;base64,"+text.profile_image);
+				}else{
+					chat_avatar_img.attr("src","/imgs/nomalProfile.jpg")
+				}
 				
 				chat_avatar.append(chat_avatar_img);
 				chat_avatar.append(chat_avatar_name);
@@ -416,7 +422,11 @@ $(function(){
 					chat_hour.text(text.trans_time);
 					chat_text.text(text.message);
 					chat_avatar_name.text(text.loginID);
-					chat_avatar_img.attr("src","https://www.bootdey.com/img/Content/avatar/avatar3.png");
+					if(text.profile_image != null){
+						chat_avatar_img.attr("src","data:image/png;base64,"+text.profile_image);
+					}else{
+						chat_avatar_img.attr("src","/imgs/nomalProfile.jpg")
+					}
 					
 					chat_avatar.append(chat_avatar_img);
 					chat_avatar.append(chat_avatar_name);
@@ -466,7 +476,11 @@ $(function(){
         		chat_hour.text(text.trans_time);
         		
         		chat_avatar_name.text(text.loginID);
-        		chat_avatar_img.attr("src","https://www.bootdey.com/img/Content/avatar/avatar3.png");
+        		if(text.profile_image != null){
+					chat_avatar_img.attr("src","data:image/png;base64,"+text.profile_image);
+				}else{
+					chat_avatar_img.attr("src","/imgs/nomalProfile.jpg")
+				}
         		
         		chat_avatar.append(chat_avatar_img);
         		chat_avatar.append(chat_avatar_name);
@@ -506,7 +520,7 @@ $(function(){
 		
 		
 		//드래그앤드랍
-		$("#drag_display").on("dragenter", function(e){
+		$("#chat-container").on("dragenter", function(e){
 		    e.preventDefault();
 		    e.stopPropagation();
 		    console.log("드래그 엔터")
@@ -514,14 +528,14 @@ $(function(){
 		    e.preventDefault();
 		    e.stopPropagation();
 		    console.log("드래그 오버")
-		    $(this).css("background-color", "#FFD8D8");
+		    $(this).css("background-color", "#BDBDBD");
 		}).on("dragleave", function(e){
 		    e.preventDefault();
 		    e.stopPropagation();
 		    console.log("드래그 떠남")
-		    $(this).css("background-color", "#FFF");
+		    $(this).css("background-color", "#FAFAFA");
 		}).on("drop", function(e){
-			 $(this).css("background-color", "#FFF");
+			 $(this).css("background-color", "#FAFAFA");
 		    e.preventDefault();
 		    console.log("드랍")
 		    var files = e.originalEvent.dataTransfer.files;
@@ -747,7 +761,7 @@ $(function(){
 <body oncontextmenu="return false">
 
 <input type="hidden" id=roomid value = ${roomid }>
-<div class="container">
+<%-- <div class="container">
     <!-- Page header start -->
     <div class="page-title">
         <div class="row gutters">
@@ -824,9 +838,11 @@ $(function(){
 	                       	
 	                       	</c:when>
                        	
-	                       	<c:otherwise>
+	                       	<c:otherwise> --%>
 	                       	
-	                       		  <div class="col-xl-8 col-lg-8 col-md-8 col-sm-9 col-9" id = drag_display>
+	       
+	                   <div class="content-wrapper">
+	                      <div class="col-12" id = drag_display>
                             <div class="selected-user">
                                 <span>To: <span class="name">피기천사얌</span></span>
                             </div>
@@ -842,7 +858,15 @@ $(function(){
 				  													<c:when test="${pack.id != loginID}">
 				  														<li class="chat-left">
 									                                        <div class="chat-avatar">
-									                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
+									                                        	<c:choose>
+									                                        		<c:when test="${friend_profile_img != null}">
+									                                        			<img src="data:image/png;base64,${friend_profile_img}" alt="Retail Admin">
+									                                        		</c:when>
+									                                        		
+									                                        		<c:otherwise>
+									                                        			<img src="/imgs/nomalProfile.jpg">
+									                                        		</c:otherwise>
+									                                        	</c:choose>
 									                                            <div class="chat-name">${pack.id }</div>
 									                                        </div>
 										                                       <div class="chat-text">${pack.message }</div> 
@@ -855,7 +879,15 @@ $(function(){
 										                                        <div class="chat-hour">${time.format(pack.reg_date) }</div>
 										                                        <div class="chat-text">${pack.message }</div>
 										                                        <div class="chat-avatar">
-										                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
+										                                            <c:choose>
+									                                        		<c:when test="${profile_img != null}">
+									                                        			<img src="data:image/png;base64,${profile_img}" alt="Retail Admin">
+									                                        		</c:when>
+									                                        		
+									                                        		<c:otherwise>
+									                                        			<img src="/imgs/nomalProfile.jpg">
+									                                        		</c:otherwise>
+									                                        	</c:choose>
 										                                            <div class="chat-name">${pack.id }</div>
 										                                        </div>
 									                                    	</li>
@@ -868,17 +900,32 @@ $(function(){
 				  													<c:when test="${pack.id != loginID}">
 				  														<li class="chat-left">
 									                                        <div class="chat-avatar">
-									                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
+									                                           <c:choose>
+									                                        		<c:when test="${friend_profile_img != null}">
+									                                        			<img src="data:image/png;base64,${friend_profile_img}" alt="Retail Admin">
+									                                        		</c:when>
+									                                        		
+									                                        		<c:otherwise>
+									                                        			<img src="/imgs/nomalProfile.jpg">
+									                                        		</c:otherwise>
+									                                        	</c:choose>
 									                                            <div class="chat-name">${pack.id }</div>
 									                                        </div>
-									                                        <div class="chat-text">${pack.oriName }</div>
+									                                        <div class =option_picture>
+										                                        	<div class = transferImage>
+										                                        		<img src ="data:image/png;base64,${pack.sysName}" id = chat-image>
+										                                        	</div>
+										                                        	<div class=option id=option style = "text-align:center">
+										                                        		<a href="/file/download?seq=${pack.seq }">다운로드</a>
+										                                        	</div>
+										                                        </div>
 									                                        <div class="chat-hour">${time.format(pack.reg_date)}</div>
 									                                    </li>
 				  													</c:when>
 				  													<c:otherwise>
 				  														   <li class="chat-right">
 										                                        <div class="chat-hour">${time.format(pack.reg_date) }</div>
-										                                        <div class =option_picture>
+										                                         <div class =option_picture>
 										                                        	<div class = transferImage>
 										                                        		<img src ="data:image/png;base64,${pack.sysName}" id = chat-image>
 										                                        	</div>
@@ -887,7 +934,15 @@ $(function(){
 										                                        	</div>
 										                                        </div>
 										                                        <div class="chat-avatar">
-										                                            <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
+										                                             <c:choose>
+									                                        		<c:when test="${profile_img != null}">
+									                                        			<img src="data:image/png;base64,${profile_img}" alt="Retail Admin">
+									                                        		</c:when>
+									                                        		
+									                                        		<c:otherwise>
+									                                        			<img src="/imgs/nomalProfile.jpg">
+									                                        		</c:otherwise>
+									                                        	</c:choose>
 										                                            <div class="chat-name">${pack.id }</div>
 										                                        </div>
 									                                    	</li>
@@ -914,22 +969,17 @@ $(function(){
                                 </div>
                         </div>
 	                       	
-	                       	</c:otherwise>
-	                        
-                        </c:choose>
-                    </div>
+     </div>
                     <!-- Row end -->
-                </div>
+                 
 
-            </div>
-
-        </div>
+     
         <!-- Row end -->
 
-    </div>
+   
     <!-- Content wrapper end -->
 
-</div>
+
     
 </body>
 </html>
