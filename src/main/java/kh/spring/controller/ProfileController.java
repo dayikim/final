@@ -66,8 +66,7 @@ public class ProfileController {
 		
 //		List<TBoardFilesDTO> pList =TFService.getpictures()		
 //         model.addAttribute("pictures",pList);
-		
-//		String kind ="재능등록";
+
 		int result1 = PService.sellingCount1(id);
 		int result2 = PService.sellingCount2(id);
 		int sellingCount= result1+result2;
@@ -91,7 +90,6 @@ public class ProfileController {
 		session.setAttribute("myInfo", pdto); // 내 정보	
 		model.addAttribute("profile",pfdto); //프로필
 
-//		String kind ="재능등록";
 		int result1 = PService.sellingCount1(id);
 		int result2 = PService.sellingCount2(id);
 		int sellingCount= result1+result2;
@@ -140,6 +138,9 @@ public class ProfileController {
 		int result2 = PService.sellingCount2(id);
 		int sellingCount= result1+result2;
 		model.addAttribute("sellingCount",sellingCount);//판매목록 갯수
+		
+		int result = RService.reviewCount(id);
+		model.addAttribute("reviewCount",result);//리뷰 갯수
 
 		List<HashMap<String,String>> sellingList;
 		sellingList =PService.sellingList(id);//판매목록 리스트
@@ -219,35 +220,54 @@ public class ProfileController {
 	public String Review(ReviewDTO dto, Model model) {
 		String sessionID = (String) session.getAttribute("loginID");
 		dto.setReviewID(sessionID);
+		/* dto.setParentseq(seq); */
 		RService.write(dto);
 		return "/profile/review_UerProfile";
 	}
 	
-//	@RequestMapping("review") //거래후기 for userprofile
-//	public String Review(String id, Model model) {
-//		
-////	PersonDTO pd = TBoardService.memberInfoById(id);//글 작성자 정보(이름,주소)
-////	model.addAttribute("memberInfo",pd);
-//		
-//String sessionID = (String) session.getAttribute("loginID");
-//		List<ReviewDTO> reviewList= RService.getAllList(sessionID);
-//		System.out.println("id 받기" +id);
-//		
-//		
-//		return "/profile/review_MyProfile";
-//	}
-}
+@RequestMapping("reviewListForMe") //거래후기 from myprofile
+	public String reviewListForMe( Model model) {
+	String id = (String) session.getAttribute("loginID");
+	PersonDTO pdto = MService.mypageList(id); // 내 정보 출력
+	ProfileFilesDTO pfdto = MService.profileSelect(id); // 내 프사 출력
+	session.setAttribute("myInfo", pdto); // 내 정보
+	model.addAttribute("profile",pfdto); //프로필
 	
-//	@RequestMapping("review") //거래후기 from myprofile
-//	public String Review2(String id, Model model) {
-////	PersonDTO pd = TBoardService.memberInfoById(id);//글 작성자 정보(이름,주소)
-////	model.addAttribute("memberInfo",pd);
-//		System.out.println("id 받기" +id);
-//		String sessionID = (String) session.getAttribute("loginID");
-//		List<ReviewDTO> reviewList= RService.getAllList(sessionID);
-//		System.out.println(reviewList.isEmpty());
-//		System.out.println(reviewList.size());
-//		model.addAttribute("reviewlist",reviewList);
-//		return "/profile/review_MyProfile";
-//	}
+//	String reviewer	
+//    PersonDTO pd = RService.memberInfoById(id);//리뷰어 정보(이름,주소)
+//    model.addAttribute("memberInfo",pd);
+	
+	int result1 = PService.sellingCount1(id);
+	int result2 = PService.sellingCount2(id);
+	int sellingCount= result1+result2;
+	model.addAttribute("sellingCount",sellingCount);//판매목록 갯수
+
+	int result = RService.reviewCount(id);
+	model.addAttribute("reviewCount",result);//리뷰 갯수
+	
+	List<ReviewDTO> reviewList= RService.getAllList(id);
+	System.out.println(reviewList.isEmpty());
+	System.out.println(reviewList.size());
+	model.addAttribute("reviewlist",reviewList);
+
+	
+		return "/profile/review_MyProfile";
+	}
+
+	
+////	@RequestMapping("reviewList") //거래후기 for myprofile
+////	public String Review(String id, Model model) {
+////		
+//////	PersonDTO pd = TBoardService.memberInfoById(id);//글 작성자 정보(이름,주소)
+//////	model.addAttribute("memberInfo",pd);
+////		
+////String sessionID = (String) session.getAttribute("loginID");
+////		List<ReviewDTO> reviewList= RService.getAllList(sessionID);
+////		System.out.println("id 받기" +id);
+////		
+////		
+////		return "/profile/review_MyProfile";
+////	}
 //}
+	
+}

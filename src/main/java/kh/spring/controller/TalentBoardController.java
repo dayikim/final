@@ -103,26 +103,23 @@ public class TalentBoardController {
 		////		List<TalentFilesDTO> fileList = F_Service.selectAll(seq); //첨부파일 목록 출력   
 		//        System.out.println("파일이 비어 있나요?? "+fileList.isEmpty());//파일이 있나요?
 		//        model.addAttribute("filelist", fileList);//파일리스트를 request애 담는다.
-		//
-		
-		
+		//	
 		return "/talentBoard/view_selling";
 	}
 	
-
 	@RequestMapping("RequestView") //요청글 상세보기 
 	public String RequestView(String id, int seq,Model model) throws Exception {
 		System.out.println(seq);
 		String sessionID = (String) session.getAttribute("loginID");
-		PersonDTO pdto = MypageService.mypageList(id); // 내 정보 출력
-		ProfileFilesDTO pfdto = MypageService.profileSelect(id); // 내 프사 출력
-		session.setAttribute("myInfo", pdto); // 내 정보
-		model.addAttribute("profile",pfdto); //프로필
+		//////////////////////////////////////////////////////////////////////
+		ProfileFilesDTO pfdto = MypageService.profileSelect(id); // 글작성자 이미지
+		model.addAttribute("profile",pfdto); //<= 코드 수정 필요(글 작성자 이미지 가져와야 함!!)
+		//////////////////////////////////////////////////////////////////////////////
 
 		PersonDTO writerInfo = RTService.memberInfoById(id);//글 작성자 정보(이름,주소)
 		model.addAttribute("writer",writerInfo);
 
-		RequestTalentDTO dto = RTService.detailView(seq);
+		RequestTalentDTO dto = RTService.detailView(seq);//요청 글 상세
 		model.addAttribute("board",dto);
 
 		////		List<TalentFilesDTO> fileList = F_Service.selectAll(seq); //첨부파일 목록 출력   
@@ -162,7 +159,7 @@ public class TalentBoardController {
 		if(result<0) {
 			return null ;
 		}else {
-			return "redirect:/";
+			return "/AllBoardList/lendList?choice=Allchoice&search=&cpage=1";
 
 		}
 		

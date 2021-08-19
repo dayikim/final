@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kh.spring.dao.ReviewDAO;
+import kh.spring.dto.PersonDTO;
 import kh.spring.dto.ReviewDTO;
 
 @Service
@@ -20,6 +21,10 @@ public class ReviewService {
 	public List<ReviewDTO> getAllList(String sessionID){
 		return dao.getAllList(sessionID);
 		
+	}
+
+	public int reviewCount(String id) {
+		return dao.reviewCount(id);
 	}
 
 	
