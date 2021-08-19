@@ -19,7 +19,50 @@
     <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2cfa7967f01741c3dc098172b2a39ee7&libraries=services"></script>
 </head>
+<script>
+let ws = new WebSocket("ws://192.168.35.97/chat/main"); 
 
+$(function(){
+	
+	let roomid;
+	
+	window.addEventListener('message',handleDocHeightMsg,false);
+
+
+	function handleDocHeightMsg(eventObj){
+		ws.send(eventObj.data);
+	}
+	
+	ws.onmessage=function(event){
+		let text  = JSON.parse(event.data);
+		
+		if(text.unread != 0){
+			for(let i =0; i<$(".user").length; i++){
+				if($($(".user")[i]).attr("id")==text.roomid){
+					$($(".user")[i]).children("#unread").css("display","block");
+					$($(".user")[i]).children("#unread").text(text.unread);
+				}
+			}
+		}else{
+			for(let i =0; i<$(".user").length; i++){
+				if($($(".user")[i]).attr("id")==text.roomid){
+					$($(".user")[i]).children("#unread").css("display","none");
+				}
+			}
+		}
+		
+	}
+	
+	
+	$(".user").on("click",function(){	
+			$("#chatdisplay").css("display","block");
+			$("#chatFrame").attr("src","/chat?roomid="+$(this).attr("id"));	
+			$("#waiting").css("display","none");
+	})
+	
+})
+
+</script>
 
 <style>
 *{ z-index:0;}
@@ -146,12 +189,34 @@ height:100%;
 	height:100%;
 }
 
+#unread{
+
+width:25px;
+height: 25px;
+font-size: 12px;
+text-align: center;
+line-height: 25px;
+position: absolute;
+left: 85%;
+display: none;
+}
+#chatdisplay{
+
+	height:834px;
+	display: none;
+
+}
+.users-container{
+background-color:#FAFAFA;
+}
+
+
 </style>
 
 <body oncontextmenu="return false">
 
 
-<div class="container">
+<div class="container shadow p-3 mb-5 bg-body rounded">
     <!-- Page header start -->
     <div class="page-title">
         <div class="row gutters">
@@ -175,7 +240,7 @@ height:100%;
 
                     <!-- Row start -->
                     <div class="row no-gutters">
-                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-3 col-3">
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
                             <div class="users-container">
                                 <div class="chat-search-box">
                                     <div class="input-group">
@@ -200,12 +265,13 @@ height:100%;
                                     </li> -->
                                     <c:forEach var="item" items="${list }">
 		                                  <li class="person" data-chat="person1">
-		                                       <div class="user">
+		                                       <div class="user" id = ${item.roomid }>
+		                                       <div class="rounded-circle badge-danger" id="unread"></div>
 		                                           <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin"> <!-- 판매라는 이미지 십입-->
 		                                           <span class="status busy"></span> <!-- 상태 표시가 가능함!-->
 		                                        </div>
 		                                        <p class="name-time">
-		                                           <span class="title"><a href = "/chat?roomid=${item.roomid }" >${item.title }</a></span>
+		                                           <span class="title">${item.title }</span>
 		                                        </p>
 		                                   </li>
                                     </c:forEach>
@@ -215,22 +281,24 @@ height:100%;
                         </div>
                         
                         
-                        <c:choose>
+    
                         
-	                       	<c:when test="${waiting ==true }">
-	                       		<div class="col-xl-8 col-lg-8 col-md-8 col-sm-9 col-9" id="waiting">
+	         
+	                       		<div class="col-9" id="waiting">
 	                       			<div class=chatinfo>
 		                       			<p>안녕하세요! <span id=titlename>돈-다 Chat</span> 입니다!</p>
 		                       			<p> <i class="fas fa-arrow-left"></i> 왼쪽 채팅방 목록을 확인해주세요! <p>
 	                       			</div>
 	                       		
 	                       		</div>
-	                       	
-	                       	</c:when>
-                       	
-	                       	<c:otherwise>
-	                       	
-	                       		  <div class="col-xl-8 col-lg-8 col-md-8 col-sm-9 col-9" id = drag_display>
+	                   
+		                       	<div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9" id=chatdisplay>
+		                       		<iframe src="" style="width:100%; height:100%;" id= chatFrame></iframe>
+		                       	</div>
+
+	                        
+  
+<%-- 	                        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-9 col-9" id = drag_display>
                             <div class="selected-user">
                                 <span>To: <span class="name">피기천사얌</span></span>
                             </div>
@@ -317,10 +385,7 @@ height:100%;
 	                                </div>
                                 </div>
                         </div>
-	                       	
-	                       	</c:otherwise>
-	                        
-                        </c:choose>
+	                       	 --%>
                     </div>
                     <!-- Row end -->
                 </div>

@@ -1,8 +1,11 @@
 package kh.spring.service;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +24,8 @@ import com.google.gson.JsonObject;
 import kh.spring.API.NaverApi;
 import kh.spring.config.ChatRegx;
 import kh.spring.dao.ChatRoomDao;
+import kh.spring.dao.MessageDao;
+import kh.spring.dao.ProfileFilesDAO;
 import kh.spring.dto.ChatFileDTO;
 import kh.spring.dto.ChatRepositoryDTO;
 import kh.spring.dto.ChatRoomDto;
@@ -31,7 +36,7 @@ import kh.spring.dto.MessageDTO;
 public class ChatService  implements InitializingBean {
 	
 	@Autowired
-	MessageService ms;
+	MessageDao ms;
 	
 	@Autowired
 	ChatRoomDao crd;
@@ -43,7 +48,7 @@ public class ChatService  implements InitializingBean {
 	ChatRegx cr;
 	
 	@Autowired
-	HttpSession session;
+	ProfileFilesDAO pffd;
 	
 	private static Map<String, List<Session>> rs = Collections.synchronizedMap(new HashMap<String, List<Session>>());
 	
@@ -75,16 +80,10 @@ public class ChatService  implements InitializingBean {
 			rs.get(roomid).add(session);
 	}
 	//룸리스트에서 해당룸을 찾아, 그 안에 있는 세션 리스트에게 메세지를 보낸다. 
-	public void sendMessage(MessageDTO md) throws Exception {
+	public void sendMessage(MessageDTO md,HttpSession hsession) throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("a h:mm"); //날짜 형식
 		List<Session> sessionList = rs.get(md.getRoomid());
-		int unread_count =0;
-		if(sessionList.size()==1) {
-			unread_count = ms.getUnread_count(md.getRoomid(),md.getId());
-			System.out.println(md.getRoomid()+"에서 온" + unread_count +"개수");
-		}else {
-			unread_count=0;
-		}
+		
 		for(Session session :sessionList) {
 			JsonObject json = new JsonObject();
 			json.addProperty("loginID", md.getId());
@@ -97,8 +96,14 @@ public class ChatService  implements InitializingBean {
 				json.addProperty("isLocation" ,"true");
 				json.addProperty("search",cr.findlocationRegx(md.getMessage()).substring(2));
 			}
+			
+			String profile_binary =pffd.profileSelect((String)hsession.getAttribute("loginID")) != null ? 
+									toBinary(hsession,pffd.profileSelect((String)hsession.getAttribute("loginID")).getSysName()):
+									null;
+			json.addProperty("profile_image",profile_binary);
 			json.addProperty("message" ,md.getMessage());
-			json.addProperty("unreadcount", unread_count);
+			json.addProperty("roomid", md.getRoomid());
+			json.addProperty("unreadcount", ms.unreadCount(md.getRoomid(),md.getId()));
 			json.addProperty("trans_time" ,sdf.format(md.getReg_date()));
 			session.getBasicRemote().sendText(json.toString());
 		}
@@ -156,28 +161,27 @@ public class ChatService  implements InitializingBean {
 		return rs;
 	}
 	
-//	public String transformDate(Date temp) {
-//		Date util_date = new Date(temp.getTime());
-//		TimeZone tz = TimeZone.getTimeZone("Asia/Seoul");
-//		SimpleDateFormat dateForm = new SimpleDateFormat("HH:mm");
-//		dateForm.setTimeZone(tz);
-//		return dateForm.format(util_date);
-//		
-//	}
-//	
-//	public String convertHour(String temp_time) {
-//		String[] split_time = temp_time.split(":");
-//		int tempHour = Integer.parseInt(split_time[0]);
-//		int convertedhour = tempHour >=15 ? tempHour-15: tempHour+9;
-////		return 	tempHour >=15 ? (Integer.parseInt(split_time[0])-15)/10 == 1 ? (Integer.parseInt(split_time[0])-15)+":"+split_time[1]:
-////			 					 "0"+(Integer.parseInt(split_time[0])-15)+":"+split_time[1]:
-////			 					 (Integer.parseInt(split_time[0])+9)+":"+split_time[1];
-//		
-//		return convertedhour >=12?   "오후 "+convertedhour+":"+split_time[1] : 
-//			   convertedhour/9 ==1 ? "오전 "+convertedhour+":"+split_time[1] : 
-//				                     "오전 "+"0"+convertedhour+":"+split_time[1]; 
-//	}
+	public String toBinary(HttpSession session,String sysName) throws Exception {
+		return Base64.getEncoder().encodeToString(getFileBinary(session.getServletContext().getRealPath("resources/imgs/mypage")+"/"+sysName));
+	}
 	
+	private byte[] getFileBinary(String filepath) {
+		File file = new File(filepath);
+		byte[] data = new byte[(int) file.length()];
+		try (FileInputStream stream = new FileInputStream(file)) {
+			stream.read(data, 0, data.length);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+			return data;
+	}
+	
+	public String findFriendid(String roomid, String id) {
+		Map<String,String> temp = new HashMap<String, String>();
+		temp.put("roomid", roomid);
+		temp.put("id",id);
+		return crd.findFriendId(temp);
+	}
 	
 }
 	

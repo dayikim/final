@@ -34,8 +34,11 @@ public class MessageDao {
 	public int unreadCount(String roomid,String id) {
 		Map <String,String> temp = new HashMap();
 		temp.put("roomid", roomid);
-		temp.put("id", id);
 		return mybatis.selectOne("Message.unreadCount", temp);
+	}
+	
+	public int readTounread(String roomid) {
+		return mybatis.update("Message.readTounread", roomid);
 	}
 	
 	

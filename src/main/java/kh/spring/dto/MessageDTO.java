@@ -23,11 +23,12 @@ public class MessageDTO implements Comparable<ChatFileDTO> {
 		this.unread_message = unread_message;
 	}
 	
-	public MessageDTO(int seq,String roomid, String id, String message) {
+	public MessageDTO(int seq,String roomid, String id, String message, String unread_message) {
 		this.seq = seq;
 		this.roomid = roomid;
 		this.id = id;
 		this.message = message;
+		this.unread_message=unread_message;
 	}
 	
 	public MessageDTO(String roomid, String id, String message) {

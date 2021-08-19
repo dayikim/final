@@ -26,6 +26,7 @@ import kh.spring.config.ChatRegx;
 import kh.spring.service.ChatService;
 import kh.spring.service.FileService;
 import kh.spring.service.MessageService;
+import kh.spring.service.MypageService;
 
 /**
  * Handles requests for the application home page.
@@ -48,6 +49,9 @@ public class ChatController {
 	
 	@Autowired
 	private ChatRegx cr;
+	
+	@Autowired
+	private MypageService myservice;
 	
 	/*
 	 * @RequestMapping("") String home() { return "home";}
@@ -77,6 +81,12 @@ public class ChatController {
 		md.addAttribute("list", cs.getChatRoomlist((String)session.getAttribute("loginID")));
 		md.addAttribute("pastMessage", ms.pastMessage(roomid));
 		md.addAttribute("time", new SimpleDateFormat("a h:mm"));
+		String myprofile_tobinary = myservice.profileSelect((String)session.getAttribute("loginID")) != null? 
+				cs.toBinary(session, myservice.profileSelect((String)session.getAttribute("loginID")).getSysName()): null;
+		String friendprofile_tobinary = myservice.profileSelect(cs.findFriendid(roomid,(String)session.getAttribute("loginID"))) != null? 
+				cs.toBinary(session, myservice.profileSelect(cs.findFriendid(roomid,(String)session.getAttribute("loginID"))).getSysName()) : null;
+		md.addAttribute("profile_img",myprofile_tobinary);
+		md.addAttribute("friend_profile_img",friendprofile_tobinary);
 		md.addAttribute("regex",cr);
 		return "chat/chat";
 	}
