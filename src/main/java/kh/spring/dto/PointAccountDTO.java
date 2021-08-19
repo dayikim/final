@@ -2,7 +2,7 @@ package kh.spring.dto;
 
 import java.sql.Date;
 
-public class PointAccount {
+public class PointAccountDTO {
 private int seq;
 private String id;
 private int pointamount;
@@ -11,11 +11,11 @@ private int earnamount;
 private String reason;
 private Date dealdate;
 
-public PointAccount() {
+public PointAccountDTO() {
 	
 }
 
-public PointAccount(int seq, String id, int pointamount, int usepoint, int earnamount, String reason, Date dealdate) {
+public PointAccountDTO(int seq, String id, int pointamount, int usepoint, int earnamount, String reason, Date dealdate) {
 	super();
 	this.seq = seq;
 	this.id = id;
