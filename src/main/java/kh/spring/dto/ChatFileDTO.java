@@ -2,9 +2,11 @@ package kh.spring.dto;
 
 import java.sql.Date;
 
+import kh.spring.API.DateSortable;
 
 
-public class ChatFileDTO{
+
+public class ChatFileDTO implements DateSortable{
 	
 	private int seq;
 	private String oriName;
@@ -67,7 +69,7 @@ public class ChatFileDTO{
 	public Date getReg_date() {
 		return reg_date;
 	}
-
+	
 	public void setReg_date(Date reg_date) {
 		this.reg_date = reg_date;
 	}
@@ -86,6 +88,12 @@ public class ChatFileDTO{
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	@Override
+	public long getDate() {
+		// TODO Auto-generated method stub
+		return this.reg_date.getTime();
 	}
 	
 }

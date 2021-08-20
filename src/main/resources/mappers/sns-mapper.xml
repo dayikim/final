@@ -72,7 +72,11 @@
 	</select>
 	
 	<select id="page" resultType="kh.spring.dto.SnsDTO">
-		select * from (select row_number() over(order by 1 desc) rnum,seq,id,contents,category,region,sysdate,love from snsBoard where region=(select SUBSTR(address1,1,2) from person where id =#{id}))where rnum between 1+#{viewcount}*(#{count}-1) and #{viewcount}*#{count} order by 1 desc
+		select * from (select row_number() over(order by seq desc) rnum,seq,id,contents,category,region,sysdate,love from snsBoard where region=(select SUBSTR(address1,1,2) from person where id =#{id}))where rnum between 1+#{viewcount}*(#{count}-1) and #{viewcount}*#{count}
+	</select>
+	
+	<select id="initSNSpage" resultType="kh.spring.dto.SnsDTO">
+		select * from (select row_number() over(order by seq desc) rnum,seq,id,contents,category,region,sysdate,love from snsBoard where region=(select SUBSTR(address1,1,2) from person where id =#{value}))where rnum between 1 and 5
 	</select>
 	
 </mapper>

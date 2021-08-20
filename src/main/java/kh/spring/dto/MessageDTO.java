@@ -2,9 +2,11 @@ package kh.spring.dto;
 
 import java.sql.Date;
 
+import kh.spring.API.DateSortable;
 
 
-public class MessageDTO{
+
+public class MessageDTO implements DateSortable{
 	
 	private int seq;
 	private String roomid;
@@ -75,5 +77,10 @@ public class MessageDTO{
 
 	public void setUnread_message(String unread_message) {
 		this.unread_message = unread_message;
+	}
+
+	@Override
+	public long getDate() {
+		return this.reg_date.getTime();
 	}
 }
