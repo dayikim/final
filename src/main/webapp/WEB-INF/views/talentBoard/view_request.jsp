@@ -250,9 +250,21 @@
 
     </style>
     <script type="text/javascript">
+    $(function() {
+		$("#search").keyup(function(e) {
+			if (e.keyCode == 13) {
+				location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
+			}
+		})
+		
+		$("#chat").on("click",function(){
+			location.href = "/chat";
+		})
+	})
+    
     $(function(){
     	$("#request").on("click",function(){
-    		location.href = "/tBoard/toRequest"
+    		location.href = "/tBoard/toSelling"
     	})
     	
 		$("#deleteBtn").on("click",function () { //게시글 삭제
@@ -357,8 +369,8 @@
         <c:choose>
                 <c:when test="${loginID == board.writer}">
             <div class="btn_box btn_wrap text-right ">
-                <button type="button" class="btn btn-info" id="deleteBtn"><i class="fas fa-trash-restore"> 삭제</i></button>
-                <button type="button" class="btn btn-info" id="modifyBtn">수정</button>
+                <button type="button" class="btn btn-info" value="${board.seq}" id="deleteBtn"><i class="fas fa-trash-restore"> 삭제</i></button>
+                <button type="button" class="btn btn-info" value="${board.seq}" id="modifyBtn">수정</button>
             </div>
             </c:when>
             </c:choose>
@@ -436,7 +448,7 @@
                 <section id="contents">
                 <!-- 게시글  내용 -->
                     <div class="col-12 md-5 contents_input">
-                        <p class="target"> 금액에 관한 자세한 내용은 1:1 채팅창으로 문의주세요.</p>
+                        <p class="target"> ${board.contents}</p>
                     </div>
 
                     <div class="btn_wrap text-right">

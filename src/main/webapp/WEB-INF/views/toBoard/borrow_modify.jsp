@@ -174,6 +174,17 @@
 
 			</style>
 			<script>
+				$(function() {
+					$("#search").keyup(function(e) {
+						if (e.keyCode == 13) {
+							location.href = "/AllBoardList/borrowList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
+						}
+					})
+					
+					$("#chat").on("click",function(){
+						location.href = "/chat";
+					})
+				})
 
 				//이미지 담을 배열
 				let preview_files = [];
@@ -305,14 +316,14 @@
 					console.log(preview_files);
 				}
 				
-				function delAttach(seq) {
-					console.log("seq : " + seq);
+// 				function delAttach(seq) {
+// 					console.log("seq : " + seq);
 
-					let delImg_id = "#delImg_id_" + seq;
-					$(delImg_id).remove();
-					let html = "<input type='hidden' name='delSeq' value='"+seq+"'>";
-					$("#preview").append(html);
-				}
+// 					let delImg_id = "#delImg_id_" + seq;
+// 					$(delImg_id).remove();
+// 					let html = "<input type='hidden' name='delSeq' value='"+seq+"'>";
+// 					$("#preview").append(html);
+// 				}
 				
 				
 
@@ -397,9 +408,9 @@
 
 			<section id="write">
 				<div class="container">
-					<form action="/brrowBoard/bwModify" method="post" id="writeform" enctype="multipart/form-data">
+					<form action="/borrowBoard/bwModify" method="post" id="writeform" enctype="multipart/form-data">
 						<div class="form-control wrapper ">
-
+							<input type="hidden" name="seq" value="${dto.seq}">
 							<div class="title">
 								<h2>
 									<b>대여 요청</b>
@@ -434,11 +445,11 @@
 									<b>이미지 미리 보기</b>
 								</h4>
 								<div class="input-group mb-3 col-md-12 " id="preview">
-									<c:forEach var="f" items="$flist">
-										<a href="javascript:void(0);" onclick="delAttach(${f.seq})" seq="${f.seq}" id="delImg_id_${f.seq}">
-											<img src="resourse/borrow/${file.oriName}"  class="selProductFile" title="Click to remove">
-										</a>
-									</c:forEach>
+<%-- 									<c:forEach var="f" items="$flist"> --%>
+<%-- 										<a href="javascript:void(0);" onclick="delAttach(${f.seq})" seq="${f.seq}" id="delImg_id_${f.seq}"> --%>
+<%-- 											<img src="resourse/borrow/${file.oriName}"  class="selProductFile" title="Click to remove"> --%>
+<!-- 										</a> -->
+<%-- 									</c:forEach> --%>
 									<!-- <img id="img"/> -->
 								</div>
 								<!-- onchange="javascript:document.getElementById('fileName').value = this.value" -->
@@ -469,7 +480,7 @@
 							</div>
 							<div class="input-group mb-3 col-md-12">
 								<textarea class="form-control" aria-label="With textarea" placeholder="세부 설명을 입력해주세요"
-									rows="10" id="contents" name="contents" value="${dto.contents}" required></textarea>
+									rows="10" id="contents" name="contents" required>"${dto.contents}"</textarea>
 							</div>
 							<div class="btn_wrap text-right">
 								<button type="button" class="btn btn-primary" id="submitBtn">수정하기</button>

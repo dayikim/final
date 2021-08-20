@@ -187,6 +187,17 @@
 						$("#Input3").attr("readonly",true);
 					}
 				})
+				$(function() {
+					$("#search").keyup(function(e) {
+						if (e.keyCode == 13) {
+							location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
+						}
+					})
+					
+					$("#chat").on("click",function(){
+						location.href = "/chat";
+					})
+				})
 
 				//이미지 담을 배열
 				let preview_files = [];

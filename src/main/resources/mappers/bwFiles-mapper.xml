@@ -17,7 +17,7 @@
 	
 	<!-- 사진 이름 -->
 	<select id="sysName" resultType="kh.spring.dto.BorrowBoardFilesDTO">
-		select sysname from files where seq=#{value}
+		select sysname from borrowboardpicturefiles where seq=#{value}
 	</select>
 	
 	<!-- 사진 삭제 -->

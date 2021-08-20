@@ -409,9 +409,9 @@
         <!-- Nav Bar End -->
 			<section id="write">
 				<div class="container">
-					<form action="/lendBoard/lendWrite" method="post" id="writeform" enctype="multipart/form-data">
+					<form action="/lendBoard/ldModify" method="post" id="writeform" enctype="multipart/form-data">
 						<div class="form-control wrapper ">
-
+							<input type="hidden" value="${dto.seq}">
 							<div class="title">
 								<h2>
 									<b>대여 하기</b>
@@ -422,14 +422,14 @@
 							<div class="input-group mb-3 col-md-12 ">
 								<label class="input-group-text input"
 									for="inputGroupSelect02">대여 물품명<strong>＊</strong></label>
-								<input type="text" class="form-control" id="title_input" name="title"
-									placeholder="거래할 물품을 입력하세요" required>
+								<input type="text" class="form-control" id="title_input" name="title" value="${dto.title}"
+									placeholder="대여할 물품을 입력하세요" required>
 							</div>
 
 							<div class="input-group mb-3 col-md-12">
 								<label class="input-group-text" for="inputGroupSelect02">카테고리<strong>＊</strong></label>
 								<select class="custom-select" id="category" name="category">
-									<option value="0" selected>카테고리 선택해주세요.</option>
+									<option value="${dto.category}" selected>${dto.category}</option>
 									<option value="디지털/가전">디지털/가전</option>
 									<option value="주방용품/가구">주방용품/가구</option>
 									<option value="패션의류/악세사리">패션의류/악세사리</option>
@@ -470,17 +470,16 @@
 							type="text" class="form-control" placeholder="가격 (ex: 100 상추/최소 금액은 100원)"
 							id="price" name="price" required onkeypress="inNumber();" /> -->
 								<input type="number" class="form-control" placeholder="(ex: 100 상추/최소 금액은 100 상추)"
-									id="price" name="price" required
-									 />
+									id="price" name="price" value="${dto.price}" required/>
 
 							</div>
 
 							<div class="input-group mb-3 col-md-12">
-								<input type="text" class="form-control" id="Input3" name="address" readonly>
+								<input type="text" class="form-control" id="Input3" name="address" value="${dto.address}" readonly>
 							</div>
 							<div class="input-group mb-3 col-md-12">
 								<textarea class="form-control" aria-label="With textarea" placeholder="세부 설명을 입력해주세요"
-									rows="10" id="contents" name="contents" required></textarea>
+									rows="10" id="contents" name="contents" required>"${dto.contents}"</textarea>
 							</div>
 							<div class="btn_wrap text-right">
 								<button type="button" class="btn btn-primary btn-lg" id="submitBtn">등록</button>

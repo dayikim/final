@@ -37,6 +37,11 @@ public class BorrowDAO {
 		return mybatis.selectOne("Borrow.detailView", seq);
 	}
 	
+	//게시글 삭제
+	public int delete(int seq) {
+		return mybatis.delete("Borrow.delete",seq);
+	}
+	
 	//게시글 리스트
 	public List<BorrowDTO> getList(String choice, String search,int cpage){
 				

@@ -16,6 +16,11 @@ public class SellTalentDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 	
+	//판매자 찾기
+    public String getWriter(int seq) {
+       return mybatis.selectOne("Selltalent.getwriter");
+    }
+	
 	public int boardWrite(SellTalentDTO dto) {
 		return mybatis.insert("Selltalent.write",dto);
 	}

@@ -22,6 +22,7 @@ public class BwBoardFilesDAO {
 	
 	//사진리스트	
 	public List<BorrowBoardFilesDTO> selectAll(int seq){
+		System.out.println("서->디 : " + seq);
 		return mybatis.selectList("BwFiles.selectAll",seq);
 	}
 	

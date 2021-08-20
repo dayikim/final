@@ -93,7 +93,7 @@
 	    	})
 	    
 	    	$("#tlRequestBtn").on("click",function(){
-	    		location.href="/AllBoardList/tlRequestListchoice=${choice}&search=${search}&cpage=1";
+	    		location.href="/AllBoardList/tlRequestList?choice=${choice}&search=${search}&cpage=1";
 	    	})
 	    	
 	    	$("#writeBtn").on("click",function(){

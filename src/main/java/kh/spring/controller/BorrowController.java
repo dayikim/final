@@ -49,10 +49,10 @@ public class BorrowController {
 		dto.setWriter(sessionID);
 		service.boardwrite(dto,realPath,fdto,file);
 
-		return "redirect:/";
+		return "redirect:/AllBoardList/borrowList?choice=Allchoice&search=&cpage=1";
 	}
 	
-	//대여하기 상세보기	
+	//대여요청 상세보기	
 	@RequestMapping(value="borrowView",produces="text/html;charset=utf8") 
 	public String borrowViewByMe(String id, int seq, Model model) throws Exception {
 		String sessionID = (String) session.getAttribute("loginID");
@@ -64,7 +64,7 @@ public class BorrowController {
         BorrowDTO dto = service.detailView(seq);//글상세보기
         
         model.addAttribute("profile",pfdto); //프로필
-        model.addAttribute("writerInfo",writerInfo);//작성자정보
+        model.addAttribute("writer",writerInfo);//작성자정보
         model.addAttribute("board",dto); //글내용	 
 		 
 		List<BorrowBoardFilesDTO> fileList = service.selectAll(seq); //첨부파일 목록 출력   
@@ -75,14 +75,16 @@ public class BorrowController {
 		return "/toBoard/borrow_view";
 	}
 	
-	//수정하기 값 꺼내 보내기
+	//수정할 값 꺼내 보내기
 	@RequestMapping(value="modify",produces="text/html;charset=utf8") 
 	public String modify(int seq, Model model) {
-//		String sessionID = (String) session.getAttribute("loginID");
-//		PersonDTO pdto = MypageService.mypageList(sessionID); // 내 정보 출력
+		System.out.println(seq);
 		
 		BorrowDTO dto = service.detailView(seq);//게시글 정보
+		System.out.println("서->컨 글 : " + dto);
+		
 		List<BorrowBoardFilesDTO> flist = service.selectAll(seq);
+		System.out.println("서->컨 파 : " + flist);
 		
 		model.addAttribute("dto", dto);
 		model.addAttribute("flist", flist);
@@ -98,7 +100,19 @@ public class BorrowController {
 		
 		service.boardModify(dto,realPath,fdto,delSeq,file);
 
-		return "redirect:/";
+		return "redirect:/AllBoardList/borrowList?choice=Allchoice&search=&cpage=1";
+	}
+	
+	//게시글 삭제
+	@RequestMapping("borrowDelete") 
+	public String borrowDelete(int seq) throws Exception {
+		int result = service.delete(seq);
+		if(result<0) {
+			return null ;
+		}else {
+			return "redirect:/AllBoardList/borrowList?choice=Allchoice&search=&cpage=1";
+
+		}
 	}
 	
 

@@ -186,6 +186,18 @@
 					$("#Input3").attr("readonly",true);
 				}
 			})
+			
+			$(function() {
+				$("#search").keyup(function(e) {
+					if (e.keyCode == 13) {
+						location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
+					}
+				})
+				
+				$("#chat").on("click",function(){
+					location.href = "/chat";
+				})
+			})
 
 				//이미지 담을 배열
 				let preview_files = [];
@@ -223,7 +235,7 @@
 						let resultprice = priceReg.test(price.val());
 
 						if (title.val() == "") {
-							alert("요청할 재능명을 입력해주세요.");
+							alert("요청할 물품명을 입력해주세요.");
 							title.focus();
 							return false;
 
@@ -398,7 +410,7 @@
 
 			<section id="write">
 				<div class="container">
-					<form action="/tBoard/requestWrite" method="post" id="writeform" enctype="multipart/form-data">
+					<form action="/borrowBoard/boardWrite" method="post" id="writeform" enctype="multipart/form-data">
 						<div class="form-control wrapper ">
 
 							<div class="title">

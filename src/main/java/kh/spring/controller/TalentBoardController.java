@@ -73,7 +73,7 @@ public class TalentBoardController {
 		dto.setSeq(seq);
 		dto.setWriter(sessionID);
 		STService.sellingWrite(dto,realPath,fdto,file);
-		return "redirect:/";
+		return "redirect:/AllBoardList/tlSellList?choice=Allchoice&search=&cpage=1";
 	}
 	//TBoardFiles도 두개 필요!!(판매용/요청용)
 	@RequestMapping("requestWrite")//재능 요청 글쓰기 데이터 받기
@@ -84,7 +84,7 @@ public class TalentBoardController {
 		dto.setSeq(seq);
 		dto.setWriter(sessionID);
 		RTService.requestWrite(dto,realPath,fdto,file);
-		return "redirect:/";
+		return "redirect:/AllBoardList/tlRequestList?choice=Allchoice&search=&cpage=1";
 	}
 	
 	@RequestMapping("sellingView") //판매글 상세보기
@@ -135,7 +135,7 @@ public class TalentBoardController {
 		if(result<0) {
 			return null ;
 		}else {
-			return "/AllBoardList/lendList?choice=Allchoice&search=&cpage=1";
+			return "redirect:/AllBoardList/tlSellList?choice=Allchoice&search=&cpage=1";
 
 		}
 	}
@@ -145,7 +145,7 @@ public class TalentBoardController {
 			if(result<0) {
 				return null ;
 			}else {
-				return "/AllBoardList/lendList?choice=Allchoice&search=&cpage=1";
+				return "redirect:/AllBoardList/tlRequestList?choice=Allchoice&search=&cpage=1";
 
 			}
 		

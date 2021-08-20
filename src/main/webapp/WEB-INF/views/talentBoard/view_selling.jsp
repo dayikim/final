@@ -250,6 +250,18 @@ p {
 }
 </style>
 <script>
+$(function() {
+	$("#search").keyup(function(e) {
+		if (e.keyCode == 13) {
+			location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
+		}
+	})
+	
+	$("#chat").on("click",function(){
+		location.href = "/chat";
+	})
+})
+
 $(function(){
 
 		$("#deleteBtn").on("click",function () { //게시글 삭제
@@ -315,7 +327,54 @@ $(function(){
             </div>
         </div>
         <!-- Top Bar End -->
-	 <!-- Nav Bar Start -->
+        
+	  <!-- Nav Bar Start -->
+        <div class="navbar navbar-expand-lg bg-dark navbar-dark">
+            <div class="container-fluid">
+                <a href="/" class="navbar-brand"><p id= titlename>돈-다</a></p>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <c:choose>
+                	<c:when test="${loginID == null }">
+                		<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    	<div class="navbar-nav ml-auto">
+                        	<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
+                        	<a href="/person/login" class="nav-item nav-link active">Login</a> <!-- Login Page 이동 -->
+                        	<a href="/person/join" class="nav-item nav-link">Sign Up</a>  <!-- SignUp Page 이동 -->
+                    	</div>
+                		</div>
+                	</c:when>
+                	<c:otherwise>
+                		<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    		<div class="navbar-nav ml-auto">
+                        		<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
+                        		<a href="/person/logout" class="nav-item nav-link active">Logout</a> <!-- Logout -->
+                        		 <div class="collapse navbar-collapse" id="navbarNavDropdown">
+	                        		 <ul class="navbar-nav">
+	                        			<li class="nav-item dropdown">
+									        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									         Menu
+									        </a>
+									        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+									          <a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
+									          <a class="dropdown-item" href="/sns/main">SNS</a>
+									          <a class="dropdown-item" href="/my/mypageProc">My page</a>
+									          <a class="dropdown-item" href="/point/ToCharging">Charging</a>
+									        </div>
+								      	</li>
+								      </ul>
+								      <button type="button" class="btn btn-outline-warning" id="chat">Chatting</button>
+							      </div>
+                    		</div>
+                		</div>
+                	</c:otherwise>
+                </c:choose>
+
+            </div>
+        </div>
+        <!-- Nav Bar End -->
+
         <div class="navbar navbar-expand-lg bg-dark navbar-dark">
             <div class="container-fluid">
                 <a href="/" class="navbar-brand"><p id= titlename>돈-다</a></p>

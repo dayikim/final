@@ -38,17 +38,24 @@ public class BorrowService {
 	
 	//게시글보기
 	public BorrowDTO detailView(int seq) {
+		System.out.println("컨->서 : " + seq);
 		return dao.detailview(seq);
 	}
 	
 	//사진리스트
 	public List<BorrowBoardFilesDTO> selectAll(int seq){
+		System.out.println("컨->서 : " + seq);
 		return fdao.selectAll(seq);
 	}
 	
 	//글 번호
 	public int getSeq() {
 		return dao.getSeq();
+	}
+	
+	//글삭제
+	public int delete(int seq) {
+		return dao.delete(seq);
 	}
 	
 	//글수정

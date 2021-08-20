@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import kh.spring.dto.BorrowBoardFilesDTO;
+import kh.spring.dto.BorrowDTO;
 import kh.spring.dto.LendDTO;
 import kh.spring.dto.LendFilesDTO;
 import kh.spring.dto.PersonDTO;
@@ -48,7 +50,7 @@ public class LendController {
 		dto.setSeq(seq);
 		dto.setWriter(sessionID);
 		service.lendWrite(dto,realPath,fdto,file);
-		return "redirect:/";
+		return "redirect:/AllBoardList/lendList?choice=Allchoice&search=&cpage=1";
 	}
 	
 	//대여하기 상세보기
@@ -73,6 +75,42 @@ public class LendController {
 		
 		
 		return "/toBoard/lend_view";
+	}
+	
+	//수정하기 값 꺼내 보내기
+	@RequestMapping(value="modify",produces="text/html;charset=utf8") 
+	public String modify(int seq, Model model) {
+			
+		LendDTO dto = service.detailView(seq);//게시글 정보
+		List<LendFilesDTO> flist = service.selectAll(seq);
+			
+		model.addAttribute("dto", dto);
+		model.addAttribute("flist", flist);
+			
+		return "/toBoard/lend_modify";
+	}
+		
+	//수정 데이터 
+	@RequestMapping(value="ldModify",produces="text/html;charset=utf8")
+	public String ldModify(LendDTO dto,LendFilesDTO fdto,String[] delSeq,MultipartFile[] file) throws Exception {
+			
+		String realPath = session.getServletContext().getRealPath("resources/imgs/borrow");
+			
+		service.boardModify(dto,realPath,fdto,delSeq,file);
+
+		return "redirect:/AllBoardList/lendList?choice=Allchoice&search=&cpage=1";
+	}
+	
+	//게시글 삭제
+	@RequestMapping("lendDelete") 
+	public String lendDelete(int seq) throws Exception {
+		int result = service.delete(seq);
+		if(result<0) {
+			return null ;
+		}else {
+			return "redirect:/AllBoardList/lendList?choice=Allchoice&search=&cpage=1";
+
+		}
 	}
 
 }

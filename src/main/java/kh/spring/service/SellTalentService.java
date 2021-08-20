@@ -34,6 +34,11 @@ public class SellTalentService {
 	@Autowired
 	private BookingDAO bdao;
 	
+	 //판매자 찾기
+	 public String getWriter(int seq) {
+	    return stdao.getWriter(seq);
+	 }
+	
 	public PersonDTO memberInfoById(String id) {
 		return pdao.memberInfoById(id);
 

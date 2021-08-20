@@ -22,27 +22,36 @@ public class LendFilesDAO {
 		return mybatis.insert("LendFiles.upload",dto);
 	}
 	
-	
 	//사진 리스트
 	public List<LendFilesDTO> selectAll(int seq){
 		return mybatis.selectList("LendFiles.selectAll",seq);
 	}
 	
-	public List<LendFilesDTO> getFiles(List<LendDTO> ldlist){
-		
-		
-		List<Integer> parentSeq = new ArrayList<>();
-		for(int i = 0; i<ldlist.size();i++) {
-			parentSeq.add(ldlist.get(i).getSeq());
-		}
-		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("parentSeq", parentSeq);
-		System.out.println(parentSeq);
-		
-		List<LendFilesDTO> lflist = mybatis.selectList("LendFiles.selectOne", map);
-		System.out.println(lflist.get(0).getSysName());
-		
-		return mybatis.selectList("LendFiles.selectOne", map);
+	//사진 이름 가져오기
+	public String getSysName(int seq) {
+		return mybatis.selectOne("LendFiles.sysName", seq);
 	}
+	
+	//사진 삭제 하기
+	public int delete(int seq) {
+		return mybatis.delete("LendFiles.delete", seq);
+	}
+	
+//	public List<LendFilesDTO> getFiles(List<LendDTO> ldlist){
+//		
+//		
+//		List<Integer> parentSeq = new ArrayList<>();
+//		for(int i = 0; i<ldlist.size();i++) {
+//			parentSeq.add(ldlist.get(i).getSeq());
+//		}
+//		
+//		HashMap<String, Object> map = new HashMap<String, Object>();
+//		map.put("parentSeq", parentSeq);
+//		System.out.println(parentSeq);
+//		
+//		List<LendFilesDTO> lflist = mybatis.selectList("LendFiles.selectOne", map);
+//		System.out.println(lflist.get(0).getSysName());
+//		
+//		return mybatis.selectList("LendFiles.selectOne", map);
+//	}
 }
