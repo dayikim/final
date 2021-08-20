@@ -8,23 +8,23 @@ import org.springframework.stereotype.Component;
 
 import kh.spring.dto.ChargingDTO;
 import kh.spring.dto.PointDTO;
-
 @Component
-public class PointDAO {
+public class ChargingDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 	
+	//포인트 충전하기
 	public int charging(ChargingDTO dto) {
 		return mybatis.insert("Point.charge",dto);
 	}
-	public int amount(String sessionID) {
-		return mybatis.selectOne("Point.amount",sessionID);
+	
+	//포인트 잔액확인
+	public int pointAmount(String sessionID) {
+		return mybatis.selectOne("Point.pointAmount",sessionID);
 	}
 	
 	public List<PointDTO> pointChargeList(String sessionID) {
 		return mybatis.selectList("Point.pointChargeList",sessionID);
 	}
-	
-
 	
 }

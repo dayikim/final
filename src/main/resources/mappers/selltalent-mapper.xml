@@ -18,6 +18,10 @@
 	<select id="getId" resultType="String">
 		select writer from selltalent
 	</select>
+	
+	<select id="getWriter" resultType="String">
+	   select writer from selltalent where seq=#{seq}
+	</select>
 
 	<delete id="delete">
 		delete from selltalent where seq=#{seq}

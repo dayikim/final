@@ -92,7 +92,7 @@ img {
 
 /* 프로필,충전하기 */
 #body {
-	padding-top: 80px;
+	padding-top: 100px;
 	padding-bottom: 30px;
 }
 

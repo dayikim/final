@@ -78,5 +78,9 @@ public class SellTalentService {
 	public String getId() {
 		return stdao.getId();
 	}
+	//판매자 찾기
+	public String getWriter(int seq) {
+		return stdao.getWriter(seq);
+	}
 	
 }
