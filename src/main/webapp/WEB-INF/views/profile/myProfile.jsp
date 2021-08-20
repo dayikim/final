@@ -91,7 +91,7 @@ img {
 
 /* 프로필-판매물품,거래후기 */
 #body {
-	padding-top: 80px;
+	padding-top: 100px;
 	padding-bottom: 30px;
 	height: auto;
 }
