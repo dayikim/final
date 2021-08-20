@@ -116,6 +116,10 @@ public class LendService {
 			}
 		}
 	}
+    //판매자 찾기
+	public String getId(int seq) {
+		return dao.getId(seq);
+	}
 
 	
 	

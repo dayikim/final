@@ -7,7 +7,7 @@ private int seq;
 private String id;
 private int pointamount;
 private int usepoint;
-private int earnamount;
+private int earnpoint;
 private String reason;
 private Date dealdate;
 
@@ -15,13 +15,13 @@ public PointAccountDTO() {
 	
 }
 
-public PointAccountDTO(int seq, String id, int pointamount, int usepoint, int earnamount, String reason, Date dealdate) {
+public PointAccountDTO(int seq, String id, int pointamount, int usepoint, int earnpoint, String reason, Date dealdate) {
 	super();
 	this.seq = seq;
 	this.id = id;
 	this.pointamount = pointamount;
 	this.usepoint = usepoint;
-	this.earnamount = earnamount;
+	this.earnpoint = earnpoint;
 	this.reason = reason;
 	this.dealdate = dealdate;
 }
@@ -38,8 +38,8 @@ public int getPointamount() {
 public int getUsepoint() {
 	return usepoint;
 }
-public int getEarnamount() {
-	return earnamount;
+public int getEarnpoint() {
+	return earnpoint;
 }
 public String getReason() {
 	return reason;
@@ -59,8 +59,8 @@ public void setPointamount(int pointamount) {
 public void setUsepoint(int usepoint) {
 	this.usepoint = usepoint;
 }
-public void setEarnamount(int earnamount) {
-	this.earnamount = earnamount;
+public void setEarnpoint(int earnpoint) {
+	this.earnpoint = earnpoint;
 }
 public void setReason(String reason) {
 	this.reason = reason;

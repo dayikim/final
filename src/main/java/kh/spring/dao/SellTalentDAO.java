@@ -165,6 +165,11 @@ public class SellTalentDAO {
 
 				return pageNavi;
 			}
+//판매자 찾기
+			public String getWriter(int seq) {
+				return mybatis.selectOne("Selltalent.getwriter");
+			}
+
 
 	
 }

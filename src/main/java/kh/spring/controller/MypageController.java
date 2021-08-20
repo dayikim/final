@@ -40,11 +40,12 @@ public class MypageController {
 		String sessionID = (String) session.getAttribute("loginID");
 		PersonDTO dto = service.mypageList(sessionID); // 내 정보 출력
 		ProfileFilesDTO pdto = service.profileSelect(sessionID); // 내 프사 출력
-		int pointAmount =PointService.amount(sessionID);//잔고금액
+		int checkAmount =PointService.checkAmount(sessionID);
+//		int pointAmount =PointService.amount(sessionID);//잔고금액
 
 		session.setAttribute("myInfo", dto); // 내 정보
 		model.addAttribute("profile",pdto); // 내 프사
-		model.addAttribute("point",pointAmount); // 내 포인트
+		model.addAttribute("point",checkAmount); // 내 포인트
 
 		return "mypage/mypage";
 	}
