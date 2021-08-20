@@ -1,6 +1,7 @@
 package kh.spring.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
+import kh.spring.dao.ProfileFilesDAO;
 import kh.spring.dto.SnsDTO;
 import kh.spring.dto.SnsFilesDTO;
 import kh.spring.service.SnsCommentService;
@@ -37,13 +39,28 @@ public class SnsController {
 	@Autowired
 	private HttpSession session;
 	
+	@Autowired
+	private ProfileFilesDAO pffd;
+	
 	@RequestMapping("/main")
 	public String main(Model model) throws Exception {
 		String id= (String)session.getAttribute("loginID"); //글 목록
 		
-		List<SnsDTO>list = service.selectAll(id);
+		List<SnsDTO>list = service.initpage(id); //SNS에서 초기에 로딩되는 페이지 (최신 글 순 5개가 출력됨)
 		model.addAttribute("list", list);
+		model.addAttribute("snslength",service.selectAll(id).size());
 		
+		List<String> initProfile = new ArrayList<String>();
+		for(SnsDTO sd : list) {
+			initProfile.add(pffd.profileSelect(sd.getId()) != null?
+							fservice.toProfileBinary(session, pffd.profileSelect(sd.getId()).getSysName()):
+							null);
+		}
+		model.addAttribute("initprofile", initProfile);
+		
+		for(SnsDTO sd : list) {
+		System.out.println("처음 로딩되는 페이지: " +sd.getSeq());
+		}
 		List<String> ldto = service.existlike(id); //좋아요목록
 		model.addAttribute("isLove",ldto);
 
@@ -60,17 +77,35 @@ public class SnsController {
 		return gs.toJson(list);
 	}
 	
-	@RequestMapping("/page")
+	@RequestMapping("page")
 	@ResponseBody
 	public String page(int count) {
 		String id = (String)session.getAttribute("loginID");
-		int viewcount = 10;
+		int viewcount = 5;
 		List<SnsDTO>list = service.page(id,viewcount,count);
+		for(SnsDTO sd : list) {
+			System.out.println("페이스북에서 가져오는 seq: " +sd.getSeq());
+			}
 		Gson g = new Gson();
 		String result = g.toJson(list);
 		return result;
 		
 	}
+	
+	@RequestMapping("snspicture")
+	@ResponseBody
+	public String page(int firstseq, int lastseq) throws Exception {
+		List<SnsFilesDTO>fdto = fservice.snsFileList(session, firstseq, lastseq);
+		Gson g = new Gson();
+		return g.toJson(fdto);
+	}
+	
+	@RequestMapping("snsprofileimage")
+	@ResponseBody
+	public String page(String id) throws Exception {	
+		return pffd.profileSelect(id) != null ? fservice.toProfileBinary(session, pffd.profileSelect(id).getSysName()) : null;
+	}
+	
 	
 	@RequestMapping("/write")
 	public String write(SnsDTO dto, MultipartFile[] file) throws Exception{

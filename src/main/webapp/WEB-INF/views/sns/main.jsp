@@ -53,7 +53,6 @@
 <style>
 .navbar {
 	position: absolute;
-	top: 8%;
 }
 
 #SnSbody {
@@ -98,6 +97,8 @@ style>body {
 
 @media ( min-width : 992px) {
 	.gedf-main {
+		position:relative;
+		top:100px;
 		padding-left: 4rem;
 		padding-right: 4rem;
 	}
@@ -136,23 +137,133 @@ style>body {
 	max-width : 300px;
 	max-height : 400px;
 }
+
 </style>
 <script>
+	var count = 2;
 	$(function() {
-		
+		console.log(count);
 		//무한스크롤
-		var count = 1;
 		var isScroll = true;
 		let loadNewPage = $(window).on("scroll",(function() {
 			if (((window.innerHeight + window.scrollY) >= document.body.offsetHeight)&& isScroll) {
 				$.ajax({
 					url : "/sns/page",
 					type : "get",
-					data : {"count" : count++},
+					data : {"count" : count},
 					dataType : "json"
 				}).done(function(e){
-					//console.log(e);
+					if (count > Number($("#length").val()) / 5) isScroll = false;
+					console.log(isScroll);
+					for(let i =0; i<e.length; i++){
+					if(isScroll){
+					var node ="";
+					
+					node += "<div class=\"card gedf-card\">"
+					node +="<div class=card-header>"
+					     node +="<div class=\"d-flex justify-content-between align-items-center\">"
+					         node +="<div class=\"d-flex justify-content-between align-items-center\">"
+						node +="<div class=mr-2>"
+						
+							  $.ajax({
+						    	  url: "/sns/snsprofileimage",
+						    	  type : "get",
+								  data : {"id":e[i].id},
+								  async: false,
+								  dataType : "TEXT"
+						      }).done(function(result){
+						    	  if(result !=null){
+						    		  node += "<img class=rounded-circle style =\"width :50px; height :50px;\" src=\"data:image/png;base64,"+result+"\">";
+						    	  }else{
+						    		  node +="<img class=rounded-circle style =\"width :50px; height :50px;\" src = \"/imgs/nomalProfile.jpg\">";
+						    	  }
+
+						      })
+
+						node += "</div>"
+							node +="<div class=ml-2>"
+								node +="<div class=\"h5 m-0\">"+e[i].id + "<input type=hidden id=hiddenseq value=114>"
+								
+								if(e[i].id == $("#session").val()){
+									node +="<a href=/sns/delete?seq="+e[i].seq+" id=del style =\"position:relative; left:5%\">삭제</a>"
+									node +="<a href=/sns/modify?seq="+e[i].seq+" id=modi style =\"position:relative; left:10%\">수정</a>"
+								}						
+														
+							node +="</div>"
+
+									node +="<div class=\"h7 text-muted\">"+e[i].region+"</div>"
+						node +="</div>"
+					node += "</div>"
+				node +="<div></div>"
+				node +="</div>"
+			node +="</div>"
+					node +="<div class=card-body id="+e[i].seq+">"
+						node +="<div class=\"text-muted h7 mb-2\">"
+						      node +="<i class=\"fa fa-clock-o\"></i>"+e[i].category+"</div>"
+						      $.ajax({
+						    	  url: "/sns/snspicture",
+						    	  type : "get",
+								  data : {"firstseq":e[e.length-1].seq  , "lastseq" :e[0].seq},
+								  async: false,
+								  dataType : "json"
+						      }).done(function(result){
+						    	  for(let p=0; p<result.length; p++){
+						    		  if(result[p].parent == e[i].seq){
+						  
+						    			  node += "<a href=\"/sns/download?oriName="+result[p].oriName+"\">";
+						    			  node += "<img src=\"data:image/png;base64,"+result[p].sysName+"\" id=photo>";
+						    			  node += "</a>";
+
+						    		  }
+
+						    	  }
+
+						      })
+						      
+									 node +="<p class=card-text>"+e[i].contents+"</p>"
+									 node +="</div>"
+									 node +="<div class=card-footer>"
+										
+											
+						if(Number(e[i].love) ==0){				
+						 node +="<a class=card-link id=love style=\"color: #FDD2BF\">"
+						}else{
+						 node +="<a class=card-link id=love style=\"color: #FF6B6B\">"
+						}
+			 node +="<i class=\"far fa-heart\"></i>"+e[i].love+"</a>"
+											
+										
+
+				 node += "<a class=card-link id=commenticon>"
+			     node +="<i class=\"fas fa-comment-dots\"></i>"
+			 node += "Comment</a>"
+						 node +="</div>"
+
+									<!-- 댓글작성 -->
+									 node += "<div id=hiddencomment style=display: none;>"
+										 node += "<div class=\"input-group mb-3\">"
+			 node += "<input type=text class=form-control id=comment placeholder=\"댓글을 작성해주세요\" aria-label=Recipient's username aria-describedby=button-addon2>"
+											 node +="<div class=input-group-append>"
+						 node += "<button class=\"btn btn-outline-secondary\" type=button id=sendcomment>"
+													 node += "<i class=\"fas fa-pen\"></i>"
+												 node += "</button>"
+											 node += "</div>"
+					 node += "<input type=hidden id=hidden value="+e[i].seq+"> <input type=hidden id=lovecount value="+e[i].love+">"
+										 node += "</div>"
+
+										<!-- 댓글리스트 -->
+										
+									 node += "</div>"
+								 node += "</div>"
+
+					$("#snsbody").append(node); 
+							 
+								 
+					}
+				}
+					count++;
 				})
+				
 			}
 		}));	
 		
@@ -474,11 +585,10 @@ style>body {
 	<!-- Nav Bar End -->
 
 
-	<div class="container-fluid gedf-wrapper" id=SnSbody>
-		<div class="row">
+	<div class="container-fluid gedf-wrapper">
+		<div class="row" id = row>
 			<div class="col-md-3"></div>
 			<div class="col-md-6 gedf-main">
-
 				<!--- 글쓰기-->
 				<form action="/sns/write" method=post enctype="multipart/form-data">
 					<div class="card gedf-card">
@@ -532,14 +642,21 @@ style>body {
 				</form>
 
 				<!--- 게시글-->
-				<c:forEach var="item" items="${list}">
+				<div id =snsbody>
+				<c:forEach var="item" items="${list}" varStatus="status">
 					<div class="card gedf-card">
 						<div class="card-header">
 							<div class="d-flex justify-content-between align-items-center">
 								<div class="d-flex justify-content-between align-items-center">
 									<div class="mr-2">
-										<img class="rounded-circle" width="45"
-											src="https://picsum.photos/50/50" alt="">
+										<c:choose>
+											<c:when test="${initprofile.get(status.index) != null}">
+												<img class="rounded-circle" src= "data:image/png;base64,${initprofile.get(status.index) }" alt="" style ="width :50px; height :50px;">
+											</c:when>
+											<c:otherwise>
+												<img class=rounded-circle style ="width :50px; height :50px;" src = "/imgs/nomalProfile.jpg">
+											</c:otherwise>
+										</c:choose>
 									</div>
 									<div class="ml-2">
 										<div class="h5 m-0">
@@ -604,7 +721,7 @@ style>body {
 								<input type=hidden id=hidden value=${item.seq }> <input
 									type=hidden id=lovecount value=${item.love }>
 							</div>
-
+						</div>
 							<!-- 댓글리스트 -->
 							<%-- 	<ul class="comments-list" id=commentList>
 									<div class="comment-body">
@@ -627,15 +744,12 @@ style>body {
 									</div>
 								</ul> --%>
 						</div>
+						</c:forEach>
 					</div>
-				</c:forEach>
-			</div>
-			<div class="col-md-3">
-				<i class="fas fa-arrow-up" id=top></i>
+					</div>
 			</div>
 		</div>
-	</div>
-	</div>
 	<input type=hidden id=session value=${loginID }>
+	<input type=hidden id=length value=${snslength }>
 </body>
 </html>

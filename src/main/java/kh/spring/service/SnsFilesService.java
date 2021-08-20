@@ -61,6 +61,10 @@ public class SnsFilesService {
 		return Base64.getEncoder().encodeToString(getFileBinary(session.getServletContext().getRealPath("files")+"/"+sysName));
 	}
 	
+	public String toProfileBinary(HttpSession session,String sysName) throws Exception {
+		return Base64.getEncoder().encodeToString(getFileBinary(session.getServletContext().getRealPath("resources/imgs/mypage")+"/"+sysName));
+	}
+	
 	private byte[] getFileBinary(String filepath) {
 		File file = new File(filepath);
 		byte[] data = new byte[(int) file.length()];
@@ -70,6 +74,20 @@ public class SnsFilesService {
 			e.printStackTrace();
 		}
 			return data;
+	}
+	
+	public List<SnsFilesDTO> snsFileList(HttpSession session,int firstseq, int lastseq ) throws Exception{
+		List<SnsFilesDTO> list = new ArrayList<SnsFilesDTO>();
+		Map<String, Integer> temp = new HashMap<String, Integer>();
+		temp.put("firstseq", firstseq);
+		temp.put("lastseq", lastseq);
+		for(SnsFilesDTO sfd : dao.snsgetFileList(temp)) {
+			sfd.setSysName(toBinary(session,sfd.getSysName()));
+			list.add(sfd);
+		}
+		
+		return list;
+		
 	}
 
 }

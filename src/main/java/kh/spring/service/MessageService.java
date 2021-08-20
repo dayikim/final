@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import kh.spring.API.DateSortable;
 import kh.spring.dao.ChatFileDAO;
 import kh.spring.dao.ChatRoomDao;
 import kh.spring.dao.MessageDao;
@@ -40,7 +41,7 @@ public class MessageService {
 	@Autowired
 	ChatRoomDao crd;
 	
-	public static void main(String[] args) {
+//	public static void main(String[] args) {
 //		Date md_date = new Date(2021, 8, 20);
 //		Date md_date1 = new Date(2021, 8, 18);
 //		Date md_date2 = new Date(2021, 8, 17);
@@ -107,8 +108,8 @@ public class MessageService {
 //				System.out.println("메세지DTO 날짜: " + ((MessageDTO)obj).getReg_date());
 //			}
 //		}
-		
-	}
+//		
+//	}
 	
 	public int insertMessage(int seq,String roomid,String id, String message, String unread) {
 		return md.insert(new MessageDTO(seq,roomid, id, message,unread));
@@ -127,14 +128,14 @@ public class MessageService {
 		return md.unreadCount(roomid,id);
 	}
 	
-	public Map<String, List<Object>> pastMessage(String roomid) throws Exception{
-		Map<String, List<Object>> temp = new TreeMap<String, List<Object>>();
+	public Map<String, List<DateSortable>> pastMessage(String roomid) throws Exception{
+		Map<String, List<DateSortable>> temp = new TreeMap<String, List<DateSortable>>();
 		SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
 		for(MessageDTO message: md.pastMessage(roomid)) {
 			if(temp.containsKey(sd.format(message.getReg_date()))) {
 				temp.get(sd.format(message.getReg_date())).add(message);
 			}else {
-				List<Object> li = new ArrayList<Object>();
+				List<DateSortable> li = new ArrayList<DateSortable>();
 				temp.put(sd.format(message.getReg_date()), li);
 			}
 		}
@@ -144,28 +145,21 @@ public class MessageService {
 				file.setSysName(toBinary(session,file.getSysName()));
 				temp.get(sd.format(file.getReg_date())).add(file);
 			}else {
-				List<Object> li = new ArrayList<Object>();
+				List<DateSortable> li = new ArrayList<DateSortable>();
 				file.setSysName(toBinary(session,file.getSysName()));
 				temp.put(sd.format(file.getReg_date()), li);
 			}
-			
-			Collections.sort(temp.get(sd.format(file.getReg_date())), new Comparator<Object>() {
-
-				@Override
-				public int compare(Object o1, Object o2) {
-					if(o2 instanceof MessageDTO && o1 instanceof ChatFileDTO) {
-						return ((ChatFileDTO)o1).getReg_date().compareTo(((MessageDTO)o2).getReg_date());
-					}if(o1 instanceof MessageDTO && o2 instanceof ChatFileDTO) {
-						return ((ChatFileDTO)o2).getReg_date().compareTo(((MessageDTO)o1).getReg_date());
-					}if(o1 instanceof MessageDTO && o2 instanceof MessageDTO) {
-						return ((MessageDTO)o1).getReg_date().compareTo(((MessageDTO)o2).getReg_date());
-					} if (o1 instanceof ChatFileDTO && o2 instanceof ChatFileDTO) {
-						return ((ChatFileDTO)o1).getReg_date().compareTo(((ChatFileDTO)o2).getReg_date());
-					}
-					return 1;
-				}
-			});
 		}
+		
+		 Collections.sort(temp.get("2021-08-20"), new Comparator<DateSortable>() {
+	         @Override
+	         public int compare(DateSortable o1, DateSortable o2) {
+	            long v1 = o1.getDate();
+	            long v2 = o2.getDate();   
+	         
+	            return (int)(v1-v2);
+	         }
+	      });
 		
 		return temp;
 	}

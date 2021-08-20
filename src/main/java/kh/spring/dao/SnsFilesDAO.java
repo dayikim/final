@@ -35,4 +35,7 @@ public class SnsFilesDAO {
 		return mybatis.selectList("SnsFile.modiFile", parent);
 	}
 
+	public List<SnsFilesDTO> snsgetFileList(Map<String,Integer> temp){
+		return mybatis.selectList("SnsFile.snsFile", temp);
+	}
 }
