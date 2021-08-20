@@ -91,7 +91,7 @@ img {
 
 /* 프로필-판매물품,거래후기 */
 #body {
-	padding-top: 80px;
+	padding-top: 100px;
 	padding-bottom: 30px;
 	height: auto;
 }
@@ -339,11 +339,11 @@ border-bottom: solid 3px #39d9c8;
 					<ul class="nav justify-content-center list">
 						<li class="nav-item"><a class="nav-link active" id="selling"
 							aria-current="page" href="/profile/userSelling?id=${writer}">
-								판매 목록<span class="badge badge-pill badge-dark"> ${sellingCount}</span>
+								판매 목록<span class="badge badge-pill badge-dark">  ${sellingCount}</span>
 						</a></li>
 						<li class="nav-item"><a class="nav-link" id="review"
-							href="/profile/review?reviewID=${writer}">거래후기<span
-								class="badge badge-pill badge-dark">0</span></a></li>
+							href="/profile/reviewListForUser?id=${writer}">거래후기<span
+								class="badge badge-pill badge-dark">${reviewCount}</span></a></li>
 					</ul>
 				</section>
 				<!-- 판매 목록 -->
@@ -356,7 +356,7 @@ border-bottom: solid 3px #39d9c8;
 										<div class="card-category">[${i.category}]</div>
 									    <a href="/profile/sellingViewByUser?writer=${writer}&seq=${i.seq}"><img src="..." class="card-img-top" alt="..."></a>
 										<h5 class="card-title"><a href="/profile/sellingViewByUser?writer=${writer}&seq=${i.seq}">${i.title}</a></h5>
-										<div class="card-price ">${i.price}상추</div>
+										<div class="card-price ">${i.price} 상추</div>
 										<div class="card-region-name">${i.address}</div>
 										<div class="card-counts">
 											<span> 채팅 <span class="badge badge-danger">3</span></span>
@@ -399,7 +399,6 @@ border-bottom: solid 3px #39d9c8;
 
 		</div>
 	</section>
-	<hr>
 	<footer>
 		<!-- Footer Start -->
 		<div class="footer">
