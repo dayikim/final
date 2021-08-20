@@ -37,25 +37,28 @@ public class ChatEndPoint {
 	private String roomid;
 	
 	@OnOpen // 소켓이 열렸을 때, 클라이언트가 챗이라는 것을 열었을 떼?
-	public void onConnect(Session session, EndpointConfig config) {
+	public void onConnect(Session session, EndpointConfig config) throws IOException {
 		hsession = (HttpSession) config.getUserProperties().get("hsession");
 		roomid = (String) hsession.getAttribute("roomid");
 		System.out.println("open이 될 시 열리는 roomid: "+roomid);
-		if(roomid != null) {
-			if (hsession.getAttribute("createroom") != null) {
-				String create_roomid = chatService.roomid();
-				chatService.createRoom(create_roomid, (String) hsession.getAttribute("loginID"),
-											   (String) hsession.getAttribute("createroom"));
-				chatService.addRoom(create_roomid, session);
-				chatService.joinroom(create_roomid, session);
-			}
-		chatService.joinroom(roomid, session);
+//		if(roomid != null) {
+//			if (hsession.getAttribute("createroom") != null) {
+//				String create_roomid = chatService.roomid();
+//				chatService.createRoom(create_roomid, (String) hsession.getAttribute("loginID"),
+//											   (String) hsession.getAttribute("createroom"));
+//				chatService.addRoom(create_roomid, session);
+//				chatService.joinroom(create_roomid, session);
+//			}
+		boolean isCreate = (Boolean)hsession.getAttribute("createRoom") != null ? (Boolean)hsession.getAttribute("createRoom") : false; 
+		if(isCreate) {
+			chatService.addRoom(roomid, session);
+		}else {
+			chatService.joinroom(roomid, session);
+		}
 		messageService.readTounread(roomid,(String) hsession.getAttribute("loginID"));
 		}
-		
-		
-	}
-
+	
+	
 	@OnMessage
 	public void onMessage(Session self, String message, boolean last) throws Exception { // 자기 자신의 메세지를 받을 수있다.
 
@@ -71,7 +74,7 @@ public class ChatEndPoint {
 		bout.write(msg);
 		
 		 if (last) {
-		chatService.sendImage(fileService.getFile(filecontroller.getSeq()), messageService.toBinary(bout.toByteArray()));
+		chatService.sendImage(hsession,fileService.getFile(filecontroller.getSeq()), messageService.toBinary(bout.toByteArray()));
 		bout.reset();
 		bout.close();
 		 }

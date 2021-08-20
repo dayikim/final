@@ -2,7 +2,9 @@ package kh.spring.dto;
 
 import java.sql.Date;
 
-public class ChatFileDTO implements Comparable<MessageDTO>{
+
+
+public class ChatFileDTO{
 	
 	private int seq;
 	private String oriName;
@@ -85,10 +87,5 @@ public class ChatFileDTO implements Comparable<MessageDTO>{
 	public void setId(String id) {
 		this.id = id;
 	}
-
-	@Override
-	public int compareTo(MessageDTO o) {
-		// TODO Auto-generated method stub
-		return this.reg_date.compareTo(o.getReg_date());
-	}
+	
 }
