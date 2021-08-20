@@ -175,6 +175,7 @@ function doNotReload(){
     }
 }
 document.onkeydown = doNotReload;
+/* http://175.116.7.99/ */
 let ws = new WebSocket("ws://192.168.35.97/chat"); 
 $(function(){
 	
@@ -189,10 +190,13 @@ $(function(){
 			
 		let text = JSON.parse(event.data);
 		
+		console.log(text.createroom);
+		
 		if(text.isCheck != "true"){
 			
 			if(text.unreadcount != null){
-				window.parent.postMessage(text.unreadcount+":"+text.roomid,'http://192.168.35.97/chat/waitingroom');
+				window.parent.postMessage(text.unreadcount+
+						":"+text.roomid,'http://192.168.35.97/chat/waitingroom');
 			}
 			
 			if(text.isNaver == "true"){
@@ -213,20 +217,20 @@ $(function(){
 				div_body_img.append(img);
 				
 				let p_text_one = $("<p class = card-text>")
-				let search_blog_1 = $("<a class = card-link>"); 
+				let search_blog_1 = $("<a class = card-link target=_blank>"); 
 				search_blog_1.text("# "+hashblog.items[1].title.replace(/<\/b>/gi," ").replace(/<b>/gi," "));
 				search_blog_1.attr("href",hashblog.items[1].link)
 				p_text_one.append(search_blog_1)
 				
 				let p_text_two = $("<p class = card-text>")
-				let search_blog_2 = $("<a class = card-link>"); 
+				let search_blog_2 = $("<a class = card-link target=_blank>"); 
 				search_blog_2.text("# "+hashblog.items[2].title.replace(/<\/b>/gi," ").replace(/<b>/gi," "));
 				search_blog_2.attr("href",hashblog.items[2].link)
 				p_text_two.append(search_blog_2)
 				
 				
 				let p_text_three = $("<p class = card-text>")
-				let search_blog_3 = $("<a class = card-link>"); 
+				let search_blog_3 = $("<a class = card-link target=_blank>"); 
 				search_blog_3.text("# "+hashblog.items[3].title.replace(/<\/b>/gi," ").replace(/<b>/gi," "));
 				search_blog_3.attr("href",hashblog.items[3].link)
 				p_text_three.append(search_blog_3)
@@ -509,7 +513,7 @@ $(function(){
 	
 	function updateScroll(){
 		var element = document.getElementById("chat-container");
-		element.scrollTop = element.scrollHeight;
+		element.scrollTop = element.scrollHeight+400;
 	}
 	
 /* 	$("#send").on("click", function(){
@@ -698,7 +702,7 @@ $(function(){
 			F_FileMultiUpload(sumFile);
 		})
 		
-		$("#inputbox").on("keydown",function(e){
+		$("#inputbox").on("keyup",function(e){
 	 		 if(e.keyCode === 13){
 	        	 drag_uploadfiles = drag_uploadfiles.filter(function(item){
 					  return item !== null && item !== undefined && item !== '';
@@ -719,6 +723,14 @@ $(function(){
 		 		  F_FileMultiUpload(sumFile);
 		 		
 	 		   //}
+	 			
+	 			let naver = /(#\S*)/gi;
+	 			if(naver.test($("#inputbox").val())){
+	 				console.log(naver.test($("#inputbox").val()));
+	 				$($("#inputbox").val()).css("color","green");
+	 			}else{
+	 				$("#inputbox").css("color","black");
+	 			}
 	 		   if(!$("#inputbox").val().replace(/(^\s*)|(\s*$)/gi, " ")){
 	 			   	console.log("공백입니다.");
 	 			}else{
@@ -904,7 +916,6 @@ $(function(){
 									                                        		<c:when test="${friend_profile_img != null}">
 									                                        			<img src="data:image/png;base64,${friend_profile_img}" alt="Retail Admin">
 									                                        		</c:when>
-									                                        		
 									                                        		<c:otherwise>
 									                                        			<img src="/imgs/nomalProfile.jpg">
 									                                        		</c:otherwise>
@@ -934,7 +945,7 @@ $(function(){
 										                                        	</div>
 										                                        </div>
 										                                        <div class="chat-avatar">
-										                                             <c:choose>
+										                                          <c:choose>
 									                                        		<c:when test="${profile_img != null}">
 									                                        			<img src="data:image/png;base64,${profile_img}" alt="Retail Admin">
 									                                        		</c:when>

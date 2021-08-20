@@ -16,11 +16,15 @@
 	</select>
 	
 	<select id="pastMessage" resultType="kh.spring.dto.MessageDTO">
-		select * from message where roomid = #{value} order by seq
+		select * from message where roomid = #{value} order by reg_date
 	</select>
 
 	<select id="unreadCount" resultType ="Integer">
-		select count(*) from message where unread_message = 'Y' and roomid= '${roomid}'
+		select count(*) from message where unread_message = 'Y' and roomid= #{roomid}
+	</select>
+	
+	<select id="unreadCountnotme" resultType ="Integer">
+		select count(*) from message where unread_message = 'Y' and roomid= #{roomid} and not id = #{id}
 	</select>
 	
 	<update id="readTounread">

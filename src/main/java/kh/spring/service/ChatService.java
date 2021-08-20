@@ -29,6 +29,7 @@ import kh.spring.dao.ProfileFilesDAO;
 import kh.spring.dto.ChatFileDTO;
 import kh.spring.dto.ChatRepositoryDTO;
 import kh.spring.dto.ChatRoomDto;
+import kh.spring.dto.LendDTO;
 import kh.spring.dto.MessageDTO;
 
 
@@ -62,10 +63,11 @@ public class ChatService  implements InitializingBean {
 		}
 	}
 	
-	//룸리스트에 룸을 만든다.
-	public int createRoom(String roomid,String session, String title) {
-		ChatRoomDto temp = new ChatRoomDto(roomid, session, title);
-		return crd.createRoom(temp);
+
+	//룸DB에 자신의 룸을 만든다. (1:1 대화)
+	public void createRoomMy(String roomid,LendDTO ld,HttpSession session) {
+		crd.createRoom(new ChatRoomDto(roomid,ld.getWriter(), ld.getTitle()));
+		crd.createRoom(new ChatRoomDto(roomid,(String)session.getAttribute("loginID"), ld.getTitle()));
 	}
 	//세션에 해당하는 룸리스트만 따로 가져온다.
 	public List<ChatRoomDto> getChatRoomlist(String session){
@@ -79,8 +81,9 @@ public class ChatService  implements InitializingBean {
 	synchronized public void joinroom(String roomid ,Session session) {
 			rs.get(roomid).add(session);
 	}
+	
 	//룸리스트에서 해당룸을 찾아, 그 안에 있는 세션 리스트에게 메세지를 보낸다. 
-	public void sendMessage(MessageDTO md,HttpSession hsession) throws Exception {
+	synchronized public void sendMessage(MessageDTO md,HttpSession hsession) throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("a h:mm"); //날짜 형식
 		List<Session> sessionList = rs.get(md.getRoomid());
 		
@@ -103,7 +106,7 @@ public class ChatService  implements InitializingBean {
 			json.addProperty("profile_image",profile_binary);
 			json.addProperty("message" ,md.getMessage());
 			json.addProperty("roomid", md.getRoomid());
-			json.addProperty("unreadcount", ms.unreadCount(md.getRoomid(),md.getId()));
+			json.addProperty("unreadcount", ms.unreadCount(md.getRoomid()));
 			json.addProperty("trans_time" ,sdf.format(md.getReg_date()));
 			session.getBasicRemote().sendText(json.toString());
 		}
@@ -133,11 +136,15 @@ public class ChatService  implements InitializingBean {
 //		}
 //	}
 	
-	public void sendImage(ChatFileDTO cdf,String file) throws IOException { //이미지를 보낸다.
+	public void sendImage(HttpSession hsession,ChatFileDTO cdf,String file) throws Exception { //이미지를 보낸다.
 		SimpleDateFormat sdf = new SimpleDateFormat("a h:mm");
 		for(Session session :rs.get(cdf.getRoomid())) {
 			JsonObject json = new JsonObject();
 			json.addProperty("loginID", cdf.getId());
+			String profile_binary =pffd.profileSelect((String)hsession.getAttribute("loginID")) != null ? 
+					toBinary(hsession,pffd.profileSelect((String)hsession.getAttribute("loginID")).getSysName()):
+					null;
+			json.addProperty("profile_image",profile_binary);
 			json.addProperty("message",file);
 			json.addProperty("seq",cdf.getSeq());
 			json.addProperty("trans_time" ,sdf.format(cdf.getReg_date()));

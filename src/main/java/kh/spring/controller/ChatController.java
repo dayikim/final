@@ -17,6 +17,7 @@ import kh.spring.config.ChatRegx;
 
 import kh.spring.service.ChatService;
 import kh.spring.service.FileService;
+import kh.spring.service.LendService;
 import kh.spring.service.MessageService;
 import kh.spring.service.MypageService;
 
@@ -43,6 +44,9 @@ public class ChatController {
 	private ChatRegx cr;
 	
 	@Autowired
+	private LendService ls; 
+	
+	@Autowired
 	private MypageService myservice;
 	
 	/*
@@ -59,8 +63,18 @@ public class ChatController {
 	@RequestMapping("waitingroom")
 	public String chat(Model md) {
 		md.addAttribute("list", cs.getChatRoomlist((String)session.getAttribute("loginID")));
+		md.addAttribute("unread_count", ms);
 		md.addAttribute("waiting", "true");
 		return "chat/chatingRoom";
+	}
+	
+	@RequestMapping("createRoom")
+	public String createRoom(int boardSeq) {
+		String roomid = cs.roomid();
+		cs.createRoomMy(roomid,ls.detailView(boardSeq),session);
+		session.setAttribute("roomid", roomid);
+		session.setAttribute("createRoom",true);
+		return "redirect:waitingroom";
 	}
 	
 	@RequestMapping("")
