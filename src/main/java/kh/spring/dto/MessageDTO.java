@@ -2,7 +2,9 @@ package kh.spring.dto;
 
 import java.sql.Date;
 
-public class MessageDTO implements Comparable<ChatFileDTO> {
+
+
+public class MessageDTO{
 	
 	private int seq;
 	private String roomid;
@@ -73,10 +75,5 @@ public class MessageDTO implements Comparable<ChatFileDTO> {
 
 	public void setUnread_message(String unread_message) {
 		this.unread_message = unread_message;
-	}
-
-	@Override
-	public int compareTo(ChatFileDTO o) {
-		return this.reg_date.compareTo(o.getReg_date());
 	}
 }

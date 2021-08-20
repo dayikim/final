@@ -8,15 +8,17 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
 @Component
 public class NaverApi {
-	private static String clientId = "";
-	private static String clientSecret = "";
+	private static String clientId = "2HFs7dbsd4zRLycDtPnY";
+	private static String clientSecret = "sCr301mNfX";
 	
 		public  String returnImageJson(String search) throws Exception {
 			String transfer_utf8 = URLEncoder.encode(search, "UTF-8");

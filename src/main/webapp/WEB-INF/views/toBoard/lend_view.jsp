@@ -250,7 +250,17 @@ p {
 }
 </style>
 <script>
-$(function(){
+
+$(function() {
+	$("#search").keyup(function(e) {
+		if (e.keyCode == 13) {
+			location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
+		}
+	})
+	
+	$("#chatting").on("click",function(){
+		location.href = "/chat/createRoom?boardSeq="+$("#boardseq").val();
+	})
 
 		$("#deleteBtn").on("click",function () { //게시글 삭제
 					let check = confirm("정말 게시글을 삭제하겠습니까?");
@@ -438,7 +448,7 @@ $(function(){
 					<input type="hidden" name="seller" value="${board.writer}">
 					<input type="hidden" name="bookable" value="y">
 					<input type="hidden" name="booker" value="${loginID}">
-					<input type="hidden" name="parentseq" value="${board.seq}">
+					<input type="hidden" name="parentseq" value="${board.seq}" id = boardseq>
 						<button type="button" class="btn btn-secondary" id="booking">
 							예약하기</button>
 					</form>
@@ -464,8 +474,7 @@ $(function(){
 						<p class="target">${board.contents }</p>
 					</div>
 					<div class="btn_wrap">
-						<button type="button" class="btn btn-outline-info btn btn-lg"
-							id="chat">
+						<button type="button" class="btn btn-outline-info btn btn-lg" id="chatting">
 							<i class="far fa-comment-dots"></i> 1:1 채팅
 						</button>
 					</div>
