@@ -24,4 +24,14 @@ public class BwBoardFilesDAO {
 	public List<BorrowBoardFilesDTO> selectAll(int seq){
 		return mybatis.selectList("BwFiles.selectAll",seq);
 	}
+	
+	//사진 이름 가져오기
+	public String getSysName(int seq) {
+		return mybatis.selectOne("BwFiles.sysName", seq);
+	}
+	
+	//사진 삭제 하기
+	public int delete(int seq) {
+		return mybatis.delete("BwFiles.delete", seq);
+	}
 }

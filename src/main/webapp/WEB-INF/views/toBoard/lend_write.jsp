@@ -6,7 +6,7 @@
 
 		<head>
 			<meta charset="utf-8">
-			<title>재능 판매</title>
+			<title>대여 하기</title>
 			<meta content="width=device-width, initial-scale=1.0" name="viewport">
 			<meta content="Free Website Template" name="keywords">
 			<meta content="Free Website Template" name="description">
@@ -176,6 +176,17 @@
 
 			</style>
 			<script>
+			$(document).ready(function(){
+				let address = "${myInfo.address1}";
+				let addressReg = /^[가-힣]*\s+[가-힣]*/g;
+				let myaddress = address.match(addressReg);
+				console.log(myaddress);
+				if(myaddress != null){
+					$("#Input3").removeAttr("readonly");
+					$("#Input3").attr("value",myaddress);
+					$("#Input3").attr("readonly",true);
+				}
+			})
 
 				//이미지 담을 배열
 				let preview_files = [];
@@ -391,16 +402,16 @@
 
 							<div class="title">
 								<h2>
-									<b>대여하기</b>
+									<b>대여 하기</b>
 								</h2>
 
 							</div>
 
 							<div class="input-group mb-3 col-md-12 ">
 								<label class="input-group-text input"
-									for="inputGroupSelect02">대여물품<strong>＊</strong></label>
+									for="inputGroupSelect02">대여 물품명<strong>＊</strong></label>
 								<input type="text" class="form-control" id="title_input" name="title"
-									placeholder="거래할 재능을 입력하세요" required>
+									placeholder="거래할 물품을 입력하세요" required>
 							</div>
 
 							<div class="input-group mb-3 col-md-12">
@@ -530,7 +541,7 @@
 					<div class="row">
 						<div class="col-12" style="text-align: center;">
 							<p id=titlename>
-								&copy; <a href="#">돈-다</a>, All Right Reserved.
+								&copy; <a href="/">돈-다</a>, All Right Reserved.
 							</p>
 						</div>
 					</div>

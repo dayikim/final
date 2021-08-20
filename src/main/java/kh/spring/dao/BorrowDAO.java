@@ -27,10 +27,15 @@ public class BorrowDAO {
 		return mybatis.insert("Borrow.insert",dto);
 	}
 	
+	//게시글 수정
+	public int boardModify(BorrowDTO dto) {
+		return mybatis.update("Borrow.modify",dto);
+	}
+	
 	//게시글 상세보기
-		public BorrowDTO detailview(int seq) {
-			return mybatis.selectOne("Borrow.detailView", seq);
-		}
+	public BorrowDTO detailview(int seq) {
+		return mybatis.selectOne("Borrow.detailView", seq);
+	}
 	
 	//게시글 리스트
 	public List<BorrowDTO> getList(String choice, String search,int cpage){

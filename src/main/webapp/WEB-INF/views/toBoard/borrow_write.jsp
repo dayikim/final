@@ -6,7 +6,7 @@
 
 		<head>
 			<meta charset="utf-8">
-			<title>재능 요청하기</title>
+			<title>대여 요청하기</title>
 			<meta content="width=device-width, initial-scale=1.0" name="viewport">
 			<meta content="Free Website Template" name="keywords">
 			<meta content="Free Website Template" name="description">
@@ -174,6 +174,18 @@
 
 			</style>
 			<script>
+				
+			$(document).ready(function(){
+				let address = "${myInfo.address1}";
+				let addressReg = /^[가-힣]*\s+[가-힣]*/g;
+				let myaddress = address.match(addressReg);
+				console.log(myaddress);
+				if(myaddress != null){
+					$("#Input3").removeAttr("readonly");
+					$("#Input3").attr("value",myaddress);
+					$("#Input3").attr("readonly",true);
+				}
+			})
 
 				//이미지 담을 배열
 				let preview_files = [];
@@ -204,7 +216,7 @@
 					let contents = $("#contents");
 					let category = $("#category");
 					let price = $("#price");
-
+					
 
 					$("#submitBtn").on("click", function () { //글 작성 전 제목 내용 입력여부 확인
 						let priceReg = /^[0-9]/g;
@@ -391,16 +403,16 @@
 
 							<div class="title">
 								<h2>
-									<b>재능 요청하기</b>
+									<b>대여 요청</b>
 								</h2>
 
 							</div>
 							<!-- 제목 -->
 							<div class="input-group mb-3 col-md-12 ">
 								<label class="input-group-text input"
-									for="inputGroupSelect02">요청할 재능명<strong>＊</strong></label>
+									for="inputGroupSelect02">요청할 물품명<strong>＊</strong></label>
 								<input type="text" class="form-control" id="title_input" name="title"
-									placeholder="요청할 재능을 입력하세요" required>
+									placeholder="요청할 물품을 입력하세요" required>
 							</div>
 									<!--카테고리-->
 							<div class="input-group mb-3 col-md-12">
@@ -449,7 +461,7 @@
 							</div>
 
 							<div class="input-group mb-3 col-md-12">
-								<input type="text" class="form-control" id="Input3" name="address" value="${myInfo.address1}" readonly>
+								<input type="text" class="form-control" id="Input3" name="address" readonly>
 							</div>
 							<div class="input-group mb-3 col-md-12">
 								<textarea class="form-control" aria-label="With textarea" placeholder="세부 설명을 입력해주세요"
@@ -526,7 +538,7 @@
 					<div class="row">
 						<div class="col-12" style="text-align: center;">
 							<p id=titlename>
-								&copy; <a href="#">돈-다</a>, All Right Reserved.
+								&copy; <a href="/">돈-다</a>, All Right Reserved.
 							</p>
 						</div>
 					</div>

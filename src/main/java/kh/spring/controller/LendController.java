@@ -57,16 +57,13 @@ public class LendController {
 		System.out.println(seq);
 		String sessionID = (String) session.getAttribute("loginID");
 		
-		PersonDTO pdto = MypageService.mypageList(id);//내정보 출력
 		ProfileFilesDTO pfdto = MypageService.profileSelect(id); // 프사 출력
 		
-		
 		PersonDTO writerInfo = service.memberInfoById(id);//글 작성자 정보(이름,주소)
-        LendDTO dto = service.detailView(seq);
+		
+        LendDTO dto = service.detailView(seq);//글 상세보기
         
-        session.setAttribute("myInfo", pdto);//내정보
-        model.addAttribute("profile",pfdto); //프로필
-        
+        model.addAttribute("profile",pfdto); //프로필        
         model.addAttribute("writerInfo",writerInfo);//작성자정보
         model.addAttribute("board",dto);//글내용		 
 		 

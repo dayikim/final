@@ -10,11 +10,16 @@
 		select * from lendboard where seq =#{seq}
 	</select>
 
-	<!-- 게시글 글쓰기 -->
+	<!-- 게시글 글쓰기 --> 
 	<insert id="insert">
 		insert into borrowboard values(#{seq},#{writer},#{title},#{category},#{contents},#{price},#{address},sysdate)
 	</insert>
-
+	
+	<!-- 게시글 글쓰기 --> 
+	<update id="modify">
+		update borrowboard set title=#{title}, category=#{category}, contents=#{contents}, price=#{price}, regdate=sysdate where seq=#{seq}
+	</update>
+	
 	<!-- 게시글 번호 -->
 	<select id="getSeq" resultType="int">
 		select TalentBoard_seq.nextval from dual

@@ -6,7 +6,7 @@
 
 		<head>
 			<meta charset="utf-8">
-			<title>재능 판매</title>
+			<title>대여 요청하기</title>
 			<meta content="width=device-width, initial-scale=1.0" name="viewport">
 			<meta content="Free Website Template" name="keywords">
 			<meta content="Free Website Template" name="description">
@@ -170,23 +170,10 @@
 					margin-right: 10px;
 					margin-bottom: 10px;
 				}
-				
-				.footer{
-				margin:0}
+
 
 			</style>
 			<script>
-				$(document).ready(function(){
-					let address = "${myInfo.address1}";
-					let addressReg = /^[가-힣]*\s+[가-힣]*/g;
-					let myaddress = address.match(addressReg);
-					console.log(myaddress);
-					if(myaddress != null){
-						$("#Input3").removeAttr("readonly");
-						$("#Input3").attr("value",myaddress);
-						$("#Input3").attr("readonly",true);
-					}
-				})
 
 				//이미지 담을 배열
 				let preview_files = [];
@@ -194,11 +181,13 @@
 				$(function () {
 					$("#file").on("change", preview)
 
-					$("#file").change(function() { 
-						$("#fileName").val(this.files && this.files.length ? this.files[0].name : this.value.replace(/^C:\\fakepath\\/i, '')); })
+					$("#file").change(function() {
+						$("#fileName").val(this.files && this.files.length ? this.files[0].name : this.value.replace(/^C:\\fakepath\\/i, ''));
+						
+					})
 
-
-					let fileTarget = $('.upload-hidden');
+					let fileTarget = $('.upload-hidden'); 
+					
 					fileTarget.on('change', function () { // 값이 변경되면
 						if (window.FileReader) { // modern browser
 							var filename = this.files[0].name;
@@ -209,21 +198,20 @@
 						// 추출한 파일명 삽입 
 						$(this).siblings("fileName").val(filename);
 					});
+					
 
+					let title = $("#title_input");
+					let contents = $("#contents");
+					let category = $("#category");
+					let price = $("#price");
 
 
 					$("#submitBtn").on("click", function () { //글 작성 전 제목 내용 입력여부 확인
-
-						let title = $("#title_input");
-						let contents = $("#contents");
-						let category = $("#category");
-						let price = $("#price");
-
 						let priceReg = /^[0-9]/g;
 						let resultprice = priceReg.test(price.val());
 
 						if (title.val() == "") {
-							alert("판매할 재능명을 입력해주세요.");
+							alert("요청할 재능명을 입력해주세요.");
 							title.focus();
 							return false;
 
@@ -233,7 +221,7 @@
 							return false;
 
 						} else if (price.val() == "") {
-							alert("판매 가격을 입력해주세요.");
+							alert("요청 가격을 입력해주세요.");
 							price.focus();
 							return false;
 
@@ -284,13 +272,14 @@
 							$("#fileName").val("");
 							$("#file").val("");
 							alert("확장자는 이미지 확장자만 가능합니다.");
+							$("#fileName").val("");
 							return;
-							
 						}
 						preview_files.push(f);
 
 						let reader = new FileReader();
 						reader.onload = function (e) {
+							index++;
 							let html = "<a href=\"javascript:void(0);\" onclick=\"deleteImage("
 								+ index
 								+ ")\" id=\"img_id_"
@@ -298,7 +287,6 @@
 								+ "\"><img src=\"" + e.target.result + "\" data-file='" + f.name + "' class='selProductFile' title='Click to remove'></a>";
 
 							$("#preview").append(html);
-							index++;
 							//  let img_html = "<img src=\"" +e.target.result + "\" />";
 							//  $("#preview").append(img_html);
 
@@ -310,12 +298,23 @@
 				function deleteImage(index) {
 					console.log("index : " + index);
 					preview_files.splice(index, 1);
+
 					let img_id = "#img_id_" + index;
 					$(img_id).remove();
 					$("#fileName").val("");
-					$("#file").val("");
 					console.log(preview_files);
 				}
+				
+				function delAttach(seq) {
+					console.log("seq : " + seq);
+
+					let delImg_id = "#delImg_id_" + seq;
+					$(delImg_id).remove();
+					let html = "<input type='hidden' name='delSeq' value='"+seq+"'>";
+					$("#preview").append(html);
+				}
+				
+				
 
 			</script>
 		</head>
@@ -349,7 +348,7 @@
 		</div>
 	</div>
 	<!-- Top Bar End -->
-  <!-- Nav Bar Start -->
+		 <!-- Nav Bar Start -->
         <div class="navbar navbar-expand-lg bg-dark navbar-dark">
             <div class="container-fluid">
                 <a href="/" class="navbar-brand"><p id= titlename>돈-다</a></p>
@@ -395,84 +394,86 @@
             </div>
         </div>
         <!-- Nav Bar End -->
+
 			<section id="write">
 				<div class="container">
-					<form action="/tBoard/sellingWrite" method="post" id="writeform" enctype="multipart/form-data">
+					<form action="/brrowBoard/bwModify" method="post" id="writeform" enctype="multipart/form-data">
 						<div class="form-control wrapper ">
 
 							<div class="title">
 								<h2>
-									<b>재능 판매하기</b>
+									<b>대여 요청</b>
 								</h2>
 
 							</div>
-
+							<!-- 제목 -->
 							<div class="input-group mb-3 col-md-12 ">
 								<label class="input-group-text input"
-									for="inputGroupSelect02">재능명<strong>＊</strong></label>
-								<input type="text" class="form-control" id="title_input" name="title"
-									placeholder="거래할 재능을 입력하세요" required>
+									for="inputGroupSelect02">요청할 물품명<strong>＊</strong></label>
+								<input type="text" class="form-control" id="title_input" name="title" value="${dto.title}"
+									placeholder="요청할 물품을 입력하세요" required>
 							</div>
-
+									<!--카테고리-->
 							<div class="input-group mb-3 col-md-12">
 								<label class="input-group-text" for="inputGroupSelect02">카테고리<strong>＊</strong></label>
 								<select class="custom-select" id="category" name="category">
-									<option value="0" selected>카테고리 선택해주세요.</option>
-									<option value="프로그램개발">프로그램개발</option>
-									<option value="문서작성">문서작성</option>
-									<option value="디자인">디자인</option>
-									<option value="번역/외국어">번역/외국어</option>
-									<option value="음악/영상">음악/영상</option>
-									<option value="생활 서비스">생활 서비스</option>
+									<option value="${dto.category}" selected>${dto.category}</option>
+									<option value="디지털/가전">디지털/가전</option>
+									<option value="주방용품/가구">주방용품/가구</option>
+									<option value="패션의류/악세사리">패션의류/악세사리</option>
+									<option value="출산/유아">출산/유아</option>
+									<option value="스포츠/레저">스포츠/레저</option>
+									<option value="생활/건강">생활/건강</option>
 									<option value="기타">기타</option>
 								</select>
 							</div>
 							
-
+							<!-- 이미지 미리보기 -->
 							<div class="input-group mb-3 col-md-12">
 								<h4>
 									<b>이미지 미리 보기</b>
 								</h4>
 								<div class="input-group mb-3 col-md-12 " id="preview">
+									<c:forEach var="f" items="$flist">
+										<a href="javascript:void(0);" onclick="delAttach(${f.seq})" seq="${f.seq}" id="delImg_id_${f.seq}">
+											<img src="resourse/borrow/${file.oriName}"  class="selProductFile" title="Click to remove">
+										</a>
+									</c:forEach>
 									<!-- <img id="img"/> -->
 								</div>
-
 								<!-- onchange="javascript:document.getElementById('fileName').value = this.value" -->
 								
-									<div class="custom-file">
-										<input type="file" name="file" class="upload-hidden" id="file"  onchange="javascript:document.getElementById('fileName').value = this.value"  multiple>
+									<div class="custom-file ">
+										<input type="file" name="file" class="upload-hidden" id="file"  multiple>
 										<input type=text class="custom-file-label"  id="fileName" name="filename" style="width: 980px;">
-																		</div>
+									</div>
 									<div class="input-group-append">
-										<button class="btn btn-outline-secondary" type="button" onclick="filesUpload();"class="uploadBtn">업로드</button>
+										<button type="button" class="btn btn-outline-secondary" onclick="filesUpload();" >업로드</button>
 									</div>
 									<!-- </form> -->
-								
-
 							</div>
 
-							
 							<div class="input-group mb-3 col-md-12">
-								<label class="input-group-text">거래 가격<strong>＊</strong></label>
+								<label class="input-group-text"> 요청 가격<strong>＊</strong></label>
 								<!-- <input
 							type="text" class="form-control" placeholder="가격 (ex: 100 상추/최소 금액은 100원)"
 							id="price" name="price" required onkeypress="inNumber();" /> -->
 								<input type="number" class="form-control" placeholder="(ex: 100 상추/최소 금액은 100 상추)"
-									id="price" name="price" required
-									 />
+									id="price" name="price" value="${dto.price}" required>
+						
 
 							</div>
 
 							<div class="input-group mb-3 col-md-12">
-								<input type="text" class="form-control" id="Input3" name="address" value="${myInfo.address1}" readonly>
+								<input type="text" class="form-control" id="Input3" name="address" value="${dto.address}" readonly>
 							</div>
 							<div class="input-group mb-3 col-md-12">
 								<textarea class="form-control" aria-label="With textarea" placeholder="세부 설명을 입력해주세요"
-									rows="10" id="contents" name="contents" required></textarea>
+									rows="10" id="contents" name="contents" value="${dto.contents}" required></textarea>
 							</div>
 							<div class="btn_wrap text-right">
-								<button type="button" class="btn btn-primary btn-lg" id="submitBtn">등록</button>
-								<button type="reset" id="cancel" class="btn btn-secondary btn-lg">취소</button>
+								<button type="button" class="btn btn-primary" id="submitBtn">수정하기</button>
+								<button type="reset" id="cancel" class="btn btn-dark">취소</button>
 
 							</div>
 						</div>
@@ -541,7 +542,7 @@
 					<div class="row">
 						<div class="col-12" style="text-align: center;">
 							<p id=titlename>
-								&copy; <a href="#">돈-다</a>, All Right Reserved.
+								&copy; <a href="/">돈-다</a>, All Right Reserved.
 							</p>
 						</div>
 					</div>

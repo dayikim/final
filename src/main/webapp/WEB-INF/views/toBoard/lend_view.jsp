@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>대여하기 게시글 상세보기</title>
+<title>재능 판매 게시글 상세보기</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free Website Template" name="keywords">
 <meta content="Free Website Template" name="description">
@@ -90,7 +90,7 @@ img {
 
 /* 프로필,상세보기 */
 #body {
-	padding-top: 100px;
+	padding-top: 110px;
 	padding-bottom: 30px;
 }
 
@@ -250,24 +250,12 @@ p {
 }
 </style>
 <script>
-$(function() {
-	$("#search").keyup(function(e) {
-		if (e.keyCode == 13) {
-			location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
-		}
-	})
-	
-	$("#chat").on("click",function(){
-		location.href = "/chat";
-	})
-})
-
 $(function(){
 
 		$("#deleteBtn").on("click",function () { //게시글 삭제
 					let check = confirm("정말 게시글을 삭제하겠습니까?");
 					if (check) {
-						location.href = "tBoard/delete?seq="
+						location.href = "/tBoard/sellingDelete?seq="
 							+ $("#deleteBtn").val(); //게시글 삭제 확인 팝업
 					} else {
 						return;
@@ -277,7 +265,7 @@ $(function(){
 		$("#modifyBtn").on("click",function () { //게시글 수정
 					let check = confirm("정말 게시글을 수정하겠습니까?");
 					if (check) {
-						location.href = "tBoard/modify?seq="
+						location.href = "/tBoard/modify?seq="
 							+ $("#modifyBtn").val(); //게시글 수정 확인 팝업
 					} else {
 						return;
@@ -375,25 +363,23 @@ $(function(){
         <!-- Nav Bar End -->
 	<section id="body">
 		<div class="container">
-			<c:if test="${loginID == board.writer}">
-				<div class="btn_box btn_wrap text-right ">
-					<button type="button" class="btn btn-info" value="${board.seq}" id="deleteBtn">
-						<i class="fas fa-trash-restore"> 삭제</i>
-					</button>
-					<button type="button" class="btn btn-info" value="${board.seq}" id="modifyBtn">수정</button>
-				</div>									
-			</c:if>
+			<c:choose>
+                <c:when test="${loginID == board.writer}">			
+					<div class="btn_box btn_wrap text-right ">			
+						<button type="button" class="btn btn-info" value="${board.seq}" id="deleteBtn">
+							<i class="fas fa-trash-restore"> 삭제</i>
+						</button>
+						<button type="button" class="btn btn-info" value="${board.seq}" id="modifyBtn">수정</button>
+					</div>									
+				</c:when>
+			</c:choose>
 			<div class="form-control wrapper">
 				<div class="board_title">
-
-					<a href="#" class="badge badge-info">대여하기</a>
-					
-				
-
-						<span id="category">${board.category}</span>
-						<h2 class="title_msg">
-							<b>${board.title}<b>
-						</h2>
+					<a href="#" class="badge badge-info">대여 하기</a>
+					<span id="category">${board.category}</span>
+					<h2 class="title_msg">
+						<b>${board.title}<b>
+					</h2>
 				</div>
 				<div class="row col-12 carousel">
 					<!-- Carousel -->
@@ -403,18 +389,18 @@ $(function(){
 <%-- 						<c:forEach var="file" items="${filelist}">
  --%>						<div class="col-12 carousel-inner">
 							<div class="col-12 col-md-12 carousel-item active">
-								<img src="/imgs/lend/noimage.jpg" class="col-12 d-block w-100"
+								<img src="자유게시판 상세 및 신고.png" class="col-12 d-block w-100"
 									alt="slide-img-1">
 <%-- 						</c:forEach>
  --%>							</div>
 							<div class=" col-12 carousel-item">
-								<img src="/imgs/lend/noimage.jpg" class="col-12 col-md-12 d-block w-100"
+								<img src="자유게시판 수정.PNG" class="col-12 col-md-12 d-block w-100"
 									alt="slide-img-2">
 								<div class="carousel-caption"></div>
 							</div>
 						</div>
 						<div class=" col-12 carousel-item">
-							<img src="/imgs/lend/noimage.jpg" class="col-12 col-md-12 d-block w-100"
+							<img src="자유게시판 작성.png" class="col-12 col-md-12 d-block w-100"
 								alt="slide-img-3">
 
 						</div>
@@ -463,7 +449,7 @@ $(function(){
 						<!-- 프로필 이미지 -->
 							<c:choose>
 					<c:when test="${profile != null}">
-						<a href="/profilie/userProfile?id=${board.writer}"><img src="/imgs/mypage/${profile.sysName}" id=profile></a>
+						<a href="/profilie/userProfile?id=${board.writer}"><img src="/imgs/mypage/${profile.sysName }" id=profile></a>
 					</c:when>
 					<c:otherwise>
 						<a href="/profilie/userProfile?id=${board.writer}"><img src="/imgs/nomalProfile.jpg" id=profile></a>
@@ -550,7 +536,7 @@ $(function(){
 				<div class="row">
 					<div class="col-12" style="text-align: center;">
 						<p id=titlename>
-							&copy; <a href="/">돈-다</a>, All Right Reserved.
+							&copy; <a href="#">돈-다</a>, All Right Reserved.
 						</p>
 					</div>
 				</div>
