@@ -19,6 +19,11 @@
 		select * from selltalent where seq =#{seq}
 	</select>
 	
+	<!-- 게시글 수정 --> 
+	<update id="modify">
+		update selltalent set title=#{title}, category=#{category}, contents=#{contents}, price=#{price}, address=#{address} where seq=#{seq}
+	</update>
+	
 	<!-- 판매자 찾기 -->
 	<select id="getAllList" resultType="kh.spring.dto.SellTalentDTO">
 		select * from selltalent
