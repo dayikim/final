@@ -199,10 +199,11 @@
 				})
 			})
 
-				//이미지 담을 배열
+				
+				//이미지 정보들을 담을 배열
 				let preview_files = [];
-
 				$(function () {
+					
 					$("#file").on("change", preview)
 
 					$("#file").change(function() {
@@ -223,58 +224,6 @@
 						$(this).siblings("fileName").val(filename);
 					});
 					
-
-					let title = $("#title_input");
-					let contents = $("#contents");
-					let category = $("#category");
-					let price = $("#price");
-					
-
-					$("#submitBtn").on("click", function () { //글 작성 전 제목 내용 입력여부 확인
-						let priceReg = /^[0-9]/g;
-						let resultprice = priceReg.test(price.val());
-
-						if (title.val() == "") {
-							alert("요청할 물품명을 입력해주세요.");
-							title.focus();
-							return false;
-
-						} else if (category.val() == "0") {
-							alert("카테고리를 선택해주세요.");
-							category.focus();
-							return false;
-
-						} else if (price.val() == "") {
-							alert("요청 가격을 입력해주세요.");
-							price.focus();
-							return false;
-
-						} else if (contents.val() == "") {
-							alert("세부내용을 입력해주세요.");
-							contents.focus();
-							return false;
-
-						} else if (resultprice) {
-							if (price.val() < 100) {
-								alert("최소 가격은 100 상추입니다. 가격을 다시 입력해주세요.");
-								price.val("");
-								price.focus();
-								return false;
-							} else {
-								$("#writeform").submit();
-
-							}
-						} else {
-							alert("숫자만 입력해주세요.")
-							price.val("");
-							price.focus();
-							return false;
-							console.log(resultprice)
-						}
-
-					});
-
-
 				})
 				function filesUpload() {
 					console.log("fileupload");
@@ -282,16 +231,17 @@
 				}
 
 				function preview(e) {
-
-					//이미지 정보들 초기화
+					
+					//이미지 정보들을 초기화
 					preview_files = [];
 					$("#file").empty();
 
 					let files = e.target.files;
 					let filesArr = Array.prototype.slice.call(files);
-
+					
 					let index = 0;
 					filesArr.forEach(function (f) {
+						console.log(f);
 						if (!f.type.match("image.*")) {
 							$("#fileName").val("");
 							$("#file").val("");
@@ -299,35 +249,82 @@
 							$("#fileName").val("");
 							return;
 						}
+							
 						preview_files.push(f);
-
 						let reader = new FileReader();
+							
 						reader.onload = function (e) {
-							let html = "<a href=\"javascript:void(0);\" onclick=\"deleteImage("
-								+ index
-								+ ")\" id=\"img_id_"
-								+ index
-								+ "\"><img src=\"" + e.target.result + "\" data-file='" + f.name + "' class='selProductFile' title='Click to remove'></a>";
-
-							$("#preview").append(html);
-							index++;
-							//  let img_html = "<img src=\"" +e.target.result + "\" />";
-							//  $("#preview").append(img_html);
-
+						let html = "<a href=\"javascript:void(0);\" onclick=\"deleteImage("+ index+")\" id=\""+ index+"_img_id""\"> <img src=\"" + e.target.result + "\" data-file='" + f.name + "' class='selProductFile' title='Click to remove'></a>";
+						index++;
+						$("#preview").append(html);
+						
+						
+						//  let img_html = "<img src=\"" +e.target.result + "\" />";
+						//  $("#preview").append(img_html);
 						}
 						reader.readAsDataURL(f);
 					});
 				}
-
+				//이미지 미리보기 삭제
 				function deleteImage(index) {
 					console.log("index : " + index);
 					preview_files.splice(index, 1);
 
-					let img_id = "#img_id_" + index;
+					let img_id = "#"+ index+"_img_id";
 					$(img_id).remove();
 					$("#fileName").val("");
 					console.log(preview_files);
 				}
+				
+				let title = $("#title_input");
+				let contents = $("#contents");
+				let category = $("#category");
+				let price = $("#price");
+				
+
+				$("#submitBtn").on("click", function () { //글 작성 전 제목 내용 입력여부 확인
+					let priceReg = /^[0-9]/g;
+					let resultprice = priceReg.test(price.val());
+
+					if (title.val() == "") {
+						alert("요청할 물품명을 입력해주세요.");
+						title.focus();
+						return false;
+
+					} else if (category.val() == "0") {
+						alert("카테고리를 선택해주세요.");
+						category.focus();
+						return false;
+
+					} else if (price.val() == "") {
+						alert("요청 가격을 입력해주세요.");
+						price.focus();
+						return false;
+
+					} else if (contents.val() == "") {
+						alert("세부내용을 입력해주세요.");
+						contents.focus();
+						return false;
+
+					} else if (resultprice) {
+						if (price.val() < 100) {
+							alert("최소 가격은 100 상추입니다. 가격을 다시 입력해주세요.");
+							price.val("");
+							price.focus();
+							return false;
+						} else {
+							$("#writeform").submit();
+
+						}
+					} else {
+						alert("숫자만 입력해주세요.")
+						price.val("");
+						price.focus();
+						return false;
+						console.log(resultprice)
+					}
+
+				});
 
 			</script>
 		</head>

@@ -96,7 +96,7 @@ img{
 		$(function() {
 			$("#search").keyup(function(e) {
 				if (e.keyCode == 13) {
-					location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
+					location.href = "/AllBoardList/tlSellList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
 				}
 			})
 			
@@ -251,7 +251,7 @@ img{
 			<input type="hidden" value="${choice}" name=choice>
 				<c:forEach var="i" items="${list}">
 					<div class="to-board">					
-						<a href="/lendBoard/lendView?id=${i.writer}&seq=${i.seq}" id="list_hhtp" class="list_hhtp">				
+						<a href="/tBoard/sellingView?id=${i.writer}&seq=${i.seq}" id="list_hhtp" class="list_hhtp">				
 <%-- 							<c:choose> --%>
 <%-- 								<c:when test="${flist.parentseq == i.seq}"> --%>
 <%-- 									<img src="/imgs/lend/${flist.sysName}" id=fimg> --%>

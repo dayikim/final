@@ -177,7 +177,7 @@
 			</style>
 			<script>
 			$(document).ready(function(){
-				let address = "${myInfo.address1}";
+				let address = "${myAd.address1}";
 				let addressReg = /^[가-힣]*\s+[가-힣]*/g;
 				let myaddress = address.match(addressReg);
 				console.log(myaddress);
@@ -411,7 +411,7 @@
 				<div class="container">
 					<form action="/lendBoard/ldModify" method="post" id="writeform" enctype="multipart/form-data">
 						<div class="form-control wrapper ">
-							<input type="hidden" value="${dto.seq}">
+							<input type="hidden" value="${dto.seq}" name="seq">
 							<div class="title">
 								<h2>
 									<b>대여 하기</b>
@@ -475,11 +475,11 @@
 							</div>
 
 							<div class="input-group mb-3 col-md-12">
-								<input type="text" class="form-control" id="Input3" name="address" value="${dto.address}" readonly>
+								<input type="text" class="form-control" id="Input3" name="address" readonly>
 							</div>
 							<div class="input-group mb-3 col-md-12">
 								<textarea class="form-control" aria-label="With textarea" placeholder="세부 설명을 입력해주세요"
-									rows="10" id="contents" name="contents" required>"${dto.contents}"</textarea>
+									rows="10" id="contents" name="contents" required>${dto.contents}</textarea>
 							</div>
 							<div class="btn_wrap text-right">
 								<button type="button" class="btn btn-primary btn-lg" id="submitBtn">등록</button>

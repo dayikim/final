@@ -98,7 +98,9 @@ public class TalentBoardController {
 		PersonDTO writerInfo = STService.memberInfoById(id);//글 작성자 정보(이름,주소)
 		model.addAttribute("writerInfo",writerInfo);
 		
+		System.out.println(seq);
         SellTalentDTO dto = STService.detailView(seq);//글 상세보기
+        System.out.println(dto);
 		 model.addAttribute("board",dto);
 		////		List<TalentFilesDTO> fileList = F_Service.selectAll(seq); //첨부파일 목록 출력   
 		//        System.out.println("파일이 비어 있나요?? "+fileList.isEmpty());//파일이 있나요?
@@ -157,6 +159,7 @@ public class TalentBoardController {
 			String sessionID = (String) session.getAttribute("loginID");
 			PersonDTO pdto = MypageService.mypageList(sessionID);
 			
+			System.out.println(seq);
 			SellTalentDTO dto = STService.detailView(seq);//게시글 정보
 			
 //			List<BorrowBoardFilesDTO> flist = service.selectAll(seq);
@@ -172,6 +175,7 @@ public class TalentBoardController {
 		//판매수정 데이터 
 		@RequestMapping(value="sellingModify",produces="text/html;charset=utf8")
 		public String sellingModify(SellTalentDTO dto, TBoardFilesDTO fdto,String[] delSeq,MultipartFile[] file) throws Exception {
+			System.out.println(dto.getSeq());
 			
 			String realPath = session.getServletContext().getRealPath("resources/imgs/selling");
 			
@@ -195,13 +199,14 @@ public class TalentBoardController {
 			model.addAttribute("dto", dto);
 //			model.addAttribute("flist", flist);
 					
-			return "/talentBoard/borrow_modify";
+			return "/talentBoard/modify_request";
 		}
 				
 		//요청수정 데이터 
 		@RequestMapping(value="requestModify",produces="text/html;charset=utf8")
 		public String requestModify(RequestTalentDTO dto,TBoardFilesDTO fdto,String[] delSeq,MultipartFile[] file) throws Exception {
-					
+			System.out.println(dto.getSeq());
+			
 			String realPath = session.getServletContext().getRealPath("resources/imgs/request");
 					
 			RTService.boardModify(dto,realPath,fdto,delSeq,file);
