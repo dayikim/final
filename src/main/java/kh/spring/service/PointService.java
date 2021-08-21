@@ -1,6 +1,10 @@
 package kh.spring.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import kh.spring.dao.ChargingDAO;
@@ -42,8 +46,9 @@ public class PointService {
 //	//결제시, 결제금액 대비 포인트 금액 비교
 	public int pointCheck(String sessionID, int point) {
 		int sum= padao.checkAmount(sessionID);
+		System.out.println("현재 포인트: " +sum);
 		int leftpoint = sum-point;
-		System.out.println("현재 포인트: "+leftpoint);
+		System.out.println("결제 후 잔여 예상 포인트: "+leftpoint);
 		
 		if(leftpoint<0) { //사용 포인트 초과
 			return 0;
@@ -58,6 +63,7 @@ public class PointService {
 	
     //결제하기
 	public int payment(PaymentDTO dto) {
+		
 		return paydao.payment(dto);
 	}
 	
@@ -66,8 +72,12 @@ public class PointService {
 		return padao.minus(padto);
 		
 	}
+//해당 게시글 결제 여부
+	public int isPayment(int parentseq) {
+		return paydao.isPayment(parentseq);
+	}
 
-	
 
-	
-}
+
+	}
+
