@@ -215,6 +215,18 @@ img{
 .product>a:hover {
 	color: gray;
 }
+
+/* 회원탈퇴 */
+.memberOutDiv{
+	text-align: left;
+}
+#memberOut{
+	width:100px;
+}
+#memberOut:hover{
+	background-color : #334257;
+	color:white;
+}
 /**************************************************************************/
 /*중간*/
 .center {
@@ -281,15 +293,16 @@ img{
 	outline: none;
 	cursor: pointer;
 }
+
 </style>
 <script>
 	$(function(){		
 		// 게시물 검색
-		$("#search").keyup(function(e) {
+/* 		$("#search").keyup(function(e) {
 			if (e.keyCode == 13) {
 				location.href = "/AllBoardList/lendList?category=AllCategory&search="+$("#search").val()+"&cpage=1";
 			}
-		})
+		}) */
 		
 		// 채팅
 		$("#chat").on("click",function(){
@@ -300,6 +313,11 @@ img{
 		$("#updateMyProfile").on("click",function(){
 			let origin_picture = $("#profile").attr("src");
 			let popup = window.open('/my/picture_change?origin='+origin_picture,'change','width=530px,height=530px,scrollbars=no,resizable=no');
+		})
+		
+		// 회원탈퇴 버튼을 눌렀을 때
+		$("#memberOut").on("click",function(){
+			
 		})
 	})
 </script>
@@ -506,9 +524,11 @@ img{
 					<div class="product">
 						<a href="#">현재 내가 빌린 상품 목록 미리보기</a>
 					</div>
-
-
 				</div>
+			</div>
+			
+			<div class="memberOutDiv">
+				<button type=button id=memberOut class="cnum-btn2">회원탈퇴</button>
 			</div>
 		</div>
 

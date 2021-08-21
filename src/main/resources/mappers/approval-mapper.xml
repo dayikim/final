@@ -12,7 +12,7 @@
 	
 	<!-- 거래 승인된 애들 출력 -->
 	<select id="dealSuccessSelect" resultType="int">
-		select * from approval where approval='y'
+		select count(*) from approval
 	</select>
 
 </mapper>

@@ -1,9 +1,7 @@
 package kh.spring.controller;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,14 +11,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartRequest;
 
 import kh.spring.config.SHA256;
+import kh.spring.dto.ApprovalDTO;
+import kh.spring.dto.BookingDTO;
+import kh.spring.dto.LendDTO;
 import kh.spring.dto.PersonDTO;
 import kh.spring.dto.PointDTO;
 import kh.spring.dto.ProfileFilesDTO;
+import kh.spring.dto.SellTalentDTO;
 import kh.spring.service.MypageService;
-import kh.spring.service.PersonService;
 import kh.spring.service.PointService;
 
 @Controller
@@ -28,11 +28,11 @@ import kh.spring.service.PointService;
 public class MypageController {
 
 	@Autowired
-	private MypageService service;
+	private MypageService service; // 마이페이지 서비스
 	@Autowired
-	private  PointService PointService;
+	private  PointService PointService; // 포인트 서비스
 	@Autowired
-	private HttpSession session;
+	private HttpSession session; // 세션
 
 	// 마이페이지 정보 출력
 	@RequestMapping(value="/mypageProc", produces="text/html;charset=utf8")
@@ -135,30 +135,34 @@ public class MypageController {
 
 	// 거래 요청 목록 - 재능
 	@RequestMapping("/requestRentalTalent")
-	public String requestRentalTalent(Model model) {
+	public String requestRentalTalent(Model model, BookingDTO dto) {
 		String sessionID = (String)session.getAttribute("loginID");
-		List<HashMap<String,Object>> list = service.requestRentalTalent(sessionID);
-		//		int result = service.dealSuccessSelect();
+		List<HashMap<String,Object>> list = service.requestRentalTalent(sessionID); // 예약리스트 꺼내기
+		
+//		int result = service.dealSuccessSelect(sessionID, booker, parentseq); // 거래 완료 버튼(booker와 parentseq의 값은 어디서 갖고오지?)
+		
 
-		//		model.addAttribute("result", result);  //  거래 승인 유무(여기서 1이 나오게 출력하고 싶은데...)
+//		model.addAttribute("approval", result);  
 		model.addAttribute("requestRental", list);  // 들어온 예약 리스트
 		return "/mypage/requestRentalTalent";
 	}
 
 	// 요청 거절 버튼을 눌렀을 때 - 재능
+	@ResponseBody
 	@RequestMapping("/dealFail")
 	public String dealFail(int parent) {
+		System.out.println(parent);
 		String sessionID = (String)session.getAttribute("loginID");
-		service.dealFail(sessionID,parent);
+		int result = service.dealFail(sessionID,parent);
 
-		return "redirect:/my/requestRentalTalent";
+		return String.valueOf(result);
 	}
 
 	// 거래 승인 완료 버튼 눌렀을 때 - 재능(미완)
 	@ResponseBody
 	@RequestMapping("/dealSuccess")
 	public String dealSuccess(String writer, String booker, int parent) {
-		System.out.println(writer + booker + parent);
+		System.out.println(writer +":"+":"+ booker+":"+ parent);
 		int result = service.dealSuccess(writer,booker,parent); 
 
 		return String.valueOf(result);
@@ -185,12 +189,14 @@ public class MypageController {
 	}
 
 	// 예약 취소 - 재능
+	@ResponseBody
 	@RequestMapping("/bookingFail")
 	public String bookingFail(int parent) {
+		System.out.println(parent);
 		String sessionID = (String)session.getAttribute("loginID");
-		service.bookingFail(sessionID,parent);
+		int result = service.bookingFail(sessionID,parent);
 
-		return "redirect:/my/buyRequestTalent";
+		return String.valueOf(result);
 	}
 
 
