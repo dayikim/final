@@ -149,10 +149,12 @@
 			<div class="col-8">
 				<div class="date">${i.dealdate }</div>
 				<div class="content">
-					<b>결제한 게시물 제목</b>
+					<b>포인트 사용</b>
 				</div>
 			</div>
-			<div class="col-4 pay">${i.usepoint }</div>
+			<div class="col-4 pay">
+				<b>${i.usepoint }</b>상추
+			</div>
 		</div>
 	</c:forEach>
 </body>

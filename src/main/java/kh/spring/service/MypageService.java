@@ -87,12 +87,20 @@ public class MypageService {
 
 	// 포인트 충전 내역 출력
 	public List<PointAccountDTO> pointChargeList(String sessionID) {
-		return ppdao.pointChargeList(sessionID);
+		String charge = "포인트 충전";
+		HashMap<String, String> param = new HashMap<>();
+		param.put("charge", charge);
+		param.put("id", sessionID);
+		return ppdao.pointChargeList(param);
 	}
 	
 	// 포인트 사용 내역 출력
 	public List<PointAccountDTO> pointUseList(String sessionID) {
-		return ppdao.pointUseList(sessionID);
+		String use = "포인트차감";
+		HashMap<String, String> param = new HashMap<>();
+		param.put("use", use);
+		param.put("id", sessionID);
+		return ppdao.pointUseList(param);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////거래 요청 목록(판매자 입장)
