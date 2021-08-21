@@ -205,16 +205,31 @@ img {
 			location.href = "/chat";
 		})
 		
-		// 예약 버튼을 눌렀을 경우
+		// 예약 취소 버튼을 눌렀을 경우
 		$(".cnum-btn1").on("click", function() {
-			let result = confirm("예약을 취소 하시겠습니까?");
+			let result = confirm("예약을 취소하시겠습니까?");
+			let a = $(this).parent().siblings().children().siblings().children("#parent").val();
+			console.log(a)
 			if (result) {
-				$("#frm").attr("action","/my/bookingFail");
-				$("#frm").submit();
+				let button = $(this);
+				$.ajax({
+					url:"/my/bookingFail",
+					data:{parent:$($(this).parent().siblings().children().siblings().children("#parent")).val()}
+				}).done(function(resp){
+					if(resp=="1"){
+						alert("예약을 취소하였습니다.")
+						location.reload();
+					}else{
+						alert("에러 발생, 다시 시도해주세요.")
+						return false;
+					}
+				})
 			} else {
 				return false;
 			}
 		})
+		
+		// 결제하기 버튼을 눌렀을 경우
 
 	})
 </script>
@@ -355,9 +370,9 @@ img {
 									<div class="col-8 right">${i.price}원</div>
 								</div>
 							</div>
-							<input type=hidden value=${i.writer } name=writer> 
-							<input type=hidden value=${i.booker } name=booker> 
-							<input type=hidden value=${i.parentseq } name=parent>
+							<input type=hidden value=${i.writer } name=writer id=writer> 
+							<input type=hidden value=${i.booker } name=booker id=booker> 
+							<input type=hidden value=${i.parentseq } name=parent id=parent>
 
 						</div>
 						<div class="col-4">
@@ -368,7 +383,7 @@ img {
 						</div>
 					</div>
 					<div class="under">
-						<input type=button id=cancel class="cnum-btn1" value="예약 취소">
+						<button type=button id=cancel class="cnum-btn1">예약 취소</button>
 						<button type=button id=approval class="cnum-btn2" disabled='disabled'>승인 대기 중</button>
 					</div>
 				</div>

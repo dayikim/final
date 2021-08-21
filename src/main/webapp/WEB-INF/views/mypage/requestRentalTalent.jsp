@@ -164,7 +164,7 @@ img {
 	margin-top: 10px;
 }
 
-#cancel {
+#cancel, #dealCancel {
 	/* 취소 */
 	border-radius: 5px;
 	width: 45%;
@@ -177,7 +177,7 @@ img {
 	cursor: pointer;
 }
 
-#approval {
+#approval, #dealComplete {
 	/* 거래승인 */
 	border-radius: 5px;
 	width: 45%;
@@ -205,29 +205,45 @@ img {
 			location.href = "/chat";
 		})
 		
-		// 요청 거절 버튼을 눌렀을 경우
-		$(".cnum-btn1").on("click", function() {
-			let result = confirm("요청을 거절하시겠습니까?");
-			if (result) {
-				$("#frm").attr("action", "/my/dealFail");
-				$("#frm").submit();
-			} else {
-				return false;
+		
+		// 거래 승인 목록 가져오기
+		$.ajax({
+			url:"/my/requestRentalTalentProc",
+			data:{booker:$("#booker").val(),parent:$("#parent").val()}
+		
+		}).done(function(resp){
+			console.log(resp) // 해당 시퀀스가 나옴
+			if(resp!=null){
+				// 거래 완료 버튼으로 바꾸기
+				$("#approval").attr("id","dealComplete")
+				$("#approval").attr("class","dComplete")
+				$("#approval").attr("disabled","false")
+				$("#approval").text("거래 완료(대여중)")
+				
+				
+				// 거래 취소 버튼으로 바꾸기
+				$("#cancel").attr("id","dealCancel")
+				$("#cancel").attr("class","dCancel")
+				$("#cancel").text("거래 취소")
 			}
+			
 		})
-
-		// 거래 승인 버튼을 눌렀을 경우(DB에 거래승인 insert하기)
-		$(".cnum-btn2").on("click", function() {
-			let result = confirm("거래 승인 하시겠습니까?");
+		
+		
+		// 요청 거절 및 거래 취소 버튼을 눌렀을 경우
+		$(".cnum-btn1").on("click", function() {
+			let result = confirm("취소 하시겠습니까?");
 			if (result) {
+				let button = $(this);
 				$.ajax({
-					url:"/my/dealSuccess",
-					data:{writer:$("#writer").val(), booker:$("#booker").val(), parent:$("#parent").val()}
+					url:"/my/dealFail",
+					data:{parent:$($(this).parent().siblings().children().siblings().children("#parent")).val()}
 				}).done(function(resp){
 					if(resp=="1"){
-						$("#approval").text("거래 완료");
-						$("#cancel").text("거래 취소")
+						alert("취소하였습니다.")
+						location.reload();
 					}else{
+						alert("에러 발생, 다시 시도해주세요.")
 						return false;
 					}
 				})
@@ -235,13 +251,47 @@ img {
 				return false;
 			}
 		})
+
+
+		// 거래 승인 버튼을 눌렀을 경우(DB에 거래승인 insert하기)
+ 		$(".cnum-btn2").on("click", function() {
+			let result = confirm("거래 승인 하시겠습니까?");
+			if (result) {
+				let button = $(this);				
+				$.ajax({
+					url:"/my/dealSuccess",
+					data:{writer:$($(this).siblings().parent().siblings().children().siblings().children().siblings().siblings("#writer")).val(), 
+						booker:$($(this).siblings().parent().siblings().children().siblings().children().siblings("#booker")).val(), 
+						parent:$($(this).siblings().parent().siblings().children().siblings().children("#parent")).val()}
+				}).done(function(resp){
+					console.log(resp)
+					if(resp=="1"){
+						alert("거래 승인이 완료되었습니다")
+						// 거래 완료 버튼으로 바꾸기
+						$(button).attr("id","dealComplete")
+						$(button).attr("class","dComplete")
+						$(button).attr("disabled","false")
+						$(button).text("거래 완료(대여중)")
+						
+						// 거래 취소 버튼으로 바꾸기
+						$(button).siblings("#cancel").attr("id","dealCancel")
+						$(button).siblings("#cancel").attr("class","dCancel")
+						$(button).siblings("#cancel").text("거래 취소")
+					}else{
+						alert("에러 발생, 다시 시도해주세요.")
+						return false;
+					}
+				})
+			} else {
+				return false;
+			}  
+		})
 		
-		/* // 거래 승인 버튼 눌렀을 때 버튼 바꾸기
-		$(".cnum-btn2").on("click", function() {
-			const btnElement = document.getElementById('approval');
-			btnElement.innerText = '거래 완료';
-		} */
 	})
+	
+	
+	
+	
 </script>
 
 </head>
@@ -315,8 +365,9 @@ img {
 										aria-expanded="false"> Menu </a>
 										<div class="dropdown-menu"
 											aria-labelledby="navbarDropdownMenuLink">
-											<a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a> <a
-												class="dropdown-item" href="/sns/main">SNS</a> <a
+											<a class="dropdown-item"
+												href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
+											<a class="dropdown-item" href="/sns/main">SNS</a> <a
 												class="dropdown-item" href="/my/mypageProc">My page</a> <a
 												class="dropdown-item" href="/point/ToCharging">Charging</a>
 										</div></li>
@@ -353,60 +404,55 @@ img {
 
 
 		<c:forEach var="i" items="${requestRental }">
-			<form action="" method="get" id=frm>
-				<div class="requestList">
-					<div class="row high">
-						<div class="col-8 information">
-							<div class="title">
-								<h4>
-									<b>${i.title }</b>
-								</h4>
-							</div>
 
-							<div class=content>
-								<div class="row">
-									<div class="col-4 left">
-										<b>대여자</b>
-									</div>
-									<div class="col-8 right">${i.writer }</div>
-								</div>
-								<div class="row">
-									<div class="col-4 left">
-										<b>구매요청자</b>
-									</div>
-									<div class="col-8 right">${i.booker }</div>
-								</div>
-								<div class="row">
-									<div class="col-4 left">
-										<b>제시 가격</b>
-									</div>
-									<div class="col-8 right">${i.price }원</div>
-								</div>
-							</div>
-							<input type=hidden value=${i.writer } id=writer name=writer>
-							<input type=hidden value=${i.booker } id=booker name=booker>
-							<input type=hidden value=${i.parentseq } id=parent name=parent>
-
+			<div class="requestList">
+				<div class="row high">
+					<div class="col-8 information">
+						<div class="title">
+							<h4>
+								<b>${i.title }</b>
+							</h4>
 						</div>
-						<div class="col-4">
-							<div class="image">
-								<img src="">
-							</div>
 
+						<div class=content>
+							<div class="row">
+								<div class="col-4 left">
+									<b>대여자</b>
+								</div>
+								<div class="col-8 right">${i.writer}</div>
+							</div>
+							<div class="row">
+								<div class="col-4 left">
+									<b>구매요청자</b>
+								</div>
+								<div class="col-8 right">${i.booker }</div>
+							</div>
+							<div class="row">
+								<div class="col-4 left">
+									<b>제시 가격</b>
+								</div>
+								<div class="col-8 right">${i.price }원</div>
+							</div>
+						</div>
+						<input type=hidden value=${i.writer } id=writer name=writer>
+						<input type=hidden value=${i.booker } id=booker name=booker>
+						<input type=hidden value=${i.parentseq } id=parent name=parent>
+
+					</div>
+					<div class="col-4">
+						<div class="image">
+							<img src="">
 						</div>
 					</div>
-					
-				
-							<div class="under">
-								<button type=button id=cancel class="cnum-btn1">요청 거절</button>
-								<button type=button id=approval class="cnum-btn2">거래 승인</button>
-							</div>
-						
-
-
-
 				</div>
-			</form>
+
+				<div class="under">
+					<button type=button id=cancel class="cnum-btn1">요청 거절</button>
+					<button type=button id=approval class="cnum-btn2">거래 승인</button>
+				</div>
+
+			</div>
+
 		</c:forEach>
 
 	</div>
