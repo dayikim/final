@@ -108,6 +108,15 @@
 </style>
 <script>
 	$(function() {
+		// 빈파일을 업로드했을때
+		$("#update").on("click",function(){
+			var fileCheck = document.getElementById("fileUpload").value;
+		    if(!fileCheck){
+		        alert("파일을 첨부해 주세요");
+		        return false;
+		    }	
+		})
+		
 		// 파일업로드 눌렀을때 사진 체인지
 		$("#fileUpload").on('change',function() { // 파일 업로드눌렀을때(확인말고)
 		let before = $("#profile").attr("src"); // 내 현재 프사의 정보를 갖고와서 before 변수에 담기
@@ -145,6 +154,7 @@
 			} else {
 				alert("This browser does not support FileReader.");
 				}
+
 		});
 		
 		// 업로드 취소 버튼 눌렀을 때
