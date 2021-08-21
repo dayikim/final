@@ -156,8 +156,15 @@ public class SnsController {
 		model.addAttribute("contents", contents);
 		model.addAttribute("seq", seq);
 		
-		List<SnsDTO>list = service.selectAll(id);		
+		List<SnsDTO>list = service.selectAll(id); //글목록
 		model.addAttribute("list", list);
+		
+		List<String> initProfile = new ArrayList<String>(); //프로필
+		for(SnsDTO sd : list) {
+			initProfile.add(pffd.profileSelect(sd.getId()) != null?
+			fservice.toProfileBinary(session, pffd.profileSelect(sd.getId()).getSysName()):null);
+		}
+		model.addAttribute("initprofile", initProfile);
 		
 		List<String> ldto = service.existlike(id); //좋아요목록
 		model.addAttribute("isLove",ldto);

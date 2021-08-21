@@ -11,6 +11,10 @@
 		select count(*) from person where id=#{value}
 	</select>
 	
+	<select id="phonedupl" resultType="int">
+		select count(*) from person where phone=#{value} 
+	</select>
+	
 	<select id="login" resultType="int">
 		select count(*) from person where id=#{id}and pw=#{pw}
 	</select>

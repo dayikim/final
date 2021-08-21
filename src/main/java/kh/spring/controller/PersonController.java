@@ -59,6 +59,13 @@ public class PersonController {
 		return String.valueOf(result);		
 	}
 	
+	@ResponseBody
+	@RequestMapping("/phonedupl")
+	public int phonedupl(String phone) {
+		int result = service.phonedupl(phone);	
+		return result;
+	}
+	
 	@RequestMapping("/joinProc")
 	public String joinProc(PersonDTO dto) throws Exception{	
 		String shaPass = SHA256.getSHA512(dto.getPw());

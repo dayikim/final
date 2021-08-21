@@ -183,7 +183,13 @@ style>body {
 
 		});
 		
+		//출력한 파일 삭제
+		document.getElementById
+		$("#upload").on("click", ".delfile", function() { //동적바인딩
+			$(this).closest(".row").remove();
+		})
 		
+		//작성할때 첨부한 파일 목록
 		$("#images-tab").on('click',function(){
 			console.log($(this).siblings("#hiddenfile").val())
 			$.ajax({
@@ -197,7 +203,7 @@ style>body {
 
 					let delDiv = $("<div>");
 					let delBtn = $("<button>");
-					delBtn.addClass("delfile");
+					delBtn.addClass("delfile1");
 					delBtn.text("-")
 					let input = $("<input type=hidden>");
 					input.addClass("fileseq");
@@ -219,15 +225,9 @@ style>body {
 				}
 			})
 		})
-
-		//출력한 파일 삭제
-		document.getElementById
-		$("#upload").on("click", ".delfile", function() { //동적바인딩
-			$(this).closest(".row").remove();
-		})
 		
 		//기존파일삭제
-		$(document).on("click",".delfile",function(){
+		$(document).on("click",".delfile1",function(){
 			var con_test = confirm("사진을 삭제하시겠습니까?");
 			if(con_test == true){
 				$.ajax({
@@ -237,7 +237,7 @@ style>body {
 				}).done(function(resp){
 					if(resp == 1){
 						alert('파일삭제완료')
-						$(this).empty();
+						$(this).parents(".row").empty();
 					}
 				})
 			}
@@ -493,15 +493,24 @@ style>body {
 					</div>
 				</form>
 
-				<!--- 게시글-->
+				<!-- 게시글-->
 				<c:forEach var="item" items="${list}">
 					<div class="card gedf-card">
 						<div class="card-header">
 							<div class="d-flex justify-content-between align-items-center">
 								<div class="d-flex justify-content-between align-items-center">
 									<div class="mr-2">
-										<img class="rounded-circle" width="45"
-											src="https://picsum.photos/50/50" alt="">
+									<!-- 프로필출력 -->
+									<c:choose>
+										<c:when test="${initprofile.get(status.index) != null}">
+											<img class="rounded-circle"
+											src="data:image/png;base64,${initprofile.get(status.index) }" 
+											alt="" style="width:50px; height: 50px;">
+										</c:when>
+									</c:choose>
+										<img class=rounded-circle
+											style="width: 50px; height: 50px;"
+											src="/imgs/nomalProfile.jpg">
 									</div>
 									<div class="ml-2">
 										<div class="h5 m-0">

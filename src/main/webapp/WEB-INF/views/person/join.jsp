@@ -26,37 +26,47 @@
 			if($("#phone").val() == ""){
         		alert("핸드폰번호 입력후 진행해주세요.");
         	}else{
-        		if(phoneNumber){
-    				let phone = $('#phone').val();
-    	            alert('인증번호 발송 완료!')
-
-    	            $.ajax({
-    	                type: "GET",
-    	                url: "/person/send",
-    	                data: {"phone" : phone},
-    	                success: function(res){
-    	                    $('#checkBtn').click(function(){
-    	                    	if($("#inputCertifiedNumber").val()==""){
-    	                    		alert("인증번호를 입력해주세요.")
-    	                    	}else{
-    	                    		if($.trim(res) ==$('#inputCertifiedNumber').val()){
-        	                            alert(
-        	                                '인증성공!',
-        	                                '휴대폰 인증이 정상적으로 완료되었습니다.',
-        	                                'success'
-        	                            )
-        	                        }else{
-        	                            alert('인증번호를 다시 확인해주세요')
-        	                            $('#inputCertifiedNumber').val("");
-        	                        }
-    	                    	}
-    	                    })
-    	                }
-    	            })
-    			}else{
-    				alert("핸드폰 형식을 확인 후 다시 인증을 시도해주세요.")
-    				$("#phone").val("");
-    			}
+        		$.ajax({
+        			type : "GET",
+        			url : "/person/phonedupl",
+        			data : {"phone" : $("#phone").val()}
+        		}).done(function(resp){
+        			if(resp > 0){
+        				alert('이미가입된 핸드폰번호입니다.')
+        			}else{
+        				if(phoneNumber){
+            				let phone = $('#phone').val();
+            	            alert('인증번호 발송 완료!')
+            	            $.ajax({
+            	                type: "GET",
+            	                url: "/person/send",
+            	                data: {"phone" : phone},
+            	                success: function(res){
+            	                    $('#checkBtn').click(function(){
+            	                    	if($("#inputCertifiedNumber").val()==""){
+            	                    		alert("인증번호를 입력해주세요.")
+            	                    	}else{
+            	                    		if($.trim(res) ==$('#inputCertifiedNumber').val()){
+                	                            alert(
+                	                                '인증성공!',
+                	                                '휴대폰 인증이 정상적으로 완료되었습니다.',
+                	                                'success'
+                	                            )
+                	                        }else{
+                	                            alert('인증번호를 다시 확인해주세요')
+                	                            $('#inputCertifiedNumber').val("");
+                	                        }
+            	                    	}
+            	                    })
+            	                }
+            	            })
+            			}else{
+            				alert("핸드폰 형식을 확인 후 다시 인증을 시도해주세요.")
+            				$("#phone").val("");
+            			}
+        				
+        			}
+        		})
         	}
         });
 		
@@ -192,6 +202,7 @@
 	        				}
 	        			 if(isYear && isMonth && isDay){
 	        				 $("#birthday").css("display","none");
+	        				 $("#birthday").css("color","black");
 	        				 console.log("여기 들어오면 안됌")
 	        			 }
 	        	 }
@@ -216,15 +227,27 @@
 				alert("입력하지 않은 항목이 있는지 확인해주세요.")
 				return false;
 			}
-			let color = $(".next_box").css("color");
-			if(color == "rgb(255, 0, 0)"){
-				alert("가입시 형식에 맞게 기입하셨는지 확인해주세요.");
+			/*let color = $(".next_box").css("color");*/
+			if($("#idcheck").css("color") == "rgb(255, 0, 0)"){
+				alert("아이디체크에서 발생된 형식에 맞게 기입하셨는지 확인해주세요.");
 				return false;
 			}
-			if(count <= 0){
+			if($("#regexPw").css("color") == "rgb(255, 0, 0)"){
+				alert("패스워드에서 발생 형식에 맞게 기입하셨는지 확인해주세요.");
+				return false;
+			}
+			if($("#val").css("color") == "rgb(255, 0, 0)"){
+				alert("아이디 중복 체크 형식에 맞게 기입하셨는지 확인해주세요.");
+				return false;
+			}
+			if($("#birthday").css("color") == "rgb(255, 0, 0)"){
+				alert("생일에서 발생된 형식에 맞게 기입하셨는지 확인해주세요.");
+				return false;
+			}
+			/*if(count <= 0){
 				alert("핸드폰인증을 진행해주세요.")
 				return false;
-			}
+			}*/
 		})
 		 
 	})
