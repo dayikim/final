@@ -86,24 +86,6 @@ img {
 	top: 30%;
 }
 
-.subject {
-	color: #1d2434;
-	text-align: center;
-	font-size: 40px;
-	font-weight: 800;
-}
-
-.contents {
-	margin-top: 5%;
-	text-align: center;
-	font-size: 25px;
-	font-weight: bold;
-}
-
-.Main {
-	margin-top: 5%;
-}
-
 /* 시작 */
 * {
 	box-sizing: border-box;
@@ -112,9 +94,7 @@ img {
 .container2 {
 	margin: auto;
 	margin-top: 108px;
-	height: 1000px;
 	width: 1000px;
-	overflow: hidden;
 	padding: 30px;
 	background-color: rgb(230, 235, 245);
 	border-radius: 10px;
@@ -178,6 +158,8 @@ style>body {
 
 @media ( min-width : 992px) {
 	.gedf-main {
+		position: relative;
+		top: 100px;
 		padding-left: 4rem;
 		padding-right: 4rem;
 	}
@@ -185,23 +167,18 @@ style>body {
 		margin-bottom: 2.77rem;
 	}
 }
-
 /**Reset Bootstrap*/
 .dropdown-toggle::after {
 	content: none;
 	display: none;
 }
 
-#commenticon, #top, #love {
+#commenticon, #top, #love, #modicomm {
 	cursor: pointer;
 }
 
 #commenticon {
 	color: #AA96DA;
-}
-
-#love {
-	color: #FFBCBC;
 }
 
 #del, #modi, #delcomm, #modicomm {
@@ -216,20 +193,300 @@ style>body {
 	display: none;
 	font-size: 50px;
 }
+
+#photo {
+	max-width: 300px;
+	max-height: 400px;
+}
 </style>
 <script>
-	$(function(){
-		// 게시물 검색
-		$("#search").keyup(function(e) {
-			if (e.keyCode == 13) {
-				location.href = "/AllBoardList/lendList?category=AllCategory&search="+$("#search").val()+"&cpage=1";
+var count = 2;
+$(function() {
+	
+	// 채팅
+	$("#chat").on("click",function(){
+		location.href = "/chat";
+	})
+	
+	
+	console.log(count);
+	//무한스크롤
+	var isScroll = true;
+	let loadNewPage = $(window).on("scroll",(function() {
+		if (((window.innerHeight + window.scrollY) >= document.body.offsetHeight)&& isScroll) {
+			$.ajax({
+				url : "/sns/page",
+				type : "get",
+				data : {"count" : count},
+				dataType : "json"
+			}).done(function(e){
+				if (count > Number($("#length").val()) / 5) isScroll = false;
+				console.log(isScroll);
+				for(let i =0; i<e.length; i++){
+				if(isScroll){
+				var node ="";
+				
+				node += "<div class=\"card gedf-card\">"
+				node +="<div class=card-header>"
+				     node +="<div class=\"d-flex justify-content-between align-items-center\">"
+				         node +="<div class=\"d-flex justify-content-between align-items-center\">"
+					node +="<div class=mr-2>"
+					
+						  $.ajax({
+					    	  url: "/sns/snsprofileimage",
+					    	  type : "get",
+							  data : {"id":e[i].id},
+							  async: false,
+							  dataType : "TEXT"
+					      }).done(function(result){
+					    	  if(result !=null){
+					    		  node += "<img class=rounded-circle style =\"width :50px; height :50px;\" src=\"data:image/png;base64,"+result+"\">";
+					    	  }else{
+					    		  node +="<img class=rounded-circle style =\"width :50px; height :50px;\" src = \"/imgs/nomalProfile.jpg\">";
+					    	  }
+
+					      })
+
+					node += "</div>"
+						node +="<div class=ml-2>"
+							node +="<div class=\"h5 m-0\">"+e[i].id + "<input type=hidden id=hiddenseq value=114>"
+							
+							if(e[i].id == $("#session").val()){
+								node +="<a href=/sns/delete?seq="+e[i].seq+" id=del style =\"position:relative; left:5%\">삭제</a>"
+								node +="<a href=/sns/modify?seq="+e[i].seq+" id=modi style =\"position:relative; left:10%\">수정</a>"
+							}						
+													
+						node +="</div>"
+
+								node +="<div class=\"h7 text-muted\">"+e[i].region+"</div>"
+					node +="</div>"
+				node += "</div>"
+			node +="<div></div>"
+			node +="</div>"
+		node +="</div>"
+				node +="<div class=card-body id="+e[i].seq+">"
+					node +="<div class=\"text-muted h7 mb-2\">"
+					      node +="<i class=\"fa fa-clock-o\"></i>"+e[i].category+"</div>"
+					      $.ajax({
+					    	  url: "/sns/snspicture",
+					    	  type : "get",
+							  data : {"firstseq":e[e.length-1].seq  , "lastseq" :e[0].seq},
+							  async: false,
+							  dataType : "json"
+					      }).done(function(result){
+					    	  for(let p=0; p<result.length; p++){
+					    		  if(result[p].parent == e[i].seq){
+					  
+					    			  node += "<a href=\"/sns/download?oriName="+result[p].oriName+"\">";
+					    			  node += "<img src=\"data:image/png;base64,"+result[p].sysName+"\" id=photo>";
+					    			  node += "</a>";
+
+					    		  }
+
+					    	  }
+
+					      })
+					      
+								 node +="<p class=card-text>"+e[i].contents+"</p>"
+								 node +="</div>"
+								 node +="<div class=card-footer>"
+									
+										
+					if(Number(e[i].love) ==0){				
+					 node +="<a class=card-link id=love style=\"color: #FDD2BF\">"
+					}else{
+					 node +="<a class=card-link id=love style=\"color: #FF6B6B\">"
+					}
+		 node +="<i class=\"far fa-heart\"></i>"+e[i].love+"</a>"
+										
+									
+
+			 node += "<a class=card-link id=commenticon>"
+		     node +="<i class=\"fas fa-comment-dots\"></i>"
+		 node += "Comment</a>"
+					 node +="</div>"
+
+								<!-- 댓글작성 -->
+								 node += "<div id=hiddencomment style=display: none;>"
+									 node += "<div class=\"input-group mb-3\">"
+		 node += "<input type=text class=form-control id=comment placeholder=\"댓글을 작성해주세요\" aria-label=Recipient's username aria-describedby=button-addon2>"
+										 node +="<div class=input-group-append>"
+					 node += "<button class=\"btn btn-outline-secondary\" type=button id=sendcomment>"
+												 node += "<i class=\"fas fa-pen\"></i>"
+											 node += "</button>"
+										 node += "</div>"
+				 node += "<input type=hidden id=hidden value="+e[i].seq+"> <input type=hidden id=lovecount value="+e[i].love+">"
+									 node += "</div>"
+
+									<!-- 댓글리스트 -->
+									
+								 node += "</div>"
+							 node += "</div>"
+
+				$("#snsbody").append(node); 
+						 
+							 
+				}
 			}
-		})
-		
-		// 채팅
-		$("#chat").on("click",function(){
-			location.href = "/chat";
-		})
+				count++;
+			})
+			
+		}
+	}));
+	
+	//댓글버튼눌렀을때
+	$(document).on("click","#commenticon",function(){
+		let hidden_comment = $(this).parent().siblings("#hiddencomment");
+		if($(this).parent().siblings("#hiddencomment").css("display")=="none"){
+			$(this).parent().siblings("#hiddencomment").show();
+			$.ajax({
+				url : "/snscomm/replyList",
+				type : "POST",
+				data : {"parentSeq":$(this).parent().siblings("#hiddencomment").children(".input-group").children("#hidden").val()},
+				dataType:"JSON",
+			}).done(function(resp){ 
+				//댓글뿌리기
+				for(var i = 0; i < resp.length; i++){
+					
+					let ul = $("<ul>")
+					ul.attr("class","comment-list");
+					ul.attr("id", "commentList");
+					
+					let body_div = $("<div>");
+					body_div.attr("class","comment-body");
+					
+					let comment_head = $("<div>");
+					comment_head.attr("class","comment-heading");
+					
+					let comment_writer = $("<h6>");
+					comment_writer.text(resp[i].id);
+					
+					let delete_tag = $("<a>");
+					delete_tag.attr("href","/snscomm/delete?seq="+resp[i].seq);
+					delete_tag.attr("id","delcomm");
+					delete_tag.text("삭제");
+					
+					let modify_tag = $("<a>");
+					modify_tag.attr("href","#");
+					modify_tag.attr("id","modicomm");
+					modify_tag.text("수정");
+										
+					let input = $("<input type=hidden id=commentseq>");
+					input.text(resp[i].seq);
+					
+					let comment = $("<div>");
+					comment.attr("id","comment");
+					comment.text(resp[i].contents);
+					
+					if(resp[i].id == $("#session").val()){
+						comment_writer.append(delete_tag);
+						comment_writer.append(modify_tag);
+					}
+					
+					comment_head.append(comment_writer);
+					comment_head.append(input);
+											
+					body_div.append(comment_head);
+					body_div.append(comment);						
+											
+					ul.append(body_div);						
+					$(hidden_comment).append(ul);						
+				}					
+			})
+		}else{
+			$(this).parent().siblings("#hiddencomment").hide();
+			let delete_ul = $(hidden_comment).children(".comment-list");
+			for(let i =0; i<delete_ul.length; i++){
+				$(delete_ul[i]).remove();
+			}				
+		}
+	})
+	
+	//댓글수정
+	$(document).on("click","#modicomm",function(){
+		console.log($(this).parents(".comment-heading").siblings("#comment").attr("contenteditable"));
+		console.log($(this).parent().siblings("#commentseq").text());
+		if($(this).parents(".comment-heading").siblings("#comment").attr("contenteditable") === "false" || $(this).parents(".comment-heading").siblings("#comment").attr("contenteditable") == undefined  ){ // 첫 클릭 했을 때 
+			$(this).parents(".comment-heading").siblings("#comment").attr("contenteditable","true");
+			$(this).parents(".comment-heading").siblings("#comment").focus();	//수정 시작
+		} else{
+			$(this).parents(".comment-heading").siblings("#comment").blur();
+			$.ajax({
+				url: "/snscomm/modify",
+				data:{"seq":$(this).parent().siblings("#commentseq").text(),"contents":$(this).parents(".comment-heading").siblings("#comment").text()},
+				dataType:"TEXT",
+			}).done(function(e){
+				if(e == 'success'){
+					$(this).parents(".comment-heading").siblings("#comment").attr("contenteditable","false");
+				}else{
+					alert('수정실패')
+				}
+			})
+		}
+	})	
+	
+	//댓글작성
+	$(document).on("click","#sendcomment",function(){
+		let hidden_comment = $(this).parents("#hiddencomment");
+		if(${loginID == null}){
+            alert('로그인 후 이용해주세요')
+         }else{
+            $.ajax({
+               url : "/snscomm/write",
+               type : "GET",
+               data : {"contents":$(this).parent().siblings("#comment").val(),"seq":$(this).parent().siblings("#hidden").val()}               
+            }).done(function(resp){
+               if(resp == 1){
+                  alert('댓글작성완료!')
+                  $(this).parents("#hiddencomment").load(window.location.href + $(this).parents("#hiddencomment"));
+					
+               }else{
+                  alert('작성실패')
+               }
+            })            
+            $(this).parent().siblings("#comment").val("");
+         }
+	})
+	
+	
+	//좋아요
+	$(document).on("click","#love",function(){
+		if(${loginID == null}){
+            alert('로그인 후 이용해주세요')
+         }else{
+        	 $.ajax({
+        		 url : "/sns/love",
+        		 type : "POST",
+        		 data : {"seq":$(this).parent().siblings("#hiddencomment").children(".input-group").children("#hidden").val(),
+        			 "love":$(this).parent().siblings("#hiddencomment").children(".input-group").children("#lovecount").val()}
+        	 }).done(function(resp){
+        		location.reload();
+        	 })
+         }
+	})
+
+	//화면올리기
+	$( window ).scroll( function() {
+		if ( $( this ).scrollTop() > 200 ) {
+			$( '#top' ).fadeIn();
+		} else {
+			$( '#top' ).fadeOut();
+		}
+	} );
+	$( '#top' ).click( function() {
+		$( 'html, body' ).animate( { scrollTop : 0 }, 400 );
+		return false;
+	} );
+	
+	$("#search").keyup(function(e) {
+		if (e.keyCode == 13) {
+			location.href = "/AllBoardList/allList?search="+ $("#search").val();
+		}
+	})
+	
+	$("#chat").on("click",function(){
+		location.href = "/chat";
+	})
 		
 	})
 </script>
@@ -361,21 +618,32 @@ style>body {
 		<div class="margin"></div>
 
 		<hr>
+		
+		
 		<!-- sns -->
 		<!--- 게시글-->
 		<div class="container3">
-			<c:forEach var="item" items="${list}">
+			<c:forEach var="item" items="${list}" varStatus="status">
 				<div class="card gedf-card">
 					<div class="card-header">
 						<div class="d-flex justify-content-between align-items-center">
 							<div class="d-flex justify-content-between align-items-center">
 								<div class="mr-2">
-									<img class="rounded-circle" width="45"
-										src="https://picsum.photos/50/50" alt="">
+									<c:choose>
+										<c:when test="${initprofile.get(status.index) != null}">
+											<img class="rounded-circle"
+												src="data:image/png;base64,${initprofile.get(status.index) }"
+												alt="" style="width: 50px; height: 50px;">
+										</c:when>
+										<c:otherwise>
+											<img class=rounded-circle style="width: 50px; height: 50px;"
+												src="/imgs/nomalProfile.jpg">
+										</c:otherwise>
+									</c:choose>
 								</div>
 								<div class="ml-2">
 									<div class="h5 m-0">
-										${item.id}
+										${item.id} <input type=hidden id=hiddenseq value=${item.seq }>
 										<c:choose>
 											<c:when test="${loginID == item.id }">
 												<a
@@ -397,10 +665,31 @@ style>body {
 						<div class="text-muted h7 mb-2">
 							<i class="fa fa-clock-o"></i>${item.category }
 						</div>
+						<c:forEach var="file" items="${file}">
+							<c:choose>
+								<c:when test="${file.parent == item.seq }">
+									<a
+										href="/sns/download?oriName=${file.oriName}&sysName=${file.sysName}">
+										<img src="data:image/png;base64,${file.sysName}" id=photo>
+									</a>
+								</c:when>
+							</c:choose>
+
+						</c:forEach>
 						<p class="card-text">${item.contents }</p>
 					</div>
 					<div class="card-footer">
-						<a class="card-link" id=love><i class="far fa-heart"></i>${item.love }</a>
+						<c:choose>
+							<c:when test="${isLove.indexOf(String.valueOf(item.seq)) != -1}">
+								<a class="card-link" id=love style="color: #FF6B6B"><i
+									class="fas fa-heart"></i>${item.love }</a>
+							</c:when>
+							<c:otherwise>
+								<a class="card-link" id=love style="color: #FDD2BF"><i
+									class="far fa-heart"></i>${item.love }</a>
+							</c:otherwise>
+						</c:choose>
+
 						<a class="card-link" id=commenticon><i
 							class="fas fa-comment-dots"></i>Comment</a>
 					</div>
@@ -417,29 +706,11 @@ style>body {
 									<i class="fas fa-pen"></i>
 								</button>
 							</div>
-							<input type=hidden id=hidden value=${item.seq }> <input
-								type=hidden id=lovecount value=${item.love }>
+							<input type=hidden id=hidden value=${item.seq }> 
+							<input type=hidden id=lovecount value=${item.love }>
+							<input type=hidden id=session value=${loginID }>
+							<input type=hidden id=length value=${snslength }>
 						</div>
-
-						<!-- 댓글리스트 -->
-						<%-- <ul class="comments-list" id=commentList>
-                        <div class="comment-body">
-                            <div class="comment-heading">
-                                <h6>list.id
-                                    <c:choose>
-                                        <c:when test="${loginID == comment.id }">
-                                            <a href="${pageContext.request.contextPath}/snscomm/delete?seq=${comment.seq }"
-                                                id=delcomm>삭제</a>
-                                            <a href="${pageContext.request.contextPath}/snscomm/modify?seq=${comment.seq }"
-                                                id=modicomm>수정</a>
-                                        </c:when>
-                                    </c:choose>
-                                    </h5>
-                                    <div type=hidden value=${comment.seq } id=commentseq></div>
-                            </div>
-                            <p>list.contents</p>
-                        </div>
-                        </ul> --%>
 					</div>
 				</div>
 			</c:forEach>

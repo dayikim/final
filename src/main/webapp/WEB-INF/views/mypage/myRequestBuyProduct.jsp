@@ -139,31 +139,12 @@ img {
 .information {
 	padding-top: 40px;
 	padding-left: 40px;
+	padding-bottom:40px;
 }
 .content{
 	margin-top:30px;
 }
 
-/* 버튼 */
-.under {
-	text-align: center;
-	padding: 10px;
-	margin-top: 10px;
-}
-
-/* 게시물 삭제 */
-.cnum-btn2 {
-	margin: auto;
-	border-radius: 5px;
-	width: 20%;
-	height: 50px;
-	background-color: #334257;
-	border: none;
-	color: #fff;
-	font-size: 15px;
-	outline: none;
-	cursor: pointer;
-}
 </style>
 
 <script>
@@ -346,9 +327,6 @@ img {
 						</div>
 
 					</div>
-				</div>
-				<div class="under">
-					<button type=button id=delete class="cnum-btn2">게시물 삭제</button>
 				</div>
 			</div>
 		</form>
