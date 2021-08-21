@@ -19,9 +19,21 @@
 	<select id="FindById" resultType="kh.spring.dto.ChatRoomDto">
 		select * from ChatRoom where roomid = #{roomid}
 	</select>
+
+	<select id="FindByRoominfo" resultType="kh.spring.dto.ChatRoomDto">
+		select * from ChatRoom where roomid = #{roomid} and sessions = #{id}
+	</select>
+	
+	<select id="FindByFreindRoominfo" resultType="kh.spring.dto.ChatRoomDto">
+		select * from ChatRoom where roomid = #{roomid} and not sessions = #{id}
+	</select>
 	
 	<select id="FindByFriendId" resultType="String">
 		select sessions from ChatRoom where roomid = #{roomid} and not sessions = #{id}
+	</select>
+	
+	<select id="FriendList" resultType="kh.spring.dto.ChatRoomDto">
+		select * from chatroom where roomid in (select roomid from chatroom where sessions =#{value}) and not sessions = #{value}
 	</select>
 
 </mapper>

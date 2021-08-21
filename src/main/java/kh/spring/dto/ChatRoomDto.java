@@ -84,6 +84,14 @@ public class ChatRoomDto {
 	public void setBoard_seq(int board_seq) {
 		this.board_seq = board_seq;
 	}
+	
+	public String getBoard_category() {
+		return board_category;
+	}
+
+	public void setBoard_category(String board_category) {
+		this.board_category = board_category;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
