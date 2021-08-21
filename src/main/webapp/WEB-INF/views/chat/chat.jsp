@@ -46,7 +46,17 @@ font-size: 30px;
 text-align: left;
 }
 
+body{
+margin-top: 1%;
+}
 
+.media{
+height:75px;
+}
+#boardimg{
+width: 70px;
+height: 70px;
+}
 .preview_picture_box{
 width:100%;
 position:absolute;
@@ -132,7 +142,6 @@ height:100%;
 
 display:none;
 }
-
 .form-group{
 margin-top:2%;
 	margin-left:2%;
@@ -190,13 +199,15 @@ $(function(){
 			
 		let text = JSON.parse(event.data);
 		
-		console.log(text.createroom);
 		
 		if(text.isCheck != "true"){
 			
 			if(text.unreadcount != null){
 				window.parent.postMessage(text.unreadcount+
 						":"+text.roomid,'http://192.168.35.97/chat/waitingroom');
+				
+				
+				
 			}
 			
 			if(text.isNaver == "true"){
@@ -857,10 +868,10 @@ $(function(){
 	                      <div class="col-12" id = drag_display>
                             <div class="selected-user">
                                 <div class="media">
-								  <img src="..." class="align-self-center mr-3" alt="..."> <!-- 이미지 출력 -->
+								  <img src="/imgs/lend/noimage.jpg" class="rounded float-left" alt="..." id = boardimg> <!-- 이미지 출력 -->
 								  <div class="media-body">
-								    <a><h5 class="mt-0">타이틀 제목 출력</h5></a>
-								    <p>가격 출력<p>
+								    <a><h5 class="mt-0">${info.title }</h5></a>
+								    <p>${info.price }상추<p>
 								  </div>
 								</div>
                             </div>

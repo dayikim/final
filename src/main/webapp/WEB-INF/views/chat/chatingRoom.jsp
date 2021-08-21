@@ -21,29 +21,74 @@
 </head>
 <script>
 let ws = new WebSocket("ws://192.168.35.97/chat/main"); 
+let existing_roomid =[];
 
 $(function(){
 	
+	for(let i =0; i<$(".user").length; i++){
+		existing_roomid.push($($(".user")[i]).attr("id"));
+	}
 
 	let roomid;
 	
 	window.addEventListener('message',handleDocHeightMsg,false);
-
-
+	
 	function handleDocHeightMsg(eventObj){
 		ws.send(eventObj.data);
 	}
 	
 	ws.onmessage=function(event){
-		let text  = JSON.parse(event.data);
 		
+		let text  = JSON.parse(event.data);
+		console.log(existing_roomid);
+		console.log(existing_roomid.indexOf(text.roomid));
 		if(text.unread != 0){
-			for(let i =0; i<$(".user").length; i++){
-				if($($(".user")[i]).attr("id")==text.roomid){
-					$($(".user")[i]).children("#unread").css("display","block");
-					$($(".user")[i]).children("#unread").text(text.unread);
+			if(existing_roomid.indexOf(text.roomid)!= -1){
+				for(let i =0; i<$(".user").length; i++){
+					if($($(".user")[i]).attr("id")==text.roomid){
+						$($(".user")[i]).children("#unread").css("display","block");
+						$($(".user")[i]).children("#unread").text(text.unread);
+					}
 				}
-			}
+			}else{
+				$.ajax({
+					url: "/chat/additionRoom",
+					method:"get",
+					data:{"roomid":text.roomid},
+					dataType: "json"
+				}).done(function(result){
+					console.log("응답옴");
+					console.log(result);
+					let node = "";
+		            node += "<li class=person data-chat=person1 style=\"margin-left:2%; margin-bottom:6%;\">";
+		               node+= " <div class=user id = "+result.roomid+">";
+		                 node += "<div class=rounded-circle badge-danger id=unread style= \"display:block\">1"
+		     				node += "</div>"
+		     				
+		     					$.ajax({
+		     						url: "/chat/additionprofile",
+		     						method:"get",
+		     						data:{"roomid":result.roomid},
+		     						async: false,
+		     						dataType: "TEXT"
+		     					}).done(function(profile){
+		     						if(profile != null){
+		     							node += "<img class=rounded-circle src=\"data:image/png;base64,"+profile+"\">"
+		     						} else{
+		     							node += "<img class=rounded-circle src=/imgs/nomalProfile.jpg>"
+		     						}
+		     					})
+		               
+		                     node+= "<span class=title>"+result.sessions+"</span>" <!-- 상태 표시가 가능함!-->
+		                  node += "</div>"           
+		             node += "</li>"
+		            $(".RoomList").append(node);
+		             
+		            existing_roomid.push(text.roomid); <!-- 이거 지우면 overflow 확인 가능함-->
+				})
+		}
+	
+
 		}else{
 			for(let i =0; i<$(".user").length; i++){
 				if($($(".user")[i]).attr("id")==text.roomid){
@@ -55,7 +100,7 @@ $(function(){
 	}
 	
 	
-	$(".user").on("click",function(){	
+	$(document).on("click",".user",function(){	
 			$("#chatdisplay").css("display","block");
 			$("#chatFrame").attr("src","/chat?roomid="+$(this).attr("id"));	
 			$("#waiting").css("display","none");
@@ -234,7 +279,6 @@ margin-bottom:6%;
 
 }
 
-
 </style>
 
 <body oncontextmenu="return false">
@@ -292,7 +336,7 @@ margin-bottom:6%;
 		                                       			</c:otherwise>
 		                                       		</c:choose>
 		                           
-		                                            <span class="title">${item.title }</span> <!-- 상태 표시가 가능함!-->
+		                                            <span class="title">${item.sessions }</span> <!-- 상태 표시가 가능함!-->
 		                                        </div>           
 		                                   </li>
                                     </c:forEach>

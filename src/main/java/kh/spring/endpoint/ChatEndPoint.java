@@ -13,6 +13,8 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import com.google.gson.JsonObject;
+
 import kh.spring.configurator.ApplicationContextProvider;
 import kh.spring.configurator.HttpSessionConfigurator;
 import kh.spring.controller.FileController;
@@ -52,6 +54,7 @@ public class ChatEndPoint {
 		boolean isCreate = (Boolean)hsession.getAttribute("createRoom") != null ? (Boolean)hsession.getAttribute("createRoom") : false; 
 		if(isCreate) {
 			chatService.addRoom(roomid, session);
+			//session.getBasicRemote().sendText(chatService.toGson(chatService.findFriendid(roomid, (String)hsession.getAttribute("loginID"))));
 		}else {
 			chatService.joinroom(roomid, session);
 		}
