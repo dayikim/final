@@ -62,5 +62,9 @@ public class PersonService {
 	public int checkcount(String id) {
 		return dao.checkcount(id);
 	}
+	
+	public int memberOut(String id) {
+		return dao.memberOut(id);
+	}
 
 }

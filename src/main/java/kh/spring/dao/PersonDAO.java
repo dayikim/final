@@ -62,6 +62,10 @@ public class PersonDAO {
 	public PersonDTO memberInfoById(String sessionID) {
 	      return mybatis.selectOne("Person.memberInfo",sessionID);
 	 }
+	
+	public int memberOut(String id) {
+		return mybatis.delete("Person.memberOut", id);
+	}
 
 
 }

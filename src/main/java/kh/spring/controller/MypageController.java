@@ -15,17 +15,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kh.spring.config.SHA256;
 import kh.spring.dao.ProfileFilesDAO;
-import kh.spring.dto.ApprovalDTO;
-import kh.spring.dto.BookingDTO;
-import kh.spring.dto.LendDTO;
 import kh.spring.dto.PersonDTO;
 import kh.spring.dto.PointAccountDTO;
-import kh.spring.dto.PointDTO;
 import kh.spring.dto.ProfileFilesDTO;
-import kh.spring.dto.SellTalentDTO;
 import kh.spring.dto.SnsDTO;
 import kh.spring.dto.SnsFilesDTO;
 import kh.spring.service.MypageService;
+import kh.spring.service.PersonService;
 import kh.spring.service.PointService;
 import kh.spring.service.SnsCommentService;
 import kh.spring.service.SnsFilesService;
@@ -37,6 +33,8 @@ public class MypageController {
 
 	@Autowired
 	private MypageService service; // 마이페이지 서비스
+	@Autowired
+	private PersonService pservice;
 	@Autowired
 	private  PointService PointService; // 포인트 서비스
 	@Autowired
@@ -320,6 +318,13 @@ public class MypageController {
 		
 		
 		return "/mypage/mySnsPage"; 
+	}
+	
+	@ResponseBody
+	@RequestMapping("/memberOut")
+	public int memberOut(String id) {
+		int result = pservice.memberOut(id);				
+		return result;
 	}
 }
 

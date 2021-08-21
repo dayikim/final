@@ -178,7 +178,7 @@ style>body {
 						    	  if(result !=null){
 						    		  node += "<img class=rounded-circle style =\"width :50px; height :50px;\" src=\"data:image/png;base64,"+result+"\">";
 						    	  }else{
-						    		  node +="<img class=rounded-circle style =\"width :50px; height :50px;\" src = \"/imgs/nomalProfile.jpg\">";
+						    		  node += "<img class=rounded-circle style =\"width :50px; height :50px;\" src = \"/imgs/nomalProfile.jpg\">";
 						    	  }
 
 						      })
@@ -488,12 +488,12 @@ style>body {
     	
     	$("#search").keyup(function(e) {
 			if (e.keyCode == 13) {
-				location.href = "/AllBoardList/allList?search="+ $("#search").val();
+				location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
 			}
 		})
 		
 		$("#chat").on("click",function(){
-			location.href = "/chat";
+			location.href = "/chat/waitingroom";
 		})
 		
 	})
@@ -570,10 +570,10 @@ style>body {
 										aria-expanded="false"> Menu </a>
 										<div class="dropdown-menu"
 											aria-labelledby="navbarDropdownMenuLink">
-											<a class="dropdown-item" href="#">Board</a> <a
+											<a class="dropdown-item" href="/AllBoardList/lendList?choice=Allchoice&search=&cpage=1">Board</a> <a
 												class="dropdown-item" href="/sns/main">SNS</a> <a
-												class="dropdown-item" href="#">My page</a> <a
-												class="dropdown-item" href="#">Charging</a>
+												class="dropdown-item" href="/my/mypageProc">My page</a> <a
+												class="dropdown-item" href="/point/ToCharging">Charging</a>
 										</div></li>
 								</ul>
 								<button type="button" class="btn btn-outline-warning" id="chat">Chatting</button>

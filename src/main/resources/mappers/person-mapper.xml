@@ -51,5 +51,9 @@
 	<select id="memberInfo" resultType="kh.spring.dto.PersonDTO">
        select name,address1 from person where id=#{id}
    </select>
+   
+   <delete id="memberOut">
+   		delete from person where id = #{value}
+   </delete>
 
 </mapper>
