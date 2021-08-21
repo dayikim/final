@@ -80,6 +80,10 @@
 		select count(*) from lendboard where category like '%'||#{value}||'%'
 	</select>
 	
+	<select id="getId" resultType="String">
+	   select writer from lendboard where seq=#{value}
+	</select>
+	
 	
 	
 </mapper>

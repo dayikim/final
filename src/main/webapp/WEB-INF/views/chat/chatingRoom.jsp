@@ -24,6 +24,7 @@ let ws = new WebSocket("ws://192.168.35.97/chat/main");
 
 $(function(){
 	
+
 	let roomid;
 	
 	window.addEventListener('message',handleDocHeightMsg,false);
@@ -59,6 +60,14 @@ $(function(){
 			$("#chatFrame").attr("src","/chat?roomid="+$(this).attr("id"));	
 			$("#waiting").css("display","none");
 	})
+	
+	for(let i =0; i< $(".user").length; i++){
+		if(Number(($($(".user")[i]).children("#unread")).text()) == 0){
+			$($(".user")[i]).children("#unread").css("display","none");
+		}else{
+			$($(".user")[i]).children("#unread").css("display","block");
+		}
+	}
 	
 })
 
@@ -198,7 +207,6 @@ text-align: center;
 line-height: 25px;
 position: absolute;
 left: 85%;
-display: none;
 }
 #chatdisplay{
 
@@ -242,16 +250,6 @@ background-color:#FAFAFA;
                     <div class="row no-gutters">
                         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
                             <div class="users-container">
-                                <div class="chat-search-box">
-                                    <div class="input-group">
-                                        <input class="form-control" placeholder="Search">
-                                        <div class="input-group-btn">
-                                            <button type="button" class="btn btn-info">
-                                                <i class="fa fa-search"></i>  <!--검색-->
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
                                 <ul class="RoomList">
                                  <!--    <li class="person" data-chat="person1">
                                         <div class="user">
@@ -266,13 +264,12 @@ background-color:#FAFAFA;
                                     <c:forEach var="item" items="${list }">
 		                                  <li class="person" data-chat="person1">
 		                                       <div class="user" id = ${item.roomid }>
-		                                       <div class="rounded-circle badge-danger" id="unread"></div>
+		                                       <div class="rounded-circle badge-danger" id="unread">
+		                                       		${unread_count.getUnread_count(item.roomid,loginID)}
+		                                       </div>
 		                                           <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin"> <!-- 판매라는 이미지 십입-->
-		                                           <span class="status busy"></span> <!-- 상태 표시가 가능함!-->
-		                                        </div>
-		                                        <p class="name-time">
-		                                           <span class="title">${item.title }</span>
-		                                        </p>
+		                                            <span class="title">${item.title }</span> <!-- 상태 표시가 가능함!-->
+		                                        </div>           
 		                                   </li>
                                     </c:forEach>
                                     

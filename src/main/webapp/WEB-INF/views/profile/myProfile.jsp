@@ -91,7 +91,7 @@ img {
 
 /* 프로필-판매물품,거래후기 */
 #body {
-	padding-top: 80px;
+	padding-top: 100px;
 	padding-bottom: 30px;
 	height: auto;
 }
@@ -352,8 +352,8 @@ border-bottom: solid 3px #39d9c8;
 								판매 목록<span class="badge badge-pill badge-dark">${sellingCount}</span>
 						</a></li>
 						<li class="nav-item"><a class="nav-link" id="review"
-							href="/profile/review?reviewID=${loginID}">거래후기<span
-								class="badge badge-pill badge-dark">0</span></a></li>
+							href="/profile/reviewListForMe">거래후기<span
+								class="badge badge-pill badge-dark">${reviewCount}</span></a></li>
 					</ul>
 				</section>
 				<section id="table_menu">

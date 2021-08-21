@@ -1,29 +1,22 @@
 package kh.spring.controller;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
+
 import java.io.File;
-import java.util.Base64;
+
 import java.util.List;
 import java.util.UUID;
 
-import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Base64Utils;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
-import kh.spring.dto.ChatFileDTO;
 import kh.spring.service.FileService;
 
 @Controller

@@ -28,6 +28,10 @@ public class SnsDAO {
 		return mybatis.selectList("Sns.page", param);
 	}
 	
+	public List<SnsDTO> initpage(String id){
+		return mybatis.selectList("Sns.initSNSpage", id);
+	}
+	
 	public List<SnsDTO>selectAll(String id){
 		return mybatis.selectList("Sns.selectAll",id);
 	}

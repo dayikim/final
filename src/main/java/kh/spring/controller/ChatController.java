@@ -1,30 +1,23 @@
 package kh.spring.controller;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Base64;
-import java.util.Date;
-import java.util.Locale;
+
 
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.Gson;
 
 
 import kh.spring.config.ChatRegx;
 
 import kh.spring.service.ChatService;
 import kh.spring.service.FileService;
+import kh.spring.service.LendService;
 import kh.spring.service.MessageService;
 import kh.spring.service.MypageService;
 
@@ -51,6 +44,9 @@ public class ChatController {
 	private ChatRegx cr;
 	
 	@Autowired
+	private LendService ls; 
+	
+	@Autowired
 	private MypageService myservice;
 	
 	/*
@@ -67,8 +63,18 @@ public class ChatController {
 	@RequestMapping("waitingroom")
 	public String chat(Model md) {
 		md.addAttribute("list", cs.getChatRoomlist((String)session.getAttribute("loginID")));
+		md.addAttribute("unread_count", ms);
 		md.addAttribute("waiting", "true");
 		return "chat/chatingRoom";
+	}
+	
+	@RequestMapping("createRoom")
+	public String createRoom(int boardSeq) {
+		String roomid = cs.roomid();
+		cs.createRoomMy(roomid,ls.detailView(boardSeq),session);
+		session.setAttribute("roomid", roomid);
+		session.setAttribute("createRoom",true);
+		return "redirect:waitingroom";
 	}
 	
 	@RequestMapping("")

@@ -8,26 +8,21 @@ public class PaymentDTO {
 	private String buyer;
 	private String item;
 	private int price;
-	private int usepoint;
-	private int earnamount;
-	private String reason;
-	
+	private int parentseq;
+	private Date paymentDate;
+
 	public PaymentDTO() {
-		super();
-		// TODO Auto-generated constructor stub
+	
 	}
-	public PaymentDTO(int seq, String seller, String buyer, String item, int price, int usepoint, int earnamount,
-			String reason, Date dealdate) {
+	public PaymentDTO(int seq, String seller, String buyer, String item, int price, int parentseq, Date paymentDate) {
 		super();
 		this.seq = seq;
 		this.seller = seller;
 		this.buyer = buyer;
 		this.item = item;
 		this.price = price;
-		this.usepoint = usepoint;
-		this.earnamount = earnamount;
-		this.reason = reason;
-		this.dealdate = dealdate;
+		this.parentseq = parentseq;
+		this.paymentDate = paymentDate;
 	}
 	public int getSeq() {
 		return seq;
@@ -44,18 +39,7 @@ public class PaymentDTO {
 	public int getPrice() {
 		return price;
 	}
-	public int getUsepoint() {
-		return usepoint;
-	}
-	public int getEarnamount() {
-		return earnamount;
-	}
-	public String getReason() {
-		return reason;
-	}
-	public Date getDealdate() {
-		return dealdate;
-	}
+	
 	public void setSeq(int seq) {
 		this.seq = seq;
 	}
@@ -71,17 +55,21 @@ public class PaymentDTO {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public void setUsepoint(int usepoint) {
-		this.usepoint = usepoint;
+	public int getParentseq() {
+		return parentseq;
 	}
-	public void setEarnamount(int earnamount) {
-		this.earnamount = earnamount;
+
+	public Date getPaymentDate() {
+		return paymentDate;
 	}
-	public void setReason(String reason) {
-		this.reason = reason;
+
+	public void setParentseq(int parentseq) {
+		this.parentseq = parentseq;
 	}
-	public void setDealdate(Date dealdate) {
-		this.dealdate = dealdate;
+
+	public void setPaymentDate(Date paymentDate) {
+		this.paymentDate = paymentDate;
 	}
-	private Date dealdate;
+	
 }
+

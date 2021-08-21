@@ -2,7 +2,11 @@ package kh.spring.dto;
 
 import java.sql.Date;
 
-public class ChatFileDTO implements Comparable<MessageDTO>{
+import kh.spring.API.DateSortable;
+
+
+
+public class ChatFileDTO implements DateSortable{
 	
 	private int seq;
 	private String oriName;
@@ -65,7 +69,7 @@ public class ChatFileDTO implements Comparable<MessageDTO>{
 	public Date getReg_date() {
 		return reg_date;
 	}
-
+	
 	public void setReg_date(Date reg_date) {
 		this.reg_date = reg_date;
 	}
@@ -87,8 +91,9 @@ public class ChatFileDTO implements Comparable<MessageDTO>{
 	}
 
 	@Override
-	public int compareTo(MessageDTO o) {
+	public long getDate() {
 		// TODO Auto-generated method stub
-		return this.reg_date.compareTo(o.getReg_date());
+		return this.reg_date.getTime();
 	}
+	
 }

@@ -147,5 +147,9 @@ public class LendDAO {
 
 		return pageNavi;
 	}
+//판매자 찾기
+	public String getId(int seq) {
+		return mybatis.selectOne("Lend.getId",seq);
+	}
 
 }

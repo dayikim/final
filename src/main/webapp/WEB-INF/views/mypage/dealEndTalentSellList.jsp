@@ -174,18 +174,22 @@ img {
 	color: orange;
 }
 
-.review_title {
-	display: block;
-	margin: 0;
-	font-weight: 800;
-	text-align: start;
-}
-
 .review_text {
 	display: block;
 	margin: 0;
+	font-size:18px;
 	text-align: start;
 }
+
+.review_form img {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	margin-bottom: 10px;
+	width: 100px;
+	overflow: hidden;
+}
+
 
 .review_form img {
 	position: absolute;
@@ -418,8 +422,7 @@ form {
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel">거래후기 보내기</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
+                                        
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-group">
@@ -430,24 +433,25 @@ form {
                                                         경험이 좋으셨나요?</label>
                                                     <label  class="col-form-label review_text">00님에게
                                                         감사인사 남겨보세요.</label>
-                                                    <img src="이미지.png">
+                                                    <img src="/imgs/letter.png">
 
 
                                                 </div>
                                                 <hr>
                                                 <div class="mb-3">
-                                                    <textarea class="form-control"  name="contents" id="message-text"
-                                                        placeholder="거래 후기 남겨주세요"></textarea>
-                                                </div>
-                                            
-                                        </div>
-                                            <input type="hidden" name="id" value="${seller}">
-                                            <input type="hidden" name="reviewable" value="y">
-                                            <button type="button" class="btn btn-dark modalBtn"
-                                                data-dismiss="modal">취소</button>
-                                            <button type="button"
-                                                class="btn btn-outline-warning modalBtn send">보내기</button>
-                                        </form>
+										<form action="/profile/review?seq=${seq}" id="reviewForm">
+											<textarea class="form-control" name="contents"
+												id="message-text" placeholder="거래 후기 남겨주세요"></textarea>
+									</div>
+
+								</div>
+								<input type="hidden" name="recipient" value="${seller}"> <input
+									type="hidden" name="reviewable" value="y">
+								<button type="button" class="btn btn-dark modalBtn"
+									data-dismiss="modal">취소</button>
+								<button type="button"
+									class="btn btn-outline-warning modalBtn send">보내기</button>
+								</form>
 
                                     </div>
                                 </div>

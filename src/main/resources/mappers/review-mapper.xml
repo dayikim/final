@@ -4,10 +4,37 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Review">
 <insert id="write">
-insert into review values(review_seq.nextval,#{id},#{reviewID},#{contents},#{reviewable},sysdate);
+insert into review values(review_seq.nextval,#{reviewer},#{recipient},#{parentseq},#{contents},#{reviewable},sysdate);
 </insert>
 <select id="getAllList" resultType="kh.spring.dto.ReviewDTO">
-	select * from review where reviewID=#{value}
+select * from review where recipient=#{value}
 </select>
 
+<select id="reviewCount" resultType="int">
+select count(*) from review where recipient=#{value}
+</select>
+
+<resultMap type="HashMap" id="reviewList">
+    <result column="name" property="name"/>
+        <result column="id" property="id"/>
+     <result column="address1" property="address1"/>
+	<result column="contents" property="contents"/>
+	<result column="regdate" property="regdate"/> 
+</resultMap>
+
+<select id="reviewList" resultMap="reviewList" resultType="HashMap">
+select person.name,person.id,person.address1,review.contents,review.regdate from person  join review on (review.reviewer = person.id)where review.recipient =#{value}
+</select>
+
+<resultMap type="HashMap" id="sysName">
+    <result column="sysName" property="sysName"/>
+    </resultMap>
+
+<select id="sysName" resultMap="sysName" resultType="HashMap">
+select sysName from profilefiles join review on (review.reviewer = profilefiles.parentseq) where review.recipient=#{value}
+</select>
+
+<select id="reviewrInfo" resultType="kh.spring.dto.ReviewDTO">
+select reviewer from review where recipient=#{value}
+</select>
 </mapper>
