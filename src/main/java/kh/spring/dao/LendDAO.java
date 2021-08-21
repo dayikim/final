@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import kh.spring.config.BoardConfig;
+import kh.spring.dto.BorrowDTO;
 import kh.spring.dto.LendDTO;
 import kh.spring.dto.SellTalentDTO;
 
@@ -17,20 +18,35 @@ public class LendDAO {
 	
 	@Autowired
 	private SqlSessionTemplate mybatis;
-	
+		
 	//게시글 번호
 	public int getSeq(){
 		return mybatis.selectOne("Lend.getSeq");
 	}
 	
+	//판매자 찾기
+	public String getId(int seq) {
+		return mybatis.selectOne("Lend.getId",seq);
+	}
+	
 	//게시글 글쓰기
-	public int boardWrite(LendDTO dto) {
+	public int lendWrite(LendDTO dto) {
 		return mybatis.insert("Lend.write",dto);
 	}
 
 	//게시글 상세보기
 	public LendDTO detailview(int seq) {
 		return mybatis.selectOne("Lend.detailView", seq);
+	}
+	
+	//게시글 수정
+	public int boardModify(LendDTO dto) {
+		return mybatis.update("Lend.modify",dto);
+	}
+	
+	//게시글 삭제
+	public int delete(int seq) {
+		return mybatis.delete("Lend.delete",seq);
 	}
 	
 	//게시글 리스트 가져오기
@@ -147,9 +163,7 @@ public class LendDAO {
 
 		return pageNavi;
 	}
-//판매자 찾기
-	public String getId(int seq) {
-		return mybatis.selectOne("Lend.getId",seq);
-	}
+	
+	
 
 }

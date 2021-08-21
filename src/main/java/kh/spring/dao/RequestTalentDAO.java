@@ -9,28 +9,39 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import kh.spring.config.BoardConfig;
+import kh.spring.dto.BorrowDTO;
 import kh.spring.dto.RequestTalentDTO;
 
 @Component
 public class RequestTalentDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
-
+	
+	//게시글 글쓰기
 	public int boardWrite(RequestTalentDTO dto) {
 		return mybatis.insert("Requesttalent.write",dto);
 	}
 
+	//게시글 상세보기
 	public RequestTalentDTO detailView(int seq) {
 		return  mybatis.selectOne("Requesttalent.detailView",seq);
 	}
+	
+	//게시글 수정
+	public int boardModify(RequestTalentDTO dto) {
+		return mybatis.update("Requesttalent.modify",dto);
+	}
 
+	//게시글 번호
 	public int getSeq(){
 		return mybatis.selectOne("Requesttalent.getSeq");
 	}
+	
 	public List<RequestTalentDTO> getAllList() {
 		return mybatis.selectList("Requesttalent.getAllList");
-
 	}
+	
+	//게시글 삭제	
 	public int delete(int seq) {
 		return mybatis.delete("Requesttalent.delete",seq);
 	}

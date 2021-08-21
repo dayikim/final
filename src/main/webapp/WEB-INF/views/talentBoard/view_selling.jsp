@@ -250,7 +250,56 @@ p {
 }
 </style>
 <script>
+$(function() {
+	$("#search").keyup(function(e) {
+		if (e.keyCode == 13) {
+			location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
+		}
+	})
+	
+	$("#chat").on("click",function(){
+		location.href = "/chat";
+	})
+})
+
 $(function(){
+	 $("#booking").on("click", function () { //예약 하기 
+         let check = confirm("정말 예약하시겠습니까?");
+         let seller= $("#seller").val();
+         let booker =$("#booker").val();
+         let bookable=$("#bookable").val();
+         let parentseq=$("#parentseq").val();
+         if (check) {
+             $.ajax({
+                 url: "/tBoard/checkBooking",
+                 data: {parentseq: parentseq,booker: booker}
+             }).done(function (resp) {
+                console.log(resp);
+                 if (resp == 0) {
+                     $.ajax({
+                         url: "/tBoard/booking",                              
+                     data: {seller: seller, parentseq: parentseq, bookable: bookable, booker: booker }
+                     }).done(function (resp) {
+                        console.log(resp);
+                         if (resp == 1) {
+                             alert("예약 완료!! \n마이페이지에서 예약내역을 확인하세요.")
+                             location.href = "${pageContext.request.contextPath}/my/mypageProc"
+                         }else{
+                            alert("예약 실패!")
+                         }                                            
+                     })
+                 } else {
+                    alert("이미 예약되었습니다.\n마이페이지에서 예약내역을 확인하세요.")
+                     location.href = "${pageContext.request.contextPath}/my/mypageProc"
+            return;                                
+                     }
+             })
+         } else {
+             alert("예약 취소!")
+             return;
+         }
+
+     })
 
 		$("#deleteBtn").on("click",function () { //게시글 삭제
 					let check = confirm("정말 게시글을 삭제하겠습니까?");
@@ -272,15 +321,15 @@ $(function(){
 					}
 				});
 
-	$("#booking").on("click",function(){ //예약 하기 
-		let check = confirm("정말 예약하시겠습니까?");
-		if (check) {
-			alert("마이페이지에서 예약내역을 확인하세요.");
-			$("#bookingform").submit();
-		}else{
-			return;
-		}
-	})	
+// 	$("#booking").on("click",function(){ //예약 하기 
+// 		let check = confirm("정말 예약하시겠습니까?");
+// 		if (check) {
+// 			alert("마이페이지에서 예약내역을 확인하세요.");
+// 			$("#bookingform").submit();
+// 		}else{
+// 			return;
+// 		}
+// 	})	
 	
 })
 </script>
@@ -315,7 +364,54 @@ $(function(){
             </div>
         </div>
         <!-- Top Bar End -->
-	 <!-- Nav Bar Start -->
+        
+	  <!-- Nav Bar Start -->
+        <div class="navbar navbar-expand-lg bg-dark navbar-dark">
+            <div class="container-fluid">
+                <a href="/" class="navbar-brand"><p id= titlename>돈-다</a></p>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <c:choose>
+                	<c:when test="${loginID == null }">
+                		<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    	<div class="navbar-nav ml-auto">
+                        	<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
+                        	<a href="/person/login" class="nav-item nav-link active">Login</a> <!-- Login Page 이동 -->
+                        	<a href="/person/join" class="nav-item nav-link">Sign Up</a>  <!-- SignUp Page 이동 -->
+                    	</div>
+                		</div>
+                	</c:when>
+                	<c:otherwise>
+                		<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    		<div class="navbar-nav ml-auto">
+                        		<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
+                        		<a href="/person/logout" class="nav-item nav-link active">Logout</a> <!-- Logout -->
+                        		 <div class="collapse navbar-collapse" id="navbarNavDropdown">
+	                        		 <ul class="navbar-nav">
+	                        			<li class="nav-item dropdown">
+									        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									         Menu
+									        </a>
+									        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+									          <a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
+									          <a class="dropdown-item" href="/sns/main">SNS</a>
+									          <a class="dropdown-item" href="/my/mypageProc">My page</a>
+									          <a class="dropdown-item" href="/point/ToCharging">Charging</a>
+									        </div>
+								      	</li>
+								      </ul>
+								      <button type="button" class="btn btn-outline-warning" id="chat">Chatting</button>
+							      </div>
+                    		</div>
+                		</div>
+                	</c:otherwise>
+                </c:choose>
+
+            </div>
+        </div>
+        <!-- Nav Bar End -->
+
         <div class="navbar navbar-expand-lg bg-dark navbar-dark">
             <div class="container-fluid">
                 <a href="/" class="navbar-brand"><p id= titlename>돈-다</a></p>
@@ -438,17 +534,17 @@ $(function(){
 
 					</div>
 					<span id="region_name">${board.address} </span>
-					<div class=" btn_wrap text-right">
-					
-					<form action="/tBoard/booking" id="bookingform">
-					<input type="hidden" name="seller" value="${board.writer}">
-					<input type="hidden" name="bookable" value="y">
-					<input type="hidden" name="booker" value="${loginID}">
-					<input type="hidden" name="parentseq" value="${board.seq}">
-						<button type="button" class="btn btn-secondary" id="booking">
-							예약하기</button>
-					</form>
-					</div>
+					<c:choose>
+						<c:when test="${loginID != board.writer}">
+							<div class=" btn_wrap text-right">
+								<input type="hidden" name="seller" value="${board.writer}">
+								<input type="hidden" name="bookable" value="y">
+								<input type="hidden" name="booker" value="${loginID}">
+								<input type="hidden" name="parentseq" value="${board.seq}">
+								<button type="button" class="btn btn-secondary" id="booking">예약하기</button>
+							</div>
+						</c:when>
+					</c:choose>
 					<span class="align-baseline" id="price">${board.price} 상추</span>
 
 					<div id="profile-image">

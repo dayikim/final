@@ -4,13 +4,25 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="BwFiles">
-
+	
+	<!-- 사진 업로드 -->
 	<insert id="upload">
 		insert into borrowboardpicturefiles values(borrowboardpicturefiles_seq.nextval,#{oriName},#{sysName},#{parentSeq},sysdate)
 	</insert>
 	
+	<!-- 사진 리스트 -->
 	<select id="selectAll" resultType="kh.spring.dto.BorrowBoardFilesDTO">
 		select * from borrowboardpicturefiles where parentSeq=#{value} order by seq asc
 	</select>
+	
+	<!-- 사진 이름 -->
+	<select id="sysName" resultType="kh.spring.dto.BorrowBoardFilesDTO">
+		select sysname from borrowboardpicturefiles where seq=#{value}
+	</select>
+	
+	<!-- 사진 삭제 -->
+	<delete id="delete">
+		delete from borrowboardpicturefiles where seq=#{value}
+	</delete>
 
 </mapper>

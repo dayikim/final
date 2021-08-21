@@ -176,6 +176,28 @@
 
 			</style>
 			<script>
+				$(document).ready(function(){
+					let address = "${myInfo.address1}";
+					let addressReg = /^[가-힣]*\s+[가-힣]*/g;
+					let myaddress = address.match(addressReg);
+					console.log(myaddress);
+					if(myaddress != null){
+						$("#Input3").removeAttr("readonly");
+						$("#Input3").attr("value",myaddress);
+						$("#Input3").attr("readonly",true);
+					}
+				})
+				$(function() {
+					$("#search").keyup(function(e) {
+						if (e.keyCode == 13) {
+							location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
+						}
+					})
+					
+					$("#chat").on("click",function(){
+						location.href = "/chat";
+					})
+				})
 
 				//이미지 담을 배열
 				let preview_files = [];

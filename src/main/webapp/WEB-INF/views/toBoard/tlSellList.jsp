@@ -191,10 +191,10 @@ img{
 									         Menu
 									        </a>
 									        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-									          <a class="dropdown-item" href="/AllBoardList/lendList?choice=Allchoice&search=&cpage=1">Board</a>
+									          <a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
 									          <a class="dropdown-item" href="/sns/main">SNS</a>
-									          <a class="dropdown-item" href="#">My page</a>
-									          <a class="dropdown-item" href="#">Charging</a>
+									          <a class="dropdown-item" href="/my/mypageProc">My page</a>
+									          <a class="dropdown-item" href="/point/ToCharging">Charging</a>
 									        </div>
 								      	</li>
 								      </ul>
@@ -244,32 +244,32 @@ img{
 			</div>
 		</form>
 		
-		<!-- 검색결과 리스트 -->
-		<div class="minibody">
+		<div class="miniboard">
+			<!-- 검색결과 리스트 -->
+			<div class="minibody">
 			<input type="hidden" value="${search}" name=search>
 			<input type="hidden" value="${choice}" name=choice>
+				<c:forEach var="i" items="${list}">
+					<div class="to-board">					
+						<a href="/lendBoard/lendView?id=${i.writer}&seq=${i.seq}" id="list_hhtp" class="list_hhtp">				
+<%-- 							<c:choose> --%>
+<%-- 								<c:when test="${flist.parentseq == i.seq}"> --%>
+<%-- 									<img src="/imgs/lend/${flist.sysName}" id=fimg> --%>
+<%-- 								</c:when> --%>
+<%-- 								<c:otherwise> --%>
+									<img src="/imgs/lend/noimage.jpg" id=fimg>
+<%-- 								</c:otherwise> --%>
+<%-- 							</c:choose> --%>
+							<input type="hidden" value="${i.seq}" id="seq" name="seq">
+							<p id=title class="title">${i.title}</p>
+							<p id="category">${i.category}</p>
+							<p id="address">${i.address}</p>
+						</a>
+					</div>
+				</c:forEach>
+			</div>
 			
-			<c:forEach var="i" items="${list}">
-				<div class="to-board">
-					<a href="/tBoard/sellingView?id=${i.writer}&seq=${i.seq}" id="list_http" class="list_http" >					
-<%-- 						<c:choose> --%>
-<%-- 							<c:when test="${flist != null}"> --%>
-<%-- 								<img src="/imgs/lend/${flist.sysName}" id=fimg> --%>
-<%-- 							</c:when> --%>
-<%-- 							<c:otherwise> --%>
-								<img src="/imgs/lend/noimage.jpg" id=fimg>
-<%-- 							</c:otherwise> --%>
-<%-- 						</c:choose>  --%>
-						<input type="hidden" value="${i.seq}" id="seq" name="seq">
-						<p id=title class="title">${i.title}</p>
-						<p id="category">${i.category}</p>
-						<p id="address">${i.address}</p>
-					</a>
-				</div>
-			</c:forEach>
-		</div>
-		
-		<!-- 글쓰기 버튼 -->
+			<!-- 글쓰기 버튼 -->
 			<c:if test="${loginID != null}">
 				<div class="write" id="write">		
 					<button type="button" class="writeBtn" id="writeBtn">
@@ -277,22 +277,23 @@ img{
 					</button>
 				</div>
 			</c:if>
-		
-		<!-- 페이징 네비바 -->
-		<div class="board_page">
-			<c:forEach var="i" items="${navi}" varStatus="s">
-				<c:choose>
-					<c:when test="${i == '>'}">
-						<a href="/AllBoardList/lendList?cpage=${navi[s.index-1]+1}&choice=${choice}&search=${search}">${i}</a>
-					</c:when>
-					<c:when test="${i == '<'}">
-						<a href="/AllBoardList/lendList?cpage=${navi[s.index-1]+1}&&choice=${choice}&search=${search}">${i}</a>
-					</c:when>
-					<c:otherwise>
-						<a href="/AllBoardList/lendList?cpage=${i}&choice=${choice}&search=${search}">${i}</a>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
+			
+			<!-- 페이징 네비바 -->
+			<div class="board_page">
+				<c:forEach var="i" items="${navi}" varStatus="s">
+					<c:choose>
+						<c:when test="${i == '>'}">
+							<a href="/AllBoardList/tlSellList?cpage=${navi[s.index-1]+1}&choice=${choice}&search=${search}">${i}</a>
+						</c:when>
+						<c:when test="${i == '<'}">
+							<a href="/AllBoardList/tlSellList?cpage=${navi[s.index-1]+1}&choice=${choice}&search=${search}">${i}</a>
+						</c:when>
+						<c:otherwise>
+							<a href="/AllBoardList/tlSellList?cpage=${i}&choice=${choice}&search=${search}">${i}</a>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+			</div>
 		</div>
 	</div>
 

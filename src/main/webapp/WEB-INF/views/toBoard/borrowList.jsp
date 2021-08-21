@@ -93,7 +93,7 @@
 	    	})
 	    
 	    	$("#tlRequestBtn").on("click",function(){
-	    		location.href="/AllBoardList/tlRequestListchoice=${choice}&search=${search}&cpage=1";
+	    		location.href="/AllBoardList/tlRequestList?choice=${choice}&search=${search}&cpage=1";
 	    	})
 	    	
 	    	$("#writeBtn").on("click",function(){
@@ -165,10 +165,10 @@
 									         Menu
 									        </a>
 									        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-									          <a class="dropdown-item" href="/AllBoardList/lendList?choice=Allchoice&search=&cpage=1">Board</a>
+									          <a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
 									          <a class="dropdown-item" href="/sns/main">SNS</a>
-									          <a class="dropdown-item" href="#">My page</a>
-									          <a class="dropdown-item" href="#">Charging</a>
+									          <a class="dropdown-item" href="/my/mypageProc">My page</a>
+									          <a class="dropdown-item" href="/point/ToCharging">Charging</a>
 									        </div>
 								      	</li>
 								      </ul>
