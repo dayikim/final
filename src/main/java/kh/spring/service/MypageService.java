@@ -19,6 +19,7 @@ import kh.spring.dao.SnsDAO;
 import kh.spring.dao.TalentBoardDAO;
 import kh.spring.dto.ApprovalDTO;
 import kh.spring.dto.PersonDTO;
+import kh.spring.dto.PointAccountDTO;
 import kh.spring.dto.PointDTO;
 import kh.spring.dto.ProfileFilesDTO;
 
@@ -84,9 +85,14 @@ public class MypageService {
 	}
 
 	// 포인트 충전 내역 출력
-	public List<PointDTO> pointChargeList(String sessionID) {
-		return ppdao.pointChargeList(sessionID);
-	}
+//	public List<PointAccountDTO> pointChargeList(String sessionID) {
+//		return ppdao.pointChargeList(sessionID);
+//	}
+	
+	// 포인트 사용 내역 출력
+//	public List<PointAccountDTO> pointUseList(String sessionID) {
+//		return ppdao.pointUseList(sessionID);
+//	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////거래 요청 목록(판매자 입장)
 
@@ -145,6 +151,13 @@ public class MypageService {
 		param.put("parent", parent);
 
 		return bdao.bookingFail(param);
+	}
+	//승인 여부 확인
+	public String isApproval(String id, int parentseq) {
+		 Map<Object, Object> param = new HashMap<>();
+		   param.put("id", id);
+		   param.put("parentseq", parentseq);
+		return adao.isApproval(param);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////// 내 게시물 보기

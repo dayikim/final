@@ -73,9 +73,5 @@ public class TalentBoardService {
 	public int delete(int seq) {
 		return tdao.delete(seq);
 	}
-	public int booking(BookingDTO dto) {
-			return bdao.booking(dto);
-	}
-
 
 }

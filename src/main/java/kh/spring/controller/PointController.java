@@ -84,7 +84,45 @@ public class PointController {
 
 		return "my/mypageProc";
 	}
-	//포인트 check
+
+	//재능 판매 결제하기 폼으로
+	@RequestMapping("TopaymentByTalent")
+	public String Topayment(int seq, String id, Model model) {
+		String sessionID = (String) session.getAttribute("loginID");
+		PersonDTO pdto = MypageService.mypageList(id); // 작성자 정보 출력
+		ProfileFilesDTO pfdto = MypageService.profileSelect(id); // 작성자 프사 출력
+		session.setAttribute("writerInfo", pdto); // 작성자 정보 출력
+		model.addAttribute("profile",pfdto); //작성자 정보 출력
+
+
+		SellTalentDTO dto = STService.detailView(seq);//글 상세보기
+		model.addAttribute("board",dto);
+
+		int pointAmount =PointService.checkAmount(sessionID);//잔고금액
+		model.addAttribute("point",pointAmount);
+		
+		return "/point/payment_talent";
+	}
+	
+	//대여하기 결제하기 폼으로
+	@RequestMapping("TopaymentBylend")
+	public String TopaymentBylend(int seq, String id, Model model) {
+		String sessionID = (String) session.getAttribute("loginID");
+		PersonDTO pdto = MypageService.mypageList(id); // 작성자 정보 출력
+		ProfileFilesDTO pfdto = MypageService.profileSelect(id); // 작성자 프사 출력
+		session.setAttribute("myInfo", pdto); // 작성자 프사 출력
+		model.addAttribute("profile",pfdto); //작성자 프사 출력
+
+		LendDTO dto = LService.detailView(seq);//글 상세보기
+		model.addAttribute("board",dto);
+
+		int pointAmount =PointService.checkAmount(sessionID);//잔고금액
+		model.addAttribute("point",pointAmount);
+		
+		return "/point/payment_lend";
+	
+	}
+	//잔여 포인트 check
 	@ResponseBody
 	@RequestMapping(value="pointcheck", produces="text/html;charset=utf8")
 	public String point(int point) throws Exception {
@@ -92,42 +130,36 @@ public class PointController {
 		int result = PointService.pointCheck(sessionID,point);
 		return String.valueOf(result);
 	}
-
-
-	//결제하기 폼으로
-	@RequestMapping("Topayment")
-	public String Topayment(int seq, Model model) {
-		String sessionID = (String) session.getAttribute("loginID");
-		PersonDTO pdto = MypageService.mypageList(sessionID); // 내 정보 출력
-		ProfileFilesDTO pfdto = MypageService.profileSelect(sessionID); // 내 프사 출력
-		session.setAttribute("myInfo", pdto); // 내 정보
-		model.addAttribute("profile",pfdto); //프로필
-
-		SellTalentDTO dto = STService.detailView(seq);//글 상세보기
-		model.addAttribute("board",dto);
-
-		int pointAmount =PointService.checkAmount(sessionID);//잔고금액
-		model.addAttribute("point",pointAmount);
-		return "/point/charging";
+	//구매여부 확인
+	@ResponseBody
+	@RequestMapping(value="isPayment",produces="text/html;charset=utf8")
+	public String isPayment(int parentseq) {
+		 System.out.println("seq :" + parentseq);
+		int isPayment =PointService.isPayment(parentseq);
+		if(isPayment>0) {
+			System.out.println("이미 결제된 거래글 입니다.");
+		}
+		return String.valueOf(isPayment);	
 	}
-
+	
 	//구매자가 확인버튼 누른다음 결제하기
-	@RequestMapping("payment")
-	public String payment(int seq,int price, Model model, PaymentDTO paydto, PointAccountDTO padto) {
+	@RequestMapping(value="payment",produces="text/html;charset=utf8")
+	public String payment(int parentseq, int price, Model model, PaymentDTO paydto, PointAccountDTO padto) {
 		//구매자 결제하기 
+		System.out.println(parentseq);
 		String sessionID = (String) session.getAttribute("loginID");
 		paydto.setBuyer(sessionID);
 		paydto.setPrice(price);
 
 		//1~ 대여하기 1001~ 재능판매 시퀀스/
 		//seq로 해당 글의 writer,title 받아오기 (seq는 판매게시글 번호)
-		if(seq<1001) {
-			LendDTO lendBInfo = LService.detailView(seq);
+		if(parentseq<1001) {
+			LendDTO lendBInfo = LService.detailView(parentseq);
 			paydto.setSeller(lendBInfo.getWriter());
 			paydto.setItem(lendBInfo.getTitle());
 			paydto.setParentseq(lendBInfo.getSeq());
-		}else {
-			SellTalentDTO STBInfo =STService.detailView(seq);
+		}else if(parentseq>1001){
+			SellTalentDTO STBInfo =STService.detailView(parentseq);
 			paydto.setSeller(STBInfo.getWriter());
 			paydto.setItem(STBInfo.getTitle());
 			paydto.setParentseq(STBInfo.getSeq());
@@ -151,12 +183,14 @@ public class PointController {
 				System.out.println("구매자 포인트 차감 성공");
 				//구매자/판매자가 오프라인 거래 후, 구매자가 확인버튼 누르면 판매자에게 입금
 				//pointaccount insert value(seq,id=seller(approval테이블),'0','0','500','판매금액',sysdate)	
-				if(seq<1001) {
-					String writer = LService.getId(seq);
+				if(parentseq<1001) {
+					String writer = LService.getId(parentseq);
+					System.out.println("판매자 :" +writer);
 					padto.setId(writer);
 
-				}else {
-					String writer =STService.getWriter(seq);
+				}else if(parentseq>1001) {
+					String writer =STService.getWriter(parentseq);
+					System.out.println("판매자 :" +writer);
 					padto.setId(writer);
 				}
 				padto.setEarnpoint(price);
@@ -180,20 +214,18 @@ public class PointController {
 		}else {
 			System.out.println("구매자 결제 실패");
 		}
- 
-		return "my/myproc";
-
+		return "redirect:/my/mypageProc";
 	}
 
 
-//	//구매자가 확인버튼 옆에 예약 취소 bookable =N
-//	@RequestMapping("dealCancel")
-//	public String dealCancel(int seq,int price, Model model, PaymentDTO paydto, PointAccountDTO padto) {
-//		
-//		//
-//		
-//		return null;
-//		//구매자 확인 취소
-//
-//}
+	//	//구매자가 확인버튼 옆에 예약 취소 bookable =N
+	//	@RequestMapping("dealCancel")
+	//	public String dealCancel(int seq,int price, Model model, PaymentDTO paydto, PointAccountDTO padto) {
+	//		
+	//		//
+	//		
+	//		return null;
+	//		//구매자 확인 취소
+	//
+	//}
 }

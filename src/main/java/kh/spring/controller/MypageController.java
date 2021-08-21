@@ -1,5 +1,6 @@
 package kh.spring.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,15 +14,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kh.spring.config.SHA256;
+import kh.spring.dao.ProfileFilesDAO;
 import kh.spring.dto.ApprovalDTO;
 import kh.spring.dto.BookingDTO;
 import kh.spring.dto.LendDTO;
 import kh.spring.dto.PersonDTO;
+import kh.spring.dto.PointAccountDTO;
 import kh.spring.dto.PointDTO;
 import kh.spring.dto.ProfileFilesDTO;
 import kh.spring.dto.SellTalentDTO;
+import kh.spring.dto.SnsDTO;
+import kh.spring.dto.SnsFilesDTO;
 import kh.spring.service.MypageService;
 import kh.spring.service.PointService;
+import kh.spring.service.SnsCommentService;
+import kh.spring.service.SnsFilesService;
+import kh.spring.service.SnsService;
 
 @Controller
 @RequestMapping("/my")
@@ -31,6 +39,14 @@ public class MypageController {
 	private MypageService service; // 마이페이지 서비스
 	@Autowired
 	private  PointService PointService; // 포인트 서비스
+	@Autowired
+	private SnsService sservice; // sns 서비스
+	@Autowired
+	private SnsCommentService scservice;
+	@Autowired
+	private SnsFilesService fservice;
+	@Autowired
+	private ProfileFilesDAO pffd;
 	@Autowired
 	private HttpSession session; // 세션
 
@@ -93,21 +109,25 @@ public class MypageController {
 		return "/mypage/profileView";
 	}
 
-	// 포인트 충전내역 확인
-	@RequestMapping(value="/pointChargeList", produces="text/html;charset=utf8")
-	public String pointChargeList(Model model) {
-		String sessionID = (String)session.getAttribute("loginID");
-		List<PointDTO> dto = service.pointChargeList(sessionID);
-
-		model.addAttribute("pointCharge",dto);
-		return "/mypage/pointCharge";
-	}
+	// 포인트 충전내역 확인(미완)
+//	@RequestMapping(value="/pointChargeList", produces="text/html;charset=utf8")
+//	public String pointChargeList(Model model) {
+//		String sessionID = (String)session.getAttribute("loginID");
+//		List<PointAccountDTO> dto = service.pointChargeList(sessionID); 
+//
+//		model.addAttribute("pointCharge",dto);
+//		return "/mypage/pointCharge";
+//	}
 
 	// 포인트 사용내역 확인(미완)
-	@RequestMapping(value="/pointUseList", produces="text/html;charset=utf8")
-	public String pointUseList() {
-		return "/mypage/pointUse";
-	}
+//	@RequestMapping(value="/pointUseList", produces="text/html;charset=utf8")
+//	public String pointUseList(Model model) {
+//		String sessionID = (String)session.getAttribute("loginID");
+//		List<PointAccountDTO> dto = service.pointUseList(sessionID); 
+//		
+//		model.addAttribute("pointUse", dto);
+//		return "/mypage/pointUse";
+//	}
 
 
 	/////////////////////////////////////////////////////////////////////////////////////////// 현재 빌린, 빌려준 상품
@@ -239,27 +259,33 @@ public class MypageController {
 
 	// 내가 쓴 게시글 목록 - 판매글(미완)
 	@RequestMapping("/myRequestSellProduct")
-	public String myRequestSellProduct() {
+	public String myRequestSellProduct(Model model) {
+		String sessionID = (String)session.getAttribute("loginID");
+//		List<LendDTO> dto = service.myRequestSellProduct(sessionID);
 		return "/mypage/myRequestSellProduct";
 	}
 
 	// 내가 쓴 게시글 목록 - 대여요청(미완)
 	@RequestMapping("/myRequestBuyProduct")
-	public String myRequestBuyProduct(){
+	public String myRequestBuyProduct(Model model){
+		String sessionID = (String)session.getAttribute("loginID");
+//		List<BorrowDTO> dto = service.myRequestBuyProduct(sessionID);
 		return "/mypage/myRequestBuyProduct";
 	}
 
 	// 내가 쓴 게시글 목록 - 재능등록(미완)
 	@RequestMapping("/myRequestSellTalent")
-	public String myRequestSellTalent(){
+	public String myRequestSellTalent(Model model){
 		String sessionID = (String)session.getAttribute("loginID");
-		//service.myRequestSellTalent(sessionID);
+//		List<SellTalentDTO> dto = service.myRequestSellTalent(sessionID);
 		return "/mypage/myRequestSellTalent";
 	}
 
 	// 내가 쓴 게시글 목록 = 재능요청(미완)
 	@RequestMapping("/myRequestBuyTalent")
-	public String myRequestBuyTalent(){
+	public String myRequestBuyTalent(Model model){
+		String sessionID = (String)session.getAttribute("loginID");
+//		List<RequestDTO> dto = service.myRequestBuyTalent(sessionID);
 		return "/mypage/myRequestBuyTalent";
 	}
 
@@ -268,14 +294,31 @@ public class MypageController {
 
 	// 나의 커뮤니티 목록 출력(미완)
 	@RequestMapping(value="/selectMySns", produces="text/html;charset=utf8")
-	public String selectMySns(Model model) {
-		String sessionID = (String) session.getAttribute("loginID");
-		ProfileFilesDTO pdto = service.profileSelect(sessionID); // 내 프사 출력
-		PersonDTO dto = service.mypageList(sessionID); // 내 정보 출력
-		//		service.selectMySns(sessionID);  // 내 커뮤니티글 출력
+	public String selectMySns(Model model) throws Exception{
+		String id= (String)session.getAttribute("loginID"); //글 목록
+		
+		List<SnsDTO>list = sservice.initpage(id); //SNS에서 초기에 로딩되는 페이지 (최신 글 순 5개가 출력됨)
+		model.addAttribute("list", list);
+		model.addAttribute("snslength",sservice.selectAll(id).size());
+		
+		List<String> initProfile = new ArrayList<String>();
+		for(SnsDTO sd : list) {
+			initProfile.add(pffd.profileSelect(sd.getId()) != null?
+							fservice.toProfileBinary(session, pffd.profileSelect(sd.getId()).getSysName()):
+							null);
+		}
+		model.addAttribute("initprofile", initProfile);
+		
+		for(SnsDTO sd : list) {
+		System.out.println("처음 로딩되는 페이지: " +sd.getSeq());
+		}
+		List<String> ldto = sservice.existlike(id); //좋아요목록
+		model.addAttribute("isLove",ldto);
 
-		model.addAttribute("profile", pdto); // 내 프로필
-		model.addAttribute("myInfo", dto);  // 내 정보
+		List<SnsFilesDTO>fdto = fservice.sendList(session); //파일목록
+		model.addAttribute("file", fdto);
+		
+		
 		return "/mypage/mySnsPage"; 
 	}
 }

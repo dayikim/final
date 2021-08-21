@@ -222,18 +222,23 @@ public class TalentBoardController {
 		    System.out.println("booker :" + booker);
 		    System.out.println("bookable :" + bookable);
 
-		    int result =STService.booking(seller,booker,bookable,parentseq);
-		    if(result>0) {
-		       System.out.println("예약성공!!");
-		    }return String.valueOf(result);
-		 }   
+		    int booking  =STService.booking(seller,booker,bookable,parentseq);
+		    if(booking>0)
+		    {
+		    System.out.println("예약성공!!");
+		    }else {
+		    System.out.println("예약실패!!");
+		    }
+		    return String.valueOf(booking);
+
+		    }
+
 		      
 		      
 		 @ResponseBody
 		 @RequestMapping(value="checkBooking",produces="text/html;charset=utf-8")
 		 public String checkBooking(int parentseq, String booker) {
-//		    String sessionID = (String) session.getAttribute("loginID");
-//		    String booker =sessionID;
+
 		    System.out.println("booker :" + booker);
 		    System.out.println("parentseq :" + parentseq);
 		    int checkBooking = STService.checkBooking(booker,parentseq);

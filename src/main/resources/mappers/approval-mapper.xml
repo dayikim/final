@@ -16,5 +16,9 @@
 		select * from approval
 		where seller=#{id} and buyer=#{booker} and parentseq=${parent}
 	</select>
-
+	
+<!--구매자와 해당 게시글 승인여부  -->
+<select id="isApproval" resultType="string">
+ select approval from approval where buyer=#{id}and parentseq=#{parentseq}
+</select>
 </mapper>

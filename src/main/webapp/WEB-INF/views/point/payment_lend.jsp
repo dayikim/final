@@ -32,303 +32,349 @@
     <!-- Template Stylesheet -->
     <link href="/css/style.css" rel="stylesheet">
     <style>
-        body {
-            background-color: #f5f6f7;
-        }
+body {
+	background-color: #f5f6f7;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-        }
+* {
+	margin: 0;
+	padding: 0;
+}
 
-        /* 네비바 및 상단 고정 부분 */
-        #titlename {
-            margin-top: 1%;
-            margin-bottom: 0;
-            font-size: 30px;
-            font-family: 'Gugi', cursive;
-            color: white;
-        }
+/* 네비바 및 상단 고정 부분 */
+#titlename {
+	margin-top: 1%;
+	margin-bottom: 0;
+	font-size: 30px;
+	font-family: 'Gugi', cursive;
+	color: white;
+}
 
-        img {
-            width: 100%;
-        }
+img {
+	width: 100%;
+}
 
-        #search {
-            width: 500px;
-            position: relative;
-        }
+#search {
+	width: 500px;
+	position: relative;
+}
 
-        .Explanation {
-            position: relative;
-            top: 30%;
-        }
+.Explanation {
+	position: relative;
+	top: 30%;
+}
 
-        .subject {
-            color: #1d2434;
-            text-align: center;
-            font-size: 40px;
-            font-weight: 800;
-        }
+.subject {
+	color: #1d2434;
+	text-align: center;
+	font-size: 40px;
+	font-weight: 800;
+}
 
-        .contents {
-            margin-top: 5%;
-            text-align: center;
-            font-size: 25px;
-            font-weight: bold;
-        }
+.contents {
+	margin-top: 5%;
+	text-align: center;
+	font-size: 25px;
+	font-weight: bold;
+}
 
-        .Main {
-            margin-top: 5%;
+.Main {
+	margin-top: 5%;
+}
 
-        }
+/* 페이지 구성 */
+.wrapper {
+	width: 100%;
+	height: auto;
+	margin: auto;
+}
 
-        /* 페이지 구성 */
-        .wrapper {
-            width: 70%;
-            height: auto;
-        }
+#body {
+	height: auto;
+	padding-top: 100px;
+	padding-bottom: 30px;
+}
 
-        #body {
-            height: auto;
-            padding-top: 30px;
-            padding-bottom: 30px;
+/* 결제하기 title */
+.card-header {
+	width: 100%;
+	margin: 0 atuo 0 0;
+	background-color: rgba(18, 54, 29, 0.973);
+	border-radius: 10px;
+	border: solid 1px black;
+	color: white;
+	font-size: 20px;
+	font-weight: bolder;
+}
 
-        }
+/* 게시글 제목 */
+.board_title {
+	margin: auto;
+	margin-top: 10px;
+	border-radius: 5px;
+	border: 1px solid gray;
+	width: 85%;
+	margin-bottom: 20px;
+}
 
-        .wrapper {
-            width: 70%;
-            margin: auto;
-            height: auto;
-        }
+/* 재능 상품 */
+#lend_product {
+	margin: auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	border-radius: 5px;
+	border: 1px solid gray;
+	width: 85%;
+	margin-bottom: 20px;
+}
 
-        /* 결제하기 title */
-        .card-header {
-            width: 70%;
-            margin: 0 atuo 0 0;
-            background-color: rgba(18, 54, 29, 0.973);
-            border-radius: 10px;
-            border: solid 1px black;
-            color: white;
-            font-size: 20px;
-            font-weight: bolder;
-        }
+hr {
+	margin: 0px;
+}
 
-        /* 게시글 제목 */
-        .board_title {
-            margin: auto;
-            margin-top: 10px;
-            border-radius: 5px;
-            border: 1px solid gray;
-            width: 85%;
-            margin-bottom: 20px;
+/* 상품명 */
+#lend_product #product {
+	position: absolute;
+	text-align: center;
+	margin-top: 20px;
+	font-size: 22px;
+	font-weight: bold;
+	letter-spacing: -0.6px;
+	margin-bottom: 10px;
+	margin-left: 140px;
+	display: inline-block;
+}
 
-        }
+#lend_product #price {
+	position: absolute;
+	margin-top: 50px;
+	margin-left: 150px;
+	font-size: 18px;
+	font-weight: bold;
+	letter-spacing: -0.6px;
+	margin-bottom: 10px;
+}
 
-        /* 대여 상품 */
-        #lend_product {
-            margin: auto;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            border: 1px solid gray;
-            width: 85%;
-            margin-bottom: 20px;
-        }
+#lend_product #profile-image img {
+	width: 100px;
+	height: 100px;
+	margin-left: 20px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	overflow: hidden;
+	vertical-align: middle;
+}
 
-        hr {
-            margin: 0px;
-        }
+/* 판매자 정보 */
+#sellerInfo_box {
+	margin-top: 10px;
+}
 
-        /* 상품명 */
-        #lend_product #product {
-            position: absolute;
-            text-align: center;
-            margin-top: 20px;
-            font-size: 22px;
-            font-weight: bold;
-            letter-spacing: -0.6px;
-            margin-bottom: 10px;
-            margin-left: 140px;
-            display: inline-block;
-        }
+#lend_product #seller {
+	margin-top: 10px;
+	margin-left: 20px;
+	font-weight: 800;
+	font-size: 18px;
+	color: gray;
+	text-align: center;
+}
 
-        #lend_product #price {
-            position: absolute;
-            margin-top: 50px;
-            margin-left: 150px;
-            font-size: 18px;
-            font-weight: bold;
-            letter-spacing: -0.6px;
-            margin-bottom: 10px;
-        }
+#lend_product #small_profile-image {
+	width: 40px;
+	height: 40px;
+	margin-left: 30px;
+	margin-bottom: 10px;
+	border-radius: 30px;
+	overflow: hidden;
+	vertical-align: middle;
+}
 
-        #lend_product #profile-image img {
-            width: 100px;
-            height: 100px;
-            margin-left: 20px;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            overflow: hidden;
-            vertical-align: middle;
-        }
+#lend_product #nickname {
+	position: absolute;
+	margin-left: 60px;
+	font-size: 16px;
+	font-weight: 600;
+	letter-spacing: -0.6px;
+	margin-bottom: 10px;
+	margin-top: 5px;
+	vertical-align: bottom;
+}
+
+/* 결제 금액 */
+#lend {
+	border-radius: 5px;
+	border: 1px solid gray;
+	width: 85%;
+	margin: auto;
+	margin-bottom: 20px;
+}
+
+.lend_period {
+	margin-top: 10px;
+	margin-left: 20px;
+}
+
+.period {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+/* 최종 결제 금액 */
+#payment {
+	border-radius: 5px;
+	border: 1px solid gray;
+	width: 85%;
+	margin: auto;
+	height: auto;
+	margin-bottom: 10px;
+}
+
+/* 포인트 결제액 */
+.point_wrap {
+	margin-top: 10px;
+	margin-left: 20px;
+	height: auto;
+	margin-bottom: 10px;
+}
+
+.point {
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.point_wrap.all {
+	margin: auto;
+	margin-right: 10px;
+}
+
+/* 보유포인트 */
+.point_wrap #remain_point {
+	display: block;
+	text-align: center;
+	font-weight: 800;
+	font-size: 18px;
+	margin-top: 20px;
+	margin-left: 40px;
+	margin-bottom: 10px;
+	margin-right: 100px;
+}
+
+/* 사용포인트 */
+.point_wrap #use_point {
+	display: block;
+	font-weight: 800;
+	font-size: 18px;
+	text-align: center;
+	margin-bottom: 0;
+}
+
+/* 포인트 관련 알림 */
+.point_wrap .alertPoint {
+	margin: 0;
+	margin-left: 60px;
+	margin-top: 10px;
+	text-align: center;
+	color: red;
+	display: block;
+}
+
+.point_wrap .amount {
+	width: 80px;
+	text-align: center;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.pointAmount {
+	color: #2ca10f;
+	font-weight: 800;
+	width: 120px;
+	margin-left: 20px;
+	width: 80px;
+}
+
+#point1 {
+	margin-left: 10px;
+}
+
+#point2 {
+	margin-right: 10px;
+}
+
+.pay_box {
+	text-align: center;
+	margin-top:5px;
+}
+
+#pay {
+	margin: auto;
+	display: block;
+	margin-bottom: 10px;
+}
+
+.btn_wrap {
+	margin-top: 20px;
+}
 
 
-        /* 판매자 정보 */
-        #sellerInfo_box {
-            margin-top: 10px;
-        }
+.amount_title {
+	margin-top: 30px;
 
-        #lend_product #seller {
-            margin-top: 10px;
-            margin-left: 20px;
-            font-weight: 800;
-            font-size: 18px;
-            color: gray;
-            text-align: center;
-        }
+	font-size: 25px;
+}
 
-        #lend_product #small_profile-image {
-            width: 40px;
-            height: 40px;
-            margin-left: 30px;
-            margin-bottom: 10px;
-            border-radius: 30px;
-            overflow: hidden;
-            vertical-align: middle;
-        }
+.final_price {
+	margin-left: 10px;
+	color: #2ca10f;
+	font-weight: 800;
+}
 
-        #lend_product #nickname {
-            position: absolute;
-            margin-left: 60px;
-            font-size: 16px;
-            font-weight: 600;
-            letter-spacing: -0.6px;
-            margin-bottom: 10px;
-            margin-top: 5px;
-            vertical-align: bottom;
-        }
+.back {
+	color: black;
+	font-size: xx-large;
+}
+</style>
+<script>
+$(function() {
 
-        /* 결제 금액 */
-        #lend {
-            border-radius: 5px;
-            border: 1px solid gray;
-            width: 85%;
-            margin: auto;
-            margin-bottom: 20px;
+	//사용 가능 포인트 체크
+	$("#insertBtn").on("click", function() {
+		let check = $(".amount")
+		if (check.val() == "") {
+			alert("사용할 포인트를 입력해주세요.");
+			check.focus();
+			return false;
 
-        }
+		} else {
+			$.ajax({
+				url : "/point/pointcheck",
+				data : {
+					point : $(".amount").val()
+				}
+			}).done(function(resp) {
+				console.log(resp);
+				if (resp == 0) {
+					$(".amount").val();
+					$(".alertPoint").text("보유 포인트 이상 사용은 불가능 합니다.");
+					$(".alertPoint").css("color", "red");
+					$(".alertPoint").css("font-weight", "800");
 
-        .lend_period {
-            margin-top: 10px;
-            margin-left: 20px;
-        }
+				} else if (resp == 1) {
+					$(".alertPoint").text("포인트 사용이 가능합니다.");
+					$(".alertPoint").css("color", "blue");
+					$(".alertPoint").css("font-weight", "800");
+				}
 
-        .period {
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
+			})
 
-        /* 최종 결제 금액 */
-        #payment {
-            border-radius: 5px;
-            border: 1px solid gray;
-            width: 85%;
-            margin: auto;
-            height: auto;
-            margin-bottom: 10px;
+		}
 
-        }
+	})
 
-        /* 포인트 결제액 */
-        .point_wrap {
-            margin-top: 10px;
-            margin-left: 20px;
-            height: auto;
-            margin-bottom: 30px;
-        }
+	$("#")
 
-        .point {
-            display: inline-block;
-            margin-right: 10px;
-        }
-
-        .point_wrap .all {
-            margin: auto;
-            margin-right: 10px;
-        }
-
-        /* 보유포인트 */
-        .point_wrap #remain_point {
-            display: block;
-            text-align: center;
-            margin-top: 10px;
-            margin-bottom: 5px;
-            margin-right: 100px;
-        }
-
-        /* 사용포인트 */
-        .point_wrap #use_point {
-            display: block;
-            text-align: center;
-            margin-bottom: 0;
-        }
-
-        /* 포인트 관련 알림 */
-        .point_wrap .alertPoint {
-            margin: 0;
-            margin-left: 60px;
-            text-align: center;
-            color: red;
-            display: block;
-        }
-
-        .point_wrap .amount {
-            width: 80px;
-            margin-left: 10px;
-            margin-right: 10px;
-
-        }
-
-        .pointAmount {
-            color: #2ca10f;
-            font-weight: 800;
-            width: 120px;
-            margin-left: 20px;
-            width: 80px;
-
-        }
-
-        #point1 {
-            margin-left: 10px;
-        }
-
-        #point2 {
-            margin-right: 10px;
-        }
-
-        .pay_box {
-            text-align: center;
-        }
-
-        #pay {
-            margin: auto;
-            display: block;
-            margin-bottom: 10px;
-
-        }
-
-        .final_price {
-            margin-left: 10px;
-            color: #2ca10f;
-            font-weight: 800;
-        }
-
-        .back {
-            color: black;
-            font-size: xx-large;
-        }
-    </style>
+})
+</script>
 </head>
 
 <body>
@@ -422,9 +468,9 @@
                         </h4>
                         <hr>
                         <h2 id="product">
-                            <b> 자전거 대여 </b>
+                            <b> ${board.title} </b>
                         </h2>
-                        <span class="align-baseline" id="price"><b class="final_price">100</b> 상추</span>
+                        <span class="align-baseline" id="price"><b class="final_price">${board.price}</b> 상추</span>
                         <div id="profile-image">
                             <!-- 프로필 이미지 -->
                             <img src="/imgs/nomalProfile.jpg">
@@ -463,43 +509,42 @@
 
                 </section>
 
-                <section id="payment">
-                    <div class="point_wrap">
-                        <h4 class=" point">
-                            <b>최종 결제 금액 </b>
-                        </h4>
-                        <hr>
-                        <span id="remain_point"><b>현재 보유 포인트 : </b> <span
-                                class="align-baseline pointAmount">middle</span>
-                            <b id="point1">상추</b></span>
-                        <span id="use_point"><b id="use">사용 포인트 : </b> <input class="amount"> <b id="point2">상추</b>
-                            <button type="button" class=" all btn-outline-info btn btn-sm">
-                                사용</i></button></span>
-
-                        <span class="alertPoint">
-                            보유 포인트 이상~~~
-                        </span>
-                    </div>
-                    <div class="pay_box">
-                        <span id="pay_amount">
-                            <h5><b>결제 금액 : <b class="final_price">100</b> <b id="point1">상추</b></b></h4>
-                        </span>
-                    </div>
-                </section>
+              <section id="payment">
+					<div class="point_wrap">
+						<h4 class=" point">
+							<b>최종 결제 금액 </b>
+						</h4>
+						<hr>
+						<span id="remain_point"><b>현재 보유 포인트 : </b> <span
+							class="align-baseline pointAmount">${point}</span> <b id="point1">상추</b></span>
+						<span id="use_point"><b id="use">사용 포인트 : </b> <input
+							class="amount" name="point"> <b id="point2">상추</b>
+							<button type="button" class=" all btn-outline-info btn btn-sm"
+								id="insertBtn">입력</button></span> <span class="alertPoint"> </span>
+					</div>
+					<hr>
+					<div class="pay_box">
+						<span id="pay_amount">
+							<h5>
+								<b class="amount_title">결제 금액 : <b class="final_price">${board.price}</b>
+									<b id="point1">상추</b></b>
+								</h4>
+						</span>
+					</div>
+				</section>
 
                 <div class="btn_wrap">
-                    <button type="button" class="btn btn-success btn btn-lg" id="pay"><i
-                            class="far fa-comment-dots"></i>
-                        결제하기</i></button>
+					<button type="button" class="btn btn-success btn btn-lg" id="pay">
+						<i class="far fa-comment-dots"></i> 결제하기
+					</button>
 
-                </div>
-                <div class="btn_wrap text-right">
-                    <a href="" class="back"><i class="fas fa-arrow-alt-circle-left"></i></a>
+				</div>
+			</div>
+			<div class="btn_wrap text-right">
+				<a href="" class="back"><i class="fas fa-arrow-alt-circle-left"></i></a>
 
-                </div>
-            </div>
-        </div>
-
+			</div>
+		</div>
 
     </section>
 

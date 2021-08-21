@@ -194,42 +194,47 @@ img {
 <script>
 	$(function() {
 		// 게시물 검색
-		$("#search").keyup(function(e) {
-			if (e.keyCode == 13) {
-				location.href = "/AllBoardList/lendList?category=AllCategory&search="+$("#search").val()+"&cpage=1";
-			}
-		})
-		
+		$("#search")
+				.keyup(
+						function(e) {
+							if (e.keyCode == 13) {
+								location.href = "/AllBoardList/lendList?category=AllCategory&search="
+										+ $("#search").val() + "&cpage=1";
+							}
+						})
+
 		// 채팅
-		$("#chat").on("click",function(){
+		$("#chat").on("click", function() {
 			location.href = "/chat";
 		})
 		
-		// 예약 취소 버튼을 눌렀을 경우
+		
+
+		// 예약 버튼을 눌렀을 경우
 		$(".cnum-btn1").on("click", function() {
-			let result = confirm("예약을 취소하시겠습니까?");
-			let a = $(this).parent().siblings().children().siblings().children("#parent").val();
-			console.log(a)
+			let result = confirm("예약을 취소 하시겠습니까?");
 			if (result) {
-				let button = $(this);
-				$.ajax({
-					url:"/my/bookingFail",
-					data:{parent:$($(this).parent().siblings().children().siblings().children("#parent")).val()}
-				}).done(function(resp){
-					if(resp=="1"){
-						alert("예약을 취소하였습니다.")
-						location.reload();
-					}else{
-						alert("에러 발생, 다시 시도해주세요.")
-						return false;
-					}
-				})
+				$("#frm").attr("action", "/my/bookingFail");
+				$("#frm").submit();
 			} else {
 				return false;
 			}
 		})
-		
-		// 결제하기 버튼을 눌렀을 경우
+	/* 	$(".payment").each(function(i){
+			$(this).click(function(e){
+			e.preventDefault();
+			location.href="/point/TopaymentByTalent?seq="+$(".parentseq").val() +"&id="+$(".id").val();
+			
+				
+			}) */
+			
+			
+	
+				
+		  $("button[id^='payment']").on("click",function(){
+				location.href="/point/TopaymentByTalent?seq="+$(".parentseq").val() +"&id="+$(".id").val();
+			
+		})  
 
 	})
 </script>
@@ -305,8 +310,9 @@ img {
 										aria-expanded="false"> Menu </a>
 										<div class="dropdown-menu"
 											aria-labelledby="navbarDropdownMenuLink">
-											<a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a> <a
-												class="dropdown-item" href="/sns/main">SNS</a> <a
+											<a class="dropdown-item"
+												href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
+											<a class="dropdown-item" href="/sns/main">SNS</a> <a
 												class="dropdown-item" href="/my/mypageProc">My page</a> <a
 												class="dropdown-item" href="/point/ToCharging">Charging</a>
 										</div></li>
@@ -353,26 +359,26 @@ img {
 							<div class="content">
 								<div class="row">
 									<div class="col-4 left">
-										<b>대여자</b>
+										<b>재능 판매자</b>
 									</div>
 									<div class="col-8 right">${i.writer}</div>
 								</div>
 								<div class="row">
 									<div class="col-4 left">
-										<b>대여요청자</b>
+										<b>재능 구매자</b>
 									</div>
 									<div class="col-8 right">${i.booker}</div>
 								</div>
 								<div class="row">
 									<div class="col-4 left">
-										<b>결제 내역</b>
+										<b>결제금</b>
 									</div>
-									<div class="col-8 right">${i.price}원</div>
+									<div class="col-8 right">${i.price}상추</div>
 								</div>
 							</div>
-							<input type=hidden value=${i.writer } name=writer id=writer> 
-							<input type=hidden value=${i.booker } name=booker id=booker> 
-							<input type=hidden value=${i.parentseq } name=parent id=parent>
+							<input type=hidden value=${i.writer } name=writer class="id"> <input
+								type=hidden value=${i.booker } name=booker > <input
+								type=hidden value=${i.parentseq } name=parent class="parentseq">
 
 						</div>
 						<div class="col-4">
@@ -383,8 +389,22 @@ img {
 						</div>
 					</div>
 					<div class="under">
-						<button type=button id=cancel class="cnum-btn1">예약 취소</button>
-						<button type=button id=approval class="cnum-btn2" disabled='disabled'>승인 대기 중</button>
+						<input type=button id=cancel class="cnum-btn1" value="예약 취소">
+                   
+						<c:choose>
+							<c:when test="${i.approval =='y'}">
+								<button type=button class="cnum-btn2" id="payment"
+									>결제하기</button>
+							</c:when>
+							<c:when test="${i.approval =='n'}">
+							<button type=button id=approval class="cnum-btn2"
+									disabled='disabled'>승인 거절</button>
+							</c:when>
+							<c:otherwise>
+								<button type=button id=approval class="cnum-btn2"
+									disabled='disabled'>승인 대기 중</button>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 			</form>
