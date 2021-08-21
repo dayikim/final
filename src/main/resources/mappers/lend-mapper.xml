@@ -19,6 +19,16 @@
 	<insert id="write">
 		insert into lendboard values(#{seq},#{writer},#{title},#{category},#{contents},#{price},#{address},sysdate)
 	</insert>
+	
+	<!-- 게시글 수정 --> 
+	<update id="modify">
+		update lendboard set title=#{title}, category=#{category}, contents=#{contents}, price=#{price} where seq=#{seq}
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="delete">
+		delete from lendboard where seq=#{seq}
+	</delete>
   
 	<!-- 전체 검색 지역 & 타이틀 & 내용 -->
 	<select id="toSearch" resultType="kh.spring.dto.LendDTO">
@@ -80,6 +90,7 @@
 		select count(*) from lendboard where category like '%'||#{value}||'%'
 	</select>
 	
+	<!-- 판매자 찾기 -->
 	<select id="getId" resultType="String">
 	   select writer from lendboard where seq=#{value}
 	</select>

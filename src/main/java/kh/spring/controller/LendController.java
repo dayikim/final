@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import kh.spring.dto.BorrowBoardFilesDTO;
+import kh.spring.dto.BorrowDTO;
 import kh.spring.dto.LendDTO;
 import kh.spring.dto.LendFilesDTO;
 import kh.spring.dto.PersonDTO;
@@ -48,7 +51,7 @@ public class LendController {
 		dto.setSeq(seq);
 		dto.setWriter(sessionID);
 		service.lendWrite(dto,realPath,fdto,file);
-		return "redirect:/";
+		return "redirect:/AllBoardList/lendList?choice=Allchoice&search=&cpage=1";
 	}
 	
 	//대여하기 상세보기
@@ -60,11 +63,12 @@ public class LendController {
 		ProfileFilesDTO pfdto = MypageService.profileSelect(id); // 프사 출력
 		
 		PersonDTO writerInfo = service.memberInfoById(id);//글 작성자 정보(이름,주소)
-        LendDTO dto = service.detailView(seq);
+		
+        LendDTO dto = service.detailView(seq);//글 상세보기
         
-        model.addAttribute("profile",pfdto); //프로필
-        model.addAttribute("writerInfo",writerInfo);
-        model.addAttribute("board",dto);		 
+        model.addAttribute("profile",pfdto); //프로필        
+        model.addAttribute("writerInfo",writerInfo);//작성자정보
+        model.addAttribute("board",dto);//글내용		 
 		 
 		List<LendFilesDTO> fileList = service.selectAll(seq); //첨부파일 목록 출력   
 		//        System.out.println("파일이 비어 있나요?? "+fileList.isEmpty());//파일이 있나요?
@@ -73,5 +77,75 @@ public class LendController {
 		
 		return "/toBoard/lend_view";
 	}
+	
+	//수정하기 값 꺼내 보내기
+	@RequestMapping(value="modify",produces="text/html;charset=utf8") 
+	public String modify(int seq, Model model) {
+		String sessionID = (String) session.getAttribute("loginID");
+		PersonDTO pdto = MypageService.mypageList(sessionID);
+		
+		
+		LendDTO dto = service.detailView(seq);//게시글 정보
+		List<LendFilesDTO> flist = service.selectAll(seq);
+		
+		model.addAttribute("myAd", pdto);
+		model.addAttribute("dto", dto);
+		model.addAttribute("flist", flist);
+			
+		return "/toBoard/lend_modify";
+	}
+		
+	//수정 데이터 
+	@RequestMapping(value="ldModify",produces="text/html;charset=utf8")
+	public String ldModify(LendDTO dto,LendFilesDTO fdto,String[] delSeq,MultipartFile[] file) throws Exception {
+			
+		String realPath = session.getServletContext().getRealPath("resources/imgs/borrow");
+			
+		service.boardModify(dto,realPath,fdto,delSeq,file);
+
+		return "redirect:/AllBoardList/lendList?choice=Allchoice&search=&cpage=1";
+	}
+	
+	//게시글 삭제
+	@RequestMapping("lendDelete") 
+	public String lendDelete(int seq) throws Exception {
+		int result = service.delete(seq);
+		if(result<0) {
+			return null ;
+		}else {
+			return "redirect:/AllBoardList/lendList?choice=Allchoice&search=&cpage=1";
+
+		}
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="booking",produces="text/html;charset=utf-8") //판매 예약 글
+	public String Booking(String seller,int parentseq, String booker,String bookable) throws Exception {
+	    System.out.println("seller :" + seller);
+	    System.out.println("parentseq :" + parentseq);
+	    System.out.println("booker :" + booker);
+	    System.out.println("bookable :" + bookable);
+
+	    int result =service.booking(seller,booker,bookable,parentseq);
+	    if(result>0) {
+	       System.out.println("예약성공!!");
+	    }return String.valueOf(result);
+	 }   
+	      
+	      
+	 @ResponseBody
+	 @RequestMapping(value="checkBooking",produces="text/html;charset=utf-8")
+	 public String checkBooking(int parentseq, String booker) {
+//	    String sessionID = (String) session.getAttribute("loginID");
+//	    String booker =sessionID;
+	    System.out.println("booker :" + booker);
+	    System.out.println("parentseq :" + parentseq);
+	    int checkBooking = service.checkBooking(booker,parentseq);
+	    if(checkBooking>0) {
+	      System.out.println("이미 예약 되어있음");
+	    }
+	    return String.valueOf(checkBooking);
+	  }
 
 }

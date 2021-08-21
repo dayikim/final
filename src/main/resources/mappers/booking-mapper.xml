@@ -5,10 +5,10 @@
   
 <mapper namespace="Booking">
 
-<insert id="booking">
-insert into booking values(booking_seq.nextval,#{seller},#{booker},#{bookable},#{parentseq},sysdate)
+<!-- <insert id="booking"> -->
+<!-- insert into booking values(booking_seq.nextval,#{seller},#{booker},#{bookable},#{parentseq},sysdate) -->
 
-</insert>
+<!-- </insert> -->
 
 <resultMap type="HashMap" id="TalentBoard"> 
 	<result column="title" property="title"/> 
@@ -42,5 +42,13 @@ insert into booking values(booking_seq.nextval,#{seller},#{booker},#{bookable},#
 <delete id="bookingFail">
 	delete from booking where booker=#{sessionID} and parentseq=${parent}
 </delete>
+
+<insert id="booking">
+insert into booking values(booking_seq.nextval,#{seller},#{booker},#{bookable},#{parentseq},sysdate)
+</insert>
+
+<select id="checkBooking" resultType="int">
+select count(*) from booking where booker=#{booker}and parentseq=#{parentseq}
+</select>
 
 </mapper>

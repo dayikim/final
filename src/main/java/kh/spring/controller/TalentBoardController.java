@@ -10,16 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import kh.spring.dto.BookingDTO;
-import kh.spring.dto.LendDTO;
+import kh.spring.dto.BorrowBoardFilesDTO;
+import kh.spring.dto.BorrowDTO;
 import kh.spring.dto.PersonDTO;
 import kh.spring.dto.ProfileFilesDTO;
 import kh.spring.dto.RequestTalentDTO;
 import kh.spring.dto.SellTalentDTO;
 import kh.spring.dto.TBoardFilesDTO;
-import kh.spring.service.LendService;
 import kh.spring.service.MypageService;
 import kh.spring.service.RequestTalentService;
 import kh.spring.service.SellTalentService;
@@ -73,7 +73,7 @@ public class TalentBoardController {
 		dto.setSeq(seq);
 		dto.setWriter(sessionID);
 		STService.sellingWrite(dto,realPath,fdto,file);
-		return "redirect:/";
+		return "redirect:/AllBoardList/tlSellList?choice=Allchoice&search=&cpage=1";
 	}
 	//TBoardFiles도 두개 필요!!(판매용/요청용)
 	@RequestMapping("requestWrite")//재능 요청 글쓰기 데이터 받기
@@ -84,7 +84,7 @@ public class TalentBoardController {
 		dto.setSeq(seq);
 		dto.setWriter(sessionID);
 		RTService.requestWrite(dto,realPath,fdto,file);
-		return "redirect:/";
+		return "redirect:/AllBoardList/tlRequestList?choice=Allchoice&search=&cpage=1";
 	}
 	
 	@RequestMapping("sellingView") //판매글 상세보기
@@ -135,7 +135,7 @@ public class TalentBoardController {
 		if(result<0) {
 			return null ;
 		}else {
-			return "/AllBoardList/lendList?choice=Allchoice&search=&cpage=1";
+			return "redirect:/AllBoardList/tlSellList?choice=Allchoice&search=&cpage=1";
 
 		}
 	}
@@ -145,23 +145,96 @@ public class TalentBoardController {
 			if(result<0) {
 				return null ;
 			}else {
-				return "/AllBoardList/lendList?choice=Allchoice&search=&cpage=1";
+				return "redirect:/AllBoardList/tlRequestList?choice=Allchoice&search=&cpage=1";
 
 			}
 		
 	}
 	
-	@RequestMapping("booking") //판매 예약 글
-	public String Booking(BookingDTO dto) throws Exception {
-		String sessionID = (String) session.getAttribute("loginID");
-        dto.setBooker(sessionID);
-		int result =STService.booking(dto);
-		if(result<0) {
-			return null ;
-		}else {
-			return "/AllBoardList/lendList?choice=Allchoice&search=&cpage=1";
-
+		//판매수정할 값 꺼내 보내기
+		@RequestMapping(value="tlsmodify",produces="text/html;charset=utf8") 
+		public String tlsmodify(int seq, Model model) {
+			String sessionID = (String) session.getAttribute("loginID");
+			PersonDTO pdto = MypageService.mypageList(sessionID);
+			
+			SellTalentDTO dto = STService.detailView(seq);//게시글 정보
+			
+//			List<BorrowBoardFilesDTO> flist = service.selectAll(seq);
+//			System.out.println("서->컨 파 : " + flist);
+			
+			model.addAttribute("myAd", pdto);
+			model.addAttribute("dto", dto);
+//			model.addAttribute("flist", flist);
+			
+			return "/talentBoard/modify_selling";
 		}
 		
-	}
+		//판매수정 데이터 
+		@RequestMapping(value="sellingModify",produces="text/html;charset=utf8")
+		public String sellingModify(SellTalentDTO dto, TBoardFilesDTO fdto,String[] delSeq,MultipartFile[] file) throws Exception {
+			
+			String realPath = session.getServletContext().getRealPath("resources/imgs/selling");
+			
+			STService.boardModify(dto,realPath,fdto,delSeq,file);
+
+			return "redirect:/AllBoardList/tlSellList?choice=Allchoice&search=&cpage=1";
+		}
+		
+		//요청수정할 값 꺼내 보내기
+		@RequestMapping(value="tlrmodify",produces="text/html;charset=utf8") 
+		public String tlrmodify(int seq, Model model) {
+			String sessionID = (String) session.getAttribute("loginID");
+			PersonDTO pdto = MypageService.mypageList(sessionID);
+					
+			RequestTalentDTO dto = RTService.detailView(seq);//게시글 정보
+					
+//			List<BorrowBoardFilesDTO> flist = service.selectAll(seq);
+//			System.out.println("서->컨 파 : " + flist);
+					
+			model.addAttribute("myAd", pdto);
+			model.addAttribute("dto", dto);
+//			model.addAttribute("flist", flist);
+					
+			return "/talentBoard/borrow_modify";
+		}
+				
+		//요청수정 데이터 
+		@RequestMapping(value="requestModify",produces="text/html;charset=utf8")
+		public String requestModify(RequestTalentDTO dto,TBoardFilesDTO fdto,String[] delSeq,MultipartFile[] file) throws Exception {
+					
+			String realPath = session.getServletContext().getRealPath("resources/imgs/request");
+					
+			RTService.boardModify(dto,realPath,fdto,delSeq,file);
+
+			return "redirect:/AllBoardList/tlRequestList?choice=Allchoice&search=&cpage=1";
+		}
+	
+		@ResponseBody
+		@RequestMapping(value="booking",produces="text/html;charset=utf-8") //판매 예약 글
+		public String Booking(String seller,int parentseq, String booker,String bookable) throws Exception {
+		    System.out.println("seller :" + seller);
+		    System.out.println("parentseq :" + parentseq);
+		    System.out.println("booker :" + booker);
+		    System.out.println("bookable :" + bookable);
+
+		    int result =STService.booking(seller,booker,bookable,parentseq);
+		    if(result>0) {
+		       System.out.println("예약성공!!");
+		    }return String.valueOf(result);
+		 }   
+		      
+		      
+		 @ResponseBody
+		 @RequestMapping(value="checkBooking",produces="text/html;charset=utf-8")
+		 public String checkBooking(int parentseq, String booker) {
+//		    String sessionID = (String) session.getAttribute("loginID");
+//		    String booker =sessionID;
+		    System.out.println("booker :" + booker);
+		    System.out.println("parentseq :" + parentseq);
+		    int checkBooking = STService.checkBooking(booker,parentseq);
+		    if(checkBooking>0) {
+		      System.out.println("이미 예약 되어있음");
+		    }
+		    return String.valueOf(checkBooking);
+		  }
 }
