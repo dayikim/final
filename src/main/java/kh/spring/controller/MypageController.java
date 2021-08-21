@@ -109,25 +109,25 @@ public class MypageController {
 		return "/mypage/profileView";
 	}
 
-	// 포인트 충전내역 확인(미완)
-//	@RequestMapping(value="/pointChargeList", produces="text/html;charset=utf8")
-//	public String pointChargeList(Model model) {
-//		String sessionID = (String)session.getAttribute("loginID");
-//		List<PointAccountDTO> dto = service.pointChargeList(sessionID); 
-//
-//		model.addAttribute("pointCharge",dto);
-//		return "/mypage/pointCharge";
-//	}
+	// 포인트 충전내역 확인
+	@RequestMapping(value="/pointChargeList", produces="text/html;charset=utf8")
+	public String pointChargeList(Model model) {
+		String sessionID = (String)session.getAttribute("loginID");
+		List<PointAccountDTO> dto = service.pointChargeList(sessionID); 
 
-	// 포인트 사용내역 확인(미완)
-//	@RequestMapping(value="/pointUseList", produces="text/html;charset=utf8")
-//	public String pointUseList(Model model) {
-//		String sessionID = (String)session.getAttribute("loginID");
-//		List<PointAccountDTO> dto = service.pointUseList(sessionID); 
-//		
-//		model.addAttribute("pointUse", dto);
-//		return "/mypage/pointUse";
-//	}
+		model.addAttribute("pointCharge",dto);
+		return "/mypage/pointCharge";
+	}
+
+	// 포인트 사용내역 확인
+	@RequestMapping(value="/pointUseList", produces="text/html;charset=utf8")
+	public String pointUseList(Model model) {
+		String sessionID = (String)session.getAttribute("loginID");
+		List<PointAccountDTO> dto = service.pointUseList(sessionID); 
+		
+		model.addAttribute("pointUse", dto);
+		return "/mypage/pointUse";
+	}
 
 
 	/////////////////////////////////////////////////////////////////////////////////////////// 현재 빌린, 빌려준 상품
