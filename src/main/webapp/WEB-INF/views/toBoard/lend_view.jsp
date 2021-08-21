@@ -326,9 +326,45 @@
 	})
 	
     $(function(){
-    	$("#request").on("click",function(){
-    		location.href = "/borrowBoard/toBorrow"
-    	})
+    	 $("#booking").on("click", function () { //예약 하기 
+             let check = confirm("정말 예약하시겠습니까?");
+             let seller= $("#seller").val();
+             let booker =$("#booker").val();
+             let bookable=$("#bookable").val();
+             let parentseq=$("#parentseq").val();
+             if (check) {
+                 $.ajax({
+                     url: "/lendBoard/booking",
+                     data: {seller: seller, parentseq: parentseq, bookable: bookable, booker: booker }
+                 }).done(function (resp) {
+                    console.log(resp);
+                     if (resp == 1) {
+                         $.ajax({
+                             url: "/lendBoard/checkBooking",
+                             data: {parentseq: parentseq,booker: booker}
+                         }).done(function (resp) {
+                             if (resp == 1) {
+                                 alert("이미 예약되었습니다.\n마이페이지에서 예약내역을 확인하세요.")
+                                 location.href = "${pageContext.request.contextPath}/my/mypageProc"
+
+                             } else {
+                                 alert("예약 완료!! \n마이페이지에서 예약내역을 확인하세요.")
+                                 location.href = "${pageContext.request.contextPath}/my/mypageProc"
+                             }
+                         })
+                     } else {
+                         alert("예약실패!!")
+                         return;
+                     }
+
+                 })
+
+             } else {
+                 alert("예약 취소!")
+                 return;
+             }
+
+         })
     	
 		$("#deleteBtn").on("click",function () { //게시글 삭제
 					let check = confirm("정말 게시글을 삭제하겠습니까?");
@@ -504,17 +540,17 @@
 
 					</div>
 					<span id="region_name">${board.address} </span>
-					<div class=" btn_wrap text-right">
-					
-					<form action="/tBoard/booking" id="bookingform">
-					<input type="hidden" name="seller" value="${board.writer}">
-					<input type="hidden" name="bookable" value="y">
-					<input type="hidden" name="booker" value="${loginID}">
-					<input type="hidden" name="parentseq" value="${board.seq}">
-						<button type="button" class="btn btn-secondary" id="booking">
-							예약하기</button>
-					</form>
-					</div>
+					<c:choose>
+						<c:when test="${loginID != board.writer}">
+							<div class=" btn_wrap text-right">
+								<input type="hidden" name="seller" value="${board.writer}">
+								<input type="hidden" name="bookable" value="y">
+								<input type="hidden" name="booker" value="${loginID}">
+								<input type="hidden" name="parentseq" value="${board.seq}">
+								<button type="button" class="btn btn-secondary" id="booking">예약하기</button>
+							</div>
+						</c:when>
+					</c:choose>
 					<span class="align-baseline" id="price">${board.price} 상추</span>
 
 					<div id="profile-image">

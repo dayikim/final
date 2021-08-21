@@ -30,6 +30,14 @@ public class BookingDAO {
 		return mybatis.delete("Booking.dealFail", param);
 	}
 	
+	public int booking(Map<Object, Object> param) {
+	      return mybatis.insert("Booking.booking",param);
+	}
+
+	public int checkBooking(Map<Object, Object> param) {
+	     return mybatis.selectOne("Booking.checkBooking",param);
+	}
+	
 	
 	//////////////////////////////////////////////////////////////////////////// 예약 내역 출력 (구매자 입장)
 	

@@ -78,14 +78,15 @@ public class BorrowController {
 	//수정할 값 꺼내 보내기
 	@RequestMapping(value="modify",produces="text/html;charset=utf8") 
 	public String modify(int seq, Model model) {
-		System.out.println(seq);
+		String sessionID = (String) session.getAttribute("loginID");
+		PersonDTO pdto = MypageService.mypageList(sessionID);
 		
 		BorrowDTO dto = service.detailView(seq);//게시글 정보
-		System.out.println("서->컨 글 : " + dto);
 		
 		List<BorrowBoardFilesDTO> flist = service.selectAll(seq);
 		System.out.println("서->컨 파 : " + flist);
 		
+		model.addAttribute("myAd", pdto);
 		model.addAttribute("dto", dto);
 		model.addAttribute("flist", flist);
 		

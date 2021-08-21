@@ -18,15 +18,15 @@ public class LendDAO {
 	
 	@Autowired
 	private SqlSessionTemplate mybatis;
-	
-	//판매자 찾기
-	public String getId(int seq) {
-	   return mybatis.selectOne("Lend.getId",seq);
-	 }
-	
+		
 	//게시글 번호
 	public int getSeq(){
 		return mybatis.selectOne("Lend.getSeq");
+	}
+	
+	//판매자 찾기
+	public String getId(int seq) {
+		return mybatis.selectOne("Lend.getId",seq);
 	}
 	
 	//게시글 글쓰기
@@ -163,9 +163,7 @@ public class LendDAO {
 
 		return pageNavi;
 	}
-//판매자 찾기
-	public String getId(int seq) {
-		return mybatis.selectOne("Lend.getId",seq);
-	}
+	
+	
 
 }

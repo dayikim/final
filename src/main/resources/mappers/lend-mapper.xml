@@ -5,11 +5,6 @@
   
 <mapper namespace="Lend">
 
-	<!-- 판매자 찾기 -->
-	<select id="getId" resultType="String">
-      select writer from lendboard where seq=#{value}
-    </select>
-
 	<!-- 게시글 상세보기 -->
 	<select id="detailView" resultType="kh.spring.dto.LendDTO">
 		select * from lendboard where seq =#{seq}
@@ -95,6 +90,7 @@
 		select count(*) from lendboard where category like '%'||#{value}||'%'
 	</select>
 	
+	<!-- 판매자 찾기 -->
 	<select id="getId" resultType="String">
 	   select writer from lendboard where seq=#{value}
 	</select>

@@ -262,6 +262,44 @@
 	})
     
     $(function(){
+    	 $("#booking").on("click", function () { //예약 하기 
+             let check = confirm("정말 예약하시겠습니까?");
+             let seller= $("#seller").val();
+             let booker =$("#booker").val();
+             let bookable=$("#bookable").val();
+             let parentseq=$("#parentseq").val();
+             if (check) {
+                 $.ajax({
+                     url: "/tBoard/checkBooking",
+                     data: {parentseq: parentseq,booker: booker}
+                 }).done(function (resp) {
+                    console.log(resp);
+                     if (resp == 0) {
+                         $.ajax({
+                             url: "/tBoard/booking",                              
+                         data: {seller: seller, parentseq: parentseq, bookable: bookable, booker: booker }
+                         }).done(function (resp) {
+                            console.log(resp);
+                             if (resp == 1) {
+                                 alert("예약 완료!! \n마이페이지에서 예약내역을 확인하세요.")
+                                 location.href = "${pageContext.request.contextPath}/my/mypageProc"
+                             }else{
+                                alert("예약 실패!")
+                             }                                            
+                         })
+                     } else {
+                        alert("이미 예약되었습니다.\n마이페이지에서 예약내역을 확인하세요.")
+                         location.href = "${pageContext.request.contextPath}/my/mypageProc"
+                return;                                
+                         }
+                 })
+             } else {
+                 alert("예약 취소!")
+                 return;
+             }
+
+         })
+    	
     	$("#request").on("click",function(){
     		location.href = "/lendBoard/toLend"
     	})

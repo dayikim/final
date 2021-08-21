@@ -3,7 +3,9 @@ package kh.spring.service;
 import java.io.File;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import kh.spring.dao.BookingDAO;
 import kh.spring.dao.LendDAO;
 import kh.spring.dao.LendFilesDAO;
 import kh.spring.dao.PersonDAO;
@@ -32,11 +35,26 @@ public class LendService {
 	@Autowired
 	private PersonDAO pdao;
 	
-
-	//판매자 찾기
-	   public String getId(int seq) {
-	      return dao.getId(seq);
-	   }
+	@Autowired
+	private BookingDAO bdao;
+	
+	//예약
+	public int booking(String seller, String booker, String bookable, int parentseq) {
+	      Map<Object,Object>param = new HashMap();
+	      param.put("seller", seller);
+	      param.put("booker",booker);
+	      param.put("bookable", bookable);
+	      param.put("parentseq", parentseq);
+	      return bdao.booking(param);
+	}
+	
+	public int checkBooking(String booker, int parentseq) {
+	      Map<Object,Object>param = new HashMap();
+	      param.put("booker",booker);
+	      param.put("parentseq", parentseq);
+	      return bdao.checkBooking(param);
+	   
+	}
 	
 	//프로파일
 	public PersonDTO memberInfoById(String id) {

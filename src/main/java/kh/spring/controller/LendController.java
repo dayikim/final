@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kh.spring.dto.BorrowBoardFilesDTO;
@@ -80,10 +81,14 @@ public class LendController {
 	//수정하기 값 꺼내 보내기
 	@RequestMapping(value="modify",produces="text/html;charset=utf8") 
 	public String modify(int seq, Model model) {
-			
+		String sessionID = (String) session.getAttribute("loginID");
+		PersonDTO pdto = MypageService.mypageList(sessionID);
+		
+		
 		LendDTO dto = service.detailView(seq);//게시글 정보
 		List<LendFilesDTO> flist = service.selectAll(seq);
-			
+		
+		model.addAttribute("myAd", pdto);
 		model.addAttribute("dto", dto);
 		model.addAttribute("flist", flist);
 			
@@ -112,5 +117,35 @@ public class LendController {
 
 		}
 	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="booking",produces="text/html;charset=utf-8") //판매 예약 글
+	public String Booking(String seller,int parentseq, String booker,String bookable) throws Exception {
+	    System.out.println("seller :" + seller);
+	    System.out.println("parentseq :" + parentseq);
+	    System.out.println("booker :" + booker);
+	    System.out.println("bookable :" + bookable);
+
+	    int result =service.booking(seller,booker,bookable,parentseq);
+	    if(result>0) {
+	       System.out.println("예약성공!!");
+	    }return String.valueOf(result);
+	 }   
+	      
+	      
+	 @ResponseBody
+	 @RequestMapping(value="checkBooking",produces="text/html;charset=utf-8")
+	 public String checkBooking(int parentseq, String booker) {
+//	    String sessionID = (String) session.getAttribute("loginID");
+//	    String booker =sessionID;
+	    System.out.println("booker :" + booker);
+	    System.out.println("parentseq :" + parentseq);
+	    int checkBooking = service.checkBooking(booker,parentseq);
+	    if(checkBooking>0) {
+	      System.out.println("이미 예약 되어있음");
+	    }
+	    return String.valueOf(checkBooking);
+	  }
 
 }

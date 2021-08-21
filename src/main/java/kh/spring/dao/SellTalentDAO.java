@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import kh.spring.config.BoardConfig;
+import kh.spring.dto.BorrowDTO;
 import kh.spring.dto.SellTalentDTO;
 
 @Component
@@ -16,30 +17,37 @@ public class SellTalentDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 	
-	//판매자 찾기
-    public String getWriter(int seq) {
-       return mybatis.selectOne("Selltalent.getwriter");
-    }
-	
+	//게시글 글쓰기
 	public int boardWrite(SellTalentDTO dto) {
 		return mybatis.insert("Selltalent.write",dto);
 	}
 	
+	//게시글 상세보기
 	public SellTalentDTO detailView(int seq) {
 		return  mybatis.selectOne("Selltalent.detailView",seq);
 	}
 	
+	//게시글 번호
 	public int getSeq(){
 		return mybatis.selectOne("Selltalent.getSeq");
 	}
+	
+	//게시글 수정
+	public int boardModify(SellTalentDTO dto) {
+		return mybatis.update("Selltalent.modify",dto);
+	}
+	
+	
 	public List<SellTalentDTO> getAllList() {
 		return mybatis.selectList("Selltalent.getAllList");
-		
 	}
+	
+	//게시글 삭제
 	public int delete(int seq) {
 		return mybatis.delete("Selltalent.delete",seq);
 	}
-
+	
+	//판매자 찾기
 	public String getId() {
 		return mybatis.selectOne("Selltalent.getId");
 	}
@@ -165,7 +173,7 @@ public class SellTalentDAO {
 
 				return pageNavi;
 			}
-//판매자 찾기
+			//판매자 찾기
 			public String getWriter(int seq) {
 				return mybatis.selectOne("Selltalent.getwriter");
 			}
