@@ -69,6 +69,7 @@ $(function(){
 		}
 	}
 	
+
 })
 
 </script>
@@ -219,6 +220,21 @@ background-color:#FAFAFA;
 }
 
 
+img{
+
+width:60px;
+height:60px;
+
+}
+
+.person{
+
+margin-left:2%;
+margin-bottom:6%;
+
+}
+
+
 </style>
 
 <body oncontextmenu="return false">
@@ -261,13 +277,21 @@ background-color:#FAFAFA;
                                            <span class="time">05/02/2019</span>  날짜/ ETC 기입 가능. (이름 옆에 붙음) 
                                         </p>
                                     </li> -->
-                                    <c:forEach var="item" items="${list }">
+                                    <c:forEach var="item" items="${list }" varStatus="status">
 		                                  <li class="person" data-chat="person1">
 		                                       <div class="user" id = ${item.roomid }>
 		                                       <div class="rounded-circle badge-danger" id="unread">
 		                                       		${unread_count.getUnread_count(item.roomid,loginID)}
 		                                       </div>
-		                                           <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin"> <!-- 판매라는 이미지 십입-->
+		                                       		<c:choose>
+		                                       			<c:when test="${profile.get(status.index) != null}">
+		                                       				<img class=rounded-circle src="data:image/png;base64,${profile.get(status.index)} " alt="Retail Admin"> 
+		                                       			</c:when>
+		                                       			<c:otherwise>
+		                                       				<img class=rounded-circle src="/imgs/nomalProfile.jpg">
+		                                       			</c:otherwise>
+		                                       		</c:choose>
+		                           
 		                                            <span class="title">${item.title }</span> <!-- 상태 표시가 가능함!-->
 		                                        </div>           
 		                                   </li>

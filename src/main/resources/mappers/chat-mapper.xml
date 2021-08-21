@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Chat">
 	<insert id="insert">
-		insert into ChatRoom values(CHATROOM_SEQ.nextval,#{roomid},#{title},#{sessions},sysdate)
+		insert into ChatRoom values(CHATROOM_SEQ.nextval,#{roomid},#{title},#{sessions},sysdate,#{board_seq},#{board_category})
 	</insert>
 	
 	<select id="allList" resultType="kh.spring.dto.ChatRoomDto">

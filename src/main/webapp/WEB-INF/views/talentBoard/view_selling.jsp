@@ -257,9 +257,9 @@ $(function() {
 		}
 	})
 	
-	$("#chat").on("click",function(){
-		location.href = "/chat";
-	})
+	$("#chatting").on("click",function(){
+			location.href = "/chat/createRoom?board_seq="+$("#seq").val()+"&board_category=talent_selling";
+		})
 })
 
 $(function(){
@@ -414,6 +414,7 @@ $(function(){
 
 	<section id="body">
 		<div class="container">
+		 <input type ="hidden"  id =seq value="${board.seq}" >
 		<c:choose>
                 <c:when test="${loginID == board.writer}">
 			
@@ -522,7 +523,7 @@ $(function(){
 					</div>
 					<div class="btn_wrap">
 						<button type="button" class="btn btn-outline-info btn btn-lg"
-							id="chat">
+							id="chatting">
 							<i class="far fa-comment-dots"></i> 1:1 채팅
 						</button>
 					</div>

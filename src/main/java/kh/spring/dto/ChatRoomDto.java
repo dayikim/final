@@ -14,21 +14,27 @@ public class ChatRoomDto {
 	private String sessions;
 	private String title;
 	private Date reg_date;
+	private int board_seq;
+	private String board_category;
 	
 	public ChatRoomDto() {}
 
-	public ChatRoomDto(int seq, String roomid, String sessions, String title, Date reg_date) {
+	public ChatRoomDto(int seq, String roomid, String sessions, String title, Date reg_date, int board_seq,String board_category) {
 		super();
 		this.seq = seq;
 		this.roomid = roomid;
 		this.sessions = sessions;
 		this.title = title;
 		this.reg_date = reg_date;
+		this.board_seq = board_seq;
+		this.board_category = board_category;
 	}
-	public ChatRoomDto(String roomid, String sessions, String title) {
+	public ChatRoomDto(String roomid, String sessions, String title, int board_seq,String board_category) {
 		this.roomid = roomid;
 		this.sessions = sessions;
 		this.title = title;
+		this.board_seq = board_seq;
+		this.board_category = board_category;
 	}
 	
 	public int getSeq() {
@@ -71,6 +77,14 @@ public class ChatRoomDto {
 		this.reg_date = reg_date;
 	}
 	
+	public int getBoard_seq() {
+		return board_seq;
+	}
+
+	public void setBoard_seq(int board_seq) {
+		this.board_seq = board_seq;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		ChatRoomDto temp = (ChatRoomDto)obj;

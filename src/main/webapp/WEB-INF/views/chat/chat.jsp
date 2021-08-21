@@ -856,7 +856,13 @@ $(function(){
 	                   <div class="content-wrapper">
 	                      <div class="col-12" id = drag_display>
                             <div class="selected-user">
-                                <span>To: <span class="name">피기천사얌</span></span>
+                                <div class="media">
+								  <img src="..." class="align-self-center mr-3" alt="..."> <!-- 이미지 출력 -->
+								  <div class="media-body">
+								    <a><h5 class="mt-0">타이틀 제목 출력</h5></a>
+								    <p>가격 출력<p>
+								  </div>
+								</div>
                             </div>
                             <div class="chat-container" id ="chat-container" >
                            	 	<input type=hidden id=testinput value = ${loginID }> <!--테스트용으로 만든 세션 아이디 확인 추후 세션 분기점 설정.-->

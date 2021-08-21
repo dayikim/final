@@ -320,8 +320,8 @@
 			}
 		})
 		
-		$("#chat").on("click",function(){
-			location.href = "/chat";
+		$("#chatting").on("click",function(){
+			location.href = "/chat/createRoom?board_seq="+$("#seq").val()+"&board_category=lend";
 		})
 	})
 	
@@ -540,6 +540,7 @@
 
 					</div>
 					<span id="region_name">${board.address} </span>
+					<input type ="hidden"  id =seq value="${board.seq}" >
 					<c:choose>
 						<c:when test="${loginID != board.writer}">
 							<div class=" btn_wrap text-right">
@@ -573,7 +574,7 @@
 					</div>
 					<div class="btn_wrap">
 						<button type="button" class="btn btn-outline-info btn btn-lg"
-							id="chat">
+							id="chatting">
 							<i class="far fa-comment-dots"></i> 1:1 채팅
 						</button>
 					</div>
