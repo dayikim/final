@@ -23,6 +23,10 @@ public class PersonDAO {
 		return mybatis.selectOne("Person.idDuplCheck",id);
 	}
 	
+	public int phonedupl(String phone) {
+		return mybatis.selectOne("Person.phonedupl", phone);
+	}
+	
 	public int login(Map<String,String>param) {
 		return mybatis.selectOne("Person.login",param);
 	}

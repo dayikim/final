@@ -13,7 +13,7 @@
 <link href="img/favicon.ico" rel="icon">
 <!-- Google Font -->
 <link
-	href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"	
+	href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"
 	rel="stylesheet">
 <link
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
@@ -97,8 +97,8 @@ style>body {
 
 @media ( min-width : 992px) {
 	.gedf-main {
-		position:relative;
-		top:100px;
+		position: relative;
+		top: 100px;
 		padding-left: 4rem;
 		padding-right: 4rem;
 	}
@@ -133,11 +133,14 @@ style>body {
 	font-size: 50px;
 }
 
-#photo{
-	max-width : 300px;
-	max-height : 400px;
+#hiddencomment{
+	display : none;
 }
 
+#photo {
+	max-width: 300px;
+	max-height: 400px;
+}
 </style>
 <script>
 	var count = 2;
@@ -227,20 +230,19 @@ style>body {
 											
 						if(Number(e[i].love) ==0){				
 						 node +="<a class=card-link id=love style=\"color: #FDD2BF\">"
+						 node +="<i class=\"far fa-heart\"></i>"+e[i].love+"</a>"
 						}else{
 						 node +="<a class=card-link id=love style=\"color: #FF6B6B\">"
+						 node +="<i class=\"fas fa-heart\"></i>"+e[i].love+"</a>"
 						}
-			 node +="<i class=\"far fa-heart\"></i>"+e[i].love+"</a>"
-											
-										
-
+																					
 				 node += "<a class=card-link id=commenticon>"
 			     node +="<i class=\"fas fa-comment-dots\"></i>"
 			 node += "Comment</a>"
 						 node +="</div>"
 
 									<!-- 댓글작성 -->
-									 node += "<div id=hiddencomment style=display: none;>"
+									 node += "<div id=hiddencomment>"
 										 node += "<div class=\"input-group mb-3\">"
 			 node += "<input type=text class=form-control id=comment placeholder=\"댓글을 작성해주세요\" aria-label=Recipient's username aria-describedby=button-addon2>"
 											 node +="<div class=input-group-append>"
@@ -586,7 +588,7 @@ style>body {
 
 
 	<div class="container-fluid gedf-wrapper">
-		<div class="row" id = row>
+		<div class="row" id=row>
 			<div class="col-md-3"></div>
 			<div class="col-md-6 gedf-main">
 				<!--- 글쓰기-->
@@ -617,7 +619,8 @@ style>body {
 									aria-labelledby="images-tab">
 									<div class="form-group">
 										<div class="custom-file">
-											<input type=file name=file id=file accept=".gif, .jpg, .png" multiple>
+											<input type=file name=file id=file accept=".gif, .jpg, .png"
+												multiple>
 											<div id=upload></div>
 										</div>
 									</div>
@@ -642,113 +645,106 @@ style>body {
 				</form>
 
 				<!--- 게시글-->
-				<div id =snsbody>
-				<c:forEach var="item" items="${list}" varStatus="status">
-					<div class="card gedf-card">
-						<div class="card-header">
-							<div class="d-flex justify-content-between align-items-center">
+				<div id=snsbody>
+					<c:forEach var="item" items="${list}" varStatus="status">
+						<div class="card gedf-card">
+							<div class="card-header">
 								<div class="d-flex justify-content-between align-items-center">
-									<div class="mr-2">
-										<c:choose>
-											<c:when test="${initprofile.get(status.index) != null}">
-												<img class="rounded-circle" src= "data:image/png;base64,${initprofile.get(status.index) }" alt="" style ="width :50px; height :50px;">
-											</c:when>
-											<c:otherwise>
-												<img class=rounded-circle style ="width :50px; height :50px;" src = "/imgs/nomalProfile.jpg">
-											</c:otherwise>
-										</c:choose>
-									</div>
-									<div class="ml-2">
-										<div class="h5 m-0">
-											${item.id} <input type=hidden id=hiddenseq value=${item.seq }>
+									<div class="d-flex justify-content-between align-items-center">
+										<div class="mr-2">
 											<c:choose>
-												<c:when test="${loginID == item.id }">
-													<a href="${pageContext.request.contextPath}/sns/delete?seq=${item.seq }" id=del>삭제</a>
-													<a href="${pageContext.request.contextPath}/sns/modify?seq=${item.seq }" id=modi>수정</a>
+												<c:when test="${initprofile.get(status.index) != null}">
+													<img class="rounded-circle"
+														src="data:image/png;base64,${initprofile.get(status.index) }"
+														alt="" style="width: 50px; height: 50px;">
 												</c:when>
+												<c:otherwise>
+													<img class=rounded-circle
+														style="width: 50px; height: 50px;"
+														src="/imgs/nomalProfile.jpg">
+												</c:otherwise>
 											</c:choose>
 										</div>
-										<div class="h7 text-muted">${item.region}</div>
-									</div>
-								</div>
-								<div></div>
-							</div>
-						</div>
-						<div class="card-body">
-							<div class="text-muted h7 mb-2">
-								<i class="fa fa-clock-o"></i>${item.category }
-							</div>
-							<c:forEach var="file" items="${file}">
-								<c:choose>
-									<c:when test="${file.parent == item.seq }">
-										<a href="/sns/download?oriName=${file.oriName}&sysName=${file.sysName}">
-											<img src="data:image/png;base64,${file.sysName}" id=photo>
-										</a>
-									</c:when>
-								</c:choose>
-
-							</c:forEach>
-							<p class="card-text">${item.contents }</p>
-						</div>
-						<div class="card-footer">
-							<c:choose>
-								<c:when test="${isLove.indexOf(String.valueOf(item.seq)) != -1}">
-									<a class="card-link" id=love style="color: #FF6B6B"><i
-										class="fas fa-heart"></i>${item.love }</a>
-								</c:when>
-								<c:otherwise>
-									<a class="card-link" id=love style="color: #FDD2BF"><i
-										class="far fa-heart"></i>${item.love }</a>
-								</c:otherwise>
-							</c:choose>
-
-							<a class="card-link" id=commenticon><i
-								class="fas fa-comment-dots"></i>Comment</a>
-						</div>
-
-						<!-- 댓글작성 -->
-						<div id=hiddencomment style="display: none;">
-							<div class="input-group mb-3">
-								<input type="text" class="form-control" id=comment
-									placeholder="댓글을 작성해주세요" aria-label="Recipient's username"
-									aria-describedby="button-addon2">
-								<div class="input-group-append">
-									<button class="btn btn-outline-secondary" type="button"
-										id="sendcomment">
-										<i class="fas fa-pen"></i>
-									</button>
-								</div>
-								<input type=hidden id=hidden value=${item.seq }> <input
-									type=hidden id=lovecount value=${item.love }>
-							</div>
-						</div>
-							<!-- 댓글리스트 -->
-							<%-- 	<ul class="comments-list" id=commentList>
-									<div class="comment-body">
-										<div class="comment-heading">
-											<h6>list.id
+										<div class="ml-2">
+											<div class="h5 m-0">
+												${item.id} <input type=hidden id=hiddenseq
+													value=${item.seq }>
 												<c:choose>
-													<c:when test="${loginID == comment.id }">
+													<c:when test="${loginID == item.id }">
 														<a
-															href="${pageContext.request.contextPath}/snscomm/delete?seq=${comment.seq }"
-															id=delcomm>삭제</a>
+															href="${pageContext.request.contextPath}/sns/delete?seq=${item.seq }"
+															id=del>삭제</a>
 														<a
-															href="${pageContext.request.contextPath}/snscomm/modify?seq=${comment.seq }"
-															id=modicomm>수정</a>
+															href="${pageContext.request.contextPath}/sns/modify?seq=${item.seq }"
+															id=modi>수정</a>
 													</c:when>
 												</c:choose>
-											</h5>
-											<div type=hidden value=${comment.seq } id=commentseq></div>
+											</div>
+											<div class="h7 text-muted">${item.region}</div>
 										</div>
-										<p>list.contents</p>
 									</div>
-								</ul> --%>
+									<div></div>
+								</div>
+							</div>
+							<div class="card-body">
+								<div class="text-muted h7 mb-2">
+									<i class="fa fa-clock-o"></i>${item.category }
+								</div>
+								<c:forEach var="file" items="${file}">
+									<c:choose>
+										<c:when test="${file.parent == item.seq }">
+											<a
+												href="/sns/download?oriName=${file.oriName}&sysName=${file.sysName}">
+												<img src="data:image/png;base64,${file.sysName}" id=photo>
+											</a>
+										</c:when>
+									</c:choose>
+
+								</c:forEach>
+								<p class="card-text">${item.contents }</p>
+							</div>
+							<div class="card-footer">
+								<c:choose>
+									<c:when
+										test="${isLove.indexOf(String.valueOf(item.seq)) != -1}">
+										<a class="card-link" id=love style="color: #FF6B6B"><i
+											class="fas fa-heart"></i>${item.love }</a>
+									</c:when>
+									<c:otherwise>
+										<a class="card-link" id=love style="color: #FDD2BF"><i
+											class="far fa-heart"></i>${item.love }</a>
+									</c:otherwise>
+								</c:choose>
+
+								<a class="card-link" id=commenticon><i
+									class="fas fa-comment-dots"></i>Comment</a>
+							</div>
+
+							<!-- 댓글작성 -->
+							<div id=hiddencomment>
+								<div class="input-group mb-3">
+									<input type="text" class="form-control" id=comment
+										placeholder="댓글을 작성해주세요" aria-label="Recipient's username"
+										aria-describedby="button-addon2">
+									<div class="input-group-append">
+										<button class="btn btn-outline-secondary" type="button"
+											id="sendcomment">
+											<i class="fas fa-pen"></i>
+										</button>
+									</div>
+									<input type=hidden id=hidden value=${item.seq }> <input
+										type=hidden id=lovecount value=${item.love }>
+								</div>
+							</div>
 						</div>
-						</c:forEach>
-					</div>
-					</div>
+					</c:forEach>
+				</div>
+				<div class="col-md-3">
+					<i class="fas fa-arrow-up" id=top></i>
+				</div>
 			</div>
 		</div>
+	</div>
 	<input type=hidden id=session value=${loginID }>
 	<input type=hidden id=length value=${snslength }>
 </body>

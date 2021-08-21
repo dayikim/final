@@ -24,6 +24,10 @@ public class PersonService {
 		return dao.idDuplCheck(id);
 	}
 	
+	public int phonedupl(String phone) {
+		return dao.phonedupl(phone);
+	}
+	
 	public int login(String id, String pw) {
 		Map<String,String>param = new HashMap();
 		param.put("id", id);
