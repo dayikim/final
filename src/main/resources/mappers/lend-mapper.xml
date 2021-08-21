@@ -22,7 +22,7 @@
 	
 	<!-- 게시글 수정 --> 
 	<update id="modify">
-		update lendboard set title=#{title}, category=#{category}, contents=#{contents}, price=#{price} where seq=#{seq}
+		update lendboard set title=#{title}, category=#{category}, contents=#{contents}, price=#{price}, address=#{address} where seq=#{seq}
 	</update>
 	
 	<!-- 게시글 삭제 -->

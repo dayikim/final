@@ -70,7 +70,7 @@
 		$(function() {
 			$("#search").keyup(function(e) {
 				if (e.keyCode == 13) {
-					location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
+					location.href = "/AllBoardList/borrowList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
 				}
 			})
 			

@@ -253,7 +253,7 @@
     $(function() {
 		$("#search").keyup(function(e) {
 			if (e.keyCode == 13) {
-				location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
+				location.href = "/AllBoardList/tlRequestList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
 			}
 		})
 		
@@ -280,7 +280,7 @@
 		$("#modifyBtn").on("click",function () { //게시글 수정
 					let check = confirm("정말 게시글을 수정하겠습니까?");
 					if (check) {
-						location.href = "/tBoard/modify?seq="
+						location.href = "/tBoard/tlrmodify?seq="
 							+ $("#modifyBtn").val(); //게시글 수정 확인 팝업
 					} else {
 						return;

@@ -174,6 +174,18 @@
 
 			</style>
 			<script>
+			$(document).ready(function(){
+				let address = "${myAd.address1}";
+				let addressReg = /^[가-힣]*\s+[가-힣]*/g;
+				let myaddress = address.match(addressReg);
+				console.log(myaddress);
+				if(myaddress != null){
+					$("#Input3").removeAttr("readonly");
+					$("#Input3").attr("value",myaddress);
+					$("#Input3").attr("readonly",true);
+				}
+			})
+			
 				$(function() {
 					$("#search").keyup(function(e) {
 						if (e.keyCode == 13) {
@@ -476,11 +488,11 @@
 							</div>
 
 							<div class="input-group mb-3 col-md-12">
-								<input type="text" class="form-control" id="Input3" name="address" value="${dto.address}" readonly>
+								<input type="text" class="form-control" id="Input3" name="address" readonly>
 							</div>
 							<div class="input-group mb-3 col-md-12">
 								<textarea class="form-control" aria-label="With textarea" placeholder="세부 설명을 입력해주세요"
-									rows="10" id="contents" name="contents" required>"${dto.contents}"</textarea>
+									rows="10" id="contents" name="contents" required>${dto.contents}</textarea>
 							</div>
 							<div class="btn_wrap text-right">
 								<button type="button" class="btn btn-primary" id="submitBtn">수정하기</button>
