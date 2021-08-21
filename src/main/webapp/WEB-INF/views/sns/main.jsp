@@ -144,6 +144,7 @@ style>body {
 </style>
 <script>
 	var count = 2;
+	let fileList = [];
 	$(function() {
 		console.log(count);
 		//무한스크롤
@@ -269,6 +270,7 @@ style>body {
 			}
 		}));	
 		
+		let fileList = [];
 		//파일명출력
 	     $('#file').change(function(){	            
 	            var files=$('input[name="file"]')[0].files;
@@ -282,7 +284,7 @@ style>body {
 	                delBtn.text("-")
 	                delDiv.append(delBtn);
 
-	                let rowDiv = $("<div>");
+	                let rowDiv = $("<div data-idx="+i+">");
 	                rowDiv.addClass("row");
 
 	                rowDiv.append(name);
@@ -292,14 +294,46 @@ style>body {
 	            	
 	            	$("#upload").append(rowDiv);
 	            	$("#upload").append(br);
+	            	
+	            	fileList.push(files[i]);
 	            }
-	            
+	            console.log("파일리스트 값: "+fileList);
 	        });
 	     
 		//출력한 파일 삭제
-	     document.getElementById
-         $("#upload").on("click", ".delfile", function(){ //동적바인딩
-             $(this).closest(".row").remove();
+         $(document).on("click", ".delfile", function(){ //동적바인딩
+        	 fileList[$(this).closest(".row").attr("data-idx")]=null;
+        	 $(this).closest(".row").remove();
+        	 console.log("파일리스트 지우고 나온 값: "+fileList);
+         })
+         
+         $("#submit").on("click", function(){
+        	 
+        	 var formData = new FormData();
+	         for (var i = 0; i < fileList.length; i++) {
+	         	formData.append("file",fileList[i]);
+	         }
+	         if($("#contents").val() != null){
+		         $.ajax({
+		        	 url:"/sns/write",
+		        	 method:"get",
+		        	 data:{"text":$("#contents").val()}
+		         })
+	         }
+        	 
+        	 $.ajax({
+        		  url:"/sns/file",
+        		  enctype: 'multipart/form-data',
+                  method: 'post',
+                  data: formData,
+                  dataType: 'TEXT',
+                  processData: false,
+                  contentType: false
+				}).done(function(){
+					
+					
+				})
+        		   
          })
 		
 		//댓글버튼눌렀을때
@@ -496,6 +530,8 @@ style>body {
 			location.href = "/chat/waitingroom";
 		})
 		
+		
+		
 	})
 </script>
 </head>
@@ -592,7 +628,6 @@ style>body {
 			<div class="col-md-3"></div>
 			<div class="col-md-6 gedf-main">
 				<!--- 글쓰기-->
-				<form action="/sns/write" method=post enctype="multipart/form-data">
 					<div class="card gedf-card">
 						<div class="card-header">
 							<ul class="nav nav-tabs card-header-tabs" id="myTab"
@@ -629,7 +664,7 @@ style>body {
 							</div>
 							<div class="btn-toolbar justify-content-between">
 								<div class="btn-group">
-									<button type="submit" class="btn btn-success">작성하기</button>
+									<button type="button" id=submit class="btn btn-success">작성하기</button>
 								</div>
 								<!-- 카테고리 -->
 								<div class="btn-group">
@@ -642,7 +677,6 @@ style>body {
 							</div>
 						</div>
 					</div>
-				</form>
 
 				<!--- 게시글-->
 				<div id=snsbody>
