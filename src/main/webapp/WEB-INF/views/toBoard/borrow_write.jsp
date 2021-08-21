@@ -252,10 +252,21 @@
 							
 						preview_files.push(f);
 						let reader = new FileReader();
-							
+						
+						let parent = $("#preview");
+						let child = parent.lastChild;
+						let last = chile.lastChild.val();
+						console.log(last);
+						
 						reader.onload = function (e) {
-						let html = "<a href=\"javascript:void(0);\" onclick=\"deleteImage("+ index+")\" id=\""+ index+"_img_id""\"> <img src=\"" + e.target.result + "\" data-file='" + f.name + "' class='selProductFile' title='Click to remove'></a>";
 						index++;
+						let html = "<a href=\"javascript:void(0);\" onclick=\"deleteImage("
+									+ index
+									+ ")\" id=\"img_id_"
+									+ index
+									+ "\"> <img src=\"" + e.target.result + "\" data-file='" + f.name + "' class='selProductFile' title='Click to remove'>"
+									+ "<input type='hidden' value='"+index+"'"\"></a>";
+						
 						$("#preview").append(html);
 						
 						
