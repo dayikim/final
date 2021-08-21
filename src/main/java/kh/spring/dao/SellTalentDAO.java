@@ -175,7 +175,7 @@ public class SellTalentDAO {
 			}
 			//판매자 찾기
 			public String getWriter(int seq) {
-				return mybatis.selectOne("Selltalent.getwriter");
+				return mybatis.selectOne("Selltalent.getWriter",seq);
 			}
 
 

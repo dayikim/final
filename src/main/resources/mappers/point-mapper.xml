@@ -19,13 +19,22 @@ insert into pointaccount values(pointaccount_seq.nextval,#{id},#{pointamount},#{
 select nvl(sum(pointamount),0) from pointAccount where id=#{value}
 </select>
 
+<!-- 해당 게시글 결제여부 확인 -->
+<select id="isPayment" resultType="int">
+select nvl(count(*),0) from payment where parentseq=${value}
+</select>
 
 <!-- 구매자 상품 결제하기 -->
 <insert id="payment">
-
+insert into payment values(payment_seq.nextval,#{seller},#{buyer},#{item},#{parentseq},#{price},sysdate)
 </insert>
 
+<!--포인트 차감  -->
+<insert id="minus">
+insert into pointaccount values(pointaccount_seq.nextval,#{id},#{pointamount},#{usepoint},#{earnpoint},#{reason},sysdate)
+</insert>
 
+<!-- 금액 확인 -->
 <select id="amount" resultType="int">
 select nvl(sum(amount),0) from charing where id=#{value}
 </select>

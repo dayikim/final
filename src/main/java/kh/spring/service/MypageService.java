@@ -152,6 +152,13 @@ public class MypageService {
 
 		return bdao.bookingFail(param);
 	}
+	//승인 여부 확인
+	public String isApproval(String id, int parentseq) {
+		 Map<Object, Object> param = new HashMap<>();
+		   param.put("id", id);
+		   param.put("parentseq", parentseq);
+		return adao.isApproval(param);
+	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////// 내 게시물 보기
 

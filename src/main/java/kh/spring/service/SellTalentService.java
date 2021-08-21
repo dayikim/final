@@ -47,7 +47,7 @@ public class SellTalentService {
 	public SellTalentDTO detailView(int seq) {
 		return stdao.detailView(seq);
 	}
-	
+	//예약하기
 	public int booking(String seller, String booker, String bookable, int parentseq) {
 	      Map<Object,Object>param = new HashMap();
 	      param.put("seller", seller);
@@ -56,6 +56,7 @@ public class SellTalentService {
 	      param.put("parentseq", parentseq);
 	      return bdao.booking(param);
 	}
+	//예약 여부 체크
 	   public int checkBooking(String booker, int parentseq) {
 	      Map<Object,Object>param = new HashMap();
 	      param.put("booker",booker);
@@ -129,9 +130,7 @@ public class SellTalentService {
 	public int delete(int seq) {
 		return stdao.delete(seq);
 	}
-	public int booking(BookingDTO dto) {
-		return bdao.booking(dto);
-}
+
 	public String getId() {
 		return stdao.getId();
 	}
@@ -139,5 +138,7 @@ public class SellTalentService {
 	public String getWriter(int seq) {
 		return stdao.getWriter(seq);
 	}
+	
+
 	
 }

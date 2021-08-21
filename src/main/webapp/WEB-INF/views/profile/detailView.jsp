@@ -272,15 +272,43 @@ $(function(){
 					}
 				});
 
-	$("#booking").on("click",function(){ //예약 하기 
-		let check = confirm("정말 예약하시겠습니까?");
-		if (check) {
-			alert("마이페이지에서 예약내역을 확인하세요.");
-			$("#bookingform").submit();
-		}else{
-			return;
-		}
-	})	
+		 $("#booking").on("click", function () { //예약 하기 
+             let check = confirm("정말 예약하시겠습니까?");
+             let seller= $("#seller").val();
+             let booker =$("#booker").val();
+             let bookable=$("#bookable").val();
+             let parentseq=$("#parentseq").val();
+             if (check) {
+                 $.ajax({
+                     url: "/tBoard/checkBooking",
+                     data: {parentseq: parentseq,booker: booker}
+                 }).done(function (resp) {
+                    console.log(resp);
+                     if (resp == 0) {
+                         $.ajax({
+                             url: "/tBoard/booking",                              
+                         data: {seller: seller, parentseq: parentseq, bookable: bookable, booker: booker }
+                         }).done(function (resp) {
+                            console.log(resp);
+                             if (resp == 1) {
+                                 alert("예약 완료!! \n마이페이지에서 예약내역을 확인하세요.")
+                                 location.href = "${pageContext.request.contextPath}/my/mypageProc"
+                             }else{
+                                alert("예약 실패!")
+                             }                                            
+                         })
+                     } else {
+                        alert("이미 예약되었습니다.\n마이페이지에서 예약내역을 확인하세요.")
+                         location.href = "${pageContext.request.contextPath}/my/mypageProc"
+                return;                                
+                         }
+                 })
+             } else {
+                 alert("예약 취소!")
+                 return;
+             }
+
+         })
 	
 })
 </script>
@@ -438,17 +466,18 @@ $(function(){
 
 					</div>
 					<span id="region_name">${board.address} </span>
-					<div class=" btn_wrap text-right">
-					
-					<form action="/tBoard/booking" id="bookingform">
-					<input type="hidden" name="seller" value="${board.writer}">
-					<input type="hidden" name="bookable" value="y">
-					<input type="hidden" name="booker" value="${loginID}">
-					<input type="hidden" name="parentseq" value="${board.seq}">
-						<button type="button" class="btn btn-secondary" id="booking">
-							예약하기</button>
-					</form>
-					</div>
+					<c:choose>
+                                <c:when test="${loginID != board.writer}">
+                                    <div class=" btn_wrap text-right">
+                                            <input type="hidden" name="seller" value="${board.writer}" id="seller">
+                                            <input type="hidden" name="bookable" value="y" id="bookable">
+                                            <input type="hidden" name="booker" value="${loginID}" id="booker">
+                                            <input type="hidden" name="parentseq" value="${board.seq}" id="parentseq">
+                                            <button type="button" class="btn btn-secondary" id="booking">
+                                                예약하기</button>
+                                    </div>
+                                </c:when>
+                            </c:choose>
 					<span class="align-baseline" id="price">${board.price} 상추</span>
 
 					<div id="profile-image">

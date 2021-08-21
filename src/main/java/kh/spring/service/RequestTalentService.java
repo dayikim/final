@@ -110,9 +110,7 @@ public class RequestTalentService {
 	public int delete(int seq) {
 		return rtdao.delete(seq);
 	}
-	public int booking(BookingDTO dto) {
-		return bdao.booking(dto);
-}
+
 	
 	
 }
