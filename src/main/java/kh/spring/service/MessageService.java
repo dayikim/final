@@ -151,15 +151,15 @@ public class MessageService {
 			}
 		}
 		
-		 Collections.sort(temp.get("2021-08-20"), new Comparator<DateSortable>() {
-	         @Override
-	         public int compare(DateSortable o1, DateSortable o2) {
-	            long v1 = o1.getDate();
-	            long v2 = o2.getDate();   
-	         
-	            return (int)(v1-v2);
-	         }
-	      });
+//		 Collections.sort(temp.get("2021-08-20"), new Comparator<DateSortable>() {
+//	         @Override
+//	         public int compare(DateSortable o1, DateSortable o2) {
+//	            long v1 = o1.getDate();
+//	            long v2 = o2.getDate();   
+//	         
+//	            return (int)(v1-v2);
+//	         }
+//	      });
 		
 		return temp;
 	}
