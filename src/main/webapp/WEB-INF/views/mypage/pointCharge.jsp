@@ -138,14 +138,14 @@
     	<div class="row list">
         	<div class="col-8">
             	<div class="date">
-                	${i.pointdate }
+                	${i.dealdate }
             	</div>
             	<div class="content">
                 	<b>포인트 충전</b>
             	</div>
         	</div>
         	<div class="col-4 pay">
-            	<b>${i.pointAmount}</b> 원
+            	<b>${i.pointamount}</b> 상추
         	</div>
     	</div>
     </c:forEach>

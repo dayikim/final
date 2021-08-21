@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kh.spring.dao.ApprovalDAO;
 import kh.spring.dao.BookingDAO;
 import kh.spring.dao.MypageDAO;
+import kh.spring.dao.PointAccountDAO;
 import kh.spring.dao.PointDAO;
 import kh.spring.dao.ProfileFilesDAO;
 import kh.spring.dao.SnsDAO;
@@ -31,7 +32,7 @@ public class MypageService {
 	@Autowired
 	private ProfileFilesDAO pdao; // 프로필
 	@Autowired
-	private PointDAO ppdao; // 포인트
+	private PointAccountDAO ppdao; // 포인트
 	@Autowired
 	private BookingDAO bdao; // 재능 예약 여부
 	@Autowired
@@ -85,14 +86,14 @@ public class MypageService {
 	}
 
 	// 포인트 충전 내역 출력
-//	public List<PointAccountDTO> pointChargeList(String sessionID) {
-//		return ppdao.pointChargeList(sessionID);
-//	}
+	public List<PointAccountDTO> pointChargeList(String sessionID) {
+		return ppdao.pointChargeList(sessionID);
+	}
 	
 	// 포인트 사용 내역 출력
-//	public List<PointAccountDTO> pointUseList(String sessionID) {
-//		return ppdao.pointUseList(sessionID);
-//	}
+	public List<PointAccountDTO> pointUseList(String sessionID) {
+		return ppdao.pointUseList(sessionID);
+	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////거래 요청 목록(판매자 입장)
 
