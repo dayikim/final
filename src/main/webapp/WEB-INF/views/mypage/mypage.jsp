@@ -317,7 +317,23 @@ img{
 		
 		// 회원탈퇴 버튼을 눌렀을 때
 		$("#memberOut").on("click",function(){
-			
+			var msg = confirm("정말로 탈퇴하시겠습니까?");
+			if(msg == true){
+				$.ajax({
+					url : "/my/memberOut",
+					type : "POST",
+					data : {"id":$("#session").val()}
+				}).done(function(resp){
+					if(resp == 1){
+						alert("회원탈퇴가 정상처리되었습니다.")
+						location.href = "/"
+					}else{
+						alert("탈퇴처리중 문제발생")
+					}
+				})
+			}else{
+				return false;
+			}
 		})
 	})
 </script>
@@ -725,6 +741,7 @@ img{
 
 	<!-- Template Javascript -->
 	<script src="/js/main.js"></script>
+	<input type=hidden id=session value=${loginID }>
 </body>
 
 </html>
