@@ -377,8 +377,8 @@ img {
 								</div>
 							</div>
 							<input type=hidden value=${i.writer } name=writer class="id"> <input
-								type=hidden value=${i.booker } name=booker > <input
-								type=hidden value=${i.parentseq } name=parent class="parentseq">
+								type=hidden value=${i.booker } name=booker > 
+								<input type=hidden value=${i.parentseq } name=parent class="parentseq">
 
 						</div>
 						<div class="col-4">

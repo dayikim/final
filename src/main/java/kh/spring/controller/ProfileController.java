@@ -162,105 +162,151 @@ public class ProfileController {
 
 
 	@RequestMapping("sellingViewByMe") //판매글 상세보기 (마이 프로필)
-	public String sellingViewByMe(int seq, Model model) throws Exception {
+	public String sellingViewByMe(int seq,String category,Model model) throws Exception {
 		System.out.println(seq);
-		String writer = (String) session.getAttribute("loginID");
+		String id = (String) session.getAttribute("loginID");
 
-		ProfileFilesDTO pfdto = MypageService.profileSelect(writer); // 프사 출력
+		ProfileFilesDTO pfdto = MypageService.profileSelect(id); // 프사 출력
 		model.addAttribute("profile",pfdto); //프로필
 
-		PersonDTO writerInfo = STService.memberInfoById(writer);//글 작성자 정보(이름,주소)
+		PersonDTO writerInfo = STService.memberInfoById(id);//글 작성자 정보(이름,주소)
 		model.addAttribute("writerInfo",writerInfo);
+		
+		//lend인지 selltalent인지 구분
+				System.out.println(seq +":" + id +":" + category);
+				int isitLendBoard =LService.isitLend(seq,id,category);
+				
+				if(isitLendBoard>0) {
+					
+					System.out.println("대여하기!!");
+					LendDTO detailview = LService.detailView(seq);
+					model.addAttribute("board",detailview);
+					
+					String sessionID = (String) session.getAttribute("loginID");
 
-		List<HashMap<Object, Object>> sellingView;
-		sellingView =PService.sellingView(seq,writer);//판매목록 상세보기
+					ProfileFilesDTO PFdto = MypageService.profileSelect(id); // 프사 출력
+					model.addAttribute("profile",PFdto); //프로필
 
-		if(seq<1001) {
-			String boardName="대여하기";
-			model.addAttribute("boardName",boardName);
-		}else {
-			String boardName="재능판매";
-			model.addAttribute("boardName",boardName);
-		}
-		model.addAttribute("board",sellingView);
+					PersonDTO WriterInfo = STService.memberInfoById(id);//글 작성자 정보(이름,주소)
+					model.addAttribute("writerInfo",WriterInfo);
 
-		////		List<TalentFilesDTO> fileList = F_Service.selectAll(seq); //첨부파일 목록 출력   
-		//        System.out.println("파일이 비어 있나요?? "+fileList.isEmpty());//파일이 있나요?
-		//        model.addAttribute("filelist", fileList);//파일리스트를 request애 담는다.
-		//		
-		return "/profile/detailView";
+					return "/toBoard/lend_view";
+				
+				}else {
+					System.out.println("재능 판매");
+					SellTalentDTO detailview =STService.detailView(seq);
+					model.addAttribute("board",detailview);
+					String sessionID = (String) session.getAttribute("loginID");
+					ProfileFilesDTO PFdto = MypageService.profileSelect(id); // 프사 출력
+					model.addAttribute("profile",PFdto); //프로필
+
+					PersonDTO WriterInfo = STService.memberInfoById(id);//글 작성자 정보(이름,주소)
+					model.addAttribute("writerInfo",WriterInfo);
+					
+					return "/talentBoard/view_selling";
+				}
+		
+		
+		
+//
+//		List<HashMap<Object, Object>> sellingView;
+//		sellingView =PService.sellingView(seq,writer);//판매목록 상세보기
+//
+//		if(seq<1001) {
+//			String boardName="대여하기";
+//			model.addAttribute("boardName",boardName);
+//		}else {
+//			String boardName="재능판매";
+//			model.addAttribute("boardName",boardName);
+//		}
+//		model.addAttribute("board",sellingView);
+//
+//		////		List<TalentFilesDTO> fileList = F_Service.selectAll(seq); //첨부파일 목록 출력   
+//		//        System.out.println("파일이 비어 있나요?? "+fileList.isEmpty());//파일이 있나요?
+//		//        model.addAttribute("filelist", fileList);//파일리스트를 request애 담는다.
+//		//		
+//		return "/profile/detailView";
 	}
 
 
 	@RequestMapping("sellingViewByUser") //판매글 상세보기 (유저 프로필)
-	public String sellingViewByUser(String writer, int seq, Model model) throws Exception {
+	public String sellingViewByUser(String id, int seq, String category, Model model) throws Exception {
 		System.out.println(seq);
-		String sessionID = (String) session.getAttribute("loginID");
+		
+		
+		//lend인지 selltalent인지 구분
+		System.out.println(seq +":" + id +":" + category);
+		int isitLendBoard =LService.isitLend(seq,id,category);
+		
+		if(isitLendBoard>0) {
+			
+			System.out.println("대여하기!!");
+			LendDTO detailview = LService.detailView(seq);
+			model.addAttribute("board",detailview);
+			
+			String sessionID = (String) session.getAttribute("loginID");
 
-		model.addAttribute("writer",writer);
+			ProfileFilesDTO pfdto = MypageService.profileSelect(id); // 프사 출력
+			model.addAttribute("profile",pfdto); //프로필
 
-		ProfileFilesDTO pfdto = MypageService.profileSelect(writer); // 프사 출력
-		model.addAttribute("profile",pfdto); //프로필
+			PersonDTO writerInfo = STService.memberInfoById(id);//글 작성자 정보(이름,주소)
+			model.addAttribute("writerInfo",writerInfo);
 
-		PersonDTO writerInfo = STService.memberInfoById(writer);//글 작성자 정보(이름,주소)
-		model.addAttribute("writerInfo",writerInfo);
-
-		List<HashMap<Object, Object>> sellingView;
-		sellingView =PService.sellingView(seq,writer);//판매목록 상세보기
-
-		if(seq<1001) {
-			String boardName="대여하기";
-			model.addAttribute("boardName",boardName);
+			return "/toBoard/lend_view";
+		
 		}else {
-			String boardName="재능판매";
-			model.addAttribute("boardName",boardName);
-		}
-		model.addAttribute("board",sellingView);
+			System.out.println("재능 판매");
+			SellTalentDTO detailview =STService.detailView(seq);
+			model.addAttribute("board",detailview);
+			String sessionID = (String) session.getAttribute("loginID");
+			ProfileFilesDTO pfdto = MypageService.profileSelect(id); // 프사 출력
+			model.addAttribute("profile",pfdto); //프로필
 
-		////		List<TalentFilesDTO> fileList = F_Service.selectAll(seq); //첨부파일 목록 출력   
-		//        System.out.println("파일이 비어 있나요?? "+fileList.isEmpty());//파일이 있나요?
-		//        model.addAttribute("filelist", fileList);//파일리스트를 request애 담는다.
-		//		
-		return "/profile/detailView";
+			PersonDTO writerInfo = STService.memberInfoById(id);//글 작성자 정보(이름,주소)
+			model.addAttribute("writerInfo",writerInfo);
+			
+			return "/talentBoard/view_selling";
+		}
+		
 	}
 
-	@RequestMapping("sellingDelete") //판매 게시글 삭제
-	public String sellingDelete(int seq) throws Exception {
-		int result = 0;
-
-		if(seq<1001) {
-			//			result =LService.delete(seq); lend테이블에서 삭제
-		}else {
-			result =STService.delete(seq);
-
-		}
-
-		if(result<0) {
-			return "redirect:/";
-
-		}
-		return "/AllBoardList/lendList?choice=Allchoice&search=&cpage=1";
-
-	}
-
-	@RequestMapping("sellingModify") //판매 게시글 수정
-	public String sellingModify(int seq) throws Exception {
-		int result = 0;
-
-		if(seq<1001) {
-			//			result =LService.delete(seq); lend테이블에서 삭제
-		}else {
-			//			result =STService.modify(seq);
-
-		}
-
-		if(result<0) {
-			return "redirect:/";
-
-		}
-		return "/AllBoardList/lendList?choice=Allchoice&search=&cpage=1";
-	}
-
+//	@RequestMapping("sellingDelete") //판매 게시글 삭제
+//	public String sellingDelete(int seq) throws Exception {
+//		int result = 0;
+//
+//		if(seq<1001) {
+//			//			result =LService.delete(seq); lend테이블에서 삭제
+//		}else {
+//			result =STService.delete(seq);
+//
+//		}
+//
+//		if(result<0) {
+//			return "redirect:/";
+//
+//		}
+//		return "/AllBoardList/lendList?choice=Allchoice&search=&cpage=1";
+//
+//	}
+//
+//	@RequestMapping("sellingModify") //판매 게시글 수정
+//	public String sellingModify(int seq) throws Exception {
+//		int result = 0;
+//
+//		if(seq<1001) {
+//			//			result =LService.delete(seq); lend테이블에서 삭제
+//		}else {
+//			//			result =STService.modify(seq);
+//
+//		}
+//
+//		if(result<0) {
+//			return "redirect:/";
+//
+//		}
+//		return "/AllBoardList/lendList?choice=Allchoice&search=&cpage=1";
+//	}
+//
 
 	@RequestMapping("review")//거래 후기 작성
 	public String Review(int seq,ReviewDTO dto, Model model) {
