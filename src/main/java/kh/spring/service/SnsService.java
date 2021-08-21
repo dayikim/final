@@ -34,6 +34,10 @@ public class SnsService {
 		return dao.page(param);
 	}
 	
+	public List<SnsDTO> initpage(String id){
+		return dao.initpage(id);
+	}
+	
 	public List<SnsDTO> selectAll(String id){
 		return dao.selectAll(id);
 	}
