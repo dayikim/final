@@ -1,7 +1,8 @@
 package kh.spring.controller;
 
 import java.text.SimpleDateFormat;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 import kh.spring.config.ChatRegx;
-
+import kh.spring.dao.ProfileFilesDAO;
+import kh.spring.dto.ChatRoomDto;
 import kh.spring.service.ChatService;
 import kh.spring.service.FileService;
 import kh.spring.service.LendService;
@@ -49,6 +51,9 @@ public class ChatController {
 	@Autowired
 	private MypageService myservice;
 	
+	@Autowired
+	private ProfileFilesDAO pffd;
+	
 	/*
 	 * @RequestMapping("") String home() { return "home";}
 	 */
@@ -61,17 +66,26 @@ public class ChatController {
 //		return "chat/chat";
 //		 }
 	@RequestMapping("waitingroom")
-	public String chat(Model md) {
+	public String chat(Model md) throws Exception {
 		md.addAttribute("list", cs.getChatRoomlist((String)session.getAttribute("loginID")));
 		md.addAttribute("unread_count", ms);
 		md.addAttribute("waiting", "true");
+		List<String> li = new ArrayList<String>();
+		for(ChatRoomDto crd:  cs.getChatRoomlist((String)session.getAttribute("loginID"))) {
+				  
+			String tobinaury = pffd.profileSelect(cs.findFriendid(crd.getRoomid(), (String)session.getAttribute("loginID"))) != null ?
+					cs.toBinary(session ,pffd.profileSelect(cs.findFriendid(crd.getRoomid(), (String)session.getAttribute("loginID"))).getSysName()) :
+						null;
+			li.add(tobinaury);
+		}
+		md.addAttribute("profile", li);
 		return "chat/chatingRoom";
 	}
 	
 	@RequestMapping("createRoom")
-	public String createRoom(int boardSeq) {
+	public String createRoom(String board_seq, String board_category) {
 		String roomid = cs.roomid();
-		cs.createRoomMy(roomid,ls.detailView(boardSeq),session);
+		cs.createRoomMy(roomid,ls.detailView(Integer.parseInt(board_seq)),session ,Integer.parseInt(board_seq) , board_category);
 		session.setAttribute("roomid", roomid);
 		session.setAttribute("createRoom",true);
 		return "redirect:waitingroom";

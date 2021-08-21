@@ -256,8 +256,8 @@
 			}
 		})
 		
-		$("#chat").on("click",function(){
-			location.href = "/chat";
+		$("#chatting").on("click",function(){
+			location.href = "/chat/createRoom?board_seq="+$("#seq").val()+"&board_category=borrow";
 		})
 	})
 	
@@ -364,6 +364,7 @@
         <!-- Nav Bar End -->
      <section id="body">
         <div class="container">
+         <input type ="hidden"  id =seq value="${board.seq}" >
         <c:choose>
                 <c:when test="${loginID == board.writer}">
             <div class="btn_box btn_wrap text-right ">
@@ -450,7 +451,7 @@
                     </div>
 
                     <div class="btn_wrap text-right">
-                        <button type="button" class="btn btn-outline-info btn btn-lg" id="chat"><i class="far fa-comment-dots"></i>
+                        <button type="button" class="btn btn-outline-info btn btn-lg" id="chatting"><i class="far fa-comment-dots"></i>
                             1:1 채팅</button>
                             <a href="/lendBoard/toLend"><button type="button" class="btn btn-outline-info btn btn-lg" id="request">
                                 대여 하기</button></a>

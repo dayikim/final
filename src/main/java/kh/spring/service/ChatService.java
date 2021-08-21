@@ -23,14 +23,21 @@ import com.google.gson.JsonObject;
 
 import kh.spring.API.NaverApi;
 import kh.spring.config.ChatRegx;
+import kh.spring.dao.BorrowDAO;
 import kh.spring.dao.ChatRoomDao;
+import kh.spring.dao.LendDAO;
 import kh.spring.dao.MessageDao;
 import kh.spring.dao.ProfileFilesDAO;
+import kh.spring.dao.RequestTalentDAO;
+import kh.spring.dao.SellTalentDAO;
+import kh.spring.dto.BorrowDTO;
 import kh.spring.dto.ChatFileDTO;
 import kh.spring.dto.ChatRepositoryDTO;
 import kh.spring.dto.ChatRoomDto;
 import kh.spring.dto.LendDTO;
 import kh.spring.dto.MessageDTO;
+import kh.spring.dto.RequestTalentDTO;
+import kh.spring.dto.SellTalentDTO;
 
 
 @Service
@@ -41,6 +48,18 @@ public class ChatService  implements InitializingBean {
 	
 	@Autowired
 	ChatRoomDao crd;
+	
+	@Autowired
+	LendDAO ldao;
+	
+	@Autowired
+	BorrowDAO borrwdao;
+	
+	@Autowired
+	SellTalentDAO std;
+	
+	@Autowired
+	RequestTalentDAO rtd;
 	
 	@Autowired
 	NaverApi na;
@@ -65,9 +84,34 @@ public class ChatService  implements InitializingBean {
 	
 
 	//룸DB에 자신의 룸을 만든다. (1:1 대화)
-	public void createRoomMy(String roomid,LendDTO ld,HttpSession session) {
-		crd.createRoom(new ChatRoomDto(roomid,ld.getWriter(), ld.getTitle()));
-		crd.createRoom(new ChatRoomDto(roomid,(String)session.getAttribute("loginID"), ld.getTitle()));
+	public void createRoomMy(String roomid,Object ld,HttpSession session,int board_seq,String board_category) {
+		
+		String writer = "";
+		String title ="";
+		switch (board_category) {
+			case "lend":  //대여 하기 카테고리별 룸 생성.
+				LendDTO lend_temp = ldao.detailview(board_seq);
+				writer = lend_temp.getWriter();
+				title = lend_temp.getTitle();
+				break;
+			case "borrow": //대여 요청 카테고리별 룸 생성.
+				BorrowDTO borrow_temp = borrwdao.detailview(board_seq);
+				writer = borrow_temp.getWriter();
+				title = borrow_temp.getTitle();
+				break;
+			case "talent_selling" ://재능 기부 카테고리별 룸 생성.
+				SellTalentDTO selltal_temp = std.detailView(board_seq);
+				writer= selltal_temp.getWriter();
+				title = selltal_temp.getTitle();
+				break;
+			case "talent_request" : //재능 요청 카테고리별 룸 생성.
+				RequestTalentDTO reque_temp = rtd.detailView(board_seq);
+				writer = reque_temp.getWriter();
+				title = reque_temp.getTitle();
+				break;
+		}
+		crd.createRoom(new ChatRoomDto(roomid,writer,title,board_seq, board_category));
+		crd.createRoom(new ChatRoomDto(roomid,(String)session.getAttribute("loginID"), title,board_seq, board_category));
 	}
 	//세션에 해당하는 룸리스트만 따로 가져온다.
 	public List<ChatRoomDto> getChatRoomlist(String session){
