@@ -177,7 +177,7 @@ img {
 	cursor: pointer;
 }
 
-#approval,#dealComplete {
+#approval, #dealComplete {
 	/* 거래승인 */
 	border-radius: 5px;
 	width: 45%;
@@ -204,6 +204,31 @@ img {
 		$("#chat").on("click",function(){
 			location.href = "/chat";
 		})
+		
+		
+		// 거래 승인 목록 가져오기
+		$.ajax({
+			url:"/my/requestRentalTalentProc",
+			data:{booker:$("#booker").val(),parent:$("#parent").val()}
+		
+		}).done(function(resp){
+			console.log(resp) // 해당 시퀀스가 나옴
+			if(resp!=null){
+				// 거래 완료 버튼으로 바꾸기
+				$("#approval").attr("id","dealComplete")
+				$("#approval").attr("class","dComplete")
+				$("#approval").attr("disabled","false")
+				$("#approval").text("거래 완료(대여중)")
+				
+				
+				// 거래 취소 버튼으로 바꾸기
+				$("#cancel").attr("id","dealCancel")
+				$("#cancel").attr("class","dCancel")
+				$("#cancel").text("거래 취소")
+			}
+			
+		})
+		
 		
 		// 요청 거절 및 거래 취소 버튼을 눌렀을 경우
 		$(".cnum-btn1").on("click", function() {
@@ -243,15 +268,15 @@ img {
 					if(resp=="1"){
 						alert("거래 승인이 완료되었습니다")
 						// 거래 완료 버튼으로 바꾸기
-						$(button).text("거래 완료(대여중)")
 						$(button).attr("id","dealComplete")
 						$(button).attr("class","dComplete")
 						$(button).attr("disabled","false")
+						$(button).text("거래 완료(대여중)")
 						
 						// 거래 취소 버튼으로 바꾸기
-						$(button).siblings("#cancel").text("거래 취소")
 						$(button).siblings("#cancel").attr("id","dealCancel")
 						$(button).siblings("#cancel").attr("class","dCancel")
+						$(button).siblings("#cancel").text("거래 취소")
 					}else{
 						alert("에러 발생, 다시 시도해주세요.")
 						return false;
@@ -379,65 +404,55 @@ img {
 
 
 		<c:forEach var="i" items="${requestRental }">
-			
-				<div class="requestList">
-					<div class="row high">
-						<div class="col-8 information">
-							<div class="title">
-								<h4>
-									<b>${i.title }</b>
-								</h4>
-							</div>
 
-							<div class=content>
-								<div class="row">
-									<div class="col-4 left">
-										<b>대여자</b>
-									</div>
-									<div class="col-8 right">${i.writer}</div>
-								</div>
-								<div class="row">
-									<div class="col-4 left">
-										<b>구매요청자</b>
-									</div>
-									<div class="col-8 right">${i.booker }</div>
-								</div>
-								<div class="row">
-									<div class="col-4 left">
-										<b>제시 가격</b>
-									</div>
-									<div class="col-8 right">${i.price }원</div>
-								</div>
-							</div>
-							<input type=hidden value=${i.writer } id=writer name=writer>
-							<input type=hidden value=${i.booker } id=booker name=booker>
-							<input type=hidden value=${i.parentseq } id=parent name=parent>
-
+			<div class="requestList">
+				<div class="row high">
+					<div class="col-8 information">
+						<div class="title">
+							<h4>
+								<b>${i.title }</b>
+							</h4>
 						</div>
-						<div class="col-4">
-							<div class="image">
-								<img src="">
+
+						<div class=content>
+							<div class="row">
+								<div class="col-4 left">
+									<b>대여자</b>
+								</div>
+								<div class="col-8 right">${i.writer}</div>
 							</div>
+							<div class="row">
+								<div class="col-4 left">
+									<b>구매요청자</b>
+								</div>
+								<div class="col-8 right">${i.booker }</div>
+							</div>
+							<div class="row">
+								<div class="col-4 left">
+									<b>제시 가격</b>
+								</div>
+								<div class="col-8 right">${i.price }원</div>
+							</div>
+						</div>
+						<input type=hidden value=${i.writer } id=writer name=writer>
+						<input type=hidden value=${i.booker } id=booker name=booker>
+						<input type=hidden value=${i.parentseq } id=parent name=parent>
+
+					</div>
+					<div class="col-4">
+						<div class="image">
+							<img src="">
 						</div>
 					</div>
-
-					<c:choose>
-						<c:when test="">
-							<div class="under">
-								<button type=button id=dealCancel class="dCancel">거래 취소</button>
-								<button type=button id=dealComplete class="dComplete" disabled="disabled">거래 완료(대여중)</button>
-							</div>
-						</c:when>
-						<c:otherwise>
-							<div class="under">
-								<button type=button id=cancel class="cnum-btn1">요청 거절</button>
-								<button type=button id=approval class="cnum-btn2">거래 승인</button>
-							</div>
-						</c:otherwise>
-					</c:choose>
-
 				</div>
-			
+
+				<div class="under">
+					<button type=button id=cancel class="cnum-btn1">요청 거절</button>
+					<button type=button id=approval class="cnum-btn2">거래 승인</button>
+				</div>
+
+			</div>
+
 		</c:forEach>
 
 	</div>

@@ -2,17 +2,19 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
+
 <mapper namespace="Approval">
 
 	<!-- 판매자가 거래 승인을 눌렀을 경우 -->
 	<insert id="dealSuccess">
-		insert into approval values(approval_seq.nextval,#{seller},#{buyer},#{approval},${parentseq},sysdate)
+		insert into approval
+		values(approval_seq.nextval,#{seller},#{buyer},#{approval},${parentseq},sysdate)
 	</insert>
-	
+
 	<!-- 거래 승인된 애들 출력 -->
 	<select id="dealSuccessSelect" resultType="int">
-		select count(*) from approval
+		select * from approval
+		where seller=#{id} and buyer=#{booker} and parentseq=${parent}
 	</select>
 
 </mapper>

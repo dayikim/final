@@ -41,7 +41,7 @@ public class MypageController {
 		PersonDTO dto = service.mypageList(sessionID); // 내 정보 출력
 		ProfileFilesDTO pdto = service.profileSelect(sessionID); // 내 프사 출력
 		int checkAmount =PointService.checkAmount(sessionID);
-//		int pointAmount =PointService.amount(sessionID);//잔고금액
+		//		int pointAmount =PointService.amount(sessionID);//잔고금액
 
 		session.setAttribute("myInfo", dto); // 내 정보
 		model.addAttribute("profile",pdto); // 내 프사
@@ -136,16 +136,23 @@ public class MypageController {
 
 	// 거래 요청 목록 - 재능
 	@RequestMapping("/requestRentalTalent")
-	public String requestRentalTalent(Model model, BookingDTO dto) {
+	public String requestRentalTalent(Model model) {
 		String sessionID = (String)session.getAttribute("loginID");
 		List<HashMap<String,Object>> list = service.requestRentalTalent(sessionID); // 예약리스트 꺼내기
-		
-//		int result = service.dealSuccessSelect(sessionID, booker, parentseq); // 거래 완료 버튼(booker와 parentseq의 값은 어디서 갖고오지?)
-		
 
-//		model.addAttribute("approval", result);  
 		model.addAttribute("requestRental", list);  // 들어온 예약 리스트
 		return "/mypage/requestRentalTalent";
+	}
+
+	// 거래 승인 버튼 출력하기 - 재능
+	@ResponseBody
+	@RequestMapping("/requestRentalTalentProc")
+	public String requestRentalTalentProc(String booker, String parent) {
+		System.out.println("대여자 : " + booker + " 부모 : " + parent);
+		String sessionID = (String)session.getAttribute("loginID");
+		int result = service.dealSuccessSelect(sessionID, booker, parent); // 거래 완료 버튼(booker와 parent의 값은 어디서 갖고오지?)
+
+		return String.valueOf(result);
 	}
 
 	// 요청 거절 버튼을 눌렀을 때 - 재능
