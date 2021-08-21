@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.google.gson.Gson;
 
@@ -108,32 +109,64 @@ public class SnsController {
 	
 	
 	@RequestMapping("/write")
-	public String write(SnsDTO dto, MultipartFile[] file) throws Exception{
-		String id = (String)session.getAttribute("loginID");
-		int seq = service.seq();
-		dto.setId(id);
-		String region = service.region(id);
-		dto.setRegion(region);
-		if(file[0].getSize() ==0) {		 //파일이 없을때
-			service.insert(seq ,dto);
-			 
-		}else {  //파일이 있을때
-			service.insert(seq ,dto); 	
-			String realPath = session.getServletContext().getRealPath("files");
-			File filesPath = new File(realPath);
-			
-			if(!filesPath.exists()) {
-				filesPath.mkdir();
-			}
-			for(MultipartFile tmp : file) {
-				String oriName = tmp.getOriginalFilename();
-				String sysName = UUID.randomUUID().toString().replaceAll("-", "")+ "_"+oriName;
-				fservice.insert(oriName, sysName, seq,id);
-				tmp.transferTo(new File(filesPath.getAbsolutePath()+"/"+sysName));
-			}
-		}			
+	@ResponseBody
+	public String write(String text) throws Exception{
+		System.out.println(text);
+//		String id = (String)session.getAttribute("loginID");
+//		int seq = service.seq();
+//		dto.setId(id);
+//		String region = service.region(id);
+//		dto.setRegion(region);
+//		if(file[0].getSize() ==0) {		 //파일이 없을때
+//			service.insert(seq ,dto);
+//			 
+//		}else {  //파일이 있을때
+//			service.insert(seq ,dto); 	
+//			String realPath = session.getServletContext().getRealPath("files");
+//			File filesPath = new File(realPath);
+//			
+//			if(!filesPath.exists()) {
+//				filesPath.mkdir();
+//			}
+//			for(MultipartFile tmp : file) {
+//				String oriName = tmp.getOriginalFilename();
+//				String sysName = UUID.randomUUID().toString().replaceAll("-", "")+ "_"+oriName;
+//				fservice.insert(oriName, sysName, seq,id);
+//				tmp.transferTo(new File(filesPath.getAbsolutePath()+"/"+sysName));
+//			}
+//		}			
 		return "redirect:/sns/main";
 	}
+	
+	@RequestMapping("/file")
+	@ResponseBody
+	public String upload(MultipartHttpServletRequest request) throws Exception{
+			List<MultipartFile> fileList = request.getFiles("file");
+			String realPath = session.getServletContext().getRealPath("files");
+			System.out.println("파일 컨트롤러안에 있는 업로드 매소드: "+realPath);
+			String istransfer = "false";
+			File filesPath = new File(realPath);
+			if(!filesPath.exists()) {filesPath.mkdir();}
+			for(MultipartFile tmp : fileList ) {
+				System.out.println(tmp.getOriginalFilename());
+			}
+//			for(MultipartFile tmp : fileList ) {
+//				seq= fs.getSeq();
+//				String oriName = tmp.getOriginalFilename();
+//				String sysName = UUID.randomUUID().toString().replaceAll("-", "")+"_"+oriName;
+//				System.out.println(oriName);
+//				System.out.println(sysName);
+//				
+//				if(fs.uploadfile(seq,oriName, sysName, (String)session.getAttribute("roomid"), (String)session.getAttribute("loginID"))>0) { 
+//					tmp.transferTo(new File(filesPath.getAbsolutePath()+"/"+sysName)); 
+//					istransfer ="true"; 
+//				}
+//					  
+//			}
+	
+	return "istransfer";
+
+}
 	
 	@RequestMapping("/delete")
 	public String delete(int seq) {
@@ -162,7 +195,7 @@ public class SnsController {
 		List<String> initProfile = new ArrayList<String>(); //프로필
 		for(SnsDTO sd : list) {
 			initProfile.add(pffd.profileSelect(sd.getId()) != null?
-			fservice.toProfileBinary(session, pffd.profileSelect(sd.getId()).getSysName()):null);
+							fservice.toProfileBinary(session, pffd.profileSelect(sd.getId()).getSysName()):null);
 		}
 		model.addAttribute("initprofile", initProfile);
 		
