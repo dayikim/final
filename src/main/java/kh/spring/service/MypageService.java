@@ -19,6 +19,7 @@ import kh.spring.dao.SnsDAO;
 import kh.spring.dao.TalentBoardDAO;
 import kh.spring.dto.ApprovalDTO;
 import kh.spring.dto.PersonDTO;
+import kh.spring.dto.PointAccountDTO;
 import kh.spring.dto.PointDTO;
 import kh.spring.dto.ProfileFilesDTO;
 
@@ -84,9 +85,14 @@ public class MypageService {
 	}
 
 	// 포인트 충전 내역 출력
-	public List<PointDTO> pointChargeList(String sessionID) {
-		return ppdao.pointChargeList(sessionID);
-	}
+//	public List<PointAccountDTO> pointChargeList(String sessionID) {
+//		return ppdao.pointChargeList(sessionID);
+//	}
+	
+	// 포인트 사용 내역 출력
+//	public List<PointAccountDTO> pointUseList(String sessionID) {
+//		return ppdao.pointUseList(sessionID);
+//	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////거래 요청 목록(판매자 입장)
 
