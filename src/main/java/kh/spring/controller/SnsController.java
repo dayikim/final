@@ -38,10 +38,10 @@ public class SnsController {
 	@Autowired
 	private SnsFilesService fservice;
 	@Autowired
-	private HttpSession session;
-	
+	private HttpSession session;	
 	@Autowired
 	private ProfileFilesDAO pffd;
+	private int seq = 0;
 	
 	@RequestMapping("/main")
 	public String main(Model model) throws Exception {
@@ -110,62 +110,36 @@ public class SnsController {
 	
 	@RequestMapping("/write")
 	@ResponseBody
-	public String write(String text) throws Exception{
-		System.out.println(text);
-//		String id = (String)session.getAttribute("loginID");
-//		int seq = service.seq();
-//		dto.setId(id);
-//		String region = service.region(id);
-//		dto.setRegion(region);
-//		if(file[0].getSize() ==0) {		 //파일이 없을때
-//			service.insert(seq ,dto);
-//			 
-//		}else {  //파일이 있을때
-//			service.insert(seq ,dto); 	
-//			String realPath = session.getServletContext().getRealPath("files");
-//			File filesPath = new File(realPath);
-//			
-//			if(!filesPath.exists()) {
-//				filesPath.mkdir();
-//			}
-//			for(MultipartFile tmp : file) {
-//				String oriName = tmp.getOriginalFilename();
-//				String sysName = UUID.randomUUID().toString().replaceAll("-", "")+ "_"+oriName;
-//				fservice.insert(oriName, sysName, seq,id);
-//				tmp.transferTo(new File(filesPath.getAbsolutePath()+"/"+sysName));
-//			}
-//		}			
+	public String write(String contents,String category) throws Exception{
+		String id = (String)session.getAttribute("loginID");
+		seq = service.seq();
+		String region = service.region(id);
+		service.insert(seq, id, contents, category, region);	
+		System.out.println(seq);
 		return "redirect:/sns/main";
 	}
 	
 	@RequestMapping("/file")
 	@ResponseBody
-	public String upload(MultipartHttpServletRequest request) throws Exception{
+	public String file(MultipartHttpServletRequest request) throws Exception{
+		System.out.println(seq);
 			List<MultipartFile> fileList = request.getFiles("file");
 			String realPath = session.getServletContext().getRealPath("files");
-			System.out.println("파일 컨트롤러안에 있는 업로드 매소드: "+realPath);
 			String istransfer = "false";
+			
 			File filesPath = new File(realPath);
 			if(!filesPath.exists()) {filesPath.mkdir();}
 			for(MultipartFile tmp : fileList ) {
 				System.out.println(tmp.getOriginalFilename());
 			}
-//			for(MultipartFile tmp : fileList ) {
-//				seq= fs.getSeq();
-//				String oriName = tmp.getOriginalFilename();
-//				String sysName = UUID.randomUUID().toString().replaceAll("-", "")+"_"+oriName;
-//				System.out.println(oriName);
-//				System.out.println(sysName);
-//				
-//				if(fs.uploadfile(seq,oriName, sysName, (String)session.getAttribute("roomid"), (String)session.getAttribute("loginID"))>0) { 
-//					tmp.transferTo(new File(filesPath.getAbsolutePath()+"/"+sysName)); 
-//					istransfer ="true"; 
-//				}
-//					  
-//			}
-	
+			for(MultipartFile tmp : fileList ) {
+				String oriName = tmp.getOriginalFilename();
+				String sysName = UUID.randomUUID().toString().replaceAll("-", "")+"_"+oriName;	
+				fservice.insert(oriName, sysName, seq, (String)session.getAttribute("loginID"));
+				tmp.transferTo(new File(filesPath.getAbsolutePath()+"/"+sysName)); 
+				istransfer = "ture"; 				  
+			}	
 	return "istransfer";
-
 }
 	
 	@RequestMapping("/delete")
@@ -209,30 +183,11 @@ public class SnsController {
 	}
 	
 	@RequestMapping("/modiProc")
-	public String modiProc(SnsDTO dto, MultipartFile[] file) throws Exception{
+	public String modiProc(String contents, String category, int seq1) throws Exception{
+		seq = seq1;
+		System.out.println(contents + category + seq);
 		String id = (String)session.getAttribute("loginID");
-		int seq = dto.getSeq();
-		int parent = dto.getSeq();
-		String contents = dto.getContents();
-
-		if(file[0].getSize() == 0) {
-			service.modify(dto);
-		}else {
-			service.modify(dto);
-			String realPath = session.getServletContext().getRealPath("files");
-			File filesPath = new File(realPath);
-			
-			if(!filesPath.exists()) {
-				filesPath.mkdir();
-			}
-			for(MultipartFile tmp : file) {
-				String oriName = tmp.getOriginalFilename();
-				String sysName = UUID.randomUUID().toString().replaceAll("-", "")+ "_"+oriName;
-				fservice.insert(oriName, sysName, parent,id);
-				tmp.transferTo(new File(filesPath.getAbsolutePath()+"/"+sysName));
-			}
-		}
-		
+		service.modify(contents, category, seq, id);
 		
 		return "redirect:/sns/main";
 	}
