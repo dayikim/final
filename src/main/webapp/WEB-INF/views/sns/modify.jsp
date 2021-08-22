@@ -37,7 +37,7 @@ style>body {
 }
 
 .gedf-wrapper {
-	margin-top: 0.97rem;
+	margin-top: 7rem;
 }
 
 @media ( min-width : 992px) {
@@ -393,13 +393,15 @@ style>body {
 									<c:choose>
 										<c:when test="${initprofile.get(status.index) != null}">
 											<img class="rounded-circle"
-											src="data:image/png;base64,${initprofile.get(status.index) }" 
-											alt="" style="width:50px; height: 50px;">
+														src="data:image/png;base64,${initprofile.get(status.index) }"
+														alt="" style="width: 50px; height: 50px;">
 										</c:when>
+										<c:otherwise>
+											<img class=rounded-circle
+														style="width: 50px; height: 50px;"
+														src="/imgs/nomalProfile.jpg">
+										</c:otherwise>
 									</c:choose>
-										<img class=rounded-circle
-											style="width: 50px; height: 50px;"
-											src="/imgs/nomalProfile.jpg">
 									</div>
 									<div class="ml-2">
 										<div class="h5 m-0">
