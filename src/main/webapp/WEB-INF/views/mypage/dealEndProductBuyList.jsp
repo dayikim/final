@@ -173,11 +173,20 @@ img {
 	color: orange;
 }
 
+/* 모달창 */
+
+.modal-title{
+margin:auto;
+font-size:24px;
+font-weight: 800;
+}
+
 .review_title {
 	display: block;
 	margin: 0;
 	font-size:20px;
 	font-weight: 800;
+	color:black;
 	text-align: start;
 }
 
@@ -234,7 +243,7 @@ form {
     		
     		// 후기
         	$(".send").on("click", function () {
-                let message = ("#message-text");
+                let message = $("#message-text");
                 if (message.val() == "") {
                     alert("메세지를 입력해주세요.");
                     message.focus();

@@ -10,11 +10,10 @@ public class ReviewDTO {
 	private String contents;
 	private String reviewable;
 	private Date Regdate;
+	private String boardtype;
 
-	public ReviewDTO() {
-	}
 	public ReviewDTO(int seq, String reviewer, String recipient, int parentseq, String contents, String reviewable,
-			Date regdate) {
+			Date regdate, String boardtype) {
 		super();
 		this.seq = seq;
 		this.reviewer = reviewer;
@@ -23,7 +22,11 @@ public class ReviewDTO {
 		this.contents = contents;
 		this.reviewable = reviewable;
 		Regdate = regdate;
+		this.boardtype = boardtype;
 	}
+	public ReviewDTO() {
+	}
+
 	public int getSeq() {
 		return seq;
 	}
@@ -76,4 +79,12 @@ public class ReviewDTO {
 	public void setRegdate(Date regdate) {
 		Regdate = regdate;
 	}
+	
+	public String getBoardtype() {
+		return boardtype;
+	}
+	public void setBoardtype(String boardtype) {
+		this.boardtype = boardtype;
+	}
+	
 }
