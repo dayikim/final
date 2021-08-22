@@ -13,12 +13,11 @@ public class PersonDTO {
 	private String postcode;
 	private String address1;
 	private String address2;
-	private int chargingMoney;
 	private Date regDate;
 	private int loginFailCount;
 	
 	public PersonDTO() {}
-	public PersonDTO(int seq, String id, String pw, String name, String phone, String email,String birth, String postcode, String address1, String address2, int chargingMoney,Date regDate,int loginFailCount) {
+	public PersonDTO(int seq, String id, String pw, String name, String phone, String email,String birth, String postcode, String address1, String address2, Date regDate,int loginFailCount) {
 		this.seq = seq;
 		this.id = id;
 		this.pw = pw;
@@ -29,7 +28,6 @@ public class PersonDTO {
 		this.postcode = postcode;
 		this.address1 = address1;
 		this.address2 = address2;
-		this.chargingMoney = chargingMoney;
 		this.regDate = regDate;
 		this.loginFailCount = loginFailCount;
 	}
@@ -100,12 +98,6 @@ public class PersonDTO {
 	}
 	public void setAddress2(String address2) {
 		this.address2 = address2;
-	}
-	public int getChargingMoney() {
-		return chargingMoney;
-	}
-	public void setChargingMoney(int chargingMoney) {
-		this.chargingMoney = chargingMoney;
 	}
 	public Date getRegDate() {
 		return regDate;

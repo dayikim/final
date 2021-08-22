@@ -44,4 +44,5 @@ public class ProfileDAO {
 		return mybatis.selectList("Profile.sellingView",param);
 
 	}
+	
 }

@@ -34,17 +34,17 @@ public class MypageController {
 	@Autowired
 	private MypageService service; // 마이페이지 서비스
 	@Autowired
-	private PersonService pservice;
+	private PersonService pservice; // 회원 서비스
 	@Autowired
 	private  PointService PointService; // 포인트 서비스
 	@Autowired
 	private SnsService sservice; // sns 서비스
 	@Autowired
-	private SnsCommentService scservice;
+	private SnsCommentService scservice; // sns댓글 서비스
 	@Autowired
-	private SnsFilesService fservice;
+	private SnsFilesService fservice; // sns파일 서비스
 	@Autowired
-	private ProfileFilesDAO pffd;
+	private ProfileFilesDAO pffd; // 프로필 서비스
 	@Autowired
 	private HttpSession session; // 세션
 
@@ -293,13 +293,18 @@ public class MypageController {
 	// 나의 커뮤니티 목록 출력(미완)
 	@RequestMapping(value="/selectMySns", produces="text/html;charset=utf8")
 	public String selectMySns(Model model) throws Exception{
-		String id= (String)session.getAttribute("loginID"); //글 목록
+		String id= (String)session.getAttribute("loginID");
 		
-		List<SnsDTO>list = sservice.initpage(id); //SNS에서 초기에 로딩되는 페이지 (최신 글 순 5개가 출력됨)
+		PersonDTO dto = service.mypageList(id); // 내 정보 출력
+		session.setAttribute("myInfo", dto); // 내 정보
+		
+		ProfileFilesDTO pdto = service.profileSelect(id); // 내 프사 출력
+		model.addAttribute("profile",pdto); // 내 프사
+		
+		List<SnsDTO>list = sservice.mySelectAll(id); // 내 sns만 출력
 		model.addAttribute("list", list);
-		model.addAttribute("snslength",sservice.selectAll(id).size());
 		
-		List<String> initProfile = new ArrayList<String>();
+		List<String> initProfile = new ArrayList<String>(); // 내 프로필사진 출력
 		for(SnsDTO sd : list) {
 			initProfile.add(pffd.profileSelect(sd.getId()) != null?
 							fservice.toProfileBinary(session, pffd.profileSelect(sd.getId()).getSysName()):

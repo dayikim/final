@@ -2,12 +2,12 @@ package kh.spring.service;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -136,6 +136,7 @@ public class MessageService {
 				temp.get(sd.format(message.getReg_date())).add(message);
 			}else {
 				List<DateSortable> li = new ArrayList<DateSortable>();
+				li.add(message);
 				temp.put(sd.format(message.getReg_date()), li);
 			}
 		}
@@ -147,20 +148,26 @@ public class MessageService {
 			}else {
 				List<DateSortable> li = new ArrayList<DateSortable>();
 				file.setSysName(toBinary(session,file.getSysName()));
+				li.add(file);
 				temp.put(sd.format(file.getReg_date()), li);
 			}
 		}
 		
-//		 Collections.sort(temp.get("2021-08-20"), new Comparator<DateSortable>() {
-//	         @Override
-//	         public int compare(DateSortable o1, DateSortable o2) {
-//	            long v1 = o1.getDate();
-//	            long v2 = o2.getDate();   
-//	         
-//	            return (int)(v1-v2);
-//	         }
-//	      });
-		
+		Iterator<String> keys = temp.keySet().iterator();
+		while(keys.hasNext()) {
+			String temp_key = keys.next();
+			if(temp.get(temp_key) != null){
+				Collections.sort(temp.get(temp_key), new Comparator<DateSortable>() {
+			         @Override
+			         public int compare(DateSortable o1, DateSortable o2) {
+			            long v1 = o1.getDate();
+			            long v2 = o2.getDate();   
+			         
+			            return (int)(v1-v2);
+			         }
+			      });
+			}
+		}
 		return temp;
 	}
 	

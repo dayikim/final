@@ -15,10 +15,12 @@ import java.util.UUID;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import kh.spring.API.NaverApi;
@@ -113,14 +115,35 @@ public class ChatService  implements InitializingBean {
 		crd.createRoom(new ChatRoomDto(roomid,writer,title,board_seq, board_category));
 		crd.createRoom(new ChatRoomDto(roomid,(String)session.getAttribute("loginID"), title,board_seq, board_category));
 	}
+	
+	public Object getboardInfo(String roomid,String id) {
+		
+		Map<String, String> temp = new HashMap<String, String>();
+		temp.put("roomid", roomid);
+		temp.put("id", id);
+		ChatRoomDto room_temp = crd.FindByRoominfo(temp);
+		switch (room_temp.getBoard_category()) {
+		case "lend": 
+			return ldao.detailview(room_temp.getBoard_seq());
+		case "borrow": 
+			return borrwdao.detailview(room_temp.getBoard_seq());
+		case "talent_selling": 
+			return std.detailView(room_temp.getBoard_seq());
+		case "talent_request": 
+			return rtd.detailView(room_temp.getBoard_seq());
+		default: return null;
+		}
+	}
+	
+	
 	//세션에 해당하는 룸리스트만 따로 가져온다.
 	public List<ChatRoomDto> getChatRoomlist(String session){
 		return crd.getChatRoomlist(session);
 	}
 	//룸 아이디에 맞는 룸을 가져온다.
-	public ChatRoomDto FindById(String roomid){
-		return crd.FindById(roomid);
-	}
+//	public ChatRoomDto FindById(String roomid){
+//		return crd.FindById(roomid);
+//	}
 	//룸에 접속한다.
 	synchronized public void joinroom(String roomid ,Session session) {
 			rs.get(roomid).add(session);
@@ -232,6 +255,33 @@ public class ChatService  implements InitializingBean {
 		temp.put("roomid", roomid);
 		temp.put("id",id);
 		return crd.findFriendId(temp);
+	}
+	
+	public ChatRoomDto FindByRoominfo(String roomid, String id) {
+		
+		Map<String,String> temp = new HashMap<String, String>();
+		temp.put("roomid", roomid);
+		temp.put("id",id);
+		return crd.FindByRoominfo(temp);
+	}
+	
+	public ChatRoomDto FindByFreindRoominfo(String roomid, String id) {
+		
+		Map<String,String> temp = new HashMap<String, String>();
+		temp.put("roomid", roomid);
+		temp.put("id",id);
+		return crd.FindByFreindRoominfo(temp);
+	}
+	
+	public String toGson(Object src) {
+		Gson gs = new Gson();
+		JsonObject json = new JsonObject();
+		json.addProperty("createroom", gs.toJson(src));
+		return json.toString();
+	}
+	
+	public List<ChatRoomDto> getfreindList(String id){
+		return crd.friendList(id);
 	}
 	
 }

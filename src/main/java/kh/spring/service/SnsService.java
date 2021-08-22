@@ -122,4 +122,9 @@ public class SnsService {
 		return dao.existlike(id);
 	}
 	
+	// 내 sns 출력
+	public List<SnsDTO> mySelectAll(String id){
+		return dao.mySelectAll(id);
+	}
+	
 }

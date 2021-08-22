@@ -1,5 +1,6 @@
 package kh.spring.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -28,13 +29,13 @@ public class PointAccountDAO {
 	}
 	
 	// 포인트 충전 내역 리스트 출력
-	public List<PointAccountDTO> pointChargeList(String sessionID) {
-		return mybatis.selectList("Point.pointChargeList", sessionID);
+	public List<PointAccountDTO> pointChargeList(HashMap<String,String> param) {
+		return mybatis.selectList("Point.pointChargeList", param);
 	}
 	
 	// 포인트 사용 내역 리스트 출력
-	public List<PointAccountDTO> pointUseList(String sessionID) {
-		return mybatis.selectList("Point.pointUseList", sessionID);
+	public List<PointAccountDTO> pointUseList(HashMap<String,String> param) {
+		return mybatis.selectList("Point.pointUseList", param);
 	}
 
 	

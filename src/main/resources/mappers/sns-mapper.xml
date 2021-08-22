@@ -79,4 +79,9 @@
 		select * from (select row_number() over(order by seq desc) rnum,seq,id,contents,category,region,sysdate,love from snsBoard where region=(select SUBSTR(address1,1,2) from person where id =#{value}))where rnum between 1 and 5
 	</select>
 	
+	<!-- 내 sns 출력 -->
+	<select id="mySelectAll" resultType="kh.spring.dto.SnsDTO">
+		select * from snsBoard where id=#{value}
+	</select>
+	
 </mapper>

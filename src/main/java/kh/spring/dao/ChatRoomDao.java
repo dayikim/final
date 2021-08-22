@@ -31,12 +31,24 @@ public class ChatRoomDao {
 		return mybatis.selectList("Chat.getList",session);
 	}
 	
-	public ChatRoomDto FindById(String roomid){
-		return mybatis.selectOne("Chat.FindById",roomid);
+	public List<ChatRoomDto> FindById(String roomid){
+		return mybatis.selectList("Chat.FindById",roomid);
+	}
+	
+	public ChatRoomDto FindByRoominfo(Map<String, String> temp){
+		return mybatis.selectOne("Chat.FindByRoominfo",temp);
+	}
+	
+	public ChatRoomDto FindByFreindRoominfo(Map<String, String> temp){
+		return mybatis.selectOne("Chat.FindByFreindRoominfo",temp);
 	}
 	
 	public String findFriendId(Map<String,String> temp) {	
 	return mybatis.selectOne("Chat.FindByFriendId",temp);
+	}
+	
+	public List<ChatRoomDto> friendList(String id) {	
+		return mybatis.selectList("Chat.FriendList",id);
 	}
 	
 }
