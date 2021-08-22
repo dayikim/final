@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Review">
 <insert id="write">
-insert into review values(review_seq.nextval,#{reviewer},#{recipient},#{parentseq},#{contents},#{reviewable},sysdate);
+insert into review values(review_seq.nextval,#{reviewer},#{recipient},#{parentseq},#{contents},#{reviewable},sysdate,#{boardtype})
 </insert>
 <select id="getAllList" resultType="kh.spring.dto.ReviewDTO">
 select * from review where recipient=#{value}
@@ -37,4 +37,9 @@ select sysName from profilefiles join review on (review.reviewer = profilefiles.
 <select id="reviewrInfo" resultType="kh.spring.dto.ReviewDTO">
 select reviewer from review where recipient=#{value}
 </select>
+<select id="checkReview" resultType="int">
+select count(*) from review where parentseq=#{value}
+</select>
+
+
 </mapper>

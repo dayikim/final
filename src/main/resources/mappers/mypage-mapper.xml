@@ -2,22 +2,89 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
+
 <mapper namespace="MyPage">
 
 	<!-- 마이페이지 출력 -->
 	<select id="mypageList" resultType="kh.spring.dto.PersonDTO">
-		select * from person where id=#{sessionID}
+		select * from person where
+		id=#{sessionID}
 	</select>
 
 	<!-- 마이페이지 정보불러옴 -->
 	<select id="modify" resultType="kh.spring.dto.PersonDTO">
-		select * from person where id=#{id}
+		select * from person where
+		id=#{id}
 	</select>
-	
+
 	<!-- 마이페이지 정보수정 -->
 	<update id="modifyProc">
-		update person set pw=#{pw},phone=#{phone},email=#{email},birth=#{birth},postcode=#{postcode},address1=#{address1},address2=#{address2} where id=#{id}
-	</update> 
-	
+		update person set
+		pw=#{pw},phone=#{phone},email=#{email},birth=#{birth},postcode=#{postcode},address1=#{address1},address2=#{address2}
+		where id=#{id}
+	</update>
+	<resultMap type="HashMap" id="dealEndlist">
+		<result column="name" property="name" />
+		<result column="buyer" property="buyer" />
+		<result column="address1" property="address1" />
+		<result column="seller" property="seller" />
+		<result column="price" property="price" />
+		<result column="item" property="item" />
+		<result column="boardtype" property="boardtype" />
+     	<result column="parentseq" property="parentseq" />
+     	<result column="reviewable" property="reviewable" />
+     	<result column="contents" property="contents" />
+		<result column="paymentdate" property="paymentdate"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 물품 거래 완료 내역 출력 (판매자인 경우) -->
+	<select id="dealEndProductSellList" resultMap="dealEndlist"
+		resultType="HashMap">
+		select
+		person.name,person.address1,payment.item,payment.buyer,payment.seller,payment.parentseq,payment.price,to_char(payment.paymentdate,'yyyy-mm-dd
+		hh24:mi')as paymentdate,payment.boardtype,review.reviewable,review.contents
+		from payment join person on
+		(person.id=payment.seller)join review on (review.reviewer =payment.buyer)where
+		payment.buyer=#{id}  and
+		payment.boardtype=#{product}
+	</select>
+
+	<!-- 물품 거래 완료 내역 출력 (구매자인 경우) -->
+	<select id="dealEndProductBuyList" resultMap="dealEndlist"
+		resultType="HashMap">
+	select
+		person.name,person.address1,payment.item,payment.buyer,payment.seller,payment.parentseq,payment.price,to_char(payment.paymentdate,'yyyy-mm-dd
+		hh24:mi')as paymentdate,payment.boardtype,review.reviewable,review.contents
+		from payment join person on
+		(person.id=payment.seller)join review on (review.reviewer =payment.buyer)where
+		payment.buyer=#{id}  and
+		payment.boardtype=#{product}
+	</select>
+
+	<!-- 재능 거래 완료 내역 출력 (판매자인 경우) -->
+	<select id="dealEndTalentSellList" resultMap="dealEndlist"
+		resultType="HashMap">
+	select
+		person.name,person.address1,payment.item,payment.buyer,payment.seller,payment.parentseq,payment.price,to_char(payment.paymentdate,'yyyy-mm-dd
+		hh24:mi')as paymentdate,payment.boardtype,review.reviewable,review.contents
+		from payment join person on
+		(person.id=payment.seller)join review on (review.reviewer =payment.buyer)where
+		payment.buyer=#{id}  and
+		payment.boardtype=#{talent}
+	</select>
+
+	<!-- 재능 거래 완료 내역 출력 (구매자인 경우) -->
+	<select id="dealEndTalentBuyList" resultMap="dealEndlist"
+		resultType="HashMap">
+		select
+		person.name,person.address1,payment.item,payment.buyer,payment.seller,payment.parentseq,payment.price,to_char(payment.paymentdate,'yyyy-mm-dd
+		hh24:mi')as paymentdate,payment.boardtype,review.reviewable,review.contents
+		from payment join person on
+		(person.id=payment.seller)join review on (review.reviewer =payment.buyer)where
+		payment.buyer=#{id}  and
+		payment.boardtype=#{talent}
+	</select>
+
+
 </mapper>

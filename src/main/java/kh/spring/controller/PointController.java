@@ -94,13 +94,11 @@ public class PointController {
 		session.setAttribute("writerInfo", pdto); // 작성자 정보 출력
 		model.addAttribute("profile",pfdto); //작성자 정보 출력
 
-
 		SellTalentDTO dto = STService.detailView(seq);//글 상세보기
 		model.addAttribute("board",dto);
 
 		int pointAmount =PointService.checkAmount(sessionID);//잔고금액
 		model.addAttribute("point",pointAmount);
-		
 		return "/point/payment_talent";
 	}
 	
@@ -151,24 +149,17 @@ public class PointController {
 		paydto.setBuyer(sessionID);
 		paydto.setPrice(price);
 
-		//seq로 해당 글의 writer,title 받아오기 (seq는 판매게시글 번호)
-		
 		//lend인지 selltalent인지 구분
-//		System.out.println(parentseq +":" + sessionID +":" + category);
-//		int isitLendBoard =LService.isitLend(parentseq,sessionID,category);	
-//		if(isitLendBoard>0) {
-//			System.out.println("대여하기");
-//			LendDTO lendBInfo = LService.detailView(parentseq);
-//			paydto.setSeller(lendBInfo.getWriter());
-//			paydto.setItem(lendBInfo.getTitle());
-//			paydto.setParentseq(lendBInfo.getSeq());
-//		}else {
-//			System.out.println("재능판매");
-//			SellTalentDTO STBInfo =STService.detailView(parentseq);
-//			paydto.setSeller(STBInfo.getWriter());
-//			paydto.setItem(STBInfo.getTitle());
-//			paydto.setParentseq(STBInfo.getSeq());
-//		}
+		System.out.println(parentseq +":" + sessionID +":" + category);
+		int isitLendBoard =LService.isitLend(parentseq,sessionID,category);	
+		if(isitLendBoard>0) {
+			System.out.println("대여하기");
+			paydto.setBoardtype("물품");
+		
+		}else {
+			System.out.println("재능판매");
+			paydto.setBoardtype("재능");
+		}
 		// 결제 하기 
 		paydto.setSeller(seller);
 		paydto.setItem(item);

@@ -17,9 +17,15 @@ public class SnsService {
 	@Autowired
 	private SnsDAO dao;
 	
-	public void insert(int seq,SnsDTO dto) throws Exception{
-		dto.setSeq(seq);
-		dao.insert(dto);
+	public void insert(int seq,String id, String contents, String category, String region) throws Exception{
+		//dto.setSeq(seq);
+		Map<String,Object>param = new HashMap();
+		param.put("seq", seq);
+		param.put("id", id);
+		param.put("contents", contents);
+		param.put("category", category);
+		param.put("region", region);
+		dao.insert(param);
 	}
 	
 	public int seq() {
@@ -65,8 +71,13 @@ public class SnsService {
 		return dao.select(seq);
 	}
 	
-	public int modify(SnsDTO dto) {
-		return dao.modify(dto);
+	public void modify(String contents, String category, int seq, String id) {
+		Map<String,Object>param = new HashMap();
+		param.put("contents", contents);
+		param.put("category", category);
+		param.put("seq", seq);
+		param.put("id", id);
+		dao.modify(param);
 	}
 	
 	public int love(int seq, int love) {

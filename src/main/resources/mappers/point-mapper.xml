@@ -26,7 +26,7 @@ select nvl(count(*),0) from payment where parentseq=${value}
 
 <!-- 구매자 상품 결제하기 -->
 <insert id="payment">
-insert into payment values(payment_seq.nextval,#{seller},#{buyer},#{item},#{parentseq},#{price},sysdate)
+insert into payment values(payment_seq.nextval,#{seller},#{buyer},#{item},#{parentseq},#{price},sysdate,#{boardtype})
 </insert>
 
 <!--포인트 차감  -->

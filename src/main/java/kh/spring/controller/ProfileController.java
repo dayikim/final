@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.spring.dto.LendDTO;
 import kh.spring.dto.PersonDTO;
@@ -307,14 +308,28 @@ public class ProfileController {
 //		return "/AllBoardList/lendList?choice=Allchoice&search=&cpage=1";
 //	}
 //
-
+	@ResponseBody
+	@RequestMapping("checkReview")//거래 후기 작성유무
+	public String checkReview(int parentseq,Model model) {
+		String id = (String) session.getAttribute("loginID");
+		int checkReview =RService.checkReview(parentseq);
+		if(checkReview>0){
+			System.out.println("이미 작성되어 있음!");
+		}
+		return String.valueOf(checkReview);
+	  }
+	
+	
+	
+	@ResponseBody
 	@RequestMapping("review")//거래 후기 작성
-	public String Review(int seq,ReviewDTO dto, Model model) {
+	public String Review(ReviewDTO dto, Model model) {
 		String sessionID = (String) session.getAttribute("loginID");
-		dto.setReviewer(sessionID);
-		dto.setParentseq(seq);
-		RService.write(dto);
-		return "/profile/review_UerProfile";
+		int result =RService.write(dto);
+		if(result>0){
+			System.out.println(" 작성 성공!");
+		}
+		return String.valueOf(result);
 	}
 
 	@RequestMapping("reviewListForMe") //거래후기 from myprofile
