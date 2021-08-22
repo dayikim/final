@@ -48,6 +48,11 @@ public class ReviewService {
 	public List<HashMap<Object, Object>> sysName(String id) {
 		return dao.sysName(id);
 	}
+	
+	//거래 후기 작성유무
+	public int checkReview(int seq) {
+		return dao.checkReview(seq);
+	}
 
 
 	

@@ -44,4 +44,8 @@ public class ReviewDAO {
 	public List<HashMap<Object, Object>> sysName(String id) {
 		return mybatis.selectList("Review.sysName",id);
 	}
+
+	public int checkReview(int seq) {
+		return mybatis.selectOne("Review.checkReview",seq);
+	}
 }

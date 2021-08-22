@@ -17,6 +17,7 @@ import kh.spring.dao.BookingDAO;
 import kh.spring.dao.BorrowDAO;
 import kh.spring.dao.LendDAO;
 import kh.spring.dao.MypageDAO;
+import kh.spring.dao.PaymentDAO;
 import kh.spring.dao.PointAccountDAO;
 import kh.spring.dao.PointDAO;
 import kh.spring.dao.ProfileFilesDAO;
@@ -27,6 +28,7 @@ import kh.spring.dao.TalentBoardDAO;
 import kh.spring.dto.ApprovalDTO;
 import kh.spring.dto.BorrowDTO;
 import kh.spring.dto.LendDTO;
+import kh.spring.dto.PaymentDTO;
 import kh.spring.dto.PersonDTO;
 import kh.spring.dto.PointAccountDTO;
 import kh.spring.dto.PointDTO;
@@ -43,6 +45,7 @@ public class MypageService {
 	private ProfileFilesDAO pdao; // 프로필
 	@Autowired
 	private PointAccountDAO ppdao; // 포인트
+	
 	@Autowired
 	private BookingDAO bdao; // 재능 예약 여부
 	@Autowired
@@ -206,6 +209,43 @@ public class MypageService {
 	public List<RequestTalentDTO> myRequestBuyTalent(String sessionID) {
 		return rtdao.myRequestBuyTalent(sessionID);
 	}
+
+	public  List<HashMap<Object, Object>> dealEndProductSellList(String id, String product) {
+		Map<Object, Object> param = new HashMap<>();
+		param.put("id", id);
+		param.put("product", product);
+		return dao.dealEndProductSellList(param);
+	}
+
+	public List<HashMap<Object, Object>> dealEndProductBuyList(String id, String product) {
+		Map<Object, Object> param = new HashMap<>();
+		param.put("id", id);
+		param.put("talent", product);
+		return dao.dealEndProductBuyList(param);
+	}
+
+	public List<HashMap<Object, Object>> dealEndTalentBuyList(String id, String talent) {
+		Map<Object, Object> param = new HashMap<>();
+		param.put("id", id);
+		param.put("talent", talent);
+		return dao.dealEndTalentBuyList(param);
+	}
+
+	public List<HashMap<Object, Object>> dealEndTalentSellList(String id, String talent) {
+		Map<Object, Object> param = new HashMap<>();
+		param.put("id", id);
+		param.put("product", talent);
+		return dao.dealEndTalentSellList(param);
+	}
+
+	
+	
+	//거래완료 후, 판매자 정보 출력!!
+	public List<HashMap<Object, Object>> sellerInfo(String id) {
+		return dao.sellerInfo(id);
+	}
+	
+	
 
 }
 
