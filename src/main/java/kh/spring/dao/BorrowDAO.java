@@ -157,4 +157,9 @@ public class BorrowDAO {
 
 		return pageNavi;
 	}
+	
+	// 마이페이지 내 게시물 대여 요청하기 출력
+	public List<BorrowDTO> myRequestBuyProduct(String sessionID) {
+		return mybatis.selectList("Borrow.myRequestBuyProduct", sessionID);
+	}
 }

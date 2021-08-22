@@ -136,31 +136,47 @@ img {
 	margin-top: 20px;
 }
 
+.image {
+	width: 200px;
+	height: 200px;
+	overflow: hidden;
+	padding-top: 10px;
+}
+
+img {
+	width: 200px;
+	height: 200px;
+	border-radius: 5px;
+}
+
 .information {
 	padding-top: 40px;
 	padding-left: 40px;
-	padding-bottom:40px;
-}
-.content{
-	margin-top:30px;
+	padding-bottom: 40px;
 }
 
+.content {
+	margin-top: 30px;
+}
 </style>
 
 <script>
 	$(function() {
 		// 게시물 검색
-		$("#search").keyup(function(e) {
-			if (e.keyCode == 13) {
-				location.href = "/AllBoardList/lendList?category=AllCategory&search="+$("#search").val()+"&cpage=1";
-			}
-		})
-		
+		$("#search")
+				.keyup(
+						function(e) {
+							if (e.keyCode == 13) {
+								location.href = "/AllBoardList/lendList?category=AllCategory&search="
+										+ $("#search").val() + "&cpage=1";
+							}
+						})
+
 		// 채팅
-		$("#chat").on("click",function(){
+		$("#chat").on("click", function() {
 			location.href = "/chat";
 		})
-		
+
 		// 게시물 삭제
 		$(".cnum-btn2").on("click", function() {
 			let result = confirm("정말 삭제하시겠습니까?");
@@ -244,8 +260,9 @@ img {
 										aria-expanded="false"> Menu </a>
 										<div class="dropdown-menu"
 											aria-labelledby="navbarDropdownMenuLink">
-											<a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a> <a
-												class="dropdown-item" href="/sns/main">SNS</a> <a
+											<a class="dropdown-item"
+												href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
+											<a class="dropdown-item" href="/sns/main">SNS</a> <a
 												class="dropdown-item" href="/my/mypageProc">My page</a> <a
 												class="dropdown-item" href="/point/ToCharging">Charging</a>
 										</div></li>
@@ -289,48 +306,46 @@ img {
 	<div class="container2">
 		<div>나의 게시물 > 대여 요청</div>
 		<!-- forEach문 사용 -->
-		<%-- <c:forEach var="i" items="${requestRental }"> --%>
-		<form action="" method="get">
+		<c:forEach var="i" items="${requestRental }">
 			<div class="requestList">
 				<div class="row high">
 					<div class="col-12 information">
 						<div class="title">
 							<h4>
-								<b>자전거 대여부탁드립니다 제바류ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ</b>
+								<b><a
+									href="/borrowBoard/borrowView?seq=${i.seq}&id=${i.writer}">${i.title }</a></b>
 							</h4>
 						</div>
 						<div class="content">
 							<div class="row">
 								<div class="col-4 left">
-									<b>대여요청자</b>
+									<b>대여자</b>
 								</div>
-								<div class="col-8 right">shoowghjk</div>
+								<div class="col-8 right">${i.writer }</div>
 							</div>
 							<div class="row">
 								<div class="col-4 left">
-									<b>주소</b>
+									<b>위치</b>
 								</div>
-								<div class="col-8 right">서울특별시 동대문구</div>
+								<div class="col-8 right">${i.address }</div>
 							</div>
 							<div class="row">
 								<div class="col-4 left">
-									<b>제시 금액</b>
+									<b>결제 내역</b>
 								</div>
-								<div class="col-8 right">500원</div>
+								<div class="col-8 right">${i.price }원</div>
 							</div>
 							<div class="row">
 								<div class="col-4 left">
 									<b>게시물 등록일</b>
 								</div>
-								<div class="col-8 right">2021-08-16</div>
+								<div class="col-8 right">${i.regdate }</div>
 							</div>
 						</div>
-
 					</div>
 				</div>
 			</div>
-		</form>
-		<%-- </c:forEach> --%>
+		</c:forEach>
 
 	</div>
 
