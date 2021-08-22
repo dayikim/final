@@ -90,4 +90,9 @@
 		select count(*) from borrowboard where contents like '%'||#{search}||'%'
 	</select>
 	
+	<!-- 마이페이지 내 게시물 대여 요청하기 출력 -->	
+	<select id="myRequestBuyProduct" resultType="kh.spring.dto.BorrowDTO">
+		select * from borrowboard where writer=#{value} order by 1 desc
+	</select>
+	
 </mapper>

@@ -15,9 +15,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kh.spring.config.SHA256;
 import kh.spring.dao.ProfileFilesDAO;
+import kh.spring.dto.BorrowDTO;
+import kh.spring.dto.LendDTO;
+import kh.spring.dto.LendFilesDTO;
 import kh.spring.dto.PersonDTO;
 import kh.spring.dto.PointAccountDTO;
 import kh.spring.dto.ProfileFilesDTO;
+import kh.spring.dto.RequestTalentDTO;
+import kh.spring.dto.SellTalentDTO;
 import kh.spring.dto.SnsDTO;
 import kh.spring.dto.SnsFilesDTO;
 import kh.spring.service.MypageService;
@@ -255,42 +260,50 @@ public class MypageController {
 
 	/////////////////////////////////////////////////////////////////////////////////////////// 내가 쓴 게시글 목록
 
-	// 내가 쓴 게시글 목록 - 판매글(미완)
+	// 내가 쓴 게시글 목록 - 판매글
 	@RequestMapping("/myRequestSellProduct")
 	public String myRequestSellProduct(Model model) {
 		String sessionID = (String)session.getAttribute("loginID");
-//		List<LendDTO> dto = service.myRequestSellProduct(sessionID);
+		List<LendDTO> dto = service.myRequestSellProduct(sessionID);
+		
+		model.addAttribute("requestRental", dto);
 		return "/mypage/myRequestSellProduct";
 	}
 
-	// 내가 쓴 게시글 목록 - 대여요청(미완)
+	// 내가 쓴 게시글 목록 - 대여요청
 	@RequestMapping("/myRequestBuyProduct")
 	public String myRequestBuyProduct(Model model){
 		String sessionID = (String)session.getAttribute("loginID");
-//		List<BorrowDTO> dto = service.myRequestBuyProduct(sessionID);
+		List<BorrowDTO> dto = service.myRequestBuyProduct(sessionID);
+		
+		model.addAttribute("requestRental", dto);
 		return "/mypage/myRequestBuyProduct";
 	}
 
-	// 내가 쓴 게시글 목록 - 재능등록(미완)
+	// 내가 쓴 게시글 목록 - 재능등록
 	@RequestMapping("/myRequestSellTalent")
 	public String myRequestSellTalent(Model model){
 		String sessionID = (String)session.getAttribute("loginID");
-//		List<SellTalentDTO> dto = service.myRequestSellTalent(sessionID);
+		List<SellTalentDTO> dto = service.myRequestSellTalent(sessionID);
+		
+		model.addAttribute("requestRental", dto);
 		return "/mypage/myRequestSellTalent";
 	}
 
-	// 내가 쓴 게시글 목록 = 재능요청(미완)
+	// 내가 쓴 게시글 목록 = 재능요청
 	@RequestMapping("/myRequestBuyTalent")
 	public String myRequestBuyTalent(Model model){
 		String sessionID = (String)session.getAttribute("loginID");
-//		List<RequestDTO> dto = service.myRequestBuyTalent(sessionID);
+		List<RequestTalentDTO> dto = service.myRequestBuyTalent(sessionID);
+		
+		model.addAttribute("requestRental",dto);
 		return "/mypage/myRequestBuyTalent";
 	}
 
 
 	///////////////////////////////////////////////////////////////////////////////////////////// 커뮤
 
-	// 나의 커뮤니티 목록 출력(미완)
+	// 나의 커뮤니티 목록 출력
 	@RequestMapping(value="/selectMySns", produces="text/html;charset=utf8")
 	public String selectMySns(Model model) throws Exception{
 		String id= (String)session.getAttribute("loginID");

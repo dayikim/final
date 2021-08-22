@@ -171,6 +171,11 @@ public class LendDAO {
 		
 	}
 	
+	// 마이페이지 내 게시물 대여하기 출력
+	public List<LendDTO> myRequestSellProduct(String sessionID) {
+		return mybatis.selectList("Lend.myRequestSellProduct", sessionID);
+	}
+	
 	
 
 }

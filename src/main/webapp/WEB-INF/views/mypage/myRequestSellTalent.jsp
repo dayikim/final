@@ -86,37 +86,43 @@ img {
 	width: 25%;
 	text-align: center;
 }
+
 .navi {
 	margin: auto;
 	margin-top: 115px;
 	width: 900px;
-	height:60px;
-	border:1px solid black;
+	height: 60px;
+	border: 1px solid black;
 	border-radius: 7px;
-	overflow:hidden;
+	overflow: hidden;
 }
-.requestSellTalent{ /* 재능등록 네비 */
-	height:100%;
-	background-color:#334257;
+
+.requestSellTalent { /* 재능등록 네비 */
+	height: 100%;
+	background-color: #334257;
 }
+
 .requestSellTalent>a>b {
 	color: white;
-	font-size:30px;
-	line-height:60px;
+	font-size: 30px;
+	line-height: 60px;
 }
-.requestBuyProduct,.requestSellProduct,.requestBuyTalent{ /* 재능등록 제외한 나머지 네비 */
-	height:100%;
+
+.requestBuyProduct, .requestSellProduct, .requestBuyTalent {
+	/* 재능등록 제외한 나머지 네비 */
+	height: 100%;
 }
-.requestBuyProduct,.requestSellProduct,.requestBuyTalent>a>b{
-	font-size:30px;
-	line-height:60px;
+
+.requestBuyProduct, .requestSellProduct, .requestBuyTalent>a>b {
+	font-size: 30px;
+	line-height: 60px;
 }
 
 /* 시작 */
 .container2 {
 	margin: auto;
 	width: 1000px;
-	padding-top:35px;
+	padding-top: 35px;
 	padding-left: 50px;
 	padding-right: 50px;
 	padding-bottom: 50px;
@@ -146,35 +152,37 @@ img {
 .information {
 	padding-top: 40px;
 	padding-left: 40px;
-	padding-bottom:40px;
-}
-.content{
-	margin-top:30px;
+	padding-bottom: 40px;
 }
 
-
+.content {
+	margin-top: 30px;
+}
 </style>
 
 <script>
-	$(function(){	
+	$(function() {
 		// 게시물 검색
-		$("#search").keyup(function(e) {
-			if (e.keyCode == 13) {
-				location.href = "/AllBoardList/lendList?category=AllCategory&search="+$("#search").val()+"&cpage=1";
-			}
-		})
-		
+		$("#search")
+				.keyup(
+						function(e) {
+							if (e.keyCode == 13) {
+								location.href = "/AllBoardList/lendList?category=AllCategory&search="
+										+ $("#search").val() + "&cpage=1";
+							}
+						})
+
 		// 채팅
-		$("#chat").on("click",function(){
+		$("#chat").on("click", function() {
 			location.href = "/chat";
 		})
-		
+
 		// 게시물 삭제
-		$(".cnum-btn2").on("click",function(){
+		$(".cnum-btn2").on("click", function() {
 			let result = confirm("정말 삭제하시겠습니까?");
-			if(result){
+			if (result) {
 				$("#frm").submit();
-			}else{
+			} else {
 				$(".cnum-btn1").parent().parent().parent().empty();
 			}
 		})
@@ -252,8 +260,9 @@ img {
 										aria-expanded="false"> Menu </a>
 										<div class="dropdown-menu"
 											aria-labelledby="navbarDropdownMenuLink">
-											<a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a> <a
-												class="dropdown-item" href="/sns/main">SNS</a> <a
+											<a class="dropdown-item"
+												href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
+											<a class="dropdown-item" href="/sns/main">SNS</a> <a
 												class="dropdown-item" href="/my/mypageProc">My page</a> <a
 												class="dropdown-item" href="/point/ToCharging">Charging</a>
 										</div></li>
@@ -273,81 +282,72 @@ img {
 	<!-- 네비바 -->
 	<div class="navi">
 		<div class="requestSellProduct">
-			<a href="/my/myRequestSellProduct">
-					<b>대여 하기</b>
+			<a href="/my/myRequestSellProduct"> <b>대여 하기</b>
 			</a>
 		</div>
 		<div class="requestBuyProduct">
-			<a href="/my/myRequestBuyProduct">
-					<b>대여 요청</b>
+			<a href="/my/myRequestBuyProduct"> <b>대여 요청</b>
 			</a>
 		</div>
 		<div class="requestSellTalent">
-			<a href="/my/myRequestSellTalent">
-					<b>재능 등록</b>
+			<a href="/my/myRequestSellTalent"> <b>재능 등록</b>
 			</a>
 		</div>
 		<div class="requestBuyTalent">
-			<a href="/my/myRequestBuyTalent">
-					<b>재능 요청</b>
+			<a href="/my/myRequestBuyTalent"> <b>재능 요청</b>
 			</a>
 		</div>
-		
+
 	</div>
 
 
 
 	<!-- 대여 요청 내역 -->
 	<div class="container2">
-	<div>나의 게시물 > 재능 등록</div>
+		<div>나의 게시물 > 재능 등록</div>
 		<!-- forEach문 사용 -->
-		<%-- <c:forEach var="i" items="${requestRental }"> --%>
-		<form action="" method="get">
-			<div class="requestList">
-				<div class="row high">
-					<div class="col-8 information">
-						<div class="title">
-							<h4>
-								<b>칼질 잘 할 자신 있습니다</b>
-							</h4>
+		<c:forEach var="i" items="${requestRental }">
+			<form action="" method="get">
+				<div class="requestList">
+					<div class="row high">
+						<div class="col-12 information">
+							<div class="title">
+								<h4>
+									<b><a
+										href="/tBoard/sellingView?seq=${i.seq}&id=${i.writer}">${i.title }</a></b>
+								</h4>
+							</div>
+							<div class="content">
+								<div class="row">
+									<div class="col-4 left">
+										<b>재능기부자</b>
+									</div>
+									<div class="col-8 right">${i.writer }</div>
+								</div>
+								<div class="row">
+									<div class="col-4 left">
+										<b>위치</b>
+									</div>
+									<div class="col-8 right">${i.address }</div>
+								</div>
+								<div class="row">
+									<div class="col-4 left">
+										<b>결제 내역</b>
+									</div>
+									<div class="col-8 right">${i.price }상추</div>
+								</div>
+								<div class="row">
+									<div class="col-4 left">
+										<b>게시물 등록일</b>
+									</div>
+									<div class="col-8 right">${i.regDate }</div>
+								</div>
+							</div>
 						</div>
-						<div class="content">
-							<div class="row">
-								<div class="col-4 left">
-									<b>재능기부자</b>
-								</div>
-								<div class="col-8 right">내이름 ㅣ shoowghjk</div>
-							</div>
-							<div class="row">
-								<div class="col-4 left">
-									<b>위치</b>
-								</div>
-								<div class="col-8 right">서울특별시 동대문구</div>
-							</div>
-							<div class="row">
-								<div class="col-4 left">
-									<b>결제 내역</b>
-								</div>
-								<div class="col-8 right">10000000원</div>
-							</div>
-							<div class="row">
-								<div class="col-4 left">
-									<b>게시물 등록일</b>
-								</div>
-								<div class="col-8 right">2021-08-16</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-4">
-						<div class="image">
-							<img src="">
-						</div>
-
 					</div>
 				</div>
-			</div>
-		</form>
-		<%-- </c:forEach> --%>
+			</form>
+		</c:forEach>
 
 	</div>
 

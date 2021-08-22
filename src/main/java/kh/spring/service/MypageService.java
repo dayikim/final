@@ -8,21 +8,31 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import kh.spring.dao.ApprovalDAO;
 import kh.spring.dao.BookingDAO;
+import kh.spring.dao.BorrowDAO;
+import kh.spring.dao.LendDAO;
 import kh.spring.dao.MypageDAO;
 import kh.spring.dao.PointAccountDAO;
 import kh.spring.dao.PointDAO;
 import kh.spring.dao.ProfileFilesDAO;
+import kh.spring.dao.RequestTalentDAO;
+import kh.spring.dao.SellTalentDAO;
 import kh.spring.dao.SnsDAO;
 import kh.spring.dao.TalentBoardDAO;
 import kh.spring.dto.ApprovalDTO;
+import kh.spring.dto.BorrowDTO;
+import kh.spring.dto.LendDTO;
 import kh.spring.dto.PersonDTO;
 import kh.spring.dto.PointAccountDTO;
 import kh.spring.dto.PointDTO;
 import kh.spring.dto.ProfileFilesDTO;
+import kh.spring.dto.RequestTalentDTO;
+import kh.spring.dto.SellTalentDTO;
 
 @Service
 public class MypageService {
@@ -38,7 +48,13 @@ public class MypageService {
 	@Autowired
 	private ApprovalDAO adao; // 거래 승인 여부
 	@Autowired
-	private SnsDAO sdao; // 커뮤니티
+	private LendDAO ldao; // 물건 대여
+	@Autowired
+	private BorrowDAO bwdao; // 물건 대여 요청
+	@Autowired
+	private SellTalentDAO stdao; // 재능 대여
+	@Autowired
+	private RequestTalentDAO rtdao; // 재능 대여 요청
 
 	// 마이페이지 정보 출력
 	public PersonDTO mypageList(String sessionID){
@@ -93,7 +109,7 @@ public class MypageService {
 		param.put("id", sessionID);
 		return ppdao.pointChargeList(param);
 	}
-	
+
 	// 포인트 사용 내역 출력
 	public List<PointAccountDTO> pointUseList(String sessionID) {
 		String use = "포인트차감";
@@ -163,15 +179,33 @@ public class MypageService {
 	}
 	//승인 여부 확인
 	public String isApproval(String id, int parentseq) {
-		 Map<Object, Object> param = new HashMap<>();
-		   param.put("id", id);
-		   param.put("parentseq", parentseq);
+		Map<Object, Object> param = new HashMap<>();
+		param.put("id", id);
+		param.put("parentseq", parentseq);
 		return adao.isApproval(param);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////// 내 게시물 보기
 
-	// 
+	// 내가 쓴 게시글 목록 - 판매글
+	public List<LendDTO> myRequestSellProduct(String sessionID) {
+		return ldao.myRequestSellProduct(sessionID);
+	}
+	
+	// 내가 쓴 게시글 목록 - 대여 요청글
+	public List<BorrowDTO> myRequestBuyProduct(String sessionID) {
+		return bwdao.myRequestBuyProduct(sessionID);
+	}
+	
+	// 내가 쓴 게시글 목록 = 재능판매글
+	public List<SellTalentDTO> myRequestSellTalent(String sessionID) {
+		return stdao.myRequestSellTalent(sessionID);
+	}
+	
+	// 내가 쓴 게시글 목록 - 재능대여글
+	public List<RequestTalentDTO> myRequestBuyTalent(String sessionID) {
+		return rtdao.myRequestBuyTalent(sessionID);
+	}
 
 }
 
