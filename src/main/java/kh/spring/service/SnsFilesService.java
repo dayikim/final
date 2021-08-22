@@ -23,11 +23,11 @@ public class SnsFilesService {
 	private SnsFilesDAO dao;
 	
 	
-	public void insert(String oriName, String sysName, int parent,String id) {
+	public void insert(String oriName, String sysName, int seq,String id) {
 		Map<String,Object> param = new HashMap();
 		param.put("oriName", oriName);
 		param.put("sysName", sysName);
-		param.put("parent", parent);
+		param.put("parent", seq);
 		param.put("id", id);
 		dao.insert(param);
 	}
