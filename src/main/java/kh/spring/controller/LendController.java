@@ -72,9 +72,9 @@ public class LendController {
         model.addAttribute("writerInfo",writerInfo);//작성자정보
         model.addAttribute("board",dto);//글내용		 
 		 
-		List<LendFilesDTO> fileList = service.selectAll(seq); //첨부파일 목록 출력   
+		List<LendFilesDTO> flist = service.selectAll(seq); //첨부파일 목록 출력   
 		//        System.out.println("파일이 비어 있나요?? "+fileList.isEmpty());//파일이 있나요?
-		model.addAttribute("flist", fileList);//파일리스트를 request애 담는다.
+		model.addAttribute("flist", flist);//파일리스트를 request애 담는다.
 		
 		
 		return "/toBoard/lend_view";

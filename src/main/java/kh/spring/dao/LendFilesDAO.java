@@ -41,6 +41,6 @@ public class LendFilesDAO {
 	
 	public List<LendFilesDTO> getFiles(){
 				
-		return mybatis.selectList("LendFiles.selectOne");
+		return mybatis.selectList("LendFiles.getList");
 	}
 }
