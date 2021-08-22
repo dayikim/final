@@ -91,4 +91,9 @@ public class SnsDAO {
 	public List<String> existlike(String id){
 		return mybatis.selectList("Sns.existlike", id);
 	}
+	
+	// 내 sns 출력
+	public List<SnsDTO> mySelectAll(String id){
+		return mybatis.selectList("Sns.mySelectAll", id);
+	}
 }

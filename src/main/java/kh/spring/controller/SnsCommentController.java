@@ -61,5 +61,11 @@ public class SnsCommentController {
 		service.modify(seq, contents);
 		return service.modify(seq, contents)>0 ? "success":"false";
 	}
-
+	
+	// 내 sns 댓글 삭제
+	@RequestMapping("/myDelete")
+	public String myDelete(int seq) {
+		service.delete(seq);
+		return "redirect:/my/selectMySns";
+	}
 }

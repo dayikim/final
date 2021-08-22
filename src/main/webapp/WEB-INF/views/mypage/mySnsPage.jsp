@@ -50,9 +50,9 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
 	integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-	crossorigin="anonymous">
-	
-</script>
+	crossorigin="anonymous"></script>
+
+<script src="/js/main.js"></script>
 
 <!-- icon css -->
 <link rel="stylesheet"
@@ -201,14 +201,7 @@ style>body {
 </style>
 <script>
 var count = 2;
-$(function() {
-	
-	// 채팅
-	$("#chat").on("click",function(){
-		location.href = "/chat";
-	})
-	
-	
+$(function() {	
 	console.log(count);
 	//무한스크롤
 	var isScroll = true;
@@ -362,7 +355,7 @@ $(function() {
 					comment_writer.text(resp[i].id);
 					
 					let delete_tag = $("<a>");
-					delete_tag.attr("href","/snscomm/delete?seq="+resp[i].seq);
+					delete_tag.attr("href","/snscomm/myDelete?seq="+resp[i].seq);
 					delete_tag.attr("id","delcomm");
 					delete_tag.text("삭제");
 					
@@ -402,7 +395,7 @@ $(function() {
 		}
 	})
 	
-	//댓글수정
+	//댓글수정(완료)
 	$(document).on("click","#modicomm",function(){
 		console.log($(this).parents(".comment-heading").siblings("#comment").attr("contenteditable"));
 		console.log($(this).parent().siblings("#commentseq").text());
@@ -425,7 +418,7 @@ $(function() {
 		}
 	})	
 	
-	//댓글작성
+	//댓글작성(완료)
 	$(document).on("click","#sendcomment",function(){
 		let hidden_comment = $(this).parents("#hiddencomment");
 		if(${loginID == null}){
@@ -465,18 +458,6 @@ $(function() {
          }
 	})
 
-	//화면올리기
-	$( window ).scroll( function() {
-		if ( $( this ).scrollTop() > 200 ) {
-			$( '#top' ).fadeIn();
-		} else {
-			$( '#top' ).fadeOut();
-		}
-	} );
-	$( '#top' ).click( function() {
-		$( 'html, body' ).animate( { scrollTop : 0 }, 400 );
-		return false;
-	} );
 	
 	$("#search").keyup(function(e) {
 		if (e.keyCode == 13) {
@@ -618,8 +599,8 @@ $(function() {
 		<div class="margin"></div>
 
 		<hr>
-		
-		
+
+
 		<!-- sns -->
 		<!--- 게시글-->
 		<div class="container3">
@@ -647,11 +628,8 @@ $(function() {
 										<c:choose>
 											<c:when test="${loginID == item.id }">
 												<a
-													href="${pageContext.request.contextPath}/sns/delete?seq=${item.seq }"
+													href="${pageContext.request.contextPath}/sns/myDelete?seq=${item.seq }"
 													id=del>삭제</a>
-												<a
-													href="${pageContext.request.contextPath}/sns/modify?seq=${item.seq }"
-													id=modi>수정</a>
 											</c:when>
 										</c:choose>
 									</div>
@@ -706,10 +684,10 @@ $(function() {
 									<i class="fas fa-pen"></i>
 								</button>
 							</div>
-							<input type=hidden id=hidden value=${item.seq }> 
-							<input type=hidden id=lovecount value=${item.love }>
-							<input type=hidden id=session value=${loginID }>
-							<input type=hidden id=length value=${snslength }>
+							<input type=hidden id=hidden value=${item.seq }> <input
+								type=hidden id=lovecount value=${item.love }> <input
+								type=hidden id=session value=${loginID }> <input
+								type=hidden id=length value=${snslength }>
 						</div>
 					</div>
 				</div>
