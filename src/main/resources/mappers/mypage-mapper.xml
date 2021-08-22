@@ -48,7 +48,7 @@
 		resultType="HashMap">
 		select distinct name,address1,contents,payment.item,payment.buyer,payment.seller,payment.parentseq,price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype,review.reviewable
 		from payment join person on
-		(person.id=payment.seller)join review on (review.reviewer =payment.seller and review.recipient = payment.buyer and review.parentseq = payment.parentseq
+		(person.id=payment.buyer)join review on (review.reviewer =payment.seller and review.recipient = payment.buyer and review.parentseq = payment.parentseq
         )where
 		payment.seller=#{id} and
 		payment.boardtype=#{product}
@@ -70,7 +70,7 @@
 		resultType="HashMap">
 		select distinct name,address1,contents,payment.item,payment.buyer,payment.seller,payment.parentseq,price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype,review.reviewable
 		from payment join person on
-		(person.id=payment.seller)join review on (review.reviewer =payment.seller and review.recipient = payment.buyer and review.parentseq = payment.parentseq
+		(person.id=payment.buyer)join review on (review.reviewer =payment.seller and review.recipient = payment.buyer and review.parentseq = payment.parentseq
         )where
 		payment.seller=#{id} and
 		payment.boardtype=#{talent}
