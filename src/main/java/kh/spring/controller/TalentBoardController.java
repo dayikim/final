@@ -104,11 +104,12 @@ public class TalentBoardController {
 		System.out.println(seq);
         SellTalentDTO dto = STService.detailView(seq);//글 상세보기
         System.out.println(dto);
-		 model.addAttribute("board",dto);
-		////		List<TalentFilesDTO> fileList = F_Service.selectAll(seq); //첨부파일 목록 출력   
-		//        System.out.println("파일이 비어 있나요?? "+fileList.isEmpty());//파일이 있나요?
-		//        model.addAttribute("filelist", fileList);//파일리스트를 request애 담는다.
-		//	
+		model.addAttribute("board",dto);
+		
+		List<TBoardFilesDTO> flist = STService.selectAll(seq); //첨부파일 목록 출력   
+		System.out.println("파일이 비어 있나요?? "+flist.isEmpty());//파일이 있나요?
+		model.addAttribute("flist", flist);//파일리스트를 request애 담는다.
+			
 		return "/talentBoard/view_selling";
 	}
 	
@@ -127,9 +128,9 @@ public class TalentBoardController {
 		RequestTalentDTO dto = RTService.detailView(seq);//요청 글 상세
 		model.addAttribute("board",dto);
 
-		////		List<TalentFilesDTO> fileList = F_Service.selectAll(seq); //첨부파일 목록 출력   
-		//        System.out.println("파일이 비어 있나요?? "+fileList.isEmpty());//파일이 있나요?
-		//        model.addAttribute("filelist", fileList);//파일리스트를 request애 담는다.
+		List<TalentBoardPictureFilesDTO> flist = RTService.selectAll(seq); //첨부파일 목록 출력   
+        System.out.println("파일이 비어 있나요?? "+flist.isEmpty());//파일이 있나요?
+		model.addAttribute("flist", flist);//파일리스트를 request애 담는다.
 		//		
 		return "/talentBoard/view_request";
 	}

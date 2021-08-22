@@ -29,10 +29,8 @@ public class AllSearchController {
 		List<LendDTO> ldlist = service.getLdList(choice, search,cpage); //대여하기 리스트 
 		
 		List<LendFilesDTO> flist = service.getFiles();
+		System.out.println(flist.get(0).getParentSeq());
 		
-		for(int i = 0;i<flist.size();i++ ) {
-			System.out.println(flist.get(i).getParentSeq());
-		}
 		model.addAttribute("list", ldlist); //대여하기 리스트 
 		model.addAttribute("flist",flist);
 		model.addAttribute("navi", ldPageNavi); //대여하기 카운트

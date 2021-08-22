@@ -82,7 +82,7 @@ img{
     		.to-board img{width: 100%; height: 70%; border-radius: 20px;} 
     		.minibody a{color: black; cursor: pointer; text-decoration: none;}
     		.minibody a:hover{color: black; text-decoration: none;}
-    		.minibody p{font-size: 18px;margin:0px;}
+    		.minibody p{font-size: 18px; margin:0px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;}
     		.title{font-weight:600;}
     		
     		.board_page {margin-bottom:10px}
@@ -251,14 +251,14 @@ img{
 				<c:forEach var="i" items="${list}">
 					<div class="to-board">					
 						<a href="/lendBoard/lendView?id=${i.writer}&seq=${i.seq}" id="list_hhtp" class="list_hhtp">				
-<%-- 							<c:choose> --%>
-<%-- 								<c:when test="${flist.parentSeq == i.seq}"> --%>
-<%-- 									<img src="/imgs/lend/${flist.sysName}" id=fimg> --%>
-<%-- 								</c:when> --%>
-<%-- 								<c:otherwise> --%>
+							<c:choose>
+								<c:when test="${flist.parentSeq == i.seq}">
+									<img src="/imgs/lend/${flist.sysName}" id=fimg>
+								</c:when>
+								<c:otherwise>
 									<img src="/imgs/noimage.jpg" id=fimg>
-<%-- 								</c:otherwise> --%>
-<%-- 							</c:choose> --%>
+								</c:otherwise>
+							</c:choose>
 							<input type="hidden" value="${i.seq}" id="seq" name="seq">
 							<p id=title class="title">${i.title}</p>
 							<p id="category">${i.category}</p>
