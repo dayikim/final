@@ -96,7 +96,7 @@ public class SnsController {
 	
 	@RequestMapping("snspicture")
 	@ResponseBody
-	public String page(int firstseq, int lastseq) throws Exception {
+	public String snspicture(int firstseq, int lastseq) throws Exception {
 		List<SnsFilesDTO>fdto = fservice.snsFileList(session, firstseq, lastseq);
 		Gson g = new Gson();
 		return g.toJson(fdto);
@@ -104,10 +104,17 @@ public class SnsController {
 	
 	@RequestMapping("snsprofileimage")
 	@ResponseBody
-	public String page(String id) throws Exception {	
+	public String snsprofileimage(String id) throws Exception {	
 		return pffd.profileSelect(id) != null ? fservice.toProfileBinary(session, pffd.profileSelect(id).getSysName()) : null;
 	}
 	
+	@RequestMapping("isliked")
+	@ResponseBody
+	public String isliked() throws Exception {	
+		List<String> ldto = service.existlike((String)session.getAttribute("loginID"));
+		Gson g = new Gson();
+		return g.toJson(ldto);
+	}
 	
 	@RequestMapping("/write")
 	@ResponseBody

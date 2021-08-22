@@ -62,7 +62,7 @@ $(function(){
 					let node = "";
 		            node += "<li class=person data-chat=person1 style=\"margin-left:2%; margin-bottom:6%;\">";
 		               node+= " <div class=user id = "+result.roomid+">";
-		                 node += "<div class=rounded-circle badge-danger id=unread style= \"display:block\">1"
+		                 node += "<div class=\"rounded-circle badge-danger\" id=unread style= \"display:block\">1"
 		     				node += "</div>"
 		     				
 		     					$.ajax({
@@ -120,6 +120,40 @@ $(function(){
 </script>
 
 <style>
+
+.users {
+padding: 0;
+}
+
+.person {
+position: relative;
+width: 100%;
+padding:1rem;
+cursor: pointer;
+border-bottom: 1px solid #f0f4f8;
+}
+
+.person:hover {
+background-color: #ffffff;
+/* Fallback Color */
+background-image: -webkit-gradient(linear, left top, left bottom, from(#D9E5FF), to(#ffffff));
+/* Saf4+, Chrome */
+background-image: -webkit-linear-gradient(right,#D9E5FF, #ffffff);
+/* Chrome 10+, Saf5.1+, iOS 5+ */
+background-image: -moz-linear-gradient(right,#D9E5FF, #ffffff);
+/* FF3.6 */
+background-image: -ms-linear-gradient(right,#D9E5FF, #ffffff);
+/* IE10 */
+background-image: -o-linear-gradient(right,#D9E5FF, #ffffff);
+/* Opera 11.10+ */
+background-image: linear-gradient(right,#D9E5FF, #ffffff);
+}
+
+#body {
+    font-family: 'Nunito';
+	background-color:  #5d8fc9;
+}
+
 *{ z-index:0;}
 .chat-container{
 overflow-y: scroll;
@@ -262,6 +296,8 @@ left: 85%;
 }
 .users-container{
 background-color:#FAFAFA;
+overflow-y: scroll;
+height:834px;
 }
 
 
@@ -272,19 +308,13 @@ height:60px;
 
 }
 
-.person{
-
-margin-left:2%;
-margin-bottom:6%;
-
-}
 
 </style>
 
-<body oncontextmenu="return false">
+<body oncontextmenu="return false" id =body>
 
 
-<div class="container shadow p-3 mb-5 bg-body rounded">
+<div class="container shadow p-3 mb-5 bg-body rounded" style ="z-index : 1; background-color:#FAFAFA; padding:10px">
     <!-- Page header start -->
     <div class="page-title">
         <div class="row gutters">
@@ -339,8 +369,7 @@ margin-bottom:6%;
 		                                            <span class="title">${item.sessions }</span> <!-- 상태 표시가 가능함!-->
 		                                        </div>           
 		                                   </li>
-                                    </c:forEach>
-                                    
+                                    </c:forEach>          
                                 </ul>
                             </div>
                         </div>
