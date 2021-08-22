@@ -20,6 +20,7 @@ import kh.spring.dto.ProfileFilesDTO;
 import kh.spring.dto.RequestTalentDTO;
 import kh.spring.dto.SellTalentDTO;
 import kh.spring.dto.TBoardFilesDTO;
+import kh.spring.dto.TalentBoardPictureFilesDTO;
 import kh.spring.service.MypageService;
 import kh.spring.service.RequestTalentService;
 import kh.spring.service.SellTalentService;
@@ -69,10 +70,11 @@ public class TalentBoardController {
 	public String sellingWrite(SellTalentDTO dto,TBoardFilesDTO fdto, MultipartFile[] file) throws Exception {
 		int seq =STService.getSeq();
 		String sessionID = (String) session.getAttribute("loginID");
-		String realPath = session.getServletContext().getRealPath("files");
+		String realPath = session.getServletContext().getRealPath("resources/imgs/selling");
 		dto.setSeq(seq);
+		int parent = dto.getSeq();
 		dto.setWriter(sessionID);
-		STService.sellingWrite(dto,realPath,fdto,file);
+		STService.sellingWrite(dto,realPath,file,parent);
 		return "redirect:/AllBoardList/tlSellList?choice=Allchoice&search=&cpage=1";
 	}
 	//TBoardFiles도 두개 필요!!(판매용/요청용)
@@ -80,10 +82,11 @@ public class TalentBoardController {
 	public String requestWrite(RequestTalentDTO dto,TBoardFilesDTO fdto, MultipartFile[] file) throws Exception {
 		int seq =RTService.getSeq();
 		String sessionID = (String) session.getAttribute("loginID");
-		String realPath = session.getServletContext().getRealPath("files");
+		String realPath = session.getServletContext().getRealPath("resources/imgs/request");
 		dto.setSeq(seq);
+		int parent = dto.getSeq();
 		dto.setWriter(sessionID);
-		RTService.requestWrite(dto,realPath,fdto,file);
+		RTService.requestWrite(dto,realPath,file,parent);
 		return "redirect:/AllBoardList/tlRequestList?choice=Allchoice&search=&cpage=1";
 	}
 	
@@ -162,12 +165,12 @@ public class TalentBoardController {
 			System.out.println(seq);
 			SellTalentDTO dto = STService.detailView(seq);//게시글 정보
 			
-//			List<BorrowBoardFilesDTO> flist = service.selectAll(seq);
+			List<TBoardFilesDTO> flist = STService.selectAll(seq);
 //			System.out.println("서->컨 파 : " + flist);
 			
 			model.addAttribute("myAd", pdto);
 			model.addAttribute("dto", dto);
-//			model.addAttribute("flist", flist);
+			model.addAttribute("flist", flist);
 			
 			return "/talentBoard/modify_selling";
 		}
@@ -179,7 +182,9 @@ public class TalentBoardController {
 			
 			String realPath = session.getServletContext().getRealPath("resources/imgs/selling");
 			
-			STService.boardModify(dto,realPath,fdto,delSeq,file);
+			int parent = dto.getSeq();
+			
+			STService.boardModify(dto,realPath,delSeq,file,parent);
 
 			return "redirect:/AllBoardList/tlSellList?choice=Allchoice&search=&cpage=1";
 		}
@@ -192,12 +197,11 @@ public class TalentBoardController {
 					
 			RequestTalentDTO dto = RTService.detailView(seq);//게시글 정보
 					
-//			List<BorrowBoardFilesDTO> flist = service.selectAll(seq);
-//			System.out.println("서->컨 파 : " + flist);
+			List<TalentBoardPictureFilesDTO> flist = RTService.selectAll(seq);
 					
 			model.addAttribute("myAd", pdto);
 			model.addAttribute("dto", dto);
-//			model.addAttribute("flist", flist);
+			model.addAttribute("flist", flist);
 					
 			return "/talentBoard/modify_request";
 		}
@@ -208,8 +212,10 @@ public class TalentBoardController {
 			System.out.println(dto.getSeq());
 			
 			String realPath = session.getServletContext().getRealPath("resources/imgs/request");
-					
-			RTService.boardModify(dto,realPath,fdto,delSeq,file);
+			
+			int parent = dto.getSeq();
+			
+			RTService.boardModify(dto,realPath,delSeq,file,parent);
 
 			return "redirect:/AllBoardList/tlRequestList?choice=Allchoice&search=&cpage=1";
 		}

@@ -252,11 +252,11 @@ img{
 					<div class="to-board">					
 						<a href="/lendBoard/lendView?id=${i.writer}&seq=${i.seq}" id="list_hhtp" class="list_hhtp">				
 <%-- 							<c:choose> --%>
-<%-- 								<c:when test="${flist.parentseq == i.seq}"> --%>
+<%-- 								<c:when test="${flist.parentSeq == i.seq}"> --%>
 <%-- 									<img src="/imgs/lend/${flist.sysName}" id=fimg> --%>
 <%-- 								</c:when> --%>
 <%-- 								<c:otherwise> --%>
-									<img src="/imgs/lend/noimage.jpg" id=fimg>
+									<img src="/imgs/noimage.jpg" id=fimg>
 <%-- 								</c:otherwise> --%>
 <%-- 							</c:choose> --%>
 							<input type="hidden" value="${i.seq}" id="seq" name="seq">

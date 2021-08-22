@@ -17,12 +17,12 @@
 	
 	<!-- 사진 이름 -->
 	<select id="sysName" resultType="kh.spring.dto.BorrowBoardFilesDTO">
-		select sysname from borrowboardpicturefiles where seq=#{value}
+		select * from borrowboardpicturefiles where seq=#{seq}
 	</select>
 	
 	<!-- 사진 삭제 -->
 	<delete id="delete">
-		delete from borrowboardpicturefiles where seq=#{value}
+		delete from borrowboardpicturefiles where seq=#{seq}
 	</delete>
 
 </mapper>

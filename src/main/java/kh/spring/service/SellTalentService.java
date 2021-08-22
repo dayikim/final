@@ -47,6 +47,13 @@ public class SellTalentService {
 	public SellTalentDTO detailView(int seq) {
 		return stdao.detailView(seq);
 	}
+	
+	//사진리스트
+	public List<TBoardFilesDTO> selectAll(int seq){
+		System.out.println("컨->서 : " + seq);
+		return fdao.tlsSelectAll(seq);
+	}
+	
 	//예약하기
 	public int booking(String seller, String booker, String bookable, int parentseq) {
 	      Map<Object,Object>param = new HashMap();
@@ -66,7 +73,7 @@ public class SellTalentService {
 	}
 	
 	 //글수정
-	public void boardModify(SellTalentDTO dto,String realPath, TBoardFilesDTO fdto,String[] delSeq,MultipartFile[] file)throws Exception{
+	public void boardModify(SellTalentDTO dto,String realPath,String[] delSeq,MultipartFile[] file,int parent)throws Exception{
 			
 		stdao.boardModify(dto);
 			
@@ -88,10 +95,11 @@ public class SellTalentService {
 				if(temp.getSize()>0) {
 					String oriName = temp.getOriginalFilename();
 					String sysName = UUID.randomUUID().toString().replaceAll("-", "")+"_"+oriName;
-					fdto.setOriName(oriName);
-					fdto.setSysName(sysName);
-					fdto.setParentSeq(dto.getSeq());
-					if(fdao.upload(fdto)>0) {
+					HashMap<String,Object> map = new HashMap<>();
+					map.put("oriName", oriName);
+					map.put("sysName",sysName);
+					map.put("parentSeq",parent);
+					if(fdao.tlsUpload(map)>0) {
 						temp.transferTo(new File(filesPath.getAbsolutePath() +"/" + sysName));
 					}
 				}
@@ -101,7 +109,7 @@ public class SellTalentService {
 	   
 
 	@Transactional //DML: insert,delete,update 트렌젝션에 영향을 받음!
-	public void sellingWrite(SellTalentDTO stdto,String realPath, TBoardFilesDTO fdto, MultipartFile[] file)throws Exception{
+	public void sellingWrite(SellTalentDTO stdto,String realPath, MultipartFile[] file,int parent)throws Exception{
 		stdao.boardWrite(stdto);
 		File filesPath = new File(realPath);
 		if(!filesPath.exists()) {filesPath.mkdir();}
@@ -109,10 +117,11 @@ public class SellTalentService {
 			if(temp.getSize()>0) {
 				String oriName = temp.getOriginalFilename();
 				String sysName = UUID.randomUUID().toString().replaceAll("-", "")+"_"+oriName;
-				fdto.setOriName(oriName);
-				fdto.setSysName(sysName);
-				fdto.setParentSeq(stdto.getSeq()-1);
-				if(fdao.upload(fdto)>0) {
+				HashMap<String,Object> map = new HashMap<>();
+				map.put("oriName", oriName);
+				map.put("sysName",sysName);
+				map.put("parentSeq",parent);
+				if(fdao.tlsUpload(map)>0) {
 					System.out.println(filesPath.getAbsolutePath() +"/" + sysName);
 					temp.transferTo(new File(filesPath.getAbsolutePath() +"/" + sysName));
 				}

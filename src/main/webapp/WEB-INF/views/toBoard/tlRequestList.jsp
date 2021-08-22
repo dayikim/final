@@ -256,7 +256,7 @@ img{
 <%-- 									<img src="/imgs/lend/${flist.sysName}" id=fimg> --%>
 <%-- 								</c:when> --%>
 <%-- 								<c:otherwise> --%>
-									<img src="/imgs/lend/noimage.jpg" id=fimg>
+									<img src="/imgs/noimage.jpg" id=fimg>
 <%-- 								</c:otherwise> --%>
 <%-- 							</c:choose> --%>
 							<input type="hidden" value="${i.seq}" id="seq" name="seq">

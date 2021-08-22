@@ -85,7 +85,7 @@
 
         /* 프로필,상세보기 */
         #body {
-            padding-top: 100px;
+            padding-top: 120px;
             padding-bottom: 30px;
 
         }
@@ -228,7 +228,9 @@
             margin-bottom: 30px;
 
         }
-
+	
+	 	.btn_wrap{text-align:center; margin-bottom:3px;}
+	 	
         .contents_input {
             padding: 0;
             margin-left: 20px;
@@ -244,7 +246,6 @@
 
 
         #chat,#request{
-            margin-bottom: 10px;
             margin-right: 10px;
         }
 
@@ -453,7 +454,7 @@
                         <p class="target"> ${board.contents}</p>
                     </div>
 
-                    <div class="btn_wrap text-right">
+                    <div class="btn_wrap">
                         <button type="button" class="btn btn-outline-info btn btn-lg" id="chatting"><i class="far fa-comment-dots"></i>
                             1:1 채팅</button>
                             <a href="/tBoard/toSelling"><button type="button" class="btn btn-outline-info btn btn-lg" id="request">

@@ -82,7 +82,7 @@ public class LendService {
 	}
 	
 	//글수정
-	public void boardModify(LendDTO dto,String realPath, LendFilesDTO fdto,String[] delSeq,MultipartFile[] file)throws Exception{
+	public void boardModify(LendDTO dto,String realPath,String[] delSeq,MultipartFile[] file,int parent)throws Exception{
 			
 		dao.boardModify(dto);
 			
@@ -104,10 +104,11 @@ public class LendService {
 			if(temp.getSize()>0) {
 				String oriName = temp.getOriginalFilename();
 				String sysName = UUID.randomUUID().toString().replaceAll("-", "")+"_"+oriName;
-				fdto.setOriName(oriName);
-				fdto.setSysName(sysName);
-				fdto.setParentSeq(dto.getSeq());
-				if(fdao.upload(fdto)>0) {
+				HashMap<String,Object> map = new HashMap<>();
+				map.put("oriName", oriName);
+				map.put("sysName",sysName);
+				map.put("parentSeq",parent);
+				if(fdao.upload(map)>0) {
 					temp.transferTo(new File(filesPath.getAbsolutePath() +"/" + sysName));
 				}
 			}
@@ -116,18 +117,19 @@ public class LendService {
 	
 	//글쓰기 및 이미지
 	@Transactional //DML: insert,delete,update 트렌젝션에 영향을 받음!
-	public void lendWrite(LendDTO dto,String realPath, LendFilesDTO fdto, MultipartFile[] file)throws Exception{
+	public void lendWrite(LendDTO dto,String realPath, MultipartFile[] file, int parent)throws Exception{
 		dao.lendWrite(dto);
 		File filesPath = new File(realPath);
 		if(!filesPath.exists()) {filesPath.mkdir();}
 		for(MultipartFile temp:file) {
 			if(temp.getSize()>0) {
 				String oriName = temp.getOriginalFilename();
-				String sysName = UUID.randomUUID().toString().replaceAll("-", "")+"_"+oriName;
-				fdto.setOriName(oriName);
-				fdto.setSysName(sysName);
-				fdto.setParentSeq(dto.getSeq());
-				if(fdao.upload(fdto)>0) {
+				String sysName = UUID.randomUUID().toString().replaceAll("-", "") +oriName;
+				HashMap<String,Object> map = new HashMap<>();
+				map.put("oriName", oriName);
+				map.put("sysName",sysName);
+				map.put("parentSeq",parent);
+				if(fdao.upload(map)>0) {
 					System.out.println(filesPath.getAbsolutePath() +"/" + sysName);
 					temp.transferTo(new File(filesPath.getAbsolutePath() +"/" + sysName));
 				}
