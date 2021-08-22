@@ -37,6 +37,12 @@ select sysName from profilefiles join review on (review.reviewer = profilefiles.
 <select id="reviewrInfo" resultType="kh.spring.dto.ReviewDTO">
 select reviewer from review where recipient=#{value}
 </select>
+
+ <select id="reviewContents" resultType="kh.spring.dto.ReviewDTO">
+		select * from review where reviewer=#{id} and boardtype=#{talent}
+	</select> 
+
+
 <select id="checkReview" resultType="int">
 select count(*) from review where parentseq=#{value}
 </select>

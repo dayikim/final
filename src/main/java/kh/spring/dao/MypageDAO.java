@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import kh.spring.dto.PaymentDTO;
 import kh.spring.dto.PersonDTO;
+import kh.spring.dto.ReviewDTO;
 
 @Component
 public class MypageDAO {
@@ -54,6 +55,10 @@ public class MypageDAO {
 	//거래완료 후, 판매자 정보 출력
 	public List<HashMap<Object, Object>> sellerInfo(String id) {
 		return mybatis.selectList("MyPage.sellerInfo",id);
+	}
+
+	public List<ReviewDTO> content(Map<Object, Object> param) {
+		return mybatis.selectList("Review.reviewContents",param);
 	}
 
 }
