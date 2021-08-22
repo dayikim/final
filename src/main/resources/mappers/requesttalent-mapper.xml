@@ -92,5 +92,10 @@
 	<select id="numCategory" resultType="int">
 		select count(*) from requesttalent where category like '%'||#{value}||'%'
 	</select>
+	
+	<!-- 내 게시물 출력 - 재능 대여 요청 -->
+	<select id="myRequestBuyTalent" resultType="kh.spring.dto.RequestTalentDTO">
+		select * from requesttalent where writer=#{value} order by 1 desc
+	</select>
 </mapper>
 

@@ -112,6 +112,11 @@
 		select count(*) from lendboard where writer=#{writer} and seq=#{seq} and
 		category=#{category}
 	</select>
+	
+	<!-- 마이페이지 내 게시물 대여하기 출력 -->	
+	<select id="myRequestSellProduct" resultType="kh.spring.dto.LendDTO">
+		select * from lendboard where writer=#{value} order by 1 desc
+	</select>
 
 
 </mapper>
