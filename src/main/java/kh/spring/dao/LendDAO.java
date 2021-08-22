@@ -3,6 +3,7 @@ package kh.spring.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -162,6 +163,12 @@ public class LendDAO {
 		if(needNext) {pageNavi.add(">");}
 
 		return pageNavi;
+	}
+	
+//해당 게시글은 lendboard인가요?
+	public int isitLend(Map<Object, Object> param) {
+			return mybatis.selectOne("Lend.isitLend",param);
+		
 	}
 	
 	

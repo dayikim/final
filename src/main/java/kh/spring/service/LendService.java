@@ -138,6 +138,16 @@ public class LendService {
 	public String getId(int seq) {
 		return dao.getId(seq);
 	}
+	
+	//해당 게시글은 lendboard인가요?
+
+	public int isitLend(int seq, String id, String category) {
+		Map<Object, Object> param = new HashMap<>();
+		param.put("writer", id);
+		param.put("seq",seq);
+		param.put("category", category);
+		return dao.isitLend(param);
+	}
 
 	
 	

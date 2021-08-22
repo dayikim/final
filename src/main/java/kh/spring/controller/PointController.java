@@ -144,27 +144,35 @@ public class PointController {
 	
 	//구매자가 확인버튼 누른다음 결제하기
 	@RequestMapping(value="payment",produces="text/html;charset=utf8")
-	public String payment(int parentseq, int price, Model model, PaymentDTO paydto, PointAccountDTO padto) {
+	public String payment(int parentseq, String item,String seller, String category, int price, Model model, PaymentDTO paydto, PointAccountDTO padto) {
 		//구매자 결제하기 
 		System.out.println(parentseq);
 		String sessionID = (String) session.getAttribute("loginID");
 		paydto.setBuyer(sessionID);
 		paydto.setPrice(price);
 
-		//1~ 대여하기 1001~ 재능판매 시퀀스/
 		//seq로 해당 글의 writer,title 받아오기 (seq는 판매게시글 번호)
-		if(parentseq<1001) {
-			LendDTO lendBInfo = LService.detailView(parentseq);
-			paydto.setSeller(lendBInfo.getWriter());
-			paydto.setItem(lendBInfo.getTitle());
-			paydto.setParentseq(lendBInfo.getSeq());
-		}else if(parentseq>1001){
-			SellTalentDTO STBInfo =STService.detailView(parentseq);
-			paydto.setSeller(STBInfo.getWriter());
-			paydto.setItem(STBInfo.getTitle());
-			paydto.setParentseq(STBInfo.getSeq());
-		}
+		
+		//lend인지 selltalent인지 구분
+//		System.out.println(parentseq +":" + sessionID +":" + category);
+//		int isitLendBoard =LService.isitLend(parentseq,sessionID,category);	
+//		if(isitLendBoard>0) {
+//			System.out.println("대여하기");
+//			LendDTO lendBInfo = LService.detailView(parentseq);
+//			paydto.setSeller(lendBInfo.getWriter());
+//			paydto.setItem(lendBInfo.getTitle());
+//			paydto.setParentseq(lendBInfo.getSeq());
+//		}else {
+//			System.out.println("재능판매");
+//			SellTalentDTO STBInfo =STService.detailView(parentseq);
+//			paydto.setSeller(STBInfo.getWriter());
+//			paydto.setItem(STBInfo.getTitle());
+//			paydto.setParentseq(STBInfo.getSeq());
+//		}
 		// 결제 하기 
+		paydto.setSeller(seller);
+		paydto.setItem(item);
+		paydto.setParentseq(parentseq);
 		int payment_result =PointService.payment(paydto);
 
 		if(payment_result>0) {
@@ -183,16 +191,21 @@ public class PointController {
 				System.out.println("구매자 포인트 차감 성공");
 				//구매자/판매자가 오프라인 거래 후, 구매자가 확인버튼 누르면 판매자에게 입금
 				//pointaccount insert value(seq,id=seller(approval테이블),'0','0','500','판매금액',sysdate)	
-				if(parentseq<1001) {
-					String writer = LService.getId(parentseq);
-					System.out.println("판매자 :" +writer);
-					padto.setId(writer);
-
-				}else if(parentseq>1001) {
-					String writer =STService.getWriter(parentseq);
-					System.out.println("판매자 :" +writer);
-					padto.setId(writer);
-				}
+//				int isitLendBoard1 =LService.isitLend(parentseq,sessionID,category);	
+//				if(isitLendBoard1>0) {
+//					System.out.println("대여하기");
+//					String writer = LService.getId(parentseq);
+//					System.out.println("판매자 :" +writer);
+//					padto.setId(writer);
+//
+//				}else {
+//					System.out.println("재능판매");
+//					String writer =STService.getWriter(parentseq);
+//					System.out.println("판매자 :" +writer);
+//					padto.setId(writer);
+//				}
+				
+				padto.setId(seller);
 				padto.setEarnpoint(price);
 				padto.setPointamount(price);
 				padto.setReason("거래금 입금");

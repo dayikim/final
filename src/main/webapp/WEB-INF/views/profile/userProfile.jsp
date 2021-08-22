@@ -354,8 +354,8 @@ border-bottom: solid 3px #39d9c8;
 								<div class="card">
 									<div class="card-body">
 										<div class="card-category">[${i.category}]</div>
-									    <a href="/profile/sellingViewByUser?writer=${writer}&seq=${i.seq}"><img src="..." class="card-img-top" alt="..."></a>
-										<h5 class="card-title"><a href="/profile/sellingViewByUser?writer=${writer}&seq=${i.seq}">${i.title}</a></h5>
+									    <a href="/profile/sellingViewByUser?id=${writer}&seq=${i.seq}&category=${i.category}" }><img src="..." class="card-img-top" alt="..."></a>
+										<h5 class="card-title"><a href="/profile/sellingViewByUser?id=${writer}&seq=${i.seq}&category=${i.category}">${i.title}</a></h5>
 										<div class="card-price ">${i.price} 상추</div>
 										<div class="card-region-name">${i.address}</div>
 										<div class="card-counts">

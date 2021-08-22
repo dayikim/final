@@ -584,8 +584,12 @@
 
                         <div class="btn_wrap">
                         <form action="/point/payment" id="payForm">
-                            <input type="hidden" name="price" value="${board.price}" id="price">
-                            <input type="hidden" name="parentseq" value="${board.seq}" id="parentseq">                               <button type="button" class="btn btn-success btn btn-lg" id="pay">
+                        	<input type="hidden" name="seller" value="${board.writer}">
+                        	 <input type="hidden" name="item" value="${board.title}">
+                        	 <input type="hidden" name="price" value="${board.price}" id="price">
+                            <input type="hidden" name="parentseq" value="${board.seq}" id="parentseq">
+                            <input type="hidden" name="category" value="${board.category}" id="category">                             
+                            <button type="button" class="btn btn-success btn btn-lg" id="pay">
                                 <i class="far fa-comment-dots"></i> 결제하기
                             </button>
                             </form>

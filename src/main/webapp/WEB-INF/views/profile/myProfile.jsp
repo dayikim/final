@@ -366,10 +366,10 @@ border-bottom: solid 3px #39d9c8;
 								<div class="card">
 									<div class="card-body">
 										<div class="card-category">[${i.category}]</div>
-										<a href="/profile/sellingViewByMe?seq=${i.seq}"><img
+										<a href="/profile/sellingViewByMe?seq=${i.seq}&category=${i.category}"><img
 											src="..." class="card-img-top" alt="..."></a>
 										<h5 class="card-title">
-											<a href="/profile/sellingViewByMe?seq=${i.seq}">${i.title}</a>
+											<a href="/profile/sellingViewByMe?seq=${i.seq}&category=${i.category}">${i.title}</a>
 										</h5>
 										<div class="card-price ">${i.price}상추</div>
 										<div class="card-region-name">${i.address}</div>

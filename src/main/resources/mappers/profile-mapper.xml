@@ -29,7 +29,7 @@ select * from lendboard where writer =#{writer} union all select * from selltale
 </select>
 
 <select id="sellingView" resultMap="sellingView" resultType="HashMap">
-select * from lendboard where writer =#{writer} and seq=#{seq} union all select * from selltalent where writer =#{writer} and seq=#{seq}
+select * from lendboard where writer =#{writer} and seq=#{seq} and #{category} union all select * from selltalent where writer =#{writer} and seq=#{seq}
 </select>
 
 <select id="sellingCount1" resultType="int">
