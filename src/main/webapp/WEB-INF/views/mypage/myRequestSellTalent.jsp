@@ -155,8 +155,13 @@ img {
 	padding-bottom: 40px;
 }
 
+.title {
+	margin-left: 50px;
+}
+
 .content {
 	margin-top: 30px;
+	margin-left: 50px;
 }
 </style>
 
@@ -319,28 +324,45 @@ img {
 							</div>
 							<div class="content">
 								<div class="row">
-									<div class="col-4 left">
-										<b>재능기부자</b>
+									<div class=col-6>
+										<div class="row">
+											<div class="col-4 left">
+												<b>대여자</b>
+											</div>
+											<div class="col-8 right">${i.writer }</div>
+										</div>
 									</div>
-									<div class="col-8 right">${i.writer }</div>
+
+									<div class=col-6>
+										<div class=row>
+											<div class="col-4 left">
+												<b>위치</b>
+											</div>
+											<div class="col-8 right">${i.address }</div>
+										</div>
+									</div>
 								</div>
+
 								<div class="row">
-									<div class="col-4 left">
-										<b>위치</b>
+									<div class="col-6">
+										<div class=row>
+											<div class="col-4 left">
+												<b>결제 내역</b>
+											</div>
+											<div class="col-8 right">${i.price }상추</div>
+										</div>
+
 									</div>
-									<div class="col-8 right">${i.address }</div>
-								</div>
-								<div class="row">
-									<div class="col-4 left">
-										<b>결제 내역</b>
+									<div class="col-6">
+										<div class=row>
+											<div class="col-4 left">
+												<b>게시물 등록일</b>
+											</div>
+											<div class="col-8 right">${i.regDate }</div>
+										</div>
+
 									</div>
-									<div class="col-8 right">${i.price }상추</div>
-								</div>
-								<div class="row">
-									<div class="col-4 left">
-										<b>게시물 등록일</b>
-									</div>
-									<div class="col-8 right">${i.regDate }</div>
+
 								</div>
 							</div>
 						</div>
