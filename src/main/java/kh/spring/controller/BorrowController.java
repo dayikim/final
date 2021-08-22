@@ -42,13 +42,14 @@ public class BorrowController {
 	//대여요청 글쓰기 데이터
 	@RequestMapping(value="boardWrite",produces="text/html;charset=utf8")
 	public String boardWrite(BorrowDTO dto,BorrowBoardFilesDTO fdto, MultipartFile[] file) throws Exception {
+		
 		int seq =service.getSeq();
 		String sessionID = (String) session.getAttribute("loginID");
 		String realPath = session.getServletContext().getRealPath("resources/imgs/borrow");
 		dto.setSeq(seq);
+		int parent = dto.getSeq();
 		dto.setWriter(sessionID);
-		service.boardwrite(dto,realPath,fdto,file);
-
+		service.boardwrite(dto,realPath,file,parent);
 		return "redirect:/AllBoardList/borrowList?choice=Allchoice&search=&cpage=1";
 	}
 	
@@ -68,7 +69,7 @@ public class BorrowController {
         model.addAttribute("board",dto); //글내용	 
 		 
 		List<BorrowBoardFilesDTO> fileList = service.selectAll(seq); //첨부파일 목록 출력   
-//      System.out.println("파일이 비어 있나요?? "+fileList.isEmpty());//파일이 있나요?
+        System.out.println(fileList+"파일이 비어 있나요?? "+fileList.isEmpty());//파일이 있나요?
 		model.addAttribute("filelist", fileList);//파일리스트를 request애 담는다.
 		
 		
@@ -98,8 +99,10 @@ public class BorrowController {
 	public String bwModify(BorrowDTO dto,BorrowBoardFilesDTO fdto,String[] delSeq,MultipartFile[] file) throws Exception {
 		
 		String realPath = session.getServletContext().getRealPath("resources/imgs/borrow");
+
+		int parent = dto.getSeq();
 		
-		service.boardModify(dto,realPath,fdto,delSeq,file);
+		service.boardModify(dto,realPath,delSeq,file,parent);
 
 		return "redirect:/AllBoardList/borrowList?choice=Allchoice&search=&cpage=1";
 	}

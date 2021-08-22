@@ -1,5 +1,6 @@
 package kh.spring.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -7,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import kh.spring.dto.BorrowBoardFilesDTO;
-import kh.spring.dto.LendFilesDTO;
 
 @Component
 public class BwBoardFilesDAO {
@@ -16,8 +16,8 @@ public class BwBoardFilesDAO {
 	private SqlSessionTemplate mybatis;
 	
 	//사진 업로드
-	public int upload(BorrowBoardFilesDTO dto) {
-		return mybatis.insert("BwFiles.upload",dto);
+	public int upload(HashMap<String,Object> map) {
+		return mybatis.insert("BwFiles.upload",map);
 	}
 	
 	//사진리스트	
@@ -28,7 +28,10 @@ public class BwBoardFilesDAO {
 	
 	//사진 이름 가져오기
 	public String getSysName(int seq) {
-		return mybatis.selectOne("BwFiles.sysName", seq);
+		
+		BorrowBoardFilesDTO dto = mybatis.selectOne("BwFiles.sysName", seq);
+		String sysName = dto.getSysName();
+		return sysName;
 	}
 	
 	//사진 삭제 하기

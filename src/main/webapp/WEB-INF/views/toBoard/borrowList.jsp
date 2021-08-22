@@ -226,14 +226,14 @@
 				<c:forEach var="i" items="${list}">
 					<div class="to-board">
 						<a href="/borrowBoard/borrowView?id=${i.writer}&seq=${i.seq}" id="list_http" class="list_http">				
-<%-- 							<c:choose> --%>
-<%-- 								<c:when test="${flist != null}"> --%>
-<%-- 									<img src="/imgs/lend/${flist.sysName}" id=fimg> --%>
-<%-- 								</c:when> --%>
-<%-- 								<c:otherwise> --%>
-									<img src="/imgs/lend/noimage.jpg" id=fimg>
-<%-- 								</c:otherwise> --%>
-<%-- 							</c:choose> --%>
+							<c:choose>
+								<c:when test="${flist != null}">
+									<img src="/imgs/borrow/${flist.sysName}" id=fimg>
+								</c:when>
+								<c:otherwise>
+									<img src="/imgs/noimage.jpg" id=fimg>
+								</c:otherwise>
+							</c:choose>
 							<input type="hidden" value="${i.seq}" id="seq" name="seq">
 							<p id=title class="title">${i.title}</p>
 							<p id="category">${i.category}</p>

@@ -3,9 +3,11 @@ package kh.spring.service;
 import java.io.File;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.maven.shared.invoker.SystemOutLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,12 +61,13 @@ public class BorrowService {
 	}
 	
 	//글수정
-	public void boardModify(BorrowDTO dto,String realPath, BorrowBoardFilesDTO fdto,String[] delSeq,MultipartFile[] file)throws Exception{
+	public void boardModify(BorrowDTO dto,String realPath, String[] delSeq,MultipartFile[] file,int parent)throws Exception{
 		
 		dao.boardModify(dto);
 		
 		if(delSeq != null) {
 			for (String target : delSeq) {
+				
 				String sysName = fdao.getSysName(Integer.parseInt(target));
 				sysName = Normalizer.normalize(sysName, Form.NFC);
 				File targetFile = new File(realPath + "/" + sysName);
@@ -80,11 +83,12 @@ public class BorrowService {
 		for(MultipartFile temp:file) {
 			if(temp.getSize()>0) {
 				String oriName = temp.getOriginalFilename();
-				String sysName = UUID.randomUUID().toString().replaceAll("-", "")+"_"+oriName;
-				fdto.setOriName(oriName);
-				fdto.setSysName(sysName);
-				fdto.setParentSeq(dto.getSeq());
-				if(fdao.upload(fdto)>0) {
+				String sysName = UUID.randomUUID().toString().replaceAll("-", "")+oriName;
+				HashMap<String,Object> map = new HashMap<>();
+				map.put("oriName", oriName);
+				map.put("sysName",sysName);
+				map.put("parentSeq",parent);
+				if(fdao.upload(map)>0) {
 					temp.transferTo(new File(filesPath.getAbsolutePath() +"/" + sysName));
 				}
 			}
@@ -93,20 +97,22 @@ public class BorrowService {
 	
 	//글쓰기
 	@Transactional //DML: insert,delete,update 트렌젝션에 영향을 받음!
-	public void boardwrite(BorrowDTO dto,String realPath, BorrowBoardFilesDTO fdto, MultipartFile[] file)throws Exception{
+	public void boardwrite(BorrowDTO dto,String realPath,MultipartFile[] file, int parent)throws Exception{
 		
 		dao.boardWrite(dto);
 		
 		File filesPath = new File(realPath);
 		if(!filesPath.exists()) {filesPath.mkdir();}
+		
 		for(MultipartFile temp:file) {
 			if(temp.getSize()>0) {
 				String oriName = temp.getOriginalFilename();
-				String sysName = UUID.randomUUID().toString().replaceAll("-", "")+"_"+oriName;
-				fdto.setOriName(oriName);
-				fdto.setSysName(sysName);
-				fdto.setParentSeq(dto.getSeq()-1);
-				if(fdao.upload(fdto)>0) {
+				String sysName = UUID.randomUUID().toString().replaceAll("-", "") +oriName;
+				HashMap<String,Object> map = new HashMap<>();
+				map.put("oriName", oriName);
+				map.put("sysName",sysName);
+				map.put("parentSeq",parent);
+				if(fdao.upload(map)>0) {
 					temp.transferTo(new File(filesPath.getAbsolutePath() +"/" + sysName));
 				}
 			}

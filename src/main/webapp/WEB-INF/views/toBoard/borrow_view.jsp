@@ -85,7 +85,7 @@
 
         /* 프로필,상세보기 */
         #body {
-            padding-top: 100px;
+            padding-top: 120px;
             padding-bottom: 30px;
 
         }
@@ -128,7 +128,7 @@
 
         .carousel-item img {
             width: 100%;
-            height: 100%;
+            height: 600px;
         }
 
         .carousel-inner {
@@ -223,11 +223,13 @@
             border: 1px solid #ddd;
             width: 85%;
             margin: auto;
-            height: auto;
+            height: 100%;
             margin-top: 10px;
             margin-bottom: 30px;
 
         }
+        
+        .btn_wrap{text-align:center; margin-bottom:3px;}
 
         .contents_input {
             padding: 0;
@@ -244,7 +246,6 @@
 
 
         #chat,#request{
-            margin-bottom: 10px;
             margin-right: 10px;
         }
     </style>
@@ -260,7 +261,7 @@
 			location.href = "/chat/createRoom?board_seq="+$("#seq").val()+"&board_category=borrow";
 		})
 	})
-	
+	$(function() {
     	$("#request").on("click",function(){//대여하기 글쓰기로이동
     		location.href = "/lendBoard/toLend"
     	})
@@ -383,28 +384,39 @@
                 <div class="row col-12 carousel">
                     <!-- Carousel -->
                     <div id="carousel-example" class="col-12 carousel slide" data-ride="carousel">
-
+<!--                     	<div class="col-12 carousel-inner"> -->
+<%-- 	                    	<c:choose> --%>
+<%-- 	                    		<c:when test="${filelist != null}"> --%>
+<%-- 	                    			<c:forEach var="flist" items="${fileList}"> --%>
+<!-- 	                    				<div class="col-12 col-md-12 carousel-item"> -->
+<%-- 	                    					<img src="/imgs/borrow/${flist.sysName}" class="col-12 d-block w-100"> --%>
+<!-- 	                    				</div> -->
+<%-- 	                    			</c:forEach> --%>
+<%-- 	                    		</c:when> --%>
+<%-- 	                    		<c:otherwise> --%>
+<!-- 	                    			<div class="col-12 col-md-12 carousel-item active"> -->
+<!-- 	                    				<img src="/imgs/noimage.jpg" class="col-12 d-block w-100"> -->
+<!-- 	                    			</div> -->
+<%-- 	                    		</c:otherwise> --%>
+<%-- 	                    	</c:choose> --%>
+<!-- 						</div> -->
 
                         <div class="col-12 carousel-inner">
-                            <div class="col-12 col-md-12 carousel-item active">
-                                <img src="자유게시판 상세 및 신고.png" class="col-12 d-block w-100" alt="slide-img-1">
-
+<!--                             <div class="col-12 col-md-12 carousel-item  active"> -->
+<%--                                 <img src="/imgs/borrow/${flist.sysName}" class="col-12 d-block w-100" alt="slide-img-1"> --%>
+<!--                             </div> -->
+                            <div class=" col-12 carousel-item active">
+                                <img src="/imgs/noimage.jpg" class="col-12 col-md-12 d-block w-100" alt="slide-img-2">
                             </div>
-                            <div class=" col-12 carousel-item">
-                                <img src="자유게시판 수정.PNG" class="col-12 col-md-12 d-block w-100" alt="slide-img-2">
-                                <div class="carousel-caption">
+<!--                         </div> -->
+<!--                         <div class=" col-12 carousel-item"> -->
+<!--                             <img src="자유게시판 작성.png" class="col-12 col-md-12 d-block w-100" alt="slide-img-3"> -->
 
-                                </div>
-                            </div>
-                        </div>
-                        <div class=" col-12 carousel-item">
-                            <img src="자유게시판 작성.png" class="col-12 col-md-12 d-block w-100" alt="slide-img-3">
+<!--                         </div> -->
+<!--                         <div class="col-12 carousel-item"> -->
+<!--                             <img src="assets/img/slides/slide-img-4.jpg" class="d-block w-100" alt="slide-img-4"> -->
 
-                        </div>
-                        <div class="col-12 carousel-item">
-                            <img src="assets/img/slides/slide-img-4.jpg" class="d-block w-100" alt="slide-img-4">
-
-                        </div>
+<!--                         </div> -->
                     </div>
 
                     <a class="carousel-control-prev" href="#carousel-example" role="button" data-slide="prev">
@@ -450,7 +462,7 @@
                         <p class="target"> ${board.contents}</p>
                     </div>
 
-                    <div class="btn_wrap text-right">
+                    <div class="btn_wrap">
                         <button type="button" class="btn btn-outline-info btn btn-lg" id="chatting"><i class="far fa-comment-dots"></i>
                             1:1 채팅</button>
                             <a href="/lendBoard/toLend"><button type="button" class="btn btn-outline-info btn btn-lg" id="request">

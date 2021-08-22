@@ -90,7 +90,7 @@ img {
 
 /* 프로필,상세보기 */
 #body {
-	padding-top: 110px;
+	padding-top: 120px;
 	padding-bottom: 30px;
 }
 
@@ -230,6 +230,8 @@ img {
 	margin-bottom: 30px;
 }
 
+ .btn_wrap{text-align:center; margin-bottom:3px;}
+ 
 .contents_input {
 	padding: 0;
 	margin-left: 20px;
@@ -493,10 +495,10 @@ $(function(){
 					<c:choose>
 						<c:when test="${loginID != board.writer}">
 							<div class=" btn_wrap text-right">
-								<input type="hidden" name="seller" value="${board.writer}">
-								<input type="hidden" name="bookable" value="y">
-								<input type="hidden" name="booker" value="${loginID}">
-								<input type="hidden" name="parentseq" value="${board.seq}">
+								<input type="hidden" name="seller" value="${board.writer}" id="seller">
+								<input type="hidden" name="bookable" value="y" id="bookble">
+								<input type="hidden" name="booker" value="${loginID}" id="booker">
+								<input type="hidden" name="parentseq" value="${board.seq}" id="parentseq">
 								<button type="button" class="btn btn-secondary" id="booking">예약하기</button>
 							</div>
 						</c:when>

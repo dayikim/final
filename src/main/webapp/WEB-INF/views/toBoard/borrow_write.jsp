@@ -116,10 +116,10 @@
 
 				/* 이미지 파일 미리보기 */
 				 #preview {list-style-type: none; margin: 20px 0 0 0; padding: 0;}
-			     #preview li {background-color: #fff; border: 1px solid #ccc; border-radius: 5px; float: left; margin: 20px 20px 0 0; padding: 2px; width: 150px; height: 150px; line-height: 150px; position: relative;}
+			     #preview li {background-color: #fff; border: 1px solid #ccc; border-radius: 5px; float: left; margin: 20px 20px 0 0; width: 150px; height: 150px; line-height: 150px; position: relative;}
 			     #preview li img.img-thumb {width: 100%; height: 100%;}
 			     #preview .ui-selected {background: red;}
-			     #preview .delete-btn {width: 24px; border: 0; position: absolute; top: -12px; right: -14px;}
+			     #preview .delete-btn {width: 13px; border: 0; position: absolute; top: -7px; right: -13px;}
         
 
 
@@ -168,6 +168,18 @@
 					$("#Input3").attr("readonly",true);
 				}
 			})
+			$(function() {
+				$("#search").keyup(function(e) {
+					if (e.keyCode == 13) {
+						location.href = "/AllBoardList/borrowList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
+					}
+				})
+					
+				$("#chat").on("click",function(){
+					location.href = "/chat";
+				})
+			})
+			
 			function filesUpload() {
 				console.log("fileupload");
 				$("#file").trigger('click');
@@ -175,26 +187,8 @@
 			
 			$(document).ready(function() {        
            
-	            var storedFiles = [];      
-	            //$('.cvf_order').hide();
-// 	            $("#file").on("change", preview)
-	            
-	            $("#file").change(function() {
-						$("#fileName").val(this.files && this.files.length ? this.files[0].name : this.value.replace(/^C:\\fakepath\\/i, ''));
-						
-					})
-	            
-	            let fileTarget = $('.upload-hidden');
-					fileTarget.on('change', function () { // 값이 변경되면
-						if (window.FileReader) { // modern browser
-							var filename = this.files[0].name;
-						}
-						else { // old IE 
-							var filename = this.val().split('/').pop().split('\\').pop(); // 파일명만 추출 
-						}
-						// 추출한 파일명 삽입 
-						$(this).siblings("fileName").val(filename);
-					});
+	            var storedFiles = [];
+	            var file = [];
 	           
 	            // 번호를 붙이는 함수
 	            function cvf_reload_order() {
@@ -221,11 +215,11 @@
 	                //불러온 파일 만큼 돌린다         
 	                for (i = 0; i < files.length; i++) {
 	                    var readImg = new FileReader();
-	                    var file = files[i];
-	                   
+	                    file = files[i];
 	                    if (file.type.match('image.*')){
 	                        //위에서 선언해준 storedFiles 배열에 이미지를 넣는다
 	                        storedFiles.push(file);
+	                        console.log(storedFiles.length);
 	                        //onload는 문서가 전부 준비된 상황 이후에 발동하도록하는데
 	                        //여기서 readImg = FileReader(); 이기 때문에 파일을 다 읽어오면 이미지를 어팬드시키도록한다
 	                        readImg.onload = (function(file) {
@@ -233,7 +227,7 @@
 	                                $('#preview').append(
 	                                "<li file = '" + file.name + "'>" +                                
 	                                    "<img class = 'img-thumb' src = '" + e.target.result + "' />" +
-	                                    "<a href = '#' class = 'cvf_delete_image' title = 'Cancel'><img class = 'delete-btn' src = '/resources/imgs/delete-btn.png' /></a>" +
+	                                    "<a href = '#' class = 'cvf_delete_image' title = 'Cancel'><img class = 'delete-btn' src = '/imgs/delete-btn.png' /></a>" +
 	                                "</li>"
 	                                );     
 	                            };
@@ -243,6 +237,8 @@
 	                       
 	                    } else {
 	                        alert('the file '+ file.name + ' is not an image<br/>');
+	                        $("#fileName").val("");
+	                        return;
 	                    }
 	                   //파일을 추가할때마다 실행해주는 테스트코드
 	                   //1000미리세컨드로 준상태면 파일이 올라오자마자 이미지를 움직일경우 번호가 늘어나서 업로드할때 배열이 섞여버린다
@@ -267,6 +263,7 @@
 	                        break;
 	                    }
 	                }
+	                $("#fileName").val("");
 	                cvf_add_order();
 	             });
 								
@@ -446,8 +443,8 @@
 								
 									<div class="custom-file">
 										<input type="file" name="file" class="upload-hidden" id="file"  onchange="javascript:document.getElementById('fileName').value = this.value"  multiple>
-										<input type=text class="custom-file-label"  id="fileName" name="filename" style="width: 980px;">
-																		</div>
+										<input type=text class="custom-file-label"  id="fileName" name="filename" style="width: 100%;">
+							</div>
 									<div class="input-group-append">
 										<button class="btn btn-outline-secondary" type="button" onclick="filesUpload();"class="uploadBtn">업로드</button>
 									</div>
