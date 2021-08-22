@@ -16,7 +16,7 @@ public class SnsFilesDAO {
 	private SqlSessionTemplate mybatis;
 	
 	public int insert(Map<String,Object>param) {
-		return mybatis.insert("SnsFile.file",param );
+		return mybatis.insert("SnsFile.insert",param );
 	}
 	
 	public List<SnsFilesDTO> fileList(){

@@ -6,37 +6,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<meta content="Free Website Template" name="keywords">
-<meta content="Free Website Template" name="description">
-<!-- Favicon -->
-<link href="img/favicon.ico" rel="icon">
-<!-- Google Font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"
-	rel="stylesheet">
-<link
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-	rel="stylesheet">
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
-	rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap"
-	rel="stylesheet">
 
-<!-- Template Stylesheet -->
-<link href="/css/style.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<link
-	href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-	rel="stylesheet" id="bootstrap-css">
-<script
-	src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script
-	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
+
 <link rel="stylesheet"
 	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
 	integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
@@ -46,43 +22,13 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
 	integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
 	crossorigin="anonymous"></script>
+	
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
 
-<script src="/js/main.js"></script>
 
 
 <style>
-.navbar {
-	position: absolute;
-}
-
-#SnSbody {
-	position: absolute;
-	top: 20%;
-	margin-left: 4%;
-}
-
-#titlename {
-	margin-top: 1%;
-	margin-bottom: 0;
-	font-size: 30px;
-	font-family: 'Gugi', cursive;
-	color: white;
-}
-
-img {
-	width: 100%;
-}
-
-#search {
-	width: 500px;
-	position: relative;
-}
-
-.Explanation {
-	position: relative;
-	top: 30%;
-}
-
 style>body {
 	background-color: #eeeeee;
 }
@@ -146,7 +92,6 @@ style>body {
 	var count = 2;
 	let fileList = [];
 	$(function() {
-		console.log(count);
 		//무한스크롤
 		var isScroll = true;
 		let loadNewPage = $(window).on("scroll",(function() {
@@ -300,7 +245,7 @@ style>body {
 	            console.log("파일리스트 값: "+fileList);
 	        });
 	     
-		//출력한 파일 삭제
+		//업로드한 파일 삭제
          $(document).on("click", ".delfile", function(){ //동적바인딩
         	 fileList[$(this).closest(".row").attr("data-idx")]=null;
         	 $(this).closest(".row").remove();
@@ -308,32 +253,37 @@ style>body {
          })
          
          $("#submit").on("click", function(){
-        	 
-        	 var formData = new FormData();
-	         for (var i = 0; i < fileList.length; i++) {
-	         	formData.append("file",fileList[i]);
-	         }
-	         if($("#contents").val() != null){
+        	 if(${loginID == null}){
+ 	            alert('로그인 후 이용해주세요')
+ 	            return false;
+ 	         }else if($("#contents").val() == ""){
+ 	        	 alert('글을 작성해주세요')
+ 	        	 return false;
+ 	         }else if($("#contents").val() != ""){
+        	 	var formData = new FormData();
+	         	for (var i = 0; i < fileList.length; i++) {
+	         		formData.append("file",fileList[i]);
+	         	}
 		         $.ajax({
 		        	 url:"/sns/write",
 		        	 method:"get",
-		        	 data:{"text":$("#contents").val()}
+		        	 data:{"contents":$("#contents").val(),"category":$("#category").val()}
+		         }).done(function(){
+		        	 location.reload();
 		         })
-	         }
-        	 
-        	 $.ajax({
-        		  url:"/sns/file",
-        		  enctype: 'multipart/form-data',
-                  method: 'post',
-                  data: formData,
-                  dataType: 'TEXT',
-                  processData: false,
-                  contentType: false
+	         	         
+        	 	$.ajax({
+        		  	url:"/sns/file",
+        		  	enctype: 'multipart/form-data',
+                  	method: 'post',
+                  	data: formData,
+                  	dataType: 'TEXT',
+                  	processData: false,
+                  	contentType: false
 				}).done(function(){
-					
-					
+					location.reload();
 				})
-        		   
+ 	         }
          })
 		
 		//댓글버튼눌렀을때
@@ -519,111 +469,13 @@ style>body {
     		$( 'html, body' ).animate( { scrollTop : 0 }, 400 );
     		return false;
     	} );
-    	
-    	$("#search").keyup(function(e) {
-			if (e.keyCode == 13) {
-				location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
-			}
-		})
-		
-		$("#chat").on("click",function(){
-			location.href = "/chat/waitingroom";
-		})
-		
-		
 		
 	})
 </script>
 </head>
 <body>
-
-	<!-- Top Bar Start -->
-	<div class="top-bar d-none d-md-block">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-6">
-					<div class="top-bar-left">
-						<div class="text">
-							<h2>AM 9:00 - PM 7:00</h2>
-						</div>
-						<div class="text">
-							<h2>02 123 4567</h2>
-							<p>고객 센터</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="top-bar-right">
-						<div class="social">
-							<a href="/sns/main"><i class="fab fa-twitter"></i></a> <a
-								href="/sns/main"><i class="fab fa-facebook-f"></i></a> <a
-								href="/sns/main"><i class="fab fa-instagram"></i></a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Top Bar End -->
-
-	<!-- Nav Bar Start -->
-	<div class="navbar navbar-expand-lg bg-dark navbar-dark">
-		<div class="container-fluid">
-			<a href="/" class="navbar-brand"><p id=titlename>돈-다</a>
-			</p>
-			<button type="button" class="navbar-toggler" data-toggle="collapse"
-				data-target="#navbarCollapse">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<c:choose>
-				<c:when test="${loginID == null }">
-					<div class="collapse navbar-collapse justify-content-between"
-						id="navbarCollapse">
-						<div class="navbar-nav ml-auto">
-							<input class="form-control mr-sm-5" type="search"
-								placeholder="물품, 지역을 검색해주세요." id=search aria-label="Search">
-							<a href="/person/login" class="nav-item nav-link active">Login</a>
-							<!-- Login Page 이동 -->
-							<a href="/person/join" class="nav-item nav-link">Sign Up</a>
-							<!-- SignUp Page 이동 -->
-						</div>
-					</div>
-				</c:when>
-				<c:otherwise>
-					<div class="collapse navbar-collapse justify-content-between"
-						id="navbarCollapse">
-						<div class="navbar-nav ml-auto">
-							<input class="form-control mr-sm-5" type="search"
-								placeholder="물품, 지역을 검색해주세요." id=search aria-label="Search">
-							<a href="/person/logout" class="nav-item nav-link active">Logout</a>
-							<!-- Logout -->
-							<div class="collapse navbar-collapse" id="navbarNavDropdown">
-								<ul class="navbar-nav">
-									<li class="nav-item dropdown"><a
-										class="nav-link dropdown-toggle" href="#"
-										id="navbarDropdownMenuLink" role="button"
-										data-toggle="dropdown" aria-haspopup="true"
-										aria-expanded="false"> Menu </a>
-										<div class="dropdown-menu"
-											aria-labelledby="navbarDropdownMenuLink">
-											<a class="dropdown-item" href="/AllBoardList/lendList?choice=Allchoice&search=&cpage=1">Board</a> <a
-												class="dropdown-item" href="/sns/main">SNS</a> <a
-												class="dropdown-item" href="/my/mypageProc">My page</a> <a
-												class="dropdown-item" href="/point/ToCharging">Charging</a>
-										</div></li>
-								</ul>
-								<button type="button" class="btn btn-outline-warning" id="chat">Chatting</button>
-							</div>
-						</div>
-					</div>
-				</c:otherwise>
-			</c:choose>
-		</div>
-	</div>
-	<!-- Nav Bar End -->
-
-
-	<div class="container-fluid gedf-wrapper">
+<jsp:include page= "/WEB-INF/views/navi.jsp" />
+	<div class="container-fluid gedf-wrapper" id=SnSbody>
 		<div class="row" id=row>
 			<div class="col-md-3"></div>
 			<div class="col-md-6 gedf-main">
@@ -668,7 +520,7 @@ style>body {
 								</div>
 								<!-- 카테고리 -->
 								<div class="btn-group">
-									<select name=category>
+									<select name=category id=category>
 										<option>우리동네질문</option>
 										<option>동네홍보</option>
 										<option>기타</option>

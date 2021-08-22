@@ -16,8 +16,8 @@ public class SnsDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 	
-	public int insert(SnsDTO dto) {
-		return mybatis.insert("Sns.insert", dto);
+	public void insert(Map<String,Object>param) {
+		mybatis.insert("Sns.insert", param);
 	}
 	
 	public int seq() {
@@ -56,8 +56,8 @@ public class SnsDAO {
 		return mybatis.selectOne("Sns.select",seq);
 	}
 	
-	public int modify(SnsDTO dto) {
-		return mybatis.update("Sns.modify", dto);
+	public void modify(Map<String,Object>param) {
+		mybatis.update("Sns.modify", param);
 	}
 	
 	public int love(Map<String,Integer>param) {

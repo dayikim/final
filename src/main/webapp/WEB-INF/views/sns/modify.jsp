@@ -6,37 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<meta content="Free Website Template" name="keywords">
-<meta content="Free Website Template" name="description">
-<!-- Favicon -->
-<link href="img/favicon.ico" rel="icon">
-<!-- Google Font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"
-	rel="stylesheet">
-<link
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-	rel="stylesheet">
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
-	rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap"
-	rel="stylesheet">
-
-<!-- Template Stylesheet -->
-<link href="/css/style.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<link
-	href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-	rel="stylesheet" id="bootstrap-css">
-<script
-	src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script
-	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
+
 <link rel="stylesheet"
 	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
 	integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
@@ -46,43 +21,12 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
 	integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
 	crossorigin="anonymous"></script>
-
-<script src="/js/main.js"></script>
+	
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
 
 
 <style>
-.navbar {
-	position: absolute;
-	top: 8%;
-}
-
-#SnSbody {
-	position: absolute;
-	top: 20%;
-	margin-left: 4%;
-}
-
-#titlename {
-	margin-top: 1%;
-	margin-bottom: 0;
-	font-size: 30px;
-	font-family: 'Gugi', cursive;
-	color: white;
-}
-
-img {
-	width: 100%;
-}
-
-#search {
-	width: 500px;
-	position: relative;
-}
-
-.Explanation {
-	position: relative;
-	top: 30%;
-}
 
 style>body {
 	background-color: #eeeeee;
@@ -136,6 +80,7 @@ style>body {
 	max-width: 300px;
 	max-height: 400px;
 }
+
 </style>
 <script>
 	$(function() {
@@ -156,72 +101,75 @@ style>body {
 			}
 		}));
 
+		let fileList = [];
 		//파일명출력
-		$('#file').change(function() {
-			var files = $('input[name="file"]')[0].files;
+	     $('#file').change(function(){	            
+	            var files=$('input[name="file"]')[0].files;
+	            
+	            for(var i= 0; i<files.length; i++){
+	            	let name = files[i].name
+	            	
+	            	let delDiv = $("<div>");
+	                let delBtn = $("<button>");
+	                delBtn.addClass("delfile");
+	                delBtn.text("-")
+	                delDiv.append(delBtn);
 
-			for (var i = 0; i < files.length; i++) {
-				let name = files[i].name
+	                let rowDiv = $("<div data-idx="+i+">");
+	                rowDiv.addClass("row");
 
-				let delDiv = $("<div>");
-				let delBtn = $("<button>");
-				delBtn.addClass("delfile");
-				delBtn.text("-")
-				delDiv.append(delBtn);
-
-				let rowDiv = $("<div>");
-				rowDiv.addClass("row");
-
-				rowDiv.append(name);
-				rowDiv.append(delDiv);
-
-				let br = $("<br>");
-
-				$("#upload").append(rowDiv);
-				$("#upload").append(br);
-			}
-
-		});
+	                rowDiv.append(name);
+	                rowDiv.append(delDiv);
+	            	
+	            	let br = $("<br>");
+	            	
+	            	$("#upload").append(rowDiv);
+	            	$("#upload").append(br);
+	            	
+	            	fileList.push(files[i]);
+	            }
+	            console.log("파일리스트 값: "+fileList);
+	        });
 		
-		//출력한 파일 삭제
-		document.getElementById
-		$("#upload").on("click", ".delfile", function() { //동적바인딩
-			$(this).closest(".row").remove();
-		})
+	   //업로드한 파일 삭제
+         $(document).on("click", ".delfile", function(){ //동적바인딩
+        	 fileList[$(this).closest(".row").attr("data-idx")]=null;
+        	 $(this).closest(".row").remove();
+         })
 		
 		//작성할때 첨부한 파일 목록
 		$("#images-tab").on('click',function(){
-			console.log($(this).siblings("#hiddenfile").val())
 			$.ajax({
 				url : "/sns/modifyfile",
 				data : {"parent":$(this).siblings("#hiddenfile").val()},
 				type : "POST",
 				dataType:"JSON"
 			}).done(function(resp){
-				for(var i = 0; i < resp.length; i++){
-					let oriName = resp[i].oriName
+				if($("#fileList").text() == ""){
+					for(var i = 0; i < resp.length; i++){
+						let oriName = resp[i].oriName
 
-					let delDiv = $("<div>");
-					let delBtn = $("<button>");
-					delBtn.addClass("delfile1");
-					delBtn.text("-")
-					let input = $("<input type=hidden>");
-					input.addClass("fileseq");
-					input.text(resp[i].seq);
-					delDiv.append(delBtn);
-					delDiv.append(input);
+						let delDiv = $("<div>");
+						let delBtn = $("<button>");
+						delBtn.addClass("delfile1");
+						delBtn.text("-")
+						let input = $("<input type=hidden>");
+						input.addClass("fileseq");
+						input.text(resp[i].seq);
+						delDiv.append(delBtn);
+						delDiv.append(input);
 
-					let rowDiv = $("<div>");
-					rowDiv.addClass("row");
+						let rowDiv = $("<div>");
+						rowDiv.addClass("row");
 
-					rowDiv.append(oriName);
-					rowDiv.append(delDiv);
+						rowDiv.append(oriName);
+						rowDiv.append(delDiv);
 
-					let br = $("<br>");
+						let br = $("<br>");
 
-					$("#fileList").append(rowDiv);
-					$("#fileList").append(br);
-					
+						$("#fileList").append(rowDiv);
+						$("#fileList").append(br);						
+					}
 				}
 			})
 		})
@@ -237,7 +185,8 @@ style>body {
 				}).done(function(resp){
 					if(resp == 1){
 						alert('파일삭제완료')
-						$(this).parents(".row").empty();
+						$(this).closest(".row").remove();
+						
 					}
 				})
 			}
@@ -245,7 +194,34 @@ style>body {
 			  return false;
 			}
 		})
-
+		
+		//수정하기버튼
+		$("#submit").on("click",function(){
+			var formData = new FormData();
+			for(var i = 0; i < fileList.length; i++){
+				formData.append("file",fileList[i]);
+			}
+			$.ajax({
+				url  : "/sns/modiProc",
+				type : "POST",
+				data : {"contents":$("#contents").val(),"category":$("#category").val(),"seq1":$(this).siblings("#hiddenfile").val()},
+			}).done(function(){
+				})
+				
+			$.ajax({
+        		 url:"/sns/file",
+        		 enctype: 'multipart/form-data',
+                 method: 'post',
+                 data: formData,
+                 dataType: 'TEXT',
+                 processData: false,
+                 contentType: false
+			}).done(function(){
+					
+				})
+				location.href = "/sns/main"
+		})
+		
 		//댓글버튼눌렀을때
 		$(document).on("click","#commenticon",function(){
 			let hidden_comment = $(this).parent().siblings("#hiddencomment");
@@ -343,101 +319,15 @@ style>body {
 </script>
 </head>
 <body>
-
-	<!-- Top Bar Start -->
-	<div class="top-bar d-none d-md-block">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-6">
-					<div class="top-bar-left">
-						<div class="text">
-							<h2>AM 9:00 - PM 7:00</h2>
-						</div>
-						<div class="text">
-							<h2>02 123 4567</h2>
-							<p>고객 센터</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="top-bar-right">
-						<div class="social">
-							<a href="/sns/main"><i class="fab fa-twitter"></i></a> <a
-								href="/sns/main"><i class="fab fa-facebook-f"></i></a> <a
-								href="/sns/main"><i class="fab fa-instagram"></i></a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Top Bar End -->
-
-	<!-- Nav Bar Start -->
-	<div class="navbar navbar-expand-lg bg-dark navbar-dark">
-		<div class="container-fluid">
-			<a href="/" class="navbar-brand"><p id=titlename>돈-다</a>
-			</p>
-			<button type="button" class="navbar-toggler" data-toggle="collapse"
-				data-target="#navbarCollapse">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<c:choose>
-				<c:when test="${loginID == null }">
-					<div class="collapse navbar-collapse justify-content-between"
-						id="navbarCollapse">
-						<div class="navbar-nav ml-auto">
-							<input class="form-control mr-sm-5" type="search"
-								placeholder="물품, 지역을 검색해주세요." id=search aria-label="Search">
-							<a href="/person/login" class="nav-item nav-link active">Login</a>
-							<!-- Login Page 이동 -->
-							<a href="/person/join" class="nav-item nav-link">Sign Up</a>
-							<!-- SignUp Page 이동 -->
-						</div>
-					</div>
-				</c:when>
-				<c:otherwise>
-					<div class="collapse navbar-collapse justify-content-between"
-						id="navbarCollapse">
-						<div class="navbar-nav ml-auto">
-							<input class="form-control mr-sm-5" type="search"
-								placeholder="물품, 지역을 검색해주세요." id=search aria-label="Search">
-							<a href="/person/logout" class="nav-item nav-link active">Logout</a>
-							<!-- Logout -->
-							<div class="collapse navbar-collapse" id="navbarNavDropdown">
-								<ul class="navbar-nav">
-									<li class="nav-item dropdown"><a
-										class="nav-link dropdown-toggle" href="#"
-										id="navbarDropdownMenuLink" role="button"
-										data-toggle="dropdown" aria-haspopup="true"
-										aria-expanded="false"> Menu </a>
-										<div class="dropdown-menu"
-											aria-labelledby="navbarDropdownMenuLink">
-											<a class="dropdown-item" href="#">Board</a> <a
-												class="dropdown-item" href="/sns/main">SNS</a> <a
-												class="dropdown-item" href="#">My page</a> <a
-												class="dropdown-item" href="#">Charging</a>
-										</div></li>
-								</ul>
-								<button type="button" class="btn btn-outline-warning" id="chat">Chatting</button>
-							</div>
-						</div>
-					</div>
-				</c:otherwise>
-			</c:choose>
-		</div>
-	</div>
-	<!-- Nav Bar End -->
-
+<jsp:include page= "/WEB-INF/views/navi.jsp" />
 
 	<div class="container-fluid gedf-wrapper" id=SnSbody>
 		<div class="row">
 			<div class="col-md-3"></div>
-			<div class="col-md-6 gedf-main">
+			<div class="col-md-6 gedf-main" id=mainbody>
 
 				<!--- 글쓰기-->
-				<form action="/sns/modiProc" method=post
-					enctype="multipart/form-data">
+
 					<div class="card gedf-card">
 						<div class="card-header">
 							<ul class="nav nav-tabs card-header-tabs" id="myTab"
@@ -448,8 +338,7 @@ style>body {
 								<li class="nav-item"><a class="nav-link" id="images-tab"
 									data-toggle="tab" role="tab" aria-controls="images"
 									aria-selected="false" href="#images">사진첨부</a>
-									<input type="hidden" name="seq" id=hiddenfile value="${seq }"></li>
-								
+								<input type="hidden" name="seq" id=hiddenfile value="${seq }"></li>
 							</ul>
 						</div>
 						<div class="card-body">
@@ -476,13 +365,14 @@ style>body {
 							</div>
 							<div class="btn-toolbar justify-content-between">
 								<div class="btn-group">
-									<button type="submit" class="btn btn-success">수정하기</button>
+									<button type="button" id="submit" class="btn btn-success">수정하기</button>
+									<input type="hidden" name="seq" id=hiddenfile value="${seq }">
 									<a href=/sns/main><button type="button" id=warning
 											class="btn btn-warning">취소하기</button></a>
 								</div>
 								<!-- 카테고리 -->
 								<div class="btn-group">
-									<select name=category>
+									<select name=category id=category>
 										<option>우리동네질문</option>
 										<option>동네홍보</option>
 										<option>기타</option>
@@ -491,7 +381,6 @@ style>body {
 							</div>
 						</div>
 					</div>
-				</form>
 
 				<!-- 게시글-->
 				<c:forEach var="item" items="${list}">
