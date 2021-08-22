@@ -195,6 +195,12 @@ $(function(){
 	let location_count=0;
 	let drag_uploadfiles=[];
 	let input_uploadfiles=[];
+	
+	ws.onopen = function(event) {
+		updateScroll();
+	};
+	
+	
 	ws.onmessage = function(event){
 			
 		let text = JSON.parse(event.data);
@@ -711,10 +717,21 @@ $(function(){
 			var sumFile = drag_uploadfiles.concat(input_uploadfiles);
 			console.log("버튼 클릭 할때"+sumFile.length);
 			F_FileMultiUpload(sumFile);
+			
+			if($("#inputbox").text() == ""){
+ 			   	console.log("공백입니다.");
+ 			   $("#inputbox").text("");
+ 			}else{
+ 				console.log($("#inputbox").text());
+ 		    	ws.send($("#inputbox").text());
+            	$("#inputbox").text("");
+         	}
 		})
 		
 		$("#inputbox").on("keyup",function(e){
+			
 	 		 if(e.keyCode === 13){
+	 			 if (!event.shiftKey){
 	        	 drag_uploadfiles = drag_uploadfiles.filter(function(item){
 					  return item !== null && item !== undefined && item !== '';
 	 			});
@@ -735,19 +752,15 @@ $(function(){
 		 		
 	 		   //}
 	 			
-	 			let naver = /(#\S*)/gi;
-	 			if(naver.test($("#inputbox").val())){
-	 				console.log(naver.test($("#inputbox").val()));
-	 				$($("#inputbox").val()).css("color","green");
-	 			}else{
-	 				$("#inputbox").css("color","black");
-	 			}
-	 		   if(!$("#inputbox").val().replace(/(^\s*)|(\s*$)/gi, " ")){
-	 			   	console.log("공백입니다.");
-	 			}else{
-	 		    	ws.send($("#inputbox").val());
-	            	$("#inputbox").val("");
-	         	}
+		 		   	if($("#inputbox").text() == ""){
+		 			   	console.log("공백입니다.");
+		 			   $("#inputbox").text("");
+		 			}else{
+		 				console.log($("#inputbox").text());
+		 		    	ws.send($("#inputbox").text());
+		            	$("#inputbox").text("");
+		         	}
+	 		 	}
 	 		 }
 		})
 		
@@ -989,7 +1002,8 @@ $(function(){
                             		 <div class="form-group col-9" id= file_CC><i class="far fa-images" id=image_cc_btn></i></div>
                             		  <input type="file" name="file" id="file" style="display:none" multiple="multiple"/>	
 	                                <div class="form-group col-9">
-	                                    <textarea class="form-control" rows="3" placeholder="Type your message here..." id = "inputbox" ></textarea>
+	                                    <!-- <textarea class="form-control" rows="3" placeholder="메시지를 입력해주세요." id = "inputbox"  style="resize: none;"></textarea> -->
+	                                    <div class="form-control" placeholder="메시지를 입력해주세요." id = "inputbox" contenteditable="true" style= "height:80px"></div>
 	                                </div>
 	                                 <div class="form-group col-2">
 	                                    <button class ="btn btn-outline-warning" type=button id = transfer_btn>Send</button>
