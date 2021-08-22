@@ -11,12 +11,12 @@
 		insert into lendfiles values(lendfiles_seq.nextval,#{oriName},#{sysName},#{parentSeq},sysdate)
 	</insert>
 	
- 	<!-- 사진가져오기 (부모)  -->
-	<select id="selectOne" parameterType="hashmap" resultType="kh.spring.dto.LendFilesDTO">
+ 	<!-- 사진가져오기 (전체)  -->
+	<select id="getList" resultType="kh.spring.dto.LendFilesDTO">
 		select * from lendfiles order by seq asc 
 	</select> 
 	
-	<!-- 사진 리스트-->
+	<!-- 사진 리스트 (글하나)-->
 	<select id="selectAll" resultType="kh.spring.dto.LendFilesDTO">
 		select * from lendfiles where parentSeq=#{value} order by seq asc
 	</select>

@@ -68,9 +68,9 @@ public class BorrowController {
         model.addAttribute("writer",writerInfo);//작성자정보
         model.addAttribute("board",dto); //글내용	 
 		 
-		List<BorrowBoardFilesDTO> fileList = service.selectAll(seq); //첨부파일 목록 출력   
-        System.out.println(fileList+"파일이 비어 있나요?? "+fileList.isEmpty());//파일이 있나요?
-		model.addAttribute("filelist", fileList);//파일리스트를 request애 담는다.
+		List<BorrowBoardFilesDTO> fList = service.selectAll(seq); //첨부파일 목록 출력   
+        System.out.println(fList+"파일이 비어 있나요?? "+fList.isEmpty());//파일이 있나요?
+		model.addAttribute("flist", fList);//파일리스트를 request애 담는다.
 		
 		
 		return "/toBoard/borrow_view";

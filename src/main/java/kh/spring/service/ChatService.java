@@ -284,6 +284,14 @@ public class ChatService  implements InitializingBean {
 		return crd.friendList(id);
 	}
 	
+	public int dupleCheckRoom(String id,String board_seq,String board_category) {
+		Map<String, String> temp = new HashMap<String, String>();
+		temp.put("id", id);
+		temp.put("board_seq", board_seq);
+		temp.put("category", board_category);
+		return crd.dupleCheckRoom(temp);
+	}
+	
 }
 	
 	

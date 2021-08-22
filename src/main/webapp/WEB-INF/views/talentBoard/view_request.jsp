@@ -22,6 +22,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
@@ -118,36 +119,11 @@
         }
 
         /* 사진 슬라이드 */
-        .carousel {
-            margin: 0;
-        }
-
-        .carousel-item {
-            max-height: 500px;
-        }
-
-        .carousel-item img {
-            width: 100%;
-            height: 100%;
-        }
-
-        .carousel-inner {
-            width: 100%;
-        }
-
-        .row .carousel-control-prev {
-            left: -40px;
-            border-bottom: 0;
-            font-size: 40px;
-            color: #444;
-        }
-
-        .row .carousel-control-next {
-            right: -40px;
-            border-bottom: 0;
-            font-size: 40px;
-            color: #444;
-        }
+        .mySlides {display:none}
+		.w3-left, .w3-right{cursor:pointer; color:#1d2434; font-size:35px;}
+		.slcon{width: 60%; height:400px;}
+		.mySlides{width:100%; height: 100%;border-radius:15px;}
+		.forDemo{width:113%;top:40%;}
 
         /* 작성자 프로필 */
         #user-profile {
@@ -384,43 +360,25 @@
                     <span id="category">${board.category}</span>
                     <h2 class="title_msg"><b>${board.title}<b></h2>
                 </div>
-                <div class="row col-12 carousel">
-                    <!-- Carousel -->
-                    <div id="carousel-example" class="col-12 carousel slide" data-ride="carousel">
-
-
-                        <div class="col-12 carousel-inner">
-                            <div class="col-12 col-md-12 carousel-item active">
-                                <img src="자유게시판 상세 및 신고.png" class="col-12 d-block w-100" alt="slide-img-1">
-
-                            </div>
-                            <div class=" col-12 carousel-item">
-                                <img src="자유게시판 수정.PNG" class="col-12 col-md-12 d-block w-100" alt="slide-img-2">
-                                <div class="carousel-caption">
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class=" col-12 carousel-item">
-                            <img src="자유게시판 작성.png" class="col-12 col-md-12 d-block w-100" alt="slide-img-3">
-
-                        </div>
-                        <div class="col-12 carousel-item">
-                            <img src="assets/img/slides/slide-img-4.jpg" class="d-block w-100" alt="slide-img-4">
-
-                        </div>
-                    </div>
-
-                    <a class="carousel-control-prev" href="#carousel-example" role="button" data-slide="prev">
-                        <i class="fas fa-chevron-circle-left" aria-hidden="true"></i>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carousel-example" role="button" data-slide="next">
-                        <i class="fas fa-chevron-circle-right" aria-hidden="true"></i>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
-                <!-- End carousel -->
+               
+               <!-- slide -->
+					<div class="w3-content w3-display-container slcon" >
+						<c:choose>
+							<c:when test="${flist != null}">
+								<c:forEach var="f" items="${flist}">
+		  							<img class="mySlides" src="/imgs/request/${f.sysName}">
+		  						</c:forEach>	
+		  						<div class="w3-center w3-container w3-section w3-large w3-text-white w3-display-bottommiddle forDemo" id="forDemo">
+								    <div class="w3-left w3-hover-text-khaki" onclick="plusDivs(-1)">&#10094;</div>
+								    <div class="w3-right w3-hover-text-khaki" onclick="plusDivs(1)">&#10095;</div>
+								</div>
+							</c:when>
+							<c:otherwise>
+									<img class="mySlides" src="/imgs/noimage.jpg">
+							</c:otherwise>	
+						</c:choose>
+					</div>
+                <!-- End slide -->
                 <section id="user-profile">
                     <div id="nickname_box">
                         <h2 id="nickname">
@@ -549,6 +507,29 @@
         <!-- Template Javascript -->
         <script src="/js/main.js"></script>
     </footer>
+    
+   <script>
+	//슬라이드
+    var slideIndex = 1;
+	showDivs(slideIndex);
+	
+	function plusDivs(n) {
+  		showDivs(slideIndex += n);
+	}
+	
+	function showDivs(n) {
+		  var i;
+		  var x = document.getElementsByClassName("mySlides");
+		  
+		  if (n > x.length) {slideIndex = 1}
+		  if (n < 1) {slideIndex = x.length}
+		  for (i = 0; i < x.length; i++) {
+		    x[i].style.display = "none";
+		   }
+		  x[slideIndex-1].style.display = "block"; 
+	}
+	
+	</script>
 
 </body>
 

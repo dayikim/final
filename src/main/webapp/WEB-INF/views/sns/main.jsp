@@ -173,14 +173,37 @@ style>body {
 									 node +="</div>"
 									 node +="<div class=card-footer>"
 										
-											
-						if(Number(e[i].love) ==0){				
+						
+										 $.ajax({
+									    	  url: "/sns/isliked",
+									    	  type : "get",
+											  async: false,
+											  dataType : "json"
+									      }).done(function(result){
+									    	  var likearr = [];
+									    	  for(let z=0; z<result.length; z++){
+									    		  likearr.push(Number(result[z]));
+									    	  }
+									    	  console.log(likearr.indexOf(e[i].seq));
+									    	  console.log("내가 좋아요 게시글 누른 리스트: "+ likearr);
+									    	  console.log("불러오는 sns 게시글 seq"+e[i].seq);
+									    		  if(likearr.indexOf(e[i].seq)!= -1 ){
+									    			  node +="<a class=card-link id=love style=\"color: #FF6B6B\">"
+													  node +="<i class=\"fas fa-heart\"></i>"+e[i].love+"</a>"
+									    		  }else{
+									    			  node +="<a class=card-link id=love style=\"color: #FDD2BF\">"
+													  node +="<i class=\"far fa-heart\"></i>"+e[i].love+"</a>"
+									    		  }
+									    	  
+
+									      })			 
+					/* 	if(Number(e[i].love) ==0){				
 						 node +="<a class=card-link id=love style=\"color: #FDD2BF\">"
 						 node +="<i class=\"far fa-heart\"></i>"+e[i].love+"</a>"
 						}else{
 						 node +="<a class=card-link id=love style=\"color: #FF6B6B\">"
 						 node +="<i class=\"fas fa-heart\"></i>"+e[i].love+"</a>"
-						}
+						} */
 																					
 				 node += "<a class=card-link id=commenticon>"
 			     node +="<i class=\"fas fa-comment-dots\"></i>"

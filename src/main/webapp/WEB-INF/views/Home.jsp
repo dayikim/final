@@ -80,7 +80,8 @@ img{
 </head>
 
     <body>
-        <!-- Top Bar Start -->
+    <jsp:include page= "/WEB-INF/views/navi.jsp" />
+     <%--    <!-- Top Bar Start -->
         <div class="top-bar d-none d-md-block">
             <div class="container-fluid">
                 <div class="row">
@@ -153,7 +154,7 @@ img{
                 </c:choose>
 
             </div>
-        </div>
+        </div> --%>
         <!-- Nav Bar End -->
         <div class="container-fluid">
             <div class = "row Main">
