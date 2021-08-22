@@ -301,7 +301,7 @@ public class MypageController {
 		ProfileFilesDTO pdto = service.profileSelect(id); // 내 프사 출력
 		model.addAttribute("profile",pdto); // 내 프사
 		
-		List<SnsDTO>list = sservice.selectAll(id); // 내 sns만 출력
+		List<SnsDTO>list = sservice.mySelectAll(id); // 내 sns만 출력
 		model.addAttribute("list", list);
 		
 		List<String> initProfile = new ArrayList<String>(); // 내 프로필사진 출력

@@ -355,7 +355,7 @@ $(function() {
 					comment_writer.text(resp[i].id);
 					
 					let delete_tag = $("<a>");
-					delete_tag.attr("href","/snscomm/delete?seq="+resp[i].seq);
+					delete_tag.attr("href","/snscomm/myDelete?seq="+resp[i].seq);
 					delete_tag.attr("id","delcomm");
 					delete_tag.text("삭제");
 					
@@ -628,11 +628,8 @@ $(function() {
 										<c:choose>
 											<c:when test="${loginID == item.id }">
 												<a
-													href="${pageContext.request.contextPath}/sns/delete?seq=${item.seq }"
+													href="${pageContext.request.contextPath}/sns/myDelete?seq=${item.seq }"
 													id=del>삭제</a>
-												<a
-													href="${pageContext.request.contextPath}/sns/modify?seq=${item.seq }"
-													id=modi>수정</a>
 											</c:when>
 										</c:choose>
 									</div>

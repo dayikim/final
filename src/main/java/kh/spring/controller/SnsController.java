@@ -275,5 +275,13 @@ public class SnsController {
 			sos.flush();
 		}
 	}
+	
+	// 나의 커뮤니티 sns에서 글삭제
+	@RequestMapping("/myDelete")
+	public String myDelete(int seq) {
+		service.delete(seq);
+		fservice.delete(seq);
+		return "redirect:/my/selectMySns";
+	} 
 		
 }
