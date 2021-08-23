@@ -379,7 +379,6 @@ img {
 		<div>예약 내역 > 재능 예약</div>
 
 		<c:forEach var="i" items="${requestRental}" varStatus="vs">
-
 			<div class="requestList">
 				<div class="row high">
 					<div class="col-12 information">
@@ -388,8 +387,8 @@ img {
 								<b>${i.title }</b>
 							</h4>
 						</div>
-						<div class="content">
-							<div class="row">
+						<div class="row content">
+							<div class="col-4 left">
 								<div class="col-4 left">
 									<b>재능 판매자</b>
 								</div>

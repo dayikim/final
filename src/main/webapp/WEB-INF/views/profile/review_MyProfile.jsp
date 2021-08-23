@@ -484,7 +484,7 @@
                                 </li>
                             </ul>
                             </c:forEach>
-                            <hr>
+                            
                         </section>
                         <div class="text-right">
                             <input type=button class="btn btn-secondary" value="메인으로" id="back">
