@@ -497,16 +497,6 @@ $(function() {
                 </section>
 
                 <section id="lend">
-                    <div class="lend_period">
-                        <h4>
-                            <b> 대여기간</b>
-                        </h4>
-                        <hr>
-                        <div class="period">
-                            <b>2021-08-18~ 2021-08-19</b>
-                        </div>
-                    </div>
-
                 </section>
 
               <section id="payment">

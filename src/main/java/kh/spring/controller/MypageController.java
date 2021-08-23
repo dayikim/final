@@ -208,7 +208,11 @@ public class MypageController {
 
 	// 예약 내역 목록 - 대여(미완)
 	@RequestMapping("/buyRequestProduct")
-	public String buyRequestProduct() {
+	public String buyRequestProduct(Model model) {
+		String sessionID = (String)session.getAttribute("loginID");
+		List<HashMap<String,Object>> result = service.buyRequestProduct(sessionID);
+
+		model.addAttribute("requestRental", result);
 		return "/mypage/buyRequestProduct";
 	}
 

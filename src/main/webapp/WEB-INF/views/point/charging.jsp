@@ -713,10 +713,10 @@ hr {
 							<button type="button" id="cancel" class="btn btn-dark btn-lg">취소</button>
 						</div>
 					</div>
-					<div class=" btn_wrap text-right ">
+					<!-- <div class=" btn_wrap text-right ">
 						<button type="button" onclick="history.back()"
 							class="btn btn-info btn-lg">마이페이지로 이동</button>
-					</div>
+					</div> -->
 				</section>
 
 			</div>

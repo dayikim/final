@@ -455,9 +455,7 @@
                         <c:when test="${loginID == null }">
                             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                                 <div class="navbar-nav ml-auto">
-                                    <input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요."
-                                        id=search aria-label="Search">
-                                    <a href="/person/login" class="nav-item nav-link active">Login</a>
+                                     <a href="/person/login" class="nav-item nav-link active">Login</a>
                                     <!-- Login Page 이동 -->
                                     <a href="/person/join" class="nav-item nav-link">Sign Up</a>
                                     <!-- SignUp Page 이동 -->
@@ -544,19 +542,6 @@
                             </div>
                         </section>
 
-                        <section id="lend">
-                            <div class="lend_period">
-                                <h4>
-                                    <b> 작업 기간</b>
-                                </h4>
-                                <hr>
-                                <div class="period">
-                                    <b>2021-08-18~ 2021-08-19</b>
-                                </div>
-                            </div>
-
-                        </section>
-
                         <section id="payment">
                             <div class="point_wrap">
                                 <h4 class=" point">
@@ -595,10 +580,10 @@
                             </form>
                         </div>
                     </div>
-                    <div class="btn_wrap text-right">
-                        <a href="" class="back"><i class="fas fa-arrow-alt-circle-left"></i></a>
+                   <!--  <div class="btn_wrap text-right">
+                        <a href="/my/mypageProc"  class="back"><i class="fas fa-arrow-alt-circle-left"></i></a>
 
-                    </div>
+                    </div> -->
                 </div>
 
 

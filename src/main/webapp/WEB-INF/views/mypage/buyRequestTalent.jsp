@@ -382,7 +382,7 @@ img {
 							
 							<input type=hidden value=${i.writer } name="id${vs.index}" class="id">
 					<%-- 		 <input type=hidden value=${i.booker } name=booker >  --%>
-								<input type=hidden value=${i.parentseq } name="parent${vs.index}" class="parentseq">
+								<input type=hidden value=${i.parentseq } name="parent" class="parentseq">
 								
 
 						</div>

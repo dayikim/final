@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>대여 예약 </title>
+<title>대여 예약</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free Website Template" name="keywords">
@@ -86,38 +86,42 @@ img {
 	width: 50%;
 	text-align: center;
 }
+
 .navi {
 	margin: auto;
 	margin-top: 115px;
 	width: 500px;
-	height:60px;
-	border:1px solid black;
+	height: 60px;
+	border: 1px solid black;
 	border-radius: 7px;
-	overflow:hidden;
-}
-.requestProduct{   /* 대여요청 네비 */
-	height:100%;
-	background-color:#334257;
-}
-.requestProduct>a>b {
-	color: white;
-	font-size:30px;
-	line-height:60px;
-}
-.requestTalent{    /* 재능요청 네비 */
-	height:100%;
-}
-.requestTalent>a>b{
-	font-size:30px;
-	line-height:60px;
+	overflow: hidden;
 }
 
+.requestProduct { /* 대여요청 네비 */
+	height: 100%;
+	background-color: #334257;
+}
+
+.requestProduct>a>b {
+	color: white;
+	font-size: 30px;
+	line-height: 60px;
+}
+
+.requestTalent { /* 재능요청 네비 */
+	height: 100%;
+}
+
+.requestTalent>a>b {
+	font-size: 30px;
+	line-height: 60px;
+}
 
 /* 시작 */
 .container2 {
 	margin: auto;
 	width: 1000px;
-	padding-top:35px;
+	padding-top: 35px;
 	padding-left: 50px;
 	padding-right: 50px;
 	padding-bottom: 50px;
@@ -181,35 +185,35 @@ img {
 	outline: none;
 	cursor: pointer;
 }
-
-
 </style>
 
 <script>
-	$(function(){
+	$(function() {
 		// 게시물 검색
-		$("#search").keyup(function(e) {
-			if (e.keyCode == 13) {
-				location.href = "/AllBoardList/lendList?category=AllCategory&search="+$("#search").val()+"&cpage=1";
-			}
-		})
-		
+		$("#search")
+				.keyup(
+						function(e) {
+							if (e.keyCode == 13) {
+								location.href = "/AllBoardList/lendList?category=AllCategory&search="
+										+ $("#search").val() + "&cpage=1";
+							}
+						})
+
 		// 채팅
-		$("#chat").on("click",function(){
+		$("#chat").on("click", function() {
 			location.href = "/chat";
 		})
-		
+
 		// 취소 버튼을 눌렀을 경우
-		$(".cnum-btn1").on("click",function(){
+		$(".cnum-btn1").on("click", function() {
 			let result = confirm("예약을 취소 하시겠습니까?");
-			if(result){
+			if (result) {
 				$(".cnum-btn1").parent().parent().parent().empty();
-			}else{
+			} else {
 				return false;
 			}
 		})
-		
-		
+
 	})
 </script>
 
@@ -284,8 +288,9 @@ img {
 										aria-expanded="false"> Menu </a>
 										<div class="dropdown-menu"
 											aria-labelledby="navbarDropdownMenuLink">
-											<a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a> <a
-												class="dropdown-item" href="/sns/main">SNS</a> <a
+											<a class="dropdown-item"
+												href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
+											<a class="dropdown-item" href="/sns/main">SNS</a> <a
 												class="dropdown-item" href="/my/mypageProc">My page</a> <a
 												class="dropdown-item" href="/point/ToCharging">Charging</a>
 										</div></li>
@@ -305,13 +310,11 @@ img {
 	<!-- 네비바 -->
 	<div class="navi">
 		<div class="requestProduct">
-			<a href="/my/buyRequestProduct">
-					<b>대여 예약</b>
+			<a href="/my/buyRequestProduct"> <b>대여 예약</b>
 			</a>
 		</div>
 		<div class="requestTalent">
-			<a href="/my/buyRequestTalent">
-					<b>재능 예약</b>
+			<a href="/my/buyRequestTalent"> <b>재능 예약</b>
 			</a>
 		</div>
 	</div>
@@ -320,10 +323,9 @@ img {
 
 	<!-- 대여 요청 내역 -->
 	<div class="container2">
-	<div>예약 내역 > 대여 예약</div>
+		<div>예약 내역 > 대여 예약</div>
 		<!-- forEach문 사용 -->
-		<%-- <c:forEach var="i" items="${requestRental }"> --%>
-		<form action="" method="get">
+		<c:forEach var="i" items="${requestRental}" varStatus="vs">
 			<div class="requestList">
 				<div class="row high">
 					<div class="col-8 information">
@@ -340,7 +342,7 @@ img {
 						</div>
 						<div class="row content">
 							<div class="col-4 left">
-								<b>결제 내역</b>
+								<b>결제금</b>
 							</div>
 							<div class="col-8 right">15000원</div>
 						</div>
@@ -360,80 +362,92 @@ img {
 				</div>
 				<div class="under">
 					<input type=button id=cancel class="cnum-btn1" value="예약 취소">
-					<button type=button id=approval class="cnum-btn2">승인 대기 중</button>
+
+					<c:choose>
+						<c:when test="${i.approval =='y'}">
+							<button type=button class="cnum-btn2" id="payment${vs.index}">
+								결제하기</button>
+						</c:when>
+						<c:when test="${i.approval =='n'}">
+							<button type=button id=approval class="cnum-btn2"
+								disabled='disabled'>승인 거절</button>
+						</c:when>
+						<c:otherwise>
+							<button type=button id=approval class="cnum-btn2"
+								disabled='disabled'>승인 대기 중</button>
+						</c:otherwise>
+					</c:choose>
 				</div>
+
 			</div>
-		</form>
-		<%-- </c:forEach> --%>
-
-	</div>
 
 
-	<!-- Footer Start -->
-	<div class="footer">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-6">
+			<!-- Footer Start -->
+			<div class="footer">
+				<div class="container">
 					<div class="row">
-						<div class="col-12">
-							<div class="footer-contact">
-								<p>
-									<i class="fa fa-map-marker-alt"></i>서울특별시 강남대로 123로
-								</p>
-								<p>
-									<i class="fa fa-phone-alt"></i>02-123-4567
-								</p>
-								<p>
-									<i class="fa fa-envelope"></i>DonDa@example.com
-								</p>
-								<div class="footer-social">
-									<a href=""><i class="fab fa-twitter"></i></a> <a href=""><i
-										class="fab fa-facebook-f"></i></a> <a href=""><i
-										class="fab fa-youtube"></i></a> <a href=""><i
-										class="fab fa-instagram"></i></a>
+						<div class="col-lg-6">
+							<div class="row">
+								<div class="col-12">
+									<div class="footer-contact">
+										<p>
+											<i class="fa fa-map-marker-alt"></i>서울특별시 강남대로 123로
+										</p>
+										<p>
+											<i class="fa fa-phone-alt"></i>02-123-4567
+										</p>
+										<p>
+											<i class="fa fa-envelope"></i>DonDa@example.com
+										</p>
+										<div class="footer-social">
+											<a href=""><i class="fab fa-twitter"></i></a> <a href=""><i
+												class="fab fa-facebook-f"></i></a> <a href=""><i
+												class="fab fa-youtube"></i></a> <a href=""><i
+												class="fab fa-instagram"></i></a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="row">
+								<div class="col-6">
+									<div class="footer-contact">
+										<p>
+											<i class="far fa-building"></i>회사소개
+										</p>
+										<p>
+											<i class="far fa-user-circle"></i>채용
+										</p>
+									</div>
+								</div>
+								<div class="col-6">
+									<div class="footer-contact">
+										<p>
+											<i class="fas fa-info"></i>이용약관
+										</p>
+										<p>
+											<i class="far fa-id-badge"></i>개인정보처리방침
+										</p>
+										<p>
+											<i class="fas fa-map-pin"></i>위치기반서비스 이용약관
+										</p>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-6">
+				<div class="container copyright">
 					<div class="row">
-						<div class="col-6">
-							<div class="footer-contact">
-								<p>
-									<i class="far fa-building"></i>회사소개
-								</p>
-								<p>
-									<i class="far fa-user-circle"></i>채용
-								</p>
-							</div>
-						</div>
-						<div class="col-6">
-							<div class="footer-contact">
-								<p>
-									<i class="fas fa-info"></i>이용약관
-								</p>
-								<p>
-									<i class="far fa-id-badge"></i>개인정보처리방침
-								</p>
-								<p>
-									<i class="fas fa-map-pin"></i>위치기반서비스 이용약관
-								</p>
-							</div>
+						<div class="col-12" style="text-align: center;">
+							<p id=titlename>
+								&copy; <a href="#">돈-다</a>, All Right Reserved.
+							</p>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		<div class="container copyright">
-			<div class="row">
-				<div class="col-12" style="text-align: center;">
-					<p id=titlename>
-						&copy; <a href="#">돈-다</a>, All Right Reserved.
-					</p>
-				</div>
-			</div>
-		</div>
+		</c:forEach>
 	</div>
 	<!-- Footer End -->
 

@@ -403,7 +403,7 @@ border-bottom: solid 3px #39d9c8;
 								<input type=hidden id=cpage value=${cpage }>
 							</div> -->
 				<div class="text-right">
-					<input type=button class="btn btn-secondary" value="메인으로" id="back">
+					<a href="/my/mypageProc" class="btn btn-secondary">메인으로</a>
 
 
 				</div>
