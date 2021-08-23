@@ -145,7 +145,7 @@ public class MypageService {
 		return bdao.requestRentalProduct(param);
 	}
 
-	// 요청 거절을 눌렀을 경우 - 재능
+	// 요청 거절을 눌렀을 경우 - 물품
 	public int dealFailProduct(String sessionID, int parent) {
 		String able = "물품";
 		HashMap<String, Object> param = new HashMap<>();
@@ -181,7 +181,7 @@ public class MypageService {
 
 	// 요청 거절을 눌렀을 경우 - 재능
 	public int dealFailTalent(String sessionID, int parent) {
-		String able = "물품";
+		String able = "재능";
 		HashMap<String, Object> param = new HashMap<>();
 		param.put("sessionID", sessionID);
 		param.put("parent", parent);
@@ -190,7 +190,7 @@ public class MypageService {
 		return bdao.dealFailTalent(param);
 	}
 
-	// 거래 승인을 눌렀을 경우 - 재능
+	// 거래 승인을 눌렀을 경우 - 재능 / 물품
 	public int dealSuccess(String writer, String booker, int parent) {
 		String y = "y";
 		return adao.dealSuccess(new ApprovalDTO(0,writer,booker,y,parent,null));
@@ -223,8 +223,13 @@ public class MypageService {
 
 	// 예약 내역 목록 - 물품
 	public List<HashMap<String, Object>> buyRequestProduct(String sessionID) {
-		// TODO Auto-generated method stub
-		return null;
+		String y = "y";
+		String boardtype="물품";
+		Map<String, String> param = new HashMap<>();
+		param.put("y", y);
+		param.put("id", sessionID);
+		param.put("product", boardtype);
+		return bdao.buyRequestProduct(param);
 	}
 
 	// 예약 취소 - 재능

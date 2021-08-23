@@ -153,7 +153,7 @@ img {
 	padding-left: 40px;
 }
 .content{
-	margin-top:10px;
+	margin-top:30px;
 }
 
 /* 버튼 */
@@ -163,7 +163,7 @@ img {
 	margin-top: 10px;
 }
 
-.cnum-btn1 {
+#cancel, #dealCancel {
 	/* 취소 */
 	border-radius: 5px;
 	width: 45%;
@@ -176,8 +176,8 @@ img {
 	cursor: pointer;
 }
 
-.cnum-btn2 {
-	/* 수정 */
+#approval, #dealComplete {
+	/* 거래승인 */
 	border-radius: 5px;
 	width: 45%;
 	height: 50px;

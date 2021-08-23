@@ -44,6 +44,11 @@ public class BookingDAO {
    
    //////////////////////////////////////////////////////////////////////////// 예약 내역 출력 (구매자 입장)
    
+   // 예약 내역 출력 - 물품
+   public List<HashMap<String,Object>> buyRequestProduct(Map<String,String> param) {
+	   return mybatis.selectList("Booking.buyRequestProduct", param);
+   }
+   
    // 예약 내역 출력 - 재능(구매자)
    public List<HashMap<String,Object>> buyRequestTalent(Map<String, String> param) {
       return mybatis.selectList("Booking.buyRequestTalent", param);

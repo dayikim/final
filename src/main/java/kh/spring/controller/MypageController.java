@@ -208,7 +208,7 @@ public class MypageController {
 		return String.valueOf(result);
 	}
 
-	// 거래 승인 완료 버튼 눌렀을 때 - 재능
+	// 거래 승인 완료 버튼 눌렀을 때 - 재능 / 물품
 	@ResponseBody
 	@RequestMapping("/dealSuccess")
 	public String dealSuccess(String writer, String booker, int parent) {
@@ -221,7 +221,7 @@ public class MypageController {
 	////////////////////////////////////////////////////////////////////////////////////////// 예약 내역 목록(구매자 입장)
 
 
-	// 예약 내역 목록 - 대여(미완)
+	// 예약 내역 목록 - 대여
 	@RequestMapping("/buyRequestProduct")
 	public String buyRequestProduct(Model model) {
 		String sessionID = (String)session.getAttribute("loginID");

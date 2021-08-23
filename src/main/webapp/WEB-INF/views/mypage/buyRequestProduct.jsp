@@ -150,7 +150,11 @@ img {
 
 .information {
 	padding-top: 40px;
-	padding-left: 40px;
+	padding-left: 70px;
+}
+
+.content{
+	margin-top:30px;
 }
 
 /* 버튼 */
@@ -204,15 +208,54 @@ img {
 			location.href = "/chat";
 		})
 
-		// 취소 버튼을 눌렀을 경우
-		$(".cnum-btn1").on("click", function() {
-			let result = confirm("예약을 취소 하시겠습니까?");
-			if (result) {
-				$(".cnum-btn1").parent().parent().parent().empty();
-			} else {
-				return false;
-			}
-		})
+		// 결제하기 버튼을 눌렀을 경우
+		$("button[id^='payment']").on(
+				"click",
+				function() {
+					let button = $(this);
+					location.href = "/point/TopaymentBylend?seq="
+							+ $(
+									$(this).siblings().parent().siblings()
+											.children().siblings().children(
+													"#parentseq")).val()
+							+ "&id="
+							+ $(
+									$(this).siblings().parent().siblings()
+											.children().siblings().children()
+											.siblings("#writer")).val()
+
+				})
+
+		// 예약 취소 버튼을 눌렀을 경우
+		$(".cnum-btn1").on(
+				"click",
+				function() {
+					let result = confirm("예약을 취소 하시겠습니까?");
+					if (result) {
+						let button = $(this);
+						$.ajax(
+								{
+									url : "/my/bookingFail",
+									data : {
+										parent : $(
+												$(this).parent().siblings()
+														.children().children(
+																"#parentseq"))
+												.val()
+									}
+								}).done(function(resp) {
+							if (resp == "1") {
+								alert("취소하였습니다.")
+								location.reload();
+							} else {
+								alert("에러 발생, 다시 시도해주세요.")
+								return false;
+							}
+						})
+					} else {
+						return false;
+					}
+				})
 
 	})
 </script>
@@ -324,7 +367,6 @@ img {
 	<!-- 대여 요청 내역 -->
 	<div class="container2">
 		<div>예약 내역 > 대여 예약</div>
-		<!-- forEach문 사용 -->
 		<c:forEach var="i" items="${requestRental}" varStatus="vs">
 			<div class="requestList">
 				<div class="row high">
@@ -334,18 +376,27 @@ img {
 								<b>${i.title }</b>
 							</h4>
 						</div>
-    						<div class="row content">
+						<div class="row content">
+							<div class="col-4 left">
+								<b>재능 판매자</b>
+
+							</div>
+							<div class="col-8 right">${i.writer}</div>
+						</div>
+						<div class="row">
+							<div class="col-4 left">
+								<b>재능 구매자</b>
+							</div>
+							<div class="col-8 right">${i.booker}</div>
+						</div>
+						<div class="row">
 							<div class="col-4 left">
 								<b>결제금</b>
 							</div>
-							<div class="col-8 right">15000원</div>
+							<div class="col-8 right">${i.price}상추</div>
 						</div>
-						<div class="row content">
-							<div class="col-4 left">
-								<b>대여자</b>
-							</div>
-							<div class="col-8 right">이희정</div>
-						</div>
+						<input type=hidden value=${i.writer } name="id" class="id" id=writer> 
+						<input type=hidden value=${i.parentseq } name="parent" class="parentseq" id=parentseq>
 					</div>
 					<div class="col-4">
 						<div class="image">
@@ -354,9 +405,10 @@ img {
 
 					</div>
 				</div>
+
+
 				<div class="under">
 					<input type=button id=cancel class="cnum-btn1" value="예약 취소">
-
 					<c:choose>
 						<c:when test="${i.approval =='y'}">
 							<button type=button class="cnum-btn2" id="payment${vs.index}">
@@ -366,82 +418,89 @@ img {
 							<button type=button id=approval class="cnum-btn2"
 								disabled='disabled'>승인 거절</button>
 						</c:when>
-						<c:otherwise>
+						<c:when test="${i.approval == null}">
+
 							<button type=button id=approval class="cnum-btn2"
 								disabled='disabled'>승인 대기 중</button>
+						</c:when>
+						<c:otherwise>
+							<button type=button class="cnum-btn2" disabled='disabled'>결제
+								완료</button>
 						</c:otherwise>
+
 					</c:choose>
+
 				</div>
+
 
 			</div>
-
-
-			<!-- Footer Start -->
-			<div class="footer">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-6">
-							<div class="row">
-								<div class="col-12">
-									<div class="footer-contact">
-										<p>
-											<i class="fa fa-map-marker-alt"></i>서울특별시 강남대로 123로
-										</p>
-										<p>
-											<i class="fa fa-phone-alt"></i>02-123-4567
-										</p>
-										<p>
-											<i class="fa fa-envelope"></i>DonDa@example.com
-										</p>
-										<div class="footer-social">
-											<a href=""><i class="fab fa-twitter"></i></a> <a href=""><i
-												class="fab fa-facebook-f"></i></a> <a href=""><i
-												class="fab fa-youtube"></i></a> <a href=""><i
-												class="fab fa-instagram"></i></a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="row">
-								<div class="col-6">
-									<div class="footer-contact">
-										<p>
-											<i class="far fa-building"></i>회사소개
-										</p>
-										<p>
-											<i class="far fa-user-circle"></i>채용
-										</p>
-									</div>
-								</div>
-								<div class="col-6">
-									<div class="footer-contact">
-										<p>
-											<i class="fas fa-info"></i>이용약관
-										</p>
-										<p>
-											<i class="far fa-id-badge"></i>개인정보처리방침
-										</p>
-										<p>
-											<i class="fas fa-map-pin"></i>위치기반서비스 이용약관
-										</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="container copyright">
-					<div class="row">
-						<div class="col-12" style="text-align: center;">
-							<p id=titlename>
-								&copy; <a href="#">돈-다</a>, All Right Reserved.
-							</p>
-						</div>
-					</div>
-				</div>
 		</c:forEach>
+	</div>
+	<!-- Footer Start -->
+	<div class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="row">
+						<div class="col-12">
+							<div class="footer-contact">
+								<p>
+									<i class="fa fa-map-marker-alt"></i>서울특별시 강남대로 123로
+								</p>
+								<p>
+									<i class="fa fa-phone-alt"></i>02-123-4567
+								</p>
+								<p>
+									<i class="fa fa-envelope"></i>DonDa@example.com
+								</p>
+								<div class="footer-social">
+									<a href=""><i class="fab fa-twitter"></i></a> <a href=""><i
+										class="fab fa-facebook-f"></i></a> <a href=""><i
+										class="fab fa-youtube"></i></a> <a href=""><i
+										class="fab fa-instagram"></i></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="row">
+						<div class="col-6">
+							<div class="footer-contact">
+								<p>
+									<i class="far fa-building"></i>회사소개
+								</p>
+								<p>
+									<i class="far fa-user-circle"></i>채용
+								</p>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="footer-contact">
+								<p>
+									<i class="fas fa-info"></i>이용약관
+								</p>
+								<p>
+									<i class="far fa-id-badge"></i>개인정보처리방침
+								</p>
+								<p>
+									<i class="fas fa-map-pin"></i>위치기반서비스 이용약관
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container copyright">
+			<div class="row">
+				<div class="col-12" style="text-align: center;">
+					<p id=titlename>
+						&copy; <a href="#">돈-다</a>, All Right Reserved.
+					</p>
+				</div>
+			</div>
+		</div>
 	</div>
 	<!-- Footer End -->
 
