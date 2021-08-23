@@ -55,12 +55,13 @@ public class SellTalentService {
 	}
 	
 	//예약하기
-	public int booking(String seller, String booker, String bookable, int parentseq) {
+	public int booking(String seller, String booker, String bookable, int parentseq,String boardtype) {
 	      Map<Object,Object>param = new HashMap();
 	      param.put("seller", seller);
 	      param.put("booker",booker);
 	      param.put("bookable", bookable);
 	      param.put("parentseq", parentseq);
+	      param.put("boardtype", boardtype);
 	      return bdao.booking(param);
 	}
 	//예약 여부 체크

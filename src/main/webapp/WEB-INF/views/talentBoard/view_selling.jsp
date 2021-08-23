@@ -243,7 +243,9 @@ $(function(){
          let seller= $("#seller").val();
          let booker =$("#booker").val();
          let bookable=$("#bookable").val();
+         let boardtype=$("#boardtype").val();
          let parentseq=$("#parentseq").val();
+         
          if (check) {
              $.ajax({
                  url: "/tBoard/checkBooking",
@@ -253,7 +255,7 @@ $(function(){
                  if (resp == 0) {
                      $.ajax({
                          url: "/tBoard/booking",                              
-                     data: {seller: seller, parentseq: parentseq, bookable: bookable, booker: booker }
+                     data: {seller: seller, parentseq: parentseq, bookable: bookable, booker: booker,boardtype:boardtype }
                      }).done(function (resp) {
                         console.log(resp);
                          if (resp == 1) {
@@ -446,7 +448,8 @@ $(function(){
 						<c:when test="${loginID != board.writer}">
 							<div class=" btn_wrap text-right">
 								<input type="hidden" name="seller" value="${board.writer}" id="seller">
-								<input type="hidden" name="bookable" value="y" id="bookble">
+								<input type="hidden" name="bookable" value="y" id="bookable">
+								<input type="hidden" name="boardtype" value="재능" id="boardtype" id="boardtype">
 								<input type="hidden" name="booker" value="${loginID}" id="booker">
 								<input type="hidden" name="parentseq" value="${board.seq}" id="parentseq">
 								<button type="button" class="btn btn-secondary" id="booking">예약하기</button>

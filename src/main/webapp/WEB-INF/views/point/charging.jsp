@@ -707,7 +707,7 @@ hr {
 
 						<!-- 충전 버튼 -->
 						<div class=" btn_wrap ">
-
+ 
 							<button type="button" class="btn btn-success btn-lg"
 								style="width: 200px;" id="charge">충전</button>
 							<button type="button" id="cancel" class="btn btn-dark btn-lg">취소</button>

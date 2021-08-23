@@ -472,7 +472,7 @@ form {
 
 							</h4>
 						</div>
-						<div>물품 빌린이: ${i.name}ㅣ${i.address1}</div>
+						<div>물품 빌린이: ${i.name}</div>
 						<div>거래 완료 일시: ${i.paymentdate}</div>
 						<div class="row foot">
 							<div class="col-3 completBg">

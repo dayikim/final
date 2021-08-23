@@ -43,10 +43,10 @@
 			jdbcType="VARCHAR" />
 	</resultMap>
 
-	<!-- 물품 거래 완료 내역 출력 (판매자(발신자)인 경우) -->
+	<!-- 물품 대여 완료 내역 출력 판매자(session)=> 구매자에게 -->
 	<select id="dealEndProductSellList" resultMap="dealEndlist"
 		resultType="HashMap">
-		select distinct name,address1,contents,payment.item,payment.buyer,payment.seller,payment.parentseq,price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype,review.reviewable
+		select distinct name,contents,payment.item,payment.buyer,payment.seller,payment.parentseq,price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype,review.reviewable
 		from payment join person on
 		(person.id=payment.buyer)join review on (review.reviewer =payment.seller and review.recipient = payment.buyer and review.parentseq = payment.parentseq
         )where
@@ -54,35 +54,37 @@
 		payment.boardtype=#{product}
 	</select>
 
-	<!-- 물품 거래 완료 내역 출력 (구매자(발신자)인 경우) -->
-	<select id="dealEndProductBuyList" resultMap="dealEndlist"
-		resultType="HashMap">
-		select distinct name,address1,contents,payment.item,payment.buyer,payment.seller,payment.parentseq,price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype,review.reviewable
-		from payment join person on
-		(person.id=payment.seller)join review on (review.reviewer =payment.buyer and review.recipient = payment.seller and review.parentseq = payment.parentseq
-        )where 
-		payment.buyer=#{id} and
-		payment.boardtype=#{product}
-	</select>
-
-	<!-- 재능 거래 완료 내역 출력 (판매자(발신자)인 경우) -->
+	
+	<!-- 재능 거래 판매 완료 내역 출력 판매자(session)=> 구매자에게 -->
 	<select id="dealEndTalentSellList" resultMap="dealEndlist"
 		resultType="HashMap">
-		select distinct name,address1,contents,payment.item,payment.buyer,payment.seller,payment.parentseq,price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype,review.reviewable
+		select distinct name,contents,payment.item,payment.buyer,payment.seller,payment.parentseq,price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype,review.reviewable
 		from payment join person on
 		(person.id=payment.buyer)join review on (review.reviewer =payment.seller and review.recipient = payment.buyer and review.parentseq = payment.parentseq
         )where
 		payment.seller=#{id} and
 		payment.boardtype=#{talent}
 	</select>
-
-	<!-- 재능 거래 완료 내역 출력 (구매자(발신자)인 경우) -->
-	<select id="dealEndTalentBuyList" resultMap="dealEndlist"
+	
+	<!-- 물품 빌림 완료 내역 출력 구매자(session)=> 판매자에게 -->
+	<select id="dealEndProductBuyList" resultMap="dealEndlist"
 		resultType="HashMap">
-		select distinct name,address1,contents,payment.item,payment.buyer,payment.seller,payment.parentseq,price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype,review.reviewable
+		 select distinct name,contents,payment.item,payment.buyer,payment.seller,payment.parentseq,price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype,review.reviewable
 		from payment join person on
 		(person.id=payment.seller)join review on (review.reviewer =payment.buyer and review.recipient = payment.seller and review.parentseq = payment.parentseq
         )where 
+		payment.buyer=#{id} and
+		payment.boardtype=#{product}
+	</select>
+	
+
+	<!-- 재능 거래 구매 완료 내역 출력 구매자(session)=> 판매자에게  -->
+	<select id="dealEndTalentBuyList" resultMap="dealEndlist"
+		resultType="HashMap">
+		 select distinct name,contents,payment.item,payment.buyer,payment.seller,payment.parentseq,price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype,review.reviewable
+		from payment join person on
+		(person.id=payment.seller)join review on (review.reviewer =payment.buyer and review.recipient = payment.seller and review.parentseq = payment.parentseq
+        )where
 		payment.buyer=#{id} and
 		payment.boardtype=#{talent}
 	</select>

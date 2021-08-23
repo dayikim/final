@@ -44,16 +44,22 @@ public class PointService {
 		}
 		
 //	//결제시, 결제금액 대비 포인트 금액 비교
-	public int pointCheck(String sessionID, int point) {
+	public int pointCheck(String sessionID, int point, int price) {
 		int sum= padao.checkAmount(sessionID);
 		System.out.println("현재 포인트: " +sum);
 		int leftpoint = sum-point;
 		System.out.println("결제 후 잔여 예상 포인트: "+leftpoint);
-		
+		int finalcheck = leftpoint-price;		
+		System.out.println("최종금액 대비 포인트 가능액: "+finalcheck);
+
 		if(leftpoint<0) { //사용 포인트 초과
 			return 0;
 		}else {   //사용가능
-			return 1;
+			if(finalcheck<0) {//결제금액이 포인트 이상일 경우
+				return 2;
+			}else {
+				return 1;
+			}
 		}
 	}
 

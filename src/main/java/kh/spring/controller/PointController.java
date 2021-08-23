@@ -123,9 +123,9 @@ public class PointController {
 	//잔여 포인트 check
 	@ResponseBody
 	@RequestMapping(value="pointcheck", produces="text/html;charset=utf8")
-	public String point(int point) throws Exception {
+	public String point(int point,int price) throws Exception {
 		String sessionID = (String) session.getAttribute("loginID");
-		int result = PointService.pointCheck(sessionID,point);
+		int result = PointService.pointCheck(sessionID,point,price);
 		return String.valueOf(result);
 	}
 	//구매여부 확인

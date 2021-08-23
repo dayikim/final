@@ -39,12 +39,13 @@ public class LendService {
 	private BookingDAO bdao;
 	
 	//예약
-	public int booking(String seller, String booker, String bookable, int parentseq) {
+	public int booking(String seller, String booker, String bookable, int parentseq,String boardtype) {
 	      Map<Object,Object>param = new HashMap();
 	      param.put("seller", seller);
 	      param.put("booker",booker);
 	      param.put("bookable", bookable);
 	      param.put("parentseq", parentseq);
+	      param.put("boardtype", boardtype);
 	      return bdao.booking(param);
 	}
 	
@@ -149,6 +150,11 @@ public class LendService {
 		param.put("seq",seq);
 		param.put("category", category);
 		return dao.isitLend(param);
+	}
+
+	public int booking(String seller, String booker, String bookable, int parentseq) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	
