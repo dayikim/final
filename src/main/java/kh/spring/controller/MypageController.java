@@ -153,70 +153,70 @@ public class MypageController {
 
 	/////////////////////////////////////////////////////////////////////////////////////////// 거래 요청 목록 (판매자 입장)
 
-	   
 
-// 거래 요청 목록 - 물품 대여
-@RequestMapping("/requestRentalProduct")
-public String requestRental(Model model) {
-String sessionID = (String)session.getAttribute("loginID");
-List<HashMap<String,Object>> list = service.requestRentalProduct(sessionID); // 예약리스트 꺼내기
 
-model.addAttribute("requestRental", list);  // 들어온 예약 리스트
-return "/mypage/requestRentalProduct";
-}
+	// 거래 요청 목록 - 물품 대여
+	@RequestMapping("/requestRentalProduct")
+	public String requestRental(Model model) {
+		String sessionID = (String)session.getAttribute("loginID");
+		List<HashMap<String,Object>> list = service.requestRentalProduct(sessionID); // 예약리스트 꺼내기
 
-// 요청 거절 버튼을 눌렀을 때 - 물품 대여
-@ResponseBody
-@RequestMapping("/dealFailProduct")
-public String dealFailProduct(int parent) {
-System.out.println(parent);
-String sessionID = (String)session.getAttribute("loginID");
-int result = service.dealFailProduct(sessionID,parent);
+		model.addAttribute("requestRental", list);  // 들어온 예약 리스트
+		return "/mypage/requestRentalProduct";
+	}
 
-return String.valueOf(result);
-}
+	// 요청 거절 버튼을 눌렀을 때 - 물품 대여
+	@ResponseBody
+	@RequestMapping("/dealFailProduct")
+	public String dealFailProduct(int parent) {
+		System.out.println(parent);
+		String sessionID = (String)session.getAttribute("loginID");
+		int result = service.dealFailProduct(sessionID,parent);
 
-// 거래 요청 목록 - 재능
-@RequestMapping("/requestRentalTalent")
-public String requestRentalTalent(Model model) {
-String sessionID = (String)session.getAttribute("loginID");
-List<HashMap<String,Object>> list = service.requestRentalTalent(sessionID); // 예약리스트 꺼내기
+		return String.valueOf(result);
+	}
 
-model.addAttribute("requestRental", list);  // 들어온 예약 리스트
-return "/mypage/requestRentalTalent";
-}
+	// 거래 요청 목록 - 재능
+	@RequestMapping("/requestRentalTalent")
+	public String requestRentalTalent(Model model) {
+		String sessionID = (String)session.getAttribute("loginID");
+		List<HashMap<String,Object>> list = service.requestRentalTalent(sessionID); // 예약리스트 꺼내기
 
-// 거래 승인 버튼 출력하기 - 재능
-@ResponseBody
-@RequestMapping("/requestRentalTalentProc")
-public String requestRentalTalentProc(String booker, String parent) {
-System.out.println("대여자 : " + booker + " 부모 : " + parent);
-String sessionID = (String)session.getAttribute("loginID");
-int result = service.dealSuccessSelect(sessionID, booker, parent); // 거래 완료 버튼(booker와 parent의 값은 어디서 갖고오지?)
+		model.addAttribute("requestRental", list);  // 들어온 예약 리스트
+		return "/mypage/requestRentalTalent";
+	}
 
-return String.valueOf(result);
-}
+	// 거래 승인 버튼 출력하기 - 재능
+	@ResponseBody
+	@RequestMapping("/requestRentalTalentProc")
+	public String requestRentalTalentProc(String booker, String parent) {
+		System.out.println("대여자 : " + booker + " 부모 : " + parent);
+		String sessionID = (String)session.getAttribute("loginID");
+		int result = service.dealSuccessSelect(sessionID, booker, parent); // 거래 완료 버튼(booker와 parent의 값은 어디서 갖고오지?)
 
-// 요청 거절 버튼을 눌렀을 때 - 재능
-@ResponseBody
-@RequestMapping("/dealFailTalent")
-public String dealFailTalent(int parent) {
-System.out.println(parent);
-String sessionID = (String)session.getAttribute("loginID");
-int result = service.dealFailTalent(sessionID,parent);
+		return String.valueOf(result);
+	}
 
-return String.valueOf(result);
-}
+	// 요청 거절 버튼을 눌렀을 때 - 재능
+	@ResponseBody
+	@RequestMapping("/dealFailTalent")
+	public String dealFailTalent(int parent) {
+		System.out.println(parent);
+		String sessionID = (String)session.getAttribute("loginID");
+		int result = service.dealFailTalent(sessionID,parent);
 
-// 거래 승인 완료 버튼 눌렀을 때 - 재능
-@ResponseBody
-@RequestMapping("/dealSuccess")
-public String dealSuccess(String writer, String booker, int parent) {
-System.out.println(writer +":"+":"+ booker+":"+ parent);
-int result = service.dealSuccess(writer,booker,parent); 
+		return String.valueOf(result);
+	}
 
-return String.valueOf(result);
-}
+	// 거래 승인 완료 버튼 눌렀을 때 - 재능
+	@ResponseBody
+	@RequestMapping("/dealSuccess")
+	public String dealSuccess(String writer, String booker, int parent) {
+		System.out.println(writer +":"+":"+ booker+":"+ parent);
+		int result = service.dealSuccess(writer,booker,parent); 
+
+		return String.valueOf(result);
+	}
 
 	////////////////////////////////////////////////////////////////////////////////////////// 예약 내역 목록(구매자 입장)
 
@@ -235,19 +235,19 @@ return String.valueOf(result);
 	@RequestMapping("buyRequestTalent")
 	public String buyRequestTalent(Model model) {
 		String sessionID = (String)session.getAttribute("loginID");
-//		int paymentCount = service.paymentCount(sessionID);
-//		System.out.println("갯수는 "+ paymentCount);
-		
-//		
-//			List<HashMap<String,Object>> paymentresult = service.buyRequestTalent2(sessionID);
-//			model.addAttribute("paymentlist", paymentresult);
-//			model.addAttribute("count",paymentCount);
-		
-			List<HashMap<String,Object>> bookingresult = service.buyRequestTalent(sessionID);
-			model.addAttribute("requestRental", bookingresult);
-		
-		
-	 return "/mypage/buyRequestTalent";
+		//		int paymentCount = service.paymentCount(sessionID);
+		//		System.out.println("갯수는 "+ paymentCount);
+
+		//		
+		//			List<HashMap<String,Object>> paymentresult = service.buyRequestTalent2(sessionID);
+		//			model.addAttribute("paymentlist", paymentresult);
+		//			model.addAttribute("count",paymentCount);
+
+		List<HashMap<String,Object>> bookingresult = service.buyRequestTalent(sessionID);
+		model.addAttribute("requestRental", bookingresult);
+
+
+		return "/mypage/buyRequestTalent";
 	}
 
 	// 예약 취소 - 재능
