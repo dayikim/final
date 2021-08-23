@@ -142,12 +142,13 @@ public class PointController {
 	
 	//구매자가 확인버튼 누른다음 결제하기
 	@RequestMapping(value="payment",produces="text/html;charset=utf8")
-	public String payment(int parentseq, String item,String seller, String category, int price, Model model, PaymentDTO paydto, PointAccountDTO padto) {
+	public String payment(int parentseq, String item,String seller, String category, int price, String paymentable, Model model, PaymentDTO paydto, PointAccountDTO padto) {
 		//구매자 결제하기 
 		System.out.println(parentseq);
 		String sessionID = (String) session.getAttribute("loginID");
 		paydto.setBuyer(sessionID);
 		paydto.setPrice(price);
+		paydto.setPaymentable(paymentable);
 
 		//lend인지 selltalent인지 구분
 		System.out.println(parentseq +":" + sessionID +":" + category);

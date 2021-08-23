@@ -30,10 +30,12 @@
 	
 	<!-- 결제 y인 건수 -->
 	<select id="paymentCount" resultType="int">
-	select count(*) from payment where parenseq=#{seq} and boardtype="#{talent}"
+	select count(*) from payment where buyer=#{id}and parentseq=(select parentseq from payment where buyer=#{id}and paymentable=#{y})
 	</select>
 	
 	
+	<!-- 	select count(*) from payment where parenseq=#{seq} and boardtype="#{talent}"
+ -->	
 	
 	<!-- <select id="checkpayable">
 	    select paymentable from payment where buyer =#{id} and paymentable=#{y}and boardtype=#{talent};

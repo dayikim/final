@@ -150,7 +150,7 @@ img {
 
 .information {
 	padding-top: 40px;
-	padding-left: 40px;
+	padding-left: 70px;
 }
 
 .content {
@@ -208,36 +208,67 @@ img {
 			location.href = "/chat";
 		})
 
-		// 예약 버튼을 눌렀을 경우
+		// 취소 버튼을 눌렀을 경우
 		$(".cnum-btn1").on("click", function() {
 			let result = confirm("예약을 취소 하시겠습니까?");
 			if (result) {
-				$("#frm").attr("action", "/my/bookingFail");
-				$("#frm").submit();
+				$(".cnum-btn1").parent().parent().parent().empty();
 			} else {
 				return false;
 			}
 		})
 
-		// 결제하기 버튼을 눌렀을 경우
-		$("button[id^='payment']").on(
-				"click",
-				function() {
+	
+
+	// 결제하기 버튼을 눌렀을 경우
+	$("button[id^='payment']").on(
+			"click",
+			function() {
+				let button = $(this);
+				location.href = "/point/TopaymentByTalent?seq="
+						+ $(
+								$(this).siblings().parent().siblings()
+										.children().siblings().children(
+												"#parentseq")).val()
+						+ "&id="
+						+ $(
+								$(this).siblings().parent().siblings()
+										.children().siblings().children()
+										.siblings("#writer")).val()
+
+			})
+
+	// 예약 취소 버튼을 눌렀을 경우
+	$(".cnum-btn1").on("click",
+			function() {
+				let result = confirm("예약을 취소 하시겠습니까?");
+				if (result) {
 					let button = $(this);
-					location.href = "/point/TopaymentByTalent?seq="
-							+ $(
-									$(this).siblings().parent().siblings()
-											.children().siblings().children(
-													"#parentseq")).val()
-							+ "&id="
-							+ $(
-									$(this).siblings().parent().siblings()
-											.children().siblings().children()
-											.siblings("#writer")).val()
-
-				})
-
-	})
+					$.ajax(
+							{
+								url : "/my/bookingFail",
+								data : {
+									parent : $(
+											$(this).parent().siblings()
+													.children().children(
+															"#parentseq"))
+											.val()
+								}
+							}).done(function(resp) {
+						if (resp == "1") {
+							alert("취소하였습니다.")
+							location.reload();
+						} else {
+							alert("에러 발생, 다시 시도해주세요.")
+							return false;
+						}
+					})
+				} else {
+					return false;
+				}
+			})
+			
+			})
 </script>
 
 </head>
@@ -351,7 +382,7 @@ img {
 
 			<div class="requestList">
 				<div class="row high">
-					<div class="col-8 information">
+					<div class="col-12 information">
 						<div class="title">
 							<h4>
 								<b>${i.title }</b>
@@ -370,6 +401,11 @@ img {
 								</div>
 								<div class="col-8 right">${i.booker}</div>
 							</div>
+							</div>
+					<div class="col-4">
+						<div class="image">
+							<img src="">
+						</div>
 							<div class="row">
 								<div class="col-4 left">
 									<b>결제금</b>
@@ -379,60 +415,40 @@ img {
 						</div>
 
 
-						<input type=hidden value=${i.writer } name="id${vs.index}"
-							class="id" id=writer> <input type=hidden
-							value=${i.parentseq } name="parent" class="parentseq"
-							id=parentseq>
+						<input type=hidden value=${i.writer } name="id" class="id" id=writer> 
+							<input type=hidden value=${i.parentseq } name="parent" class="parentseq"						id=parentseq>
 
+					
 
-					</div>
-					<div class="col-4">
-						<div class="image">
-							<img src="">
-						</div>
 
 					</div>
 				</div>
 				<div class="under">
 					<input type=button id=cancel class="cnum-btn1" value="예약 취소">
-
 					<c:choose>
-						<c:when test="${count eq 1}">
-
-							<c:forEach var="pay" items="${paymentlist}">
-								<c:choose>
-									<c:when test="${pay.paymentable ==y}">
-										<button type=button class="cnum-btn2" disabled='disabled'>결제
-											완료</button>
-									</c:when>
-									<c:otherwise>
-									<button type=button id=approval class="cnum-btn2"
-										disabled='disabled'>승인 대기 중</button>
-								</c:otherwise>
-								</c:choose>
-							</c:forEach>
-
+						<c:when test="${i.approval =='y'}">
+							<button type=button class="cnum-btn2" id="payment${vs.index}">
+								결제하기</button>
 						</c:when>
+						<c:when test="${i.approval =='n'}">
+							<button type=button id=approval class="cnum-btn2"
+								disabled='disabled'>승인 거절</button>
+						</c:when>
+						<c:when test="${i.approval == null}">
 
-
+							<button type=button id=approval class="cnum-btn2"
+								disabled='disabled'>승인 대기 중</button>
+						</c:when>
 						<c:otherwise>
-							<c:choose>
-								<c:when test="${i.approval =='y'}">
-									<button type=button class="cnum-btn2" id="payment${vs.index}">
-										결제하기</button>
-								</c:when>
-								<c:when test="${i.approval =='n'}">
-									<button type=button id=approval class="cnum-btn2"
-										disabled='disabled'>승인 거절</button>
-								</c:when>
-								<c:otherwise>
-									<button type=button id=approval class="cnum-btn2"
-										disabled='disabled'>승인 대기 중</button>
-								</c:otherwise>
-							</c:choose>
+							<button type=button class="cnum-btn2" disabled='disabled'>결제
+								완료</button>
 						</c:otherwise>
+
 					</c:choose>
+
 				</div>
+
+
 			</div>
 		</c:forEach>
 	</div>

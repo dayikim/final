@@ -591,7 +591,8 @@
                         	 <input type="hidden" name="item" value="${board.title}">
                         	 <input type="hidden" name="price" value="${board.price}" id="price">
                             <input type="hidden" name="parentseq" value="${board.seq}" id="parentseq">
-                            <input type="hidden" name="category" value="${board.category}" id="category">                             
+                            <input type="hidden" name="category" value="${board.category}" id="category">
+                            <input type=hidden" name="paymentable" value="y">                            
                             <button type="button" class="btn btn-success btn btn-lg" id="pay">
                                 <i class="far fa-comment-dots"></i> 결제하기
                             </button>
