@@ -212,16 +212,6 @@ div {
 			location.href = "/chat";
 		})
 
-		// 취소 버튼을 눌렀을 경우
-		$(".cnum-btn1").on("click", function() {
-			let result = confirm("예약을 취소 하시겠습니까?");
-			if (result) {
-				$(".cnum-btn1").parent().parent().parent().empty();
-			} else {
-				return false;
-			}
-		})
-
 		// 결제하기 버튼을 눌렀을 경우
 		$("button[id^='payment']").on(
 				"click",

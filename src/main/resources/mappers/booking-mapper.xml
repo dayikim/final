@@ -38,6 +38,12 @@
 	delete from booking where seller=#{sessionID} and parentseq=${parent} and boardtype=#{able}
 </delete>
 
+<!-- 구매자가 물품 예약 내역 출력 -->
+<select id="buyRequestProduct" resultMap="selltalent" resultType="HashMap">
+	select distinct lendboard.writer,booking.booker,lendboard.price,lendboard.title,booking.parentseq,approval.approval
+	from lendboard join booking on (lendboard.seq = booking.parentseq) join approval on (approval.buyer =booking.booker)
+	where booking.bookable=#{y} and booking.booker=#{id} and booking.boardtype=#{product}
+</select>
 
 <!-- 구매자가 재능 예약 내역 출력 -->
 <select id="buyRequestTalent" resultMap="selltalent" resultType="HashMap">

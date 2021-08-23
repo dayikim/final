@@ -150,10 +150,10 @@ img {
 
 .information {
 	padding-top: 40px;
-	padding-left: 70px;
+	padding-left: 40px;
 }
 .content{
-	margin-top:10px;
+	margin-top:30px;
 }
 
 /* 버튼 */
@@ -163,7 +163,7 @@ img {
 	margin-top: 10px;
 }
 
-.cnum-btn1 {
+#cancel, #dealCancel {
 	/* 취소 */
 	border-radius: 5px;
 	width: 45%;
@@ -176,8 +176,8 @@ img {
 	cursor: pointer;
 }
 
-.cnum-btn2 {
-	/* 수정 */
+#approval, #dealComplete {
+	/* 거래승인 */
 	border-radius: 5px;
 	width: 45%;
 	height: 50px;
@@ -235,7 +235,7 @@ img {
 				let button = $(this);
 				$.ajax({
 					url:"/my/dealFailProduct",
-					data:{parent:$($(this).parent().siblings().children().children("#parent")).val()}
+					data:{parent:$($(this).parent().siblings().children().siblings().children("#parent")).val()}
 				}).done(function(resp){
 					if(resp=="1"){
 						alert("취소하였습니다.")
@@ -398,7 +398,7 @@ img {
 
 			<div class="requestList">
 				<div class="row high">
-					<div class="col-12 information">
+					<div class="col-8 information">
 						<div class="title">
 							<h4>
 								<b>${i.title }</b>
@@ -428,6 +428,12 @@ img {
 						<input type=hidden value=${i.writer } id=writer name=writer>
 						<input type=hidden value=${i.booker } id=booker name=booker>
 						<input type=hidden value=${i.parentseq } id=parent name=parent>
+
+					</div>
+					<div class="col-4">
+						<div class="image">
+							<img src="">
+						</div>
 
 					</div>
 				</div>
