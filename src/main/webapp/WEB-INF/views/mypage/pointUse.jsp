@@ -133,7 +133,7 @@
 
 	<div class="navi">
 		<div class="pointCharge">
-			<a href="/my/pointChargeList"><b>포인트충전</b></a>
+			<a href="/my/pointChargeList"><b>포인트입금</b></a>
 		</div>
 		<div class="pointUse">
 			<a href="/my/pointUseList"><b>포인트사용</b></a>
@@ -153,7 +153,7 @@
 				</div>
 			</div>
 			<div class="col-4 pay">
-				<b>${i.usepoint }</b>상추
+				<b>${i.usepoint }</b> 상추
 			</div>
 		</div>
 	</c:forEach>

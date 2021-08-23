@@ -116,14 +116,14 @@
     <div class="margin"></div>
 
     <div class="payTitle">
-        <b>포인트충전</b>
+        <b>포인트입금</b>
     </div>
 
     <div class="margin"></div>
 
     <div class="navi">
         <div class="pointCharge">
-            <a href="/my/pointChargeList"><b>포인트충전</b></a>
+            <a href="/my/pointChargeList"><b>포인트입금</b></a>
         </div>
         <div class="pointUse">
             <a href="/my/pointUseList"><b>포인트사용</b></a>
@@ -141,7 +141,7 @@
                 	${i.dealdate }
             	</div>
             	<div class="content">
-                	<b>포인트 충전</b>
+                	<b>${i.reason }</b>
             	</div>
         	</div>
         	<div class="col-4 pay">
