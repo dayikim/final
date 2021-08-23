@@ -153,8 +153,8 @@ img {
 	padding-left: 70px;
 }
 
-.content {
-	margin-top: 40px;
+.content{
+	margin-top:30px;
 }
 
 /* 버튼 */
@@ -189,6 +189,10 @@ img {
 	outline: none;
 	cursor: pointer;
 }
+
+div {
+	border: 1px solid balck;
+}
 </style>
 
 <script>
@@ -218,57 +222,56 @@ img {
 			}
 		})
 
-	
-
-	// 결제하기 버튼을 눌렀을 경우
-	$("button[id^='payment']").on(
-			"click",
-			function() {
-				let button = $(this);
-				location.href = "/point/TopaymentByTalent?seq="
-						+ $(
-								$(this).siblings().parent().siblings()
-										.children().siblings().children(
-												"#parentseq")).val()
-						+ "&id="
-						+ $(
-								$(this).siblings().parent().siblings()
-										.children().siblings().children()
-										.siblings("#writer")).val()
-
-			})
-
-	// 예약 취소 버튼을 눌렀을 경우
-	$(".cnum-btn1").on("click",
-			function() {
-				let result = confirm("예약을 취소 하시겠습니까?");
-				if (result) {
+		// 결제하기 버튼을 눌렀을 경우
+		$("button[id^='payment']").on(
+				"click",
+				function() {
 					let button = $(this);
-					$.ajax(
-							{
-								url : "/my/bookingFail",
-								data : {
-									parent : $(
-											$(this).parent().siblings()
-													.children().children(
-															"#parentseq"))
-											.val()
-								}
-							}).done(function(resp) {
-						if (resp == "1") {
-							alert("취소하였습니다.")
-							location.reload();
-						} else {
-							alert("에러 발생, 다시 시도해주세요.")
-							return false;
-						}
-					})
-				} else {
-					return false;
-				}
-			})
-			
-			})
+					location.href = "/point/TopaymentByTalent?seq="
+							+ $(
+									$(this).siblings().parent().siblings()
+											.children().siblings().children(
+													"#parentseq")).val()
+							+ "&id="
+							+ $(
+									$(this).siblings().parent().siblings()
+											.children().siblings().children()
+											.siblings("#writer")).val()
+
+				})
+
+		// 예약 취소 버튼을 눌렀을 경우
+		$(".cnum-btn1").on(
+				"click",
+				function() {
+					let result = confirm("예약을 취소 하시겠습니까?");
+					if (result) {
+						let button = $(this);
+						$.ajax(
+								{
+									url : "/my/bookingFail",
+									data : {
+										parent : $(
+												$(this).parent().siblings()
+														.children().children(
+																"#parentseq"))
+												.val()
+									}
+								}).done(function(resp) {
+							if (resp == "1") {
+								alert("취소하였습니다.")
+								location.reload();
+							} else {
+								alert("에러 발생, 다시 시도해주세요.")
+								return false;
+							}
+						})
+					} else {
+						return false;
+					}
+				})
+
+	})
 </script>
 
 </head>
@@ -382,47 +385,42 @@ img {
 
 			<div class="requestList">
 				<div class="row high">
-					<div class="col-12 information">
+					<div class="col-8 information">
 						<div class="title">
 							<h4>
 								<b>${i.title }</b>
 							</h4>
 						</div>
-						<div class="content">
-							<div class="row">
-								<div class="col-4 left">
-									<b>재능 판매자</b>
-								</div>
-								<div class="col-8 right">${i.writer}</div>
+						<div class="row content">
+							<div class="col-4 left">
+								<b>재능 판매자</b>
 							</div>
-							<div class="row">
-								<div class="col-4 left">
-									<b>재능 구매자</b>
-								</div>
-								<div class="col-8 right">${i.booker}</div>
+							<div class="col-8 right">${i.writer}</div>
+						</div>
+						<div class="row">
+							<div class="col-4 left">
+								<b>재능 구매자</b>
 							</div>
+							<div class="col-8 right">${i.booker}</div>
+						</div>
+						<div class="row">
+							<div class="col-4 left">
+								<b>결제금</b>
 							</div>
+							<div class="col-8 right">${i.price}상추</div>
+						</div>
+						<input type=hidden value=${i.writer } name="id" class="id" id=writer> 
+						<input type=hidden value=${i.parentseq } name="parent" class="parentseq" id=parentseq>
+					</div>
 					<div class="col-4">
 						<div class="image">
 							<img src="">
 						</div>
-							<div class="row">
-								<div class="col-4 left">
-									<b>결제금</b>
-								</div>
-								<div class="col-8 right">${i.price}상추</div>
-							</div>
-						</div>
-
-
-						<input type=hidden value=${i.writer } name="id" class="id" id=writer> 
-							<input type=hidden value=${i.parentseq } name="parent" class="parentseq"						id=parentseq>
-
-					
-
 
 					</div>
 				</div>
+
+
 				<div class="under">
 					<input type=button id=cancel class="cnum-btn1" value="예약 취소">
 					<c:choose>
