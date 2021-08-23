@@ -157,10 +157,10 @@ public class MypageController {
 	// 거래 요청 목록 - 대여(미완)
 	@RequestMapping("/requestRentalProduct")
 	public String requestRental(Model model) {
-		String sessionID = (String)session.getAttribute("loginID");
-		List<HashMap<String,Object>> list = service.requestRentalProduct(sessionID); // 예약리스트 꺼내기
-
-		model.addAttribute("requestRental", list);  // 들어온 예약 리스트
+//		String sessionID = (String)session.getAttribute("loginID");
+//		List<HashMap<String,Object>> list = service.requestRentalProduct(sessionID); // 예약리스트 꺼내기
+//
+//		model.addAttribute("requestRental", list);  // 들어온 예약 리스트
 		return "/mypage/requestRentalProduct";
 	}
 
