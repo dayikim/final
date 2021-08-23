@@ -260,9 +260,9 @@ img {
 				let button = $(this);				
 				$.ajax({
 					url:"/my/dealSuccess",
-					data:{writer:$($(this).siblings().parent().siblings().children().siblings().children().siblings().siblings("#writer")).val(), 
-						booker:$($(this).siblings().parent().siblings().children().siblings().children().siblings("#booker")).val(), 
-						parent:$($(this).siblings().parent().siblings().children().siblings().children("#parent")).val()}
+					data:{writer:$($(this).siblings().parent().siblings().children().children().siblings().siblings("#writer")).val(), 
+						booker:$($(this).siblings().parent().siblings().children().children().siblings("#booker")).val(), 
+						parent:$($(this).siblings().parent().siblings().children().children("#parent")).val()}
 				}).done(function(resp){
 					console.log(resp)
 					if(resp=="1"){
