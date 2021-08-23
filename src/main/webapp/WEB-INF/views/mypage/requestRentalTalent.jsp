@@ -150,7 +150,7 @@ img {
 
 .information {
 	padding-top: 40px;
-	padding-left: 70px;
+	padding-left: 40px;
 }
 
 .content {
@@ -237,7 +237,7 @@ img {
 				let button = $(this);
 				$.ajax({
 					url:"/my/dealFailTalent",
-					data:{parent:$($(this).parent().siblings().children().children("#parent")).val()}
+					data:{parent:$($(this).parent().siblings().children().siblings().children("#parent")).val()}
 				}).done(function(resp){
 					if(resp=="1"){
 						alert("취소하였습니다.")
@@ -260,9 +260,9 @@ img {
 				let button = $(this);				
 				$.ajax({
 					url:"/my/dealSuccess",
-					data:{writer:$($(this).siblings().parent().siblings().children().children().siblings().siblings("#writer")).val(), 
-						booker:$($(this).siblings().parent().siblings().children().children().siblings("#booker")).val(), 
-						parent:$($(this).siblings().parent().siblings().children().children("#parent")).val()}
+					data:{writer:$($(this).siblings().parent().siblings().children().siblings().children().siblings().siblings("#writer")).val(), 
+						booker:$($(this).siblings().parent().siblings().children().siblings().children().siblings("#booker")).val(), 
+						parent:$($(this).siblings().parent().siblings().children().siblings().children("#parent")).val()}
 				}).done(function(resp){
 					console.log(resp)
 					if(resp=="1"){
@@ -407,7 +407,7 @@ img {
 
 			<div class="requestList">
 				<div class="row high">
-					<div class="col-12 information">
+					<div class="col-8 information">
 						<div class="title">
 							<h4>
 								<b><a href="/tBoard/sellingView?seq=${i.parentseq}&id=${i.writer}">${i.title }</a></b>
@@ -437,6 +437,12 @@ img {
 						<input type=hidden value=${i.writer } id=writer name=writer>
 						<input type=hidden value=${i.booker } id=booker name=booker>
 						<input type=hidden value=${i.parentseq } id=parent name=parent>
+
+					</div>
+					<div class="col-4">
+						<div class="image">
+							<img src="">
+						</div>
 
 					</div>
 				</div>
