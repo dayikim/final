@@ -11,6 +11,23 @@ public class PaymentDTO {
 	private int parentseq;
 	private Date paymentDate;
 	private String boardtype;
+	private String paymentable;
+
+	
+
+	public PaymentDTO(int seq, String seller, String buyer, String item, int price, int parentseq, Date paymentDate,
+			String boardtype, String paymentable) {
+		super();
+		this.seq = seq;
+		this.seller = seller;
+		this.buyer = buyer;
+		this.item = item;
+		this.price = price;
+		this.parentseq = parentseq;
+		this.paymentDate = paymentDate;
+		this.boardtype = boardtype;
+		this.paymentable = paymentable;
+	}
 
 	public PaymentDTO(int seq, String seller, String buyer, String item, int price, int parentseq, Date paymentDate,
 			String boardtype) {
@@ -81,6 +98,14 @@ public class PaymentDTO {
 	}
 	public void setBoardtype(String boardtype) {
 		this.boardtype = boardtype;
+	}
+	
+	public String getPaymentable() {
+		return paymentable;
+	}
+
+	public void setPaymentable(String paymentable) {
+		this.paymentable = paymentable;
 	}
 	
 }

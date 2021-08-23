@@ -27,6 +27,18 @@
 		pw=#{pw},phone=#{phone},email=#{email},birth=#{birth},postcode=#{postcode},address1=#{address1},address2=#{address2}
 		where id=#{id}
 	</update>
+	
+	<select id="paymentCount" resultType="int">
+	select count(*) from payment where buyer =#{id} and paymentable=#{y}and boardtype=#{talent}
+    and parentseq= (select parentseq from payment where boardtype=#{talent} and  buyer=#{id} and paymentable =#{y})
+	</select>
+	
+	
+	
+	<!-- <select id="checkpayable">
+	    select paymentable from payment where buyer =#{id} and paymentable=#{y}and boardtype=#{talent};
+	
+	</select> -->
 
 	<resultMap type="HashMap" id="dealEndlist">
 		<result column="name" property="name" />

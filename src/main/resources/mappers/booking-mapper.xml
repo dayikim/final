@@ -28,11 +28,11 @@
 </delete>
 
 
-<!-- 구매자가 재능 판매 예약 내역 출력 -->
+<!-- 구매자가 재능 예약 내역 출력 -->
 <select id="buyRequestTalent" resultMap="selltalent" resultType="HashMap">
 select distinct selltalent.writer,booking.booker,selltalent.price,selltalent.title,booking.parentseq,approval.approval
 	from selltalent join booking on (selltalent.seq = booking.parentseq) join approval on (approval.buyer =booking.booker)
-	where booking.bookable=#{y} and booking.booker=#{id}
+	where booking.bookable=#{y} and booking.booker=#{id} and booking.boardtype=#{talent}
 </select>
 
 <!-- 구매자가 예약내역 취소 -->
