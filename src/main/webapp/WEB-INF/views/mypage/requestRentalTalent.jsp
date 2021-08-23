@@ -237,7 +237,7 @@ img {
 				let button = $(this);
 				$.ajax({
 					url:"/my/dealFail",
-					data:{parent:$($(this).parent().siblings().children().siblings().children("#parent")).val()}
+					data:{parent:$($(this).parent().siblings().children().children("#parent")).val()}
 				}).done(function(resp){
 					if(resp=="1"){
 						alert("취소하였습니다.")
