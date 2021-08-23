@@ -30,8 +30,8 @@
 
 <!-- 구매자에게 들어온 예약 내역 출력 -->
 <select id="buyRequestTalent" resultMap="selltalent" resultType="HashMap">
-select selltalent.writer,booking.booker,selltalent.price,selltalent.title,booking.parentseq,approval.approval
-	from selltalent join booking on (selltalent.seq = booking.parentseq) join approval on (approval.buyer =booking.booker)
+select selltalent.writer,booking.booker,selltalent.price,selltalent.title,booking.parentseq
+	from selltalent join booking on (selltalent.seq = booking.parentseq)
 	where booking.bookable=#{y} and booking.booker=#{id}
 </select>
 
