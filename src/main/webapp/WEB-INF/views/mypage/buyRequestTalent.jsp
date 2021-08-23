@@ -150,7 +150,7 @@ img {
 
 .information {
 	padding-top: 40px;
-	padding-left: 40px;
+	padding-left: 70px;
 }
 
 .content {
@@ -208,12 +208,23 @@ img {
 			location.href = "/chat";
 		})
 
-		// 예약 버튼을 눌렀을 경우
+		// 예약 취소 버튼을 눌렀을 경우
 		$(".cnum-btn1").on("click", function() {
 			let result = confirm("예약을 취소 하시겠습니까?");
 			if (result) {
-				$("#frm").attr("action", "/my/bookingFail");
-				$("#frm").submit();
+				let button = $(this);
+				$.ajax({
+					url:"/my/bookingFail",
+					data:{parent:$($(this).parent().siblings().children().children("#parentseq")).val()}
+				}).done(function(resp){
+					if(resp=="1"){
+						alert("취소하였습니다.")
+						location.reload();
+					}else{
+						alert("에러 발생, 다시 시도해주세요.")
+						return false;
+					}
+				})
 			} else {
 				return false;
 			}
@@ -351,7 +362,7 @@ img {
 
 			<div class="requestList">
 				<div class="row high">
-					<div class="col-8 information">
+					<div class="col-12 information">
 						<div class="title">
 							<h4>
 								<b>${i.title }</b>
@@ -386,21 +397,15 @@ img {
 
 
 					</div>
-					<div class="col-4">
-						<div class="image">
-							<img src="">
-						</div>
-
-					</div>
 				</div>
 				<div class="under">
 					<input type=button id=cancel class="cnum-btn1" value="예약 취소">
 
 					<c:choose>
-						<c:if test="${count eq 1}">
+						<c:when test="${count eq 1}">
 							<button type=button class="cnum-btn2" disabled='disabled'>
 								결제 완료</button>
-						</c:if>
+						</c:when>
 						<c:otherwise>
 							<c:choose>
 								<c:when test="${i.approval =='y'}">

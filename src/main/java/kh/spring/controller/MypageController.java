@@ -196,7 +196,7 @@ public class MypageController {
 		return String.valueOf(result);
 	}
 
-	// 거래 승인 완료 버튼 눌렀을 때 - 재능(미완)
+	// 거래 승인 완료 버튼 눌렀을 때 - 재능
 	@ResponseBody
 	@RequestMapping("/dealSuccess")
 	public String dealSuccess(String writer, String booker, int parent) {
