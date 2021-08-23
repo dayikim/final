@@ -89,11 +89,11 @@ style>body {
 }
 </style>
 <script>
-	var count = 2;
 	let fileList = [];
 	$(function() {
 		//무한스크롤
 		var isScroll = true;
+		var count = 2;
 		let loadNewPage = $(window).on("scroll",(function() {
 			if (((window.innerHeight + window.scrollY) >= document.body.offsetHeight)&& isScroll) {
 				$.ajax({
@@ -131,7 +131,7 @@ style>body {
 
 						node += "</div>"
 							node +="<div class=ml-2>"
-								node +="<div class=\"h5 m-0\">"+e[i].id + "<input type=hidden id=hiddenseq value=114>"
+								node +="<div class=\"h5 m-0\">"+e[i].id + "<input type=hidden id=hiddenseq value="+e[i].seq+">"
 								
 								if(e[i].id == $("#session").val()){
 									node +="<a href=/sns/delete?seq="+e[i].seq+" id=del style =\"position:relative; left:5%\">삭제</a>"

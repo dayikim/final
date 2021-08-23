@@ -240,7 +240,7 @@ public class MypageController {
 
 	//////////////////////////////////////////////////////////////////////////////////////////// 거래 완료 목록
 
-	// 거래 완료 목록 출력 - 물품 대여(미완)
+	// 거래 완료 목록 출력 - 물품 대여
 	@RequestMapping(value="/dealEndProductSellList", produces="text/html;charset=utf8")
 	public String dealEndProductSellList(Model model) {
 		String id = (String)session.getAttribute("loginID");
@@ -251,7 +251,7 @@ public class MypageController {
 		return "/mypage/dealEndProductSellList";
 	}
 
-	// 거래 완료 목록 출력 -물품 빌림(미완)
+	// 거래 완료 목록 출력 -물품 빌리기
 	@RequestMapping(value="/dealEndProductBuyList", produces="text/html;charset=utf8")
 	public String dealEndProductBuyList(Model model) {
 		String id = (String)session.getAttribute("loginID");
@@ -261,7 +261,6 @@ public class MypageController {
 			
 		return "/mypage/dealEndProductBuyList";
 	}
-	
 	
 
 	// 거래 완료 목록 출력 - 재능 판매완료
@@ -365,6 +364,7 @@ public class MypageController {
 		return "/mypage/mySnsPage"; 
 	}
 	
+	// 회원탈퇴
 	@ResponseBody
 	@RequestMapping("/memberOut")
 	public int memberOut(String id) {

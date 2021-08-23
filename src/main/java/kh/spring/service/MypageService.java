@@ -46,7 +46,7 @@ public class MypageService {
 	private ProfileFilesDAO pdao; // 프로필
 	@Autowired
 	private PointAccountDAO ppdao; // 포인트
-	
+
 	@Autowired
 	private BookingDAO bdao; // 재능 예약 여부
 	@Autowired
@@ -105,7 +105,9 @@ public class MypageService {
 		return pdao.delete(sessionID);
 	}
 
+
 	// 포인트 충전 내역 출력
+
 	   public List<PointAccountDTO> pointChargeList(String sessionID) {
 	      String charge = "포인트 충전";
 	      String insert = "거래금 입금";
@@ -124,6 +126,7 @@ public class MypageService {
 	      param.put("id", sessionID);
 	      return ppdao.pointUseList(param);
 	   }
+
 
 	//////////////////////////////////////////////////////////////////////////////////////////////거래 요청 목록(판매자 입장)
 
@@ -203,22 +206,25 @@ public class MypageService {
 	public List<LendDTO> myRequestSellProduct(String sessionID) {
 		return ldao.myRequestSellProduct(sessionID);
 	}
-	
+
 	// 내가 쓴 게시글 목록 - 대여 요청글
 	public List<BorrowDTO> myRequestBuyProduct(String sessionID) {
 		return bwdao.myRequestBuyProduct(sessionID);
 	}
-	
+
 	// 내가 쓴 게시글 목록 = 재능판매글
 	public List<SellTalentDTO> myRequestSellTalent(String sessionID) {
 		return stdao.myRequestSellTalent(sessionID);
 	}
-	
+
 	// 내가 쓴 게시글 목록 - 재능대여글
 	public List<RequestTalentDTO> myRequestBuyTalent(String sessionID) {
 		return rtdao.myRequestBuyTalent(sessionID);
 	}
 
+	////////////////////////////////////////////////////////////////////////////////////////////거래 완료 목록
+
+	// 거래 완료 목록 출력 - 물품 대여
 	public  List<HashMap<Object, Object>> dealEndProductSellList(String id, String product) {
 		Map<Object, Object> param = new HashMap<>();
 		param.put("id", id);
@@ -226,6 +232,7 @@ public class MypageService {
 		return dao.dealEndProductSellList(param);
 	}
 
+	// 거래 완료 목록 출력 -물품 빌리기
 	public List<HashMap<Object, Object>> dealEndProductBuyList(String id, String product) {
 		Map<Object, Object> param = new HashMap<>();
 		param.put("id", id);
@@ -233,13 +240,7 @@ public class MypageService {
 		return dao.dealEndProductBuyList(param);
 	}
 
-	public List<HashMap<Object, Object>> dealEndTalentBuyList(String id, String talent) {
-		Map<Object, Object> param = new HashMap<>();
-		param.put("id", id);
-		param.put("talent", talent);
-		return dao.dealEndTalentBuyList(param);
-	}
-
+	// 거래 완료 목록 출력 - 재능 구매완료
 	public List<HashMap<Object, Object>> dealEndTalentSellList(String id, String talent) {
 		Map<Object, Object> param = new HashMap<>();
 		param.put("id", id);
@@ -247,9 +248,13 @@ public class MypageService {
 		return dao.dealEndTalentSellList(param);
 	}
 
-
-	
-	
+	// 거래 완료 목록 출력 - 재능 판매완료
+	public List<HashMap<Object, Object>> dealEndTalentBuyList(String id, String talent) {
+		Map<Object, Object> param = new HashMap<>();
+		param.put("id", id);
+		param.put("talent", talent);
+		return dao.dealEndTalentBuyList(param);
+	}
 
 }
 
