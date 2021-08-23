@@ -368,6 +368,11 @@
                                 	alert("보유 포인트가 결제금을 초과하였습니다.\n충전하고 다시 결제해주세요.\n바로 충전페이지로 이동합니다.")
                                     location.href = "${pageContext.request.contextPath}/point/ToCharging"
 
+                                }else if(resp == 3){
+                                	 $(".amount").val();
+                                     $(".alertPoint").text("결제 금액에 맞춰 포인트를 입력해주세요.");
+                                     $(".alertPoint").css("color", "red");
+                                     $(".alertPoint").css("font-weight", "800");
                                 }
 
                             })

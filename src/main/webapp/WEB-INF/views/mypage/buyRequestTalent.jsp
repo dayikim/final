@@ -392,14 +392,8 @@ div {
 						</div>
 						<div class="row content">
 							<div class="col-4 left">
-<<<<<<< HEAD
-								<div class="col-4 left">
-									<b>재능 판매자</b>
-								</div>
-								<div class="col-8 right">${i.writer}</div>
-=======
 								<b>재능 판매자</b>
->>>>>>> 26a8aa91eb62bc2d9404189c038a7bd9531e1928
+
 							</div>
 							<div class="col-8 right">${i.writer}</div>
 						</div>

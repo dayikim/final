@@ -151,7 +151,7 @@ public class PointController {
 		paydto.setPaymentable(paymentable);
 
 		//lend인지 selltalent인지 구분
-		System.out.println(parentseq +":" + sessionID +":" + category);
+		System.out.println(parentseq +":" + sessionID +":" + category + ":" + paymentable);
 		int isitLendBoard =LService.isitLend(parentseq,sessionID,category);	
 		if(isitLendBoard>0) {
 			System.out.println("대여하기");

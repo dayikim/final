@@ -19,7 +19,7 @@ select count(*) from review where recipient=#{value}
         <result column="id" property="id"/>
      <result column="address1" property="address1"/>
 	<result column="contents" property="contents"/>
-	<result column="regdate" property="regdate"/> 
+	<result column="regdate" property="regdate"   /> 
 </resultMap>
 
 <select id="reviewList" resultMap="reviewList" resultType="HashMap">
