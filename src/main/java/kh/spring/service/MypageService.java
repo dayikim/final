@@ -138,11 +138,22 @@ public class MypageService {
 		String y = "y";
 		String able = "물품";
 		Map<String, String> param = new HashMap<>();
-		param.put("able", able);		
 		param.put("y", y);
+		param.put("able", able);		
 		param.put("id", sessionID);
 
-		return bdao.requestRentalTalent(param);
+		return bdao.requestRentalProduct(param);
+	}
+	
+	// 요청 거절을 눌렀을 경우 - 재능
+	public int dealFailProduct(String sessionID, int parent) {
+		String able = "물품";
+		HashMap<String, Object> param = new HashMap<>();
+		param.put("sessionID", sessionID);
+		param.put("parent", parent);
+		param.put("able", able);
+
+		return bdao.dealFailProduct(param);
 	}
 
 
@@ -169,12 +180,14 @@ public class MypageService {
 	}
 
 	// 요청 거절을 눌렀을 경우 - 재능
-	public int dealFail(String sessionID, int parent) {
+	public int dealFailTalent(String sessionID, int parent) {
+		String able = "물품";
 		HashMap<String, Object> param = new HashMap<>();
 		param.put("sessionID", sessionID);
 		param.put("parent", parent);
+		param.put("able", able);
 
-		return bdao.dealFail(param);
+		return bdao.dealFailTalent(param);
 	}
 
 	// 거래 승인을 눌렀을 경우 - 재능
