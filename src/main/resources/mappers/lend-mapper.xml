@@ -4,7 +4,18 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Lend">
-
+	<resultMap type="HashMap" id="LendDTO">
+		<result column="seq" property="seq"/>
+		<result column="writer" property="writer"/>
+		<result column="title" property="title"/>
+		<result column="category" property="category"/>
+		<result column="contents" property="contents"/>
+		<result column="price" property="price"/>
+		<result column="address" property="address"/>
+		<result column="regdate" property="regdate"/>
+		<result column="sysName" property="sysName"/>
+	</resultMap>
+		
 	<!-- 게시글 상세보기 -->
 	<select id="detailView" resultType="kh.spring.dto.LendDTO">
 		select * from lendboard where
@@ -35,34 +46,50 @@
 		delete from lendboard where seq=#{seq}
 	</delete>
 
-	<!-- 전체 검색 지역 & 타이틀 & 내용 -->
-	<select id="toSearch" resultType="kh.spring.dto.LendDTO">
-		<![CDATA[select * from (select rownum as rnum, A.* from (select * from lendboard where address like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%' or category like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	<!-- 전체 검색 지역 & 타이틀 & 내용 & 카테고리 -->
+	<select id="toSearch" resultType="HashMap" resultMap="LendDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select lb.*, lf.SYSNAME from lendboard lb left join (
+				select SYSNAME, PARENTSEQ, REGDATE from (
+				select ROW_NUMBER() over (PARTITION BY lendfiles.PARENTSEQ order by lendfiles.REGDATE asc ) AS RNUM, lendfiles.* from lendfiles ) TB
+				where RNUM=1 ) lf on lb.SEQ=lf.PARENTSEQ where address like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%' or category like '%'||#{search}||'%' order by SEQ desc)A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
 	</select>
-
 	<!-- 주소 검색 -->
-	<select id="toAddress" resultType="kh.spring.dto.LendDTO">
-		<![CDATA[select * from (select rownum as rnum, A.* from (select * from lendboard where address like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	<select id="toAddress" resultType="HashMap" resultMap="LendDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select lb.*, lf.SYSNAME from lendboard lb left join (
+				select SYSNAME, PARENTSEQ, REGDATE from (
+				select ROW_NUMBER() over (PARTITION BY lendfiles.PARENTSEQ order by lendfiles.REGDATE asc ) AS RNUM, lendfiles.* from lendfiles ) TB
+				where RNUM=1 ) lf on lb.SEQ=lf.PARENTSEQ where address like '%'||#{search}||'%' order by SEQ desc)A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
 	</select>
 
 	<!-- 타이틀 검색 -->
-	<select id="toTitle" resultType="kh.spring.dto.LendDTO">
-		<![CDATA[select * from (select rownum as rnum, A.* from (select * from lendboard where title like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	<select id="toTitle" resultType="HashMap" resultMap="LendDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select lb.*, lf.SYSNAME from lendboard lb left join (
+				select SYSNAME, PARENTSEQ, REGDATE from (
+				select ROW_NUMBER() over (PARTITION BY lendfiles.PARENTSEQ order by lendfiles.REGDATE asc ) AS RNUM, lendfiles.* from lendfiles ) TB
+				where RNUM=1 ) lf on lb.SEQ=lf.PARENTSEQ where title like '%'||#{search}||'%' order by SEQ desc)A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
 	</select>
 
 	<!-- 컨텐츠 검색 -->
-	<select id="toContents" resultType="kh.spring.dto.LendDTO">
-		<![CDATA[select * from (select rownum as rnum, A.* from (select * from lendboard where contents like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	<select id="toContents" resultType="HashMap" resultMap="LendDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select lb.*, lf.SYSNAME from lendboard lb left join (
+				select SYSNAME, PARENTSEQ, REGDATE from (
+				select ROW_NUMBER() over (PARTITION BY lendfiles.PARENTSEQ order by lendfiles.REGDATE asc ) AS RNUM, lendfiles.* from lendfiles ) TB
+				where RNUM=1 ) lf on lb.SEQ=lf.PARENTSEQ where contents like '%'||#{search}||'%' order by SEQ desc)A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
 	</select>
-
 	<!-- 카테고리 검색 -->
-	<select id="toCategory" resultType="kh.spring.dto.LendDTO">
-		<![CDATA[select * from (select rownum as rnum, A.* from (select * from lendboard where category like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	<select id="toCategory" resultType="HashMap" resultMap="LendDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select lb.*, lf.SYSNAME from lendboard lb left join (
+				select SYSNAME, PARENTSEQ, REGDATE from (
+				select ROW_NUMBER() over (PARTITION BY lendfiles.PARENTSEQ order by lendfiles.REGDATE asc ) AS RNUM, lendfiles.* from lendfiles ) TB
+				where RNUM=1 ) lf on lb.SEQ=lf.PARENTSEQ where category like '%'||#{search}||'%' order by SEQ desc)A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
 	</select>
 
 	<!-- 검색이 null일 경우 전체목록 나오게 -->
-	<select id="toList" resultType="kh.spring.dto.LendDTO">
-		<![CDATA[select * from (select rownum as rnum, A.* from (select * from lendboard order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	<select id="toList" resultType="HashMap" resultMap="LendDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select lb.*, lf.SYSNAME from lendboard lb left join (
+				select SYSNAME, PARENTSEQ, REGDATE from (
+				select ROW_NUMBER() over (PARTITION BY lendfiles.PARENTSEQ order by lendfiles.REGDATE asc ) AS RNUM, lendfiles.* from lendfiles ) TB
+				where RNUM=1 ) lf on lb.SEQ=lf.PARENTSEQ order by SEQ desc)A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
 	</select>
 
 	<!-- 검색 지역 & 타이틀 & 컨텐츠 카운트 -->
@@ -72,9 +99,9 @@
 
 	<!-- 검색 지역 & 타이틀 & 컨텐츠 카운트 -->
 	<select id="numAllList" resultType="int">
-		select count(*) from
-		lendboard where address like '%'||#{value}||'%' or title like
-		'%'||#{value}||'%' or contents like '%'||#{value}||'%' or category
+		select count(*) from lendboard l inner join lendfiles f on l.seq = f.parentSeq  
+		where l.address like '%'||#{value}||'%' or l.title like
+		'%'||#{value}||'%' or l.contents like '%'||#{value}||'%' or l.category
 		like '%'||#{value}||'%'
 	</select>
 
@@ -113,7 +140,7 @@
 		category=#{category}
 	</select>
 	
-	<!-- 마이페이지 내 게시물 대여하기 출력 -->	
+	<!-- 마이페이지 내 게시물 대여하기 출력	 -->
 	<select id="myRequestSellProduct" resultType="kh.spring.dto.LendDTO">
 		select * from lendboard where writer=#{value} order by 1 desc
 	</select>

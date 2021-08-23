@@ -3,12 +3,23 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Selltalent">
+	<resultMap type="HashMap" id="SellTalentDTO">
+		<result column="seq" property="seq"/>
+		<result column="writer" property="writer"/>
+		<result column="title" property="title"/>
+		<result column="category" property="category"/>
+		<result column="contents" property="contents"/>
+		<result column="price" property="price"/>
+		<result column="address" property="address"/>
+		<result column="regdate" property="regdate"/>
+		<result column="sysName" property="sysName"/>
+	</resultMap>
 	
 	<!-- 판매자 찾기 -->
 	<select id="getWriter" resultType="String">
       select writer from selltalent where seq=#{seq}
    	</select>
-	
+   	
 	<!-- 게시글 글쓰기 -->
 	<insert id="write">
 		insert into selltalent values(#{seq},#{writer},#{title},#{category},#{contents},#{price},#{address},sysdate)
@@ -33,42 +44,62 @@
 		select writer from selltalent
 	</select>
 	
+	<!-- 삭제 -->
 	<delete id="delete">
 		delete from selltalent where seq=#{seq}
 	</delete>
-
+	
+	<!-- 게시글 번호 -->
 	<select id="getSeq" resultType="int">
 		select selltalent_seq.nextval from dual
 	</select>
 	
 	<!-- 전체 검색 지역 & 타이틀 & 내용 -->
-	<select id="toSearch" resultType="kh.spring.dto.SellTalentDTO">
-		<![CDATA[select * from (select rownum as rnum, A.* from (select * from selltalent where address like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%' or category like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	<select id="toSearch" resultType="HashMap" resultMap="SellTalentDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select lb.*, lf.SYSNAME from selltalent lb left join (
+				select SYSNAME, PARENTSEQ, REGDATE from (
+				select ROW_NUMBER() over (PARTITION BY TBoardfiles.PARENTSEQ order by TBoardfiles.REGDATE asc ) AS RNUM, TBoardfiles.* from TBoardfiles) TB
+				where RNUM=1 ) lf on lb.SEQ=lf.PARENTSEQ where address like '%'||#{search}||'%' or title like '%'||#{search}||'%' or contents like '%'||#{search}||'%' or category like '%'||#{search}||'%' order by SEQ desc)A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
 	</select>
 	
 	<!-- 주소 검색 -->
-	<select id="toAddress" resultType="kh.spring.dto.SellTalentDTO">
-		<![CDATA[select * from (select rownum as rnum, A.* from (select * from selltalent where address like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	<select id="toAddress" resultType="HashMap" resultMap="SellTalentDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select lb.*, lf.SYSNAME from selltalent lb left join (
+				select SYSNAME, PARENTSEQ, REGDATE from (
+				select ROW_NUMBER() over (PARTITION BY TBoardfiles.PARENTSEQ order by TBoardfiles.REGDATE asc ) AS RNUM, TBoardfiles.* from TBoardfiles) TB
+				where RNUM=1 ) lf on lb.SEQ=lf.PARENTSEQ where address like '%'||#{search}||'%' order by SEQ desc)A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
 	</select>
 	
 	<!-- 타이틀 검색 -->
-	<select id="toTitle" resultType="kh.spring.dto.SellTalentDTO">
-		<![CDATA[select * from (select rownum as rnum, A.* from (select * from selltalent where title like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	<select id="toTitle" resultType="HashMap" resultMap="SellTalentDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select lb.*, lf.SYSNAME from selltalent lb left join (
+				select SYSNAME, PARENTSEQ, REGDATE from (
+				select ROW_NUMBER() over (PARTITION BY TBoardfiles.PARENTSEQ order by TBoardfiles.REGDATE asc ) AS RNUM, TBoardfiles.* from TBoardfiles) TB
+				where RNUM=1 ) lf on lb.SEQ=lf.PARENTSEQ where title like '%'||#{search}||'%' order by SEQ desc)A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
 	</select>
 	
 	<!-- 컨텐츠 검색 -->
-	<select id="toContents" resultType="kh.spring.dto.SellTalentDTO">
-		<![CDATA[select * from (select rownum as rnum, A.* from (select * from selltalent where contents like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	<select id="toContents" resultType="HashMap" resultMap="SellTalentDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select lb.*, lf.SYSNAME from selltalent lb left join (
+				select SYSNAME, PARENTSEQ, REGDATE from (
+				select ROW_NUMBER() over (PARTITION BY TBoardfiles.PARENTSEQ order by TBoardfiles.REGDATE asc ) AS RNUM, TBoardfiles.* from TBoardfiles) TB
+				where RNUM=1 ) lf on lb.SEQ=lf.PARENTSEQ where contents like '%'||#{search}||'%' order by SEQ desc)A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
 	</select>
 	
 	<!-- 카테고리 검색 -->
-	<select id="toCategory" resultType="kh.spring.dto.SellTalentDTO">
-		<![CDATA[select * from (select rownum as rnum, A.* from (select * from selltalent where category like '%'||#{search}||'%' order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	<select id="toCategory" resultType="HashMap" resultMap="SellTalentDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select lb.*, lf.SYSNAME from selltalent lb left join (
+				select SYSNAME, PARENTSEQ, REGDATE from (
+				select ROW_NUMBER() over (PARTITION BY TBoardfiles.PARENTSEQ order by TBoardfiles.REGDATE asc ) AS RNUM, TBoardfiles.* from TBoardfiles) TB
+				where RNUM=1 ) lf on lb.SEQ=lf.PARENTSEQ where category like '%'||#{search}||'%' order by SEQ desc)A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
 	</select>
 	
 	<!-- 검색이 null일 경우 전체목록 나오게 -->
-	<select id="toList" resultType="kh.spring.dto.SellTalentDTO">
-		<![CDATA[select * from (select rownum as rnum, A.* from (select * from selltalent order by seq desc) A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
+	<select id="toList" resultType="HashMap" resultMap="SellTalentDTO">
+		<![CDATA[select * from (select rownum as rnum, A.* from (select lb.*, lf.SYSNAME from selltalent lb left join (
+				select SYSNAME, PARENTSEQ, REGDATE from (
+				select ROW_NUMBER() over (PARTITION BY TBoardfiles.PARENTSEQ order by TBoardfiles.REGDATE asc ) AS RNUM, TBoardfiles.* from TBoardfiles) TB
+				where RNUM=1 ) lf on lb.SEQ=lf.PARENTSEQ order by SEQ desc)A where ROWNUM <= #{endNum}) where rnum >= #{startNum}]]>
 	</select>
 		
 	<!-- 검색 지역 & 타이틀 & 컨텐츠 카운트 -->

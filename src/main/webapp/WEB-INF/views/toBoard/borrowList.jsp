@@ -227,8 +227,8 @@
 					<div class="to-board">
 						<a href="/borrowBoard/borrowView?id=${i.writer}&seq=${i.seq}" id="list_http" class="list_http">				
 							<c:choose>
-								<c:when test="${flist.parent == i.seq}">
-									<img src="/imgs/borrow/${flist.sysName}" id=fimg>
+								<c:when test="${i.sysName != null}">
+									<img src="/imgs/borrow/${i.sysName}" id=fimg>
 								</c:when>
 								<c:otherwise>
 									<img src="/imgs/noimage.jpg" id=fimg>
