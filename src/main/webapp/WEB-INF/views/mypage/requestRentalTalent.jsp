@@ -150,7 +150,7 @@ img {
 
 .information {
 	padding-top: 40px;
-	padding-left: 40px;
+	padding-left: 70px;
 }
 
 .content {
@@ -407,10 +407,10 @@ img {
 
 			<div class="requestList">
 				<div class="row high">
-					<div class="col-8 information">
+					<div class="col-12 information">
 						<div class="title">
 							<h4>
-								<b>${i.title }</b>
+								<b><a href="/tBoard/sellingView?seq=${i.parentseq}&id=${i.writer}">${i.title }</a></b>
 							</h4>
 						</div>
 
@@ -438,11 +438,6 @@ img {
 						<input type=hidden value=${i.booker } id=booker name=booker>
 						<input type=hidden value=${i.parentseq } id=parent name=parent>
 
-					</div>
-					<div class="col-4">
-						<div class="image">
-							<img src="">
-						</div>
 					</div>
 				</div>
 

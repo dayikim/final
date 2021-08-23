@@ -150,7 +150,7 @@ img {
 
 .information {
 	padding-top: 40px;
-	padding-left: 40px;
+	padding-left: 70px;
 }
 .content{
 	margin-top:10px;
@@ -204,24 +204,85 @@ img {
 			location.href = "/chat";
 		})
 		
-		// 취소 버튼을 눌렀을 경우
+		// 거래 승인 목록 가져오기
+		$.ajax({
+			url:"/my/requestRentalTalentProc",
+			data:{booker:$("#booker").val(),parent:$("#parent").val()}
+		
+		}).done(function(resp){
+			console.log(resp) // 해당 시퀀스가 나옴
+			if(resp!=null){
+				// 거래 완료 버튼으로 바꾸기
+				$("#approval").attr("id","dealComplete")
+				$("#approval").attr("class","dComplete")
+				$("#approval").attr("disabled","false")
+				$("#approval").text("거래 완료(대여중)")
+				
+				
+				// 거래 취소 버튼으로 바꾸기
+				$("#cancel").attr("id","dealCancel")
+				$("#cancel").attr("class","dCancel")
+				$("#cancel").text("거래 취소")
+			}
+			
+		})
+		
+		
+		// 요청 거절 및 거래 취소 버튼을 눌렀을 경우
 		$(".cnum-btn1").on("click", function() {
-			let result = confirm("요청을 거절 하시겠습니까?");
+			let result = confirm("취소 하시겠습니까?");
 			if (result) {
-				$(".cnum-btn1").parent().parent().parent().empty();
+				let button = $(this);
+				$.ajax({
+					url:"/my/dealFail",
+					data:{parent:$($(this).parent().siblings().children().siblings().children("#parent")).val()}
+				}).done(function(resp){
+					if(resp=="1"){
+						alert("취소하였습니다.")
+						location.reload();
+					}else{
+						alert("에러 발생, 다시 시도해주세요.")
+						return false;
+					}
+				})
 			} else {
 				return false;
 			}
 		})
 
-		// 승인 버튼을 눌렀을 경우
-		$(".cnum-btn2").on("click", function() {
+
+		// 거래 승인 버튼을 눌렀을 경우(DB에 거래승인 insert하기)
+ 		$(".cnum-btn2").on("click", function() {
 			let result = confirm("거래 승인 하시겠습니까?");
 			if (result) {
-				$("#frm").submit();
+				let button = $(this);				
+				$.ajax({
+					url:"/my/dealSuccess",
+					data:{writer:$($(this).siblings().parent().siblings().children().siblings().children().siblings().siblings("#writer")).val(), 
+						booker:$($(this).siblings().parent().siblings().children().siblings().children().siblings("#booker")).val(), 
+						parent:$($(this).siblings().parent().siblings().children().siblings().children("#parent")).val()}
+				}).done(function(resp){
+					console.log(resp)
+					if(resp=="1"){
+						alert("거래 승인이 완료되었습니다")
+						// 거래 완료 버튼으로 바꾸기
+						$(button).attr("id","dealComplete")
+						$(button).attr("class","dComplete")
+						$(button).attr("disabled","false")
+						$(button).text("거래 완료(대여중)")
+						
+						// 거래 취소 버튼으로 바꾸기
+						$(button).siblings("#cancel").attr("id","dealCancel")
+						$(button).siblings("#cancel").attr("class","dCancel")
+						$(button).siblings("#cancel").text("거래 취소")
+					}else{
+						alert("에러 발생, 다시 시도해주세요.")
+						return false;
+					}
+				})
 			} else {
 				return false;
-			}
+			}  
 		})
 	})
 </script>
@@ -337,7 +398,7 @@ img {
 
 			<div class="requestList">
 				<div class="row high">
-					<div class="col-8 information">
+					<div class="col-12 information">
 						<div class="title">
 							<h4>
 								<b>${i.title }</b>
@@ -368,11 +429,6 @@ img {
 						<input type=hidden value=${i.booker } id=booker name=booker>
 						<input type=hidden value=${i.parentseq } id=parent name=parent>
 
-					</div>
-					<div class="col-4">
-						<div class="image">
-							<img src="">
-						</div>
 					</div>
 				</div>
 
