@@ -70,7 +70,7 @@
 		$(function() {
 			$("#search").keyup(function(e) {
 				if (e.keyCode == 13) {
-					location.href = "/AllBoardList/borrowList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
+					location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
 				}
 			})
 			
@@ -227,7 +227,7 @@
 					<div class="to-board">
 						<a href="/borrowBoard/borrowView?id=${i.writer}&seq=${i.seq}" id="list_http" class="list_http">				
 							<c:choose>
-								<c:when test="${flist != null}">
+								<c:when test="${flist.parent == i.seq}">
 									<img src="/imgs/borrow/${flist.sysName}" id=fimg>
 								</c:when>
 								<c:otherwise>
