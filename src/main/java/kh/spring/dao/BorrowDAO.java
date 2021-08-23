@@ -43,7 +43,7 @@ public class BorrowDAO {
 	}
 	
 	//게시글 리스트
-	public List<BorrowDTO> getList(String choice, String search,int cpage){
+	public List<HashMap<String, Object>> getList(String choice, String search,int cpage){
 				
 		if(search == null) {
 			search = "";
@@ -57,7 +57,7 @@ public class BorrowDAO {
 		map.put("endNum", endNum);
 		map.put("startNum", startNum);
 				
-		List<BorrowDTO> list = null;
+		List<HashMap<String, Object>> list = null;
 		
 		
 		if(!search.equals("")) {

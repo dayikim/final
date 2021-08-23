@@ -251,14 +251,14 @@ img{
 				<c:forEach var="i" items="${list}">
 					<div class="to-board">					
 						<a href="/tBoard/RequestView?id=${i.writer}&seq=${i.seq}" id="list_hhtp" class="list_hhtp">				
-<%-- 							<c:choose> --%>
-<%-- 								<c:when test="${flist != null}"> --%>
-<%-- 									<img src="/imgs/lend/${flist.sysName}" id=fimg> --%>
-<%-- 								</c:when> --%>
-<%-- 								<c:otherwise> --%>
+							<c:choose>
+								<c:when test="${i.sysName != null}">
+									<img src="/imgs/request/${i.sysName}" id=fimg>
+								</c:when>
+								<c:otherwise>
 									<img src="/imgs/noimage.jpg" id=fimg>
-<%-- 								</c:otherwise> --%>
-<%-- 							</c:choose> --%>
+								</c:otherwise>
+							</c:choose>
 							<input type="hidden" value="${i.seq}" id="seq" name="seq">
 							<p id=title class="title">${i.title}</p>
 							<p id="category">${i.category}</p>
