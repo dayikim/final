@@ -407,11 +407,8 @@ aria-haspopup="true" aria-expanded="false"> <b>물품 ▼</b>
 
 </a>
 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-<a class="dropdown-item" href="/my/dealEndProductSellList">대여
-
-완료</a>
-<a class="dropdown-item" href="/my/dealEndProductBuyList">빌림
-완료</a>
+<a class="dropdown-item" href="/my/dealEndProductSellList">물품대여 완료</a>
+<a class="dropdown-item" href="/my/dealEndProductBuyList">물품빌리기 완료</a>
 </div></li>
 
 </ul>
@@ -429,11 +426,8 @@ aria-haspopup="true" aria-expanded="false"> <b>재능 ▼</b>
 
 </a>
 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-<a class="dropdown-item" href="/my/dealEndTalentSellList">판매
-
-완료</a>
-<a class="dropdown-item" href="/my/dealEndTalentBuyList">구매
-완료</a>
+<a class="dropdown-item" href="/my/dealEndTalentSellList">재능 판매</a>
+<a class="dropdown-item" href="/my/dealEndTalentBuyList">재능 구매</a>
 </div></li>
 
 </ul>
@@ -444,7 +438,7 @@ aria-haspopup="true" aria-expanded="false"> <b>재능 ▼</b>
 <div class="container2">
 
 <div class="margin">
-<div>물품 > 빌림 완료</div>
+<div>물품 > 물품빌리기 완료</div>
 </div>
 
 		<!---------forEach 사용 구간------------------------------------------------------------------------------>

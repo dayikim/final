@@ -175,26 +175,25 @@ img {
 	color: orange;
 }
 /*모달창  */
-
-.modal-title{
-margin:auto;
-font-size:24px;
-font-weight: 800;
+.modal-title {
+	margin: auto;
+	font-size: 24px;
+	font-weight: 800;
 }
 
 .review_title {
 	display: block;
 	margin: 0;
-	font-size:20px;
+	font-size: 20px;
 	font-weight: 800;
-	color:black;
+	color: black;
 	text-align: start;
 }
 
 .review_text {
 	display: block;
 	margin: 0;
-	font-size:18px;
+	font-size: 18px;
 	text-align: start;
 }
 
@@ -206,7 +205,6 @@ font-weight: 800;
 	width: 100px;
 	overflow: hidden;
 }
-
 
 .review_form img {
 	position: absolute;
@@ -236,76 +234,88 @@ form {
 }
 </style>
 <script>
-$(function () { // 게시물 검색
-    $("#search")
-        .keyup(function (e) {
-            if (e.keyCode == 13) {
-                location.href = "/AllBoardList/lendList?category=AllCategory&search=" + $("#search").val() + "&cpage=1";
-            }
-        })
-        // 채팅
-        $("#chat")
-        .on("click", function () {
-            location.href = "/chat";
-        })
-        // person
-        // 후기
-        $(".send")
-        .on("click", function () {
-            let message = $("#message-text");
-            if (message.val() == "") {
-                alert("메세지를 입력해주세요.");
-                message.focus();
-                return false;
-            } else {
-                let check = confirm("거래 후기를 보내시겠습니까?");
-                let recipient = $("#recipient").val();
-                let reviewer = $("#reviewer").val();
-                let boardtype = $("#boardtype").val();
-                let reviewable = $("#reviewable").val();
-                let contents = $(".contents").val();
-                let parentseq = $("#parentseq").val();
-                if (check) {
-                    $.ajax({
-                        url: "/profile/checkReview",
-                        data: {
-                            parentseq: parentseq
-                        }
-                    }).done(function (resp) {
-                        console.log(resp);
-                        if (resp == 0) {
-                            $.ajax({
-                                url: "/profile/review",
-                                data: {
-                                    recipient: recipient,
-                                    parentseq: parentseq,
-                                    reviewer: reviewer,
-                                    reviewable: reviewable,
-                                    contents: contents,
-                                    boardtype: boardtype
-                                }
-                            }).done(function (resp) {
-                                console.log(resp);
-                                if (resp == 1) {
-                                    alert("거래 후기 작성 완료!! \n마이페이지에서 거래완료 내역을 확인하세요.")
-                                    location.href = "${pageContext.request.contextPath}/my/mypageProc"
-                                } else {
-                                    alert("작성 실패!!")
-                                }
-                            })
-                        } else {
-                            alert("이미 후기를 작성하였습니다.\n마이페이지에서 거래완료 내역을 확인하세요.")
-                            location.href = "${pageContext.request.contextPath}/my/mypageProc"
-                            return;
-                        }
-                    })
-                } else {
-                    alert("거래 후기 작성 취소!")
-                    return;
-                }
-            }
-        })
-});
+	$(function() { // 게시물 검색
+		$("#search")
+				.keyup(
+						function(e) {
+							if (e.keyCode == 13) {
+								location.href = "/AllBoardList/lendList?category=AllCategory&search="
+										+ $("#search").val() + "&cpage=1";
+							}
+						})
+		// 채팅
+		$("#chat").on("click", function() {
+			location.href = "/chat";
+		})
+		// person
+		// 후기
+		$(".send")
+				.on(
+						"click",
+						function() {
+							let message = $("#message-text");
+							if (message.val() == "") {
+								alert("메세지를 입력해주세요.");
+								message.focus();
+								return false;
+							} else {
+								let check = confirm("거래 후기를 보내시겠습니까?");
+								let recipient = $("#recipient").val();
+								let reviewer = $("#reviewer").val();
+								let boardtype = $("#boardtype").val();
+								let reviewable = $("#reviewable").val();
+								let contents = $(".contents").val();
+								let parentseq = $("#parentseq").val();
+								if (check) {
+									$
+											.ajax({
+												url : "/profile/checkReview",
+												data : {
+													parentseq : parentseq
+												}
+											})
+											.done(
+													function(resp) {
+														console.log(resp);
+														if (resp == 0) {
+															$
+																	.ajax(
+																			{
+																				url : "/profile/review",
+																				data : {
+																					recipient : recipient,
+																					parentseq : parentseq,
+																					reviewer : reviewer,
+																					reviewable : reviewable,
+																					contents : contents,
+																					boardtype : boardtype
+																				}
+																			})
+																	.done(
+																			function(
+																					resp) {
+																				console
+																						.log(resp);
+																				if (resp == 1) {
+																					alert("거래 후기 작성 완료!! \n마이페이지에서 거래완료 내역을 확인하세요.")
+																					location.href = "${pageContext.request.contextPath}/my/mypageProc"
+																				} else {
+																					alert("작성 실패!!")
+																				}
+																			})
+														} else {
+															alert("이미 후기를 작성하였습니다.\n마이페이지에서 거래완료 내역을 확인하세요.")
+															location.href = "${pageContext.request.contextPath}/my/mypageProc"
+															return;
+														}
+													})
+								} else {
+									alert("거래 후기 작성 취소!")
+									return;
+								}
+							}
+						})
+	});
 </script>
 
 
@@ -411,8 +421,8 @@ $(function () { // 게시물 검색
 					aria-haspopup="true" aria-expanded="false"> <b>물품 ▼</b>
 				</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" href="/my/dealEndProductSellList">대여
-							완료</a> <a class="dropdown-item" href="/my/dealEndProductBuyList">빌림
+						<a class="dropdown-item" href="/my/dealEndProductSellList">물품대여
+							완료</a> <a class="dropdown-item" href="/my/dealEndProductBuyList">물품빌리기
 							완료</a>
 					</div></li>
 			</ul>
@@ -425,9 +435,9 @@ $(function () { // 게시물 검색
 					aria-haspopup="true" aria-expanded="false"> <b>재능 ▼</b>
 				</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" href="/my/dealEndTalentSellList">판매
-							완료</a> <a class="dropdown-item" href="/my/dealEndTalentBuyList">구매
-							완료</a>
+						<a class="dropdown-item" href="/my/dealEndTalentSellList">재능
+							판매</a> <a class="dropdown-item" href="/my/dealEndTalentBuyList">재능
+							구매</a>
 					</div></li>
 			</ul>
 		</div>
@@ -435,31 +445,34 @@ $(function () { // 게시물 검색
 	<br>
 	<div class="container2">
 		<div class="margin">
-			<div>물품 > 대여완료</div>
+			<div>물품 > 물품대여 완료</div>
 		</div>
 
 		<!---------forEach 사용 구간------------------------------------------------------------------------------>
 
 		<!-- 대여 완료 출력 -->
 		<c:forEach var="i" items="${productSellList}" varStatus="vs">
-				<div class="completDiv">
-			<div class="row complet">
-				<div class="col-12 col-md-4 col-sm-4 completImgDiv">
-					<div class="completImg">
-					
-					<!-- lendboard 주소로 수정 -->
-						<a href="/lendBoard/lendView?id=${i.buyer}&seq=${i.parentseq}"><img src="..."></a>
-					</div>
-				</div>
-				<div class="col-12 col-md-8 col-sm-8 information">
-					<div>
-						<h4>
-						<!-- lendboard 주소로 수정 -->
-						<a href="/lendBoard/lendView?id=${i.buyer}&seq=${i.parentseq}"> <b>${i.item}</b></a>
+			<div class="completDiv">
+				<div class="row complet">
+					<div class="col-12 col-md-4 col-sm-4 completImgDiv">
+						<div class="completImg">
 
-						</h4>
+							<!-- lendboard 주소로 수정 -->
+							<a href="/lendBoard/lendView?id=${i.buyer}&seq=${i.parentseq}"><img
+								src="..."></a>
+						</div>
 					</div>
-					<div>물품 빌린이: ${i.name}ㅣ${i.address1}</div>
+					<div class="col-12 col-md-8 col-sm-8 information">
+						<div>
+							<h4>
+								<!-- lendboard 주소로 수정 -->
+								<a href="/lendBoard/lendView?id=${i.buyer}&seq=${i.parentseq}">
+									<b>${i.item}</b>
+								</a>
+
+							</h4>
+						</div>
+						<div>물품 빌린이: ${i.name}ㅣ${i.address1}</div>
 						<div>거래 완료 일시: ${i.paymentdate}</div>
 						<div class="row foot">
 							<div class="col-3 completBg">
@@ -473,20 +486,22 @@ $(function () { // 게시물 검색
 				</div>
 				<hr>
 
-			<!-- 거래 후기 링크 걸기 -->
+				<!-- 거래 후기 링크 걸기 -->
 				<div class="review">
 					<c:choose>
 						<c:when test="${i.reviewable =='y'}">
-							<a href="" data-toggle="modal" data-target="#sendModal${vs.index}"
-								id="openReview">작성한 후기 보기</a>
+							<a href="" data-toggle="modal"
+								data-target="#sendModal${vs.index}" id="openReview">작성한 후기
+								보기</a>
 						</c:when>
 						<c:otherwise>
-							<a href="" data-toggle="modal" data-target="#writeModal${vs.index}"
-								id="other">거래 후기 보내기</a>
+							<a href="" data-toggle="modal"
+								data-target="#writeModal${vs.index}" id="other">거래 후기 보내기</a>
 						</c:otherwise>
 					</c:choose>
-					<div class="modal fade modal_box" id="writeModal${vs.index}" tabindex="-1"
-						aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal fade modal_box" id="writeModal${vs.index}"
+						tabindex="-1" aria-labelledby="exampleModalLabel"
+						aria-hidden="true">
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -520,8 +535,9 @@ $(function () { // 게시물 검색
 							</div>
 						</div>
 					</div>
-					<div class="modal fade modal_box" id="sendModal${vs.index}" tabindex="-1"
-						aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal fade modal_box" id="sendModal${vs.index}"
+						tabindex="-1" aria-labelledby="exampleModalLabel"
+						aria-hidden="true">
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">
