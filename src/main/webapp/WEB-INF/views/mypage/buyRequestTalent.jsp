@@ -207,8 +207,6 @@ img {
 		$("#chat").on("click", function() {
 			location.href = "/chat";
 		})
-		
-		
 
 		// 예약 버튼을 눌렀을 경우
 		$(".cnum-btn1").on("click", function() {
@@ -220,27 +218,24 @@ img {
 				return false;
 			}
 		})
-	/* 	$(".payment").each(function(i){
-			$(this).click(function(e){
-			e.preventDefault();
-			location.href="/point/TopaymentByTalent?seq="+$(".parentseq").val() +"&id="+$(".id").val();
-			
-				
-			}) */
-			
-			
-	
-		  // 결제하기 버튼을 눌렀을 경우
-		  $("button[id^='payment']").on("click",function(){
-			  let button = $(this);
-			  location.href="/point/TopaymentByTalent?seq="+$($(this).siblings().parent().siblings().children().siblings().children("#parentseq")).val() 
-					  								+"&id="+$($(this).siblings().parent().siblings().children().siblings().children().siblings("#writer")).val() 
-		  
-				 
-		 
-				
-			
-		})  
+
+		// 결제하기 버튼을 눌렀을 경우
+		$("button[id^='payment']").on(
+				"click",
+				function() {
+					let button = $(this);
+					location.href = "/point/TopaymentByTalent?seq="
+							+ $(
+									$(this).siblings().parent().siblings()
+											.children().siblings().children(
+													"#parentseq")).val()
+							+ "&id="
+							+ $(
+									$(this).siblings().parent().siblings()
+											.children().siblings().children()
+											.siblings("#writer")).val()
+
+				})
 
 	})
 </script>
@@ -384,8 +379,10 @@ img {
 						</div>
 
 
-						<input type=hidden value=${i.writer } name="id${vs.index}" class="id" id=writer> 
-						<input type=hidden value=${i.parentseq } name="parent" class="parentseq" id=parentseq>
+						<input type=hidden value=${i.writer } name="id${vs.index}"
+							class="id" id=writer> <input type=hidden
+							value=${i.parentseq } name="parent" class="parentseq"
+							id=parentseq>
 
 
 					</div>
@@ -400,27 +397,31 @@ img {
 					<input type=button id=cancel class="cnum-btn1" value="예약 취소">
 
 					<c:choose>
-						<c:when test="${i.approval =='y'}">
-							<button type=button class="cnum-btn2" id="payment${vs.index}">
-								결제하기</button>
-						</c:when>
-						<c:when test="${i.approval =='n'}">
-							<button type=button id=approval class="cnum-btn2"
-								disabled='disabled'>승인 거절</button>
-						</c:when>
+						<c:if test="${count eq 1}">
+							<button type=button class="cnum-btn2" disabled='disabled'>
+								결제 완료</button>
+						</c:if>
 						<c:otherwise>
-							<button type=button id=approval class="cnum-btn2"
-								disabled='disabled'>승인 대기 중</button>
+							<c:choose>
+								<c:when test="${i.approval =='y'}">
+									<button type=button class="cnum-btn2" id="payment${vs.index}">
+										결제하기</button>
+								</c:when>
+								<c:when test="${i.approval =='n'}">
+									<button type=button id=approval class="cnum-btn2"
+										disabled='disabled'>승인 거절</button>
+								</c:when>
+								<c:otherwise>
+									<button type=button id=approval class="cnum-btn2"
+										disabled='disabled'>승인 대기 중</button>
+								</c:otherwise>
+							</c:choose>
 						</c:otherwise>
 					</c:choose>
 				</div>
 			</div>
-
 		</c:forEach>
 	</div>
-
-
-
 	<!-- Footer Start -->
 	<div class="footer">
 		<div class="container">

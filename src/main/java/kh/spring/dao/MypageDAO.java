@@ -60,5 +60,9 @@ public class MypageDAO {
 	public List<ReviewDTO> content(Map<Object, Object> param) {
 		return mybatis.selectList("Review.reviewContents",param);
 	}
+	//해당 게시글의 payment y인 갯수
+	public int paymentCount(Map<Object, Object> param) {
+		return mybatis.selectOne("MyPage.paymentCount",param);
+	}
 
 }

@@ -225,7 +225,11 @@ public class MypageController {
 	public String buyRequestTalent(Model model) {
 		String sessionID = (String)session.getAttribute("loginID");
 		List<HashMap<String,Object>> result = service.buyRequestTalent(sessionID);
-
+		
+		//결제여부 판단
+		int paymentCount = service.paymentCount(sessionID);
+		System.out.println("갯수는 "+ paymentCount);
+        model.addAttribute("count",paymentCount);
 		model.addAttribute("requestRental", result);
 		return "/mypage/buyRequestTalent";
 	}

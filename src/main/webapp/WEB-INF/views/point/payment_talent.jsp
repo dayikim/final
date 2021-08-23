@@ -365,8 +365,7 @@
 
                                 }else if (resp == 2){
                                 	 $(".amount").val();
-                                	$(".alertPoint").text("보유 포인트가 결제금을 초과하여 사용이 불가능 합니다.");
-                                	alert("충전하고 결제해주세요.\n 충전페이지로 이동합니다.")
+                                	alert("보유 포인트가 결제금을 초과하였습니다.\n충전하고 다시 결제해주세요.\n바로 충전페이지로 이동합니다.")
                                     location.href = "${pageContext.request.contextPath}/point/ToCharging"
 
                                 }
@@ -405,7 +404,7 @@
                                 }).done(function (resp) {
                                     console.log(resp);
                                     if (resp == 0) {
-                                    	 alert("결제 완료!! \n마이페이지에서 포인트 내역을 확인하세요.")
+                                    	 alert("결제 완료!! \n마이페이지에서 거래 완료 목록을 확인하세요.")
                                     	$("#payForm").submit();
 
                                     } else {

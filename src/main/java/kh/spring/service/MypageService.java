@@ -48,6 +48,9 @@ public class MypageService {
 	private PointAccountDAO ppdao; // 포인트
 
 	@Autowired
+	private PaymentDAO paydao;//결제
+	
+	@Autowired
 	private BookingDAO bdao; // 재능 예약 여부
 	@Autowired
 	private ApprovalDAO adao; // 거래 승인 여부
@@ -186,10 +189,11 @@ public class MypageService {
 	// 예약 내역 목록 - 재능
 	public List<HashMap<String,Object>> buyRequestTalent(String sessionID) {
 		String y = "y";
+		String boardtype="재능";
 		Map<String, String> param = new HashMap<>();
 		param.put("y", y);
 		param.put("id", sessionID);
-
+		param.put("talent", boardtype);
 		return bdao.buyRequestTalent(param);
 	}
 
@@ -214,6 +218,17 @@ public class MypageService {
 		param.put("parentseq", parentseq);
 		return adao.isApproval(param);
 	}
+	
+//	//재능 결제 여부 check
+//		public List<HashMap<String, Object>> checkpayble(String sessionID) {
+//			String paymentable = "y";
+//			String boardtype="재능";
+//			Map<Object, Object> param = new HashMap<>();
+//			param.put("id", sessionID);
+//			param.put("y", paymentable);
+//			param.put("talent", boardtype);
+//			return dao.checkpayble(param);
+//		}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////// 내 게시물 보기
 
@@ -270,6 +285,18 @@ public class MypageService {
 		param.put("talent", talent);
 		return dao.dealEndTalentBuyList(param);
 	}
+// 해당 게시글의 거래 갯수
+	public int paymentCount(String sessionID) {
+		String paymentable = "y";
+		String boardtype="재능";
+		Map<Object, Object> param = new HashMap<>();
+		param.put("id", sessionID);
+		param.put("talent", boardtype);
+		param.put("y", paymentable);
+		return dao.paymentCount(param);
+	}
+	
+	
 
 }
 
