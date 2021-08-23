@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>돈 빼고 다! 돈-고</title>
+<title>대여 예약 </title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free Website Template" name="keywords">
@@ -306,12 +306,12 @@ img {
 	<div class="navi">
 		<div class="requestProduct">
 			<a href="/my/buyRequestProduct">
-					<b>대여 요청</b>
+					<b>대여 예약</b>
 			</a>
 		</div>
 		<div class="requestTalent">
 			<a href="/my/buyRequestTalent">
-					<b>재능 요청</b>
+					<b>재능 예약</b>
 			</a>
 		</div>
 	</div>
@@ -320,7 +320,7 @@ img {
 
 	<!-- 대여 요청 내역 -->
 	<div class="container2">
-	<div>예약 내역 > 대여 요청</div>
+	<div>예약 내역 > 대여 예약</div>
 		<!-- forEach문 사용 -->
 		<%-- <c:forEach var="i" items="${requestRental }"> --%>
 		<form action="" method="get">

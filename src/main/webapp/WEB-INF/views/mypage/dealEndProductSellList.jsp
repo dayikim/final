@@ -411,8 +411,8 @@ $(function () { // 게시물 검색
 					aria-haspopup="true" aria-expanded="false"> <b>물품 ▼</b>
 				</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" href="/my/dealEndProductSellList">물품대여
-							완료</a> <a class="dropdown-item" href="/my/dealEndProductBuyList">물품빌림
+						<a class="dropdown-item" href="/my/dealEndProductSellList">대여
+							완료</a> <a class="dropdown-item" href="/my/dealEndProductBuyList">빌림
 							완료</a>
 					</div></li>
 			</ul>
@@ -435,7 +435,7 @@ $(function () { // 게시물 검색
 	<br>
 	<div class="container2">
 		<div class="margin">
-			<div>물품 > 물품 대여완료</div>
+			<div>물품 > 대여완료</div>
 		</div>
 
 		<!---------forEach 사용 구간------------------------------------------------------------------------------>
@@ -448,14 +448,14 @@ $(function () { // 게시물 검색
 					<div class="completImg">
 					
 					<!-- lendboard 주소로 수정 -->
-						<a href="/tBoard/sellingView?id=${i.buyer}&seq=${i.seq}"><img src="..."></a>
+						<a href="/lendBoard/lendView?id=${i.buyer}&seq=${i.parentseq}"><img src="..."></a>
 					</div>
 				</div>
 				<div class="col-12 col-md-8 col-sm-8 information">
 					<div>
 						<h4>
 						<!-- lendboard 주소로 수정 -->
-						<a href="/tBoard/sellingView?id=${i.buyer}&seq=${i.seq}"> <b>${i.item}</b>
+						<a href="/lendBoard/lendView?id=${i.buyer}&seq=${i.parentseq}"> <b>${i.item}</b></a>
 
 						</h4>
 					</div>

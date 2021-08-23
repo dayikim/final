@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>돈 빼고 다! 돈-고</title>
+<title>재능 예약</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free Website Template" name="keywords">
@@ -232,7 +232,9 @@ img {
 	
 				
 		  $("button[id^='payment']").on("click",function(){
-				location.href="/point/TopaymentByTalent?seq="+$(".parentseq").val() +"&id="+$(".id").val();
+				location.href="/point/TopaymentByTalent?seq="+$(".parentseq").val() +"&id="+$(".id").val();  
+		 
+				
 			
 		})  
 
@@ -332,22 +334,22 @@ img {
 	<!-- 네비바 -->
 	<div class="navi">
 		<div class="requestProduct">
-			<a href="/my/buyRequestProduct"> <b>대여 요청</b>
+			<a href="/my/buyRequestProduct"> <b>대여 예약</b>
 			</a>
 		</div>
 		<div class="requestTalent">
-			<a href="/my/buyRequestTalent"> <b>재능 요청</b>
+			<a href="/my/buyRequestTalent"> <b>재능 예약</b>
 			</a>
 		</div>
 	</div>
 
 
-
 	<!-- 대여 요청 내역 -->
 	<div class="container2">
-		<div>예약 내역 > 재능 요청</div>
-		<c:forEach var="i" items="${requestRental }">
-			<form action="" method="get" id=frm>
+		<div>예약 내역 > 재능 예약</div>
+
+				<c:forEach var="i" items="${requestRental}" varStatus="vs">
+			
 				<div class="requestList">
 					<div class="row high">
 						<div class="col-8 information">
@@ -376,9 +378,12 @@ img {
 									<div class="col-8 right">${i.price}상추</div>
 								</div>
 							</div>
-							<input type=hidden value=${i.writer } name=writer class="id"> <input
-								type=hidden value=${i.booker } name=booker > 
-								<input type=hidden value=${i.parentseq } name=parent class="parentseq">
+						
+							
+							<input type=hidden value=${i.writer } name="id${vs.index}" class="id">
+					<%-- 		 <input type=hidden value=${i.booker } name=booker >  --%>
+								<input type=hidden value=${i.parentseq } name="parent${vs.index}" class="parentseq">
+								
 
 						</div>
 						<div class="col-4">
@@ -393,8 +398,8 @@ img {
                    
 						<c:choose>
 							<c:when test="${i.approval =='y'}">
-								<button type=button class="cnum-btn2" id="payment"
-									>결제하기</button>
+								<button type=button class="cnum-btn2" id="payment${vs.index}">
+									결제하기</button>
 							</c:when>
 							<c:when test="${i.approval =='n'}">
 							<button type=button id=approval class="cnum-btn2"
@@ -407,10 +412,10 @@ img {
 						</c:choose>
 					</div>
 				</div>
-			</form>
+		
 		</c:forEach>
-
 	</div>
+
 
 
 	<!-- Footer Start -->

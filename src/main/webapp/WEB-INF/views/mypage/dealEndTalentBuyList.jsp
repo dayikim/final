@@ -380,8 +380,8 @@ form {
 					aria-haspopup="true" aria-expanded="false"> <b>물품 ▼</b>
 				</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" href="/my/dealEndProductSellList">물품대여
-							완료</a> <a class="dropdown-item" href="/my/dealEndProductBuyList">물품빌림
+						<a class="dropdown-item" href="/my/dealEndProductSellList">대여
+							완료</a> <a class="dropdown-item" href="/my/dealEndProductBuyList">빌림
 							완료</a>
 					</div></li>
 			</ul>
@@ -413,14 +413,14 @@ form {
 				<div class="row complet">
 					<div class="col-12 col-md-4 col-sm-4 completImgDiv">
 						<div class="completImg">
-							<a href="/tBoard/sellingView?id=${i.buyer}&seq=${i.seq}"><img src="..."></a>
+							<a href="/tBoard/sellingView?id=${i.seller}&seq=${i.parentseq}"><img src="..."></a>
 
 						</div>
 					</div>
 					<div class="col-12 col-md-8 col-sm-8 information">
 						<div>
 							<h4>
-								<a href="/tBoard/sellingView?id=${i.buyer}&seq=${i.seq}"> <b>${i.item}</b>
+								<a href="/tBoard/sellingView?id=${i.seller}&seq=${i.parentseq}"> <b>${i.item}</b>
 								</a>
 							</h4>
 						</div>

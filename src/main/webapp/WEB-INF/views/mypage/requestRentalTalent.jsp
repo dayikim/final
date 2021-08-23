@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>돈 빼고 다! 돈-고</title>
+<title>재능 거래 요청</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free Website Template" name="keywords">
