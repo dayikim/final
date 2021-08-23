@@ -279,6 +279,10 @@ return String.valueOf(result);
 	@RequestMapping(value="/dealEndProductBuyList", produces="text/html;charset=utf8")
 	public String dealEndProductBuyList(Model model) {
 		String id = (String)session.getAttribute("loginID");
+		
+		
+		
+		
 		String product="물품";
 		List<HashMap<Object, Object>> dealEndProductBuyList =service.dealEndProductBuyList(id,product);
 		model.addAttribute("productBuyList",dealEndProductBuyList);
