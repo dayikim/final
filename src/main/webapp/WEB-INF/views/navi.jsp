@@ -64,7 +64,6 @@ img{
     
 	<script>
 	
-		let ws = new WebSocket("ws://192.168.35.97/navi"); 
 	
 		$(function() {
 			$("#search").keyup(function(e) {
@@ -101,9 +100,9 @@ img{
                     <div class="col-md-6">
                         <div class="top-bar-right">
                             <div class="social">
-                                <a href="/sns/main"><i class="fab fa-twitter"></i></a>
-                                <a href="/sns/main"><i class="fab fa-facebook-f"></i></a>
-                                <a href="/sns/main"><i class="fab fa-instagram"></i></a>
+                                <a href=#><i class="fab fa-twitter"></i></a>
+                                <a href=#><i class="fab fa-facebook-f"></i></a>
+                                <a href=#><i class="fab fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
@@ -159,9 +158,9 @@ img{
         </div>
         <!-- Nav Bar End -->
         <!-- JavaScript Libraries -->
-<!--         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+-         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-        <script src="/lib/easing/easing.min.js"></script> -->
+        <script src="/lib/easing/easing.min.js"></script>
         
         <!-- Template Javascript -->
         <script src="/js/main.js"></script>
