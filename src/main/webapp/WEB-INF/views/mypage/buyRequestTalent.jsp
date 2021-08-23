@@ -230,9 +230,13 @@ img {
 			
 			
 	
-				
+		  // 결제하기 버튼을 눌렀을 경우
 		  $("button[id^='payment']").on("click",function(){
-				location.href="/point/TopaymentByTalent?seq="+$(".parentseq").val() +"&id="+$(".id").val();  
+			  let button = $(this);
+			  location.href="/point/TopaymentByTalent?seq="+$($(this).siblings().parent().siblings().children().siblings().children("#parentseq")).val() 
+					  								+"&id="+$($(this).siblings().parent().siblings().children().siblings().children().siblings("#writer")).val() 
+		  
+				 
 		 
 				
 			
@@ -348,71 +352,70 @@ img {
 	<div class="container2">
 		<div>예약 내역 > 재능 예약</div>
 
-				<c:forEach var="i" items="${requestRental}" varStatus="vs">
-			
-				<div class="requestList">
-					<div class="row high">
-						<div class="col-8 information">
-							<div class="title">
-								<h4>
-									<b>${i.title }</b>
-								</h4>
-							</div>
-							<div class="content">
-								<div class="row">
-									<div class="col-4 left">
-										<b>재능 판매자</b>
-									</div>
-									<div class="col-8 right">${i.writer}</div>
-								</div>
-								<div class="row">
-									<div class="col-4 left">
-										<b>재능 구매자</b>
-									</div>
-									<div class="col-8 right">${i.booker}</div>
-								</div>
-								<div class="row">
-									<div class="col-4 left">
-										<b>결제금</b>
-									</div>
-									<div class="col-8 right">${i.price}상추</div>
-								</div>
-							</div>
-						
-							
-							<input type=hidden value=${i.writer } name="id${vs.index}" class="id">
-					<%-- 		 <input type=hidden value=${i.booker } name=booker >  --%>
-								<input type=hidden value=${i.parentseq } name="parent" class="parentseq">
-								
+		<c:forEach var="i" items="${requestRental}" varStatus="vs">
 
+			<div class="requestList">
+				<div class="row high">
+					<div class="col-8 information">
+						<div class="title">
+							<h4>
+								<b>${i.title }</b>
+							</h4>
 						</div>
-						<div class="col-4">
-							<div class="image">
-								<img src="">
+						<div class="content">
+							<div class="row">
+								<div class="col-4 left">
+									<b>재능 판매자</b>
+								</div>
+								<div class="col-8 right">${i.writer}</div>
 							</div>
-
+							<div class="row">
+								<div class="col-4 left">
+									<b>재능 구매자</b>
+								</div>
+								<div class="col-8 right">${i.booker}</div>
+							</div>
+							<div class="row">
+								<div class="col-4 left">
+									<b>결제금</b>
+								</div>
+								<div class="col-8 right">${i.price}상추</div>
+							</div>
 						</div>
+
+
+						<input type=hidden value=${i.writer } name="id${vs.index}" class="id" id=writer> 
+						<input type=hidden value=${i.parentseq } name="parent" class="parentseq" id=parentseq>
+
+
 					</div>
-					<div class="under">
-						<input type=button id=cancel class="cnum-btn1" value="예약 취소">
-                   
-						<c:choose>
-							<c:when test="${i.approval =='y'}">
-								<button type=button class="cnum-btn2" id="payment${vs.index}">
-									결제하기</button>
-							</c:when>
-							<c:when test="${i.approval =='n'}">
-							<button type=button id=approval class="cnum-btn2"
-									disabled='disabled'>승인 거절</button>
-							</c:when>
-							<c:otherwise>
-								<button type=button id=approval class="cnum-btn2"
-									disabled='disabled'>승인 대기 중</button>
-							</c:otherwise>
-						</c:choose>
+					<div class="col-4">
+						<div class="image">
+							<img src="">
+						</div>
+
 					</div>
 				</div>
-		
+				<div class="under">
+					<input type=button id=cancel class="cnum-btn1" value="예약 취소">
+
+					<c:choose>
+						<c:when test="${i.approval =='y'}">
+							<button type=button class="cnum-btn2" id="payment${vs.index}">
+								결제하기</button>
+						</c:when>
+						<c:when test="${i.approval =='n'}">
+							<button type=button id=approval class="cnum-btn2"
+								disabled='disabled'>승인 거절</button>
+						</c:when>
+						<c:otherwise>
+							<button type=button id=approval class="cnum-btn2"
+								disabled='disabled'>승인 대기 중</button>
+						</c:otherwise>
+					</c:choose>
+				</div>
+			</div>
+
 		</c:forEach>
 	</div>
 
