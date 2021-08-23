@@ -19,7 +19,7 @@
 <select id="requestRentalTalent" resultMap="selltalent" resultType="HashMap">
 	select distinct selltalent.writer,booking.booker,selltalent.price,selltalent.title,booking.parentseq
 	from selltalent join booking on (selltalent.seq = booking.parentseq) 
-	where booking.bookable=#{y} and booking.seller=#{id}
+	where booking.bookable=#{y} and booking.seller=#{id} and booking.boardtype=#{able}
 </select>
 
 <!-- 판매자에게 들어온 예약 요청 취소 -->

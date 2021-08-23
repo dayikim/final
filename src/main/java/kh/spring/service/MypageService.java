@@ -108,33 +108,48 @@ public class MypageService {
 
 	// 포인트 충전 내역 출력
 
-	   public List<PointAccountDTO> pointChargeList(String sessionID) {
-	      String charge = "포인트 충전";
-	      String insert = "거래금 입금";
-	      HashMap<String, String> param = new HashMap<>();
-	      param.put("id", sessionID);
-	      param.put("charge", charge);
-	      param.put("insert", insert);
-	      return ppdao.pointChargeList(param);
-	   }
+	public List<PointAccountDTO> pointChargeList(String sessionID) {
+		String charge = "포인트 충전";
+		String insert = "거래금 입금";
+		HashMap<String, String> param = new HashMap<>();
+		param.put("id", sessionID);
+		param.put("charge", charge);
+		param.put("insert", insert);
+		return ppdao.pointChargeList(param);
+	}
 
-	   // 포인트 사용 내역 출력
-	   public List<PointAccountDTO> pointUseList(String sessionID) {
-	      String use = "포인트차감";
-	      HashMap<String, String> param = new HashMap<>();
-	      param.put("use", use);
-	      param.put("id", sessionID);
-	      return ppdao.pointUseList(param);
-	   }
+	// 포인트 사용 내역 출력
+	public List<PointAccountDTO> pointUseList(String sessionID) {
+		String use = "포인트차감";
+		HashMap<String, String> param = new HashMap<>();
+		param.put("use", use);
+		param.put("id", sessionID);
+		return ppdao.pointUseList(param);
+	}
 
 
 	//////////////////////////////////////////////////////////////////////////////////////////////거래 요청 목록(판매자 입장)
 
+	// 거래 요청 목록 - 대여
+	public List<HashMap<String,Object>> requestRentalProduct(String sessionID) {
+		String y = "y";
+		String able = "물품";
+		Map<String, String> param = new HashMap<>();
+		param.put("able", able);		
+		param.put("y", y);
+		param.put("id", sessionID);
+
+		return bdao.requestRentalTalent(param);
+	}
+
+
 	// 거래 요청 목록 - 재능
 	public List<HashMap<String,Object>> requestRentalTalent(String sessionID) {
 		String y = "y";
+		String able = "재능";
 		Map<String, String> param = new HashMap<>();
 		param.put("y", y);
+		param.put("able", able);
 		param.put("id", sessionID);
 
 		return bdao.requestRentalTalent(param);
@@ -177,13 +192,13 @@ public class MypageService {
 
 		return bdao.buyRequestTalent(param);
 	}
-	
+
 	// 예약 내역 목록 - 물품
 	public List<HashMap<String, Object>> buyRequestProduct(String sessionID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	// 예약 취소 - 재능
 	public int bookingFail(String sessionID, int parent) {
 		HashMap<String, Object> param = new HashMap<>();
