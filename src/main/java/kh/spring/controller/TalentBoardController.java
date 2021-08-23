@@ -223,13 +223,14 @@ public class TalentBoardController {
 	
 		@ResponseBody
 		@RequestMapping(value="booking",produces="text/html;charset=utf-8") //판매 예약 글
-		public String Booking(String seller,int parentseq, String booker,String bookable) throws Exception {
+		public String Booking(String seller,int parentseq, String booker,String bookable,String boardtype) throws Exception {
 		    System.out.println("seller :" + seller);
 		    System.out.println("parentseq :" + parentseq);
 		    System.out.println("booker :" + booker);
 		    System.out.println("bookable :" + bookable);
+		    System.out.println("boardtype :" + boardtype);
 
-		    int booking  =STService.booking(seller,booker,bookable,parentseq);
+		    int booking  =STService.booking(seller,booker,bookable,parentseq,boardtype);
 		    if(booking>0)
 		    {
 		    System.out.println("예약성공!!");
@@ -245,7 +246,6 @@ public class TalentBoardController {
 		 @ResponseBody
 		 @RequestMapping(value="checkBooking",produces="text/html;charset=utf-8")
 		 public String checkBooking(int parentseq, String booker) {
-
 		    System.out.println("booker :" + booker);
 		    System.out.println("parentseq :" + parentseq);
 		    int checkBooking = STService.checkBooking(booker,parentseq);

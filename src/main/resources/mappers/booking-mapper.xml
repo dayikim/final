@@ -17,7 +17,7 @@
 
 <!-- 판매자에게 들어온 예약 요청 목록 출력 -->
 <select id="requestRentalTalent" resultMap="selltalent" resultType="HashMap">
-	select selltalent.writer,booking.booker,selltalent.price,selltalent.title,booking.parentseq
+	select distinct selltalent.writer,booking.booker,selltalent.price,selltalent.title,booking.parentseq
 	from selltalent join booking on (selltalent.seq = booking.parentseq) 
 	where booking.bookable=#{y} and booking.seller=#{id} and booking.boardtype=#{able}
 </select>
@@ -28,9 +28,9 @@
 </delete>
 
 
-<!-- 구매자에게 들어온 예약 내역 출력 -->
+<!-- 구매자가 재능 판매 예약 내역 출력 -->
 <select id="buyRequestTalent" resultMap="selltalent" resultType="HashMap">
-select selltalent.writer,booking.booker,selltalent.price,selltalent.title,booking.parentseq,approval.approval
+select distinct selltalent.writer,booking.booker,selltalent.price,selltalent.title,booking.parentseq,approval.approval
 	from selltalent join booking on (selltalent.seq = booking.parentseq) join approval on (approval.buyer =booking.booker)
 	where booking.bookable=#{y} and booking.booker=#{id}
 </select>
@@ -42,7 +42,7 @@ select selltalent.writer,booking.booker,selltalent.price,selltalent.title,bookin
 
 <!-- 예약하기 -->
 <insert id="booking">
-insert into booking values(booking_seq.nextval,#{seller},#{booker},#{bookable},#{parentseq},sysdate)
+insert into booking values(booking_seq.nextval,#{seller},#{booker},#{bookable},#{parentseq},sysdate,#{boardtype})
 </insert>
 <!--해당 게시글과 예약자가 한 예약 체크 -->
 <select id="checkBooking" resultType="int">

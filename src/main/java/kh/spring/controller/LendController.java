@@ -125,13 +125,14 @@ public class LendController {
 	
 	@ResponseBody
 	@RequestMapping(value="booking",produces="text/html;charset=utf-8") //판매 예약 글
-	public String Booking(String seller,int parentseq, String booker,String bookable) throws Exception {
+	public String Booking(String seller,int parentseq, String booker,String bookable,String boardtype) throws Exception {
 	    System.out.println("seller :" + seller);
 	    System.out.println("parentseq :" + parentseq);
 	    System.out.println("booker :" + booker);
 	    System.out.println("bookable :" + bookable);
+	    System.out.println("boardtype :" + boardtype);
 
-	    int result =service.booking(seller,booker,bookable,parentseq);
+	    int result =service.booking(seller,booker,bookable,parentseq,boardtype);
 	    if(result>0) {
 	       System.out.println("예약성공!!");
 	    }return String.valueOf(result);
@@ -141,8 +142,6 @@ public class LendController {
 	 @ResponseBody
 	 @RequestMapping(value="checkBooking",produces="text/html;charset=utf-8")
 	 public String checkBooking(int parentseq, String booker) {
-//	    String sessionID = (String) session.getAttribute("loginID");
-//	    String booker =sessionID;
 	    System.out.println("booker :" + booker);
 	    System.out.println("parentseq :" + parentseq);
 	    int checkBooking = service.checkBooking(booker,parentseq);

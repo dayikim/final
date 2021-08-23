@@ -338,6 +338,7 @@
                     //사용 가능 포인트 체크
                     $("#insertBtn").on("click", function () {
                         let check = $(".amount")
+                       let price =$("#finalPrice").val();
                         if (check.val() == "") {
                             alert("사용할 포인트를 입력해주세요.");
                             check.focus();
@@ -347,7 +348,7 @@
                             $.ajax({
                                 url: "/point/pointcheck",
                                 data: {
-                                    point: $(".amount").val()
+                                    point: $(".amount").val(),price: price
                                 }
                             }).done(function (resp) {
                                 console.log(resp);
@@ -362,6 +363,12 @@
                                     $(".alertPoint").css("color", "blue");
                                     $(".alertPoint").css("font-weight", "800");
 
+                                }else if (resp == 2){
+                                	 $(".amount").val();
+                                	$(".alertPoint").text("보유 포인트가 결제금을 초과하여 사용이 불가능 합니다.");
+                                	alert("충전하고 결제해주세요.\n 충전페이지로 이동합니다.")
+                                    location.href = "${pageContext.request.contextPath}/point/ToCharging"
+
                                 }
 
                             })
@@ -371,11 +378,21 @@
                     })
 
                     $("#pay").on("click", function () {
-                        let check = $(".amount")
+                    	let price =$("#finalPrice").val();
+                    	let pointAmount=$("#pointAmount").val();
+                        let check = $(".amount");
+                       
                         if (check.val() == "") {
                             alert("사용할 포인트를 입력해주세요.");
                             check.focus();
                             return false;
+                                                      	
+                            }else if(price>pointAmount){
+                            	alert("충전하고 다시 결제해주세요.")
+                            	console.log(price);
+                            	console.log(pointAmount);
+                            	console.log(price>pointAmount);
+                                return false;
 
                         } else {
                             let check = confirm("정말 결제하시겠습니까?");
@@ -552,6 +569,7 @@
                                         class="align-baseline pointAmount">${point}</span> <b id="point1">상추</b></span>
                                 <span id="use_point"><b id="use">사용 포인트 : </b> <input class="amount" name="point"> <b
                                         id="point2">상추</b>
+                                      <input type="hidden" value="${point}" id="pointAmount">
                                     <button type="button" class=" all btn-outline-info btn btn-sm"
                                         id="insertBtn">입력</button></span> <span class="alertPoint"> </span>
                             </div>
@@ -560,9 +578,10 @@
                             <div class="pay_box">
                                 <span id="pay_amount">
                                     <h5>
-                                        <b class="amount_title">결제 금액 : <b class="final_price">${board.price}</b>
+                                        <b class="amount_title">결제 금액 : <b class="final_price" >${board.price}</b>
+                                        <input type="hidden" value="${board.price}" id="finalPrice">
                                             <b id="point1">상추</b></b>
-                                        </h4>
+                                        </h5>
                                 </span>
                             </div>
                         </section>

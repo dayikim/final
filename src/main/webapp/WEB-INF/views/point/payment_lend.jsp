@@ -371,7 +371,42 @@ $(function() {
 
 	})
 
-	$("#")
+	 $("#pay").on("click", function () {
+         let check = $(".amount")
+         if (check.val() == "") {
+             alert("사용할 포인트를 입력해주세요.");
+             check.focus();
+             return false;
+
+         } else {
+             let check = confirm("정말 결제하시겠습니까?");
+             let parentseq = $("#parentseq").val();
+                                                     
+             if (check) {
+                 $.ajax({
+                     url: "/point/isPayment",
+                     data: { parentseq: parentseq }
+                 }).done(function (resp) {
+                     console.log(resp);
+                     if (resp == 0) {
+                     	 alert("결제 완료!! \n마이페이지에서 포인트 내역을 확인하세요.")
+                     	$("#payForm").submit();
+
+                     } else {
+                         alert("이미 결제된 거래 게시글입니다.")
+                         location.href = "${pageContext.request.contextPath}/my/mypageProc"
+                         return;
+                     }
+                 })
+             } else {
+                 alert("결제 취소!")
+                 return;
+             }
+         }
+
+         })
+
+ })
 
 })
 </script>
@@ -417,7 +452,6 @@ $(function() {
                 	<c:when test="${loginID == null }">
                 		<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     	<div class="navbar-nav ml-auto">
-                        	<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
                         	<a href="/person/login" class="nav-item nav-link active">Login</a> <!-- Login Page 이동 -->
                         	<a href="/person/join" class="nav-item nav-link">Sign Up</a>  <!-- SignUp Page 이동 -->
                     	</div>
@@ -426,7 +460,6 @@ $(function() {
                 	<c:otherwise>
                 		<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     		<div class="navbar-nav ml-auto">
-                        		<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
                         		<a href="/person/logout" class="nav-item nav-link active">Logout</a> <!-- Logout -->
                         		 <div class="collapse navbar-collapse" id="navbarNavDropdown">
 	                        		 <ul class="navbar-nav">
@@ -500,40 +533,47 @@ $(function() {
                 </section>
 
               <section id="payment">
-					<div class="point_wrap">
-						<h4 class=" point">
-							<b>최종 결제 금액 </b>
-						</h4>
-						<hr>
-						<span id="remain_point"><b>현재 보유 포인트 : </b> <span
-							class="align-baseline pointAmount">${point}</span> <b id="point1">상추</b></span>
-						<span id="use_point"><b id="use">사용 포인트 : </b> <input
-							class="amount" name="point"> <b id="point2">상추</b>
-							<button type="button" class=" all btn-outline-info btn btn-sm"
-								id="insertBtn">입력</button></span> <span class="alertPoint"> </span>
-					</div>
-					<hr>
-					<div class="pay_box">
-						<span id="pay_amount">
-							<h5>
-								<b class="amount_title">결제 금액 : <b class="final_price">${board.price}</b>
-									<b id="point1">상추</b></b>
-								</h4>
-						</span>
-					</div>
-				</section>
+                            <div class="point_wrap">
+                                <h4 class=" point">
+                                    <b>최종 결제 금액 </b>
+                                </h4>
+                                <hr>
+                                <span id="remain_point"><b>현재 보유 포인트 : </b> <span
+                                        class="align-baseline pointAmount">${point}</span> <b id="point1">상추</b></span>
+                                <span id="use_point"><b id="use">사용 포인트 : </b> <input class="amount" name="point"> <b
+                                        id="point2">상추</b>
+                                    <button type="button" class=" all btn-outline-info btn btn-sm"
+                                        id="insertBtn">입력</button></span> <span class="alertPoint"> </span>
+                            </div>
+
+                            <hr>
+                            <div class="pay_box">
+                                <span id="pay_amount">
+                                    <h5>
+                                        <b class="amount_title">결제 금액 : <b class="final_price">${board.price}</b>
+                                            <b id="point1">상추</b></b>
+                                        </h4>
+                                </span>
+                            </div>
+                        </section>
 
                 <div class="btn_wrap">
-					<button type="button" class="btn btn-success btn btn-lg" id="pay">
-						<i class="far fa-comment-dots"></i> 결제하기
-					</button>
-
-				</div>
+                        <form action="/point/payment" id="payForm">
+                        	<input type="hidden" name="seller" value="${board.writer}">
+                        	 <input type="hidden" name="item" value="${board.title}">
+                        	 <input type="hidden" name="price" value="${board.price}" id="price">
+                            <input type="hidden" name="parentseq" value="${board.seq}" id="parentseq">
+                            <input type="hidden" name="category" value="${board.category}" id="category">                             
+                            <button type="button" class="btn btn-success btn btn-lg" id="pay">
+                                <i class="far fa-comment-dots"></i> 결제하기
+                            </button>
+                            </form>
+                        </div>
 			</div>
-			<div class="btn_wrap text-right">
+			<!-- <div class="btn_wrap text-right">
 				<a href="" class="back"><i class="fas fa-arrow-alt-circle-left"></i></a>
 
-			</div>
+			</div> -->
 		</div>
 
     </section>

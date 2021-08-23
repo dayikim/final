@@ -438,7 +438,7 @@ form {
 								</a>
 							</h4>
 						</div>
-						<div>재능 판매자: ${i.name}ㅣ${i.address1}</div>
+						<div>재능 판매자: ${i.name}</div>
 						<div>거래 완료 일시: ${i.paymentdate}</div>
 						<div class="row foot">
 							<div class="col-3 completBg">
