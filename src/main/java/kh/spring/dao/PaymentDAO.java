@@ -1,5 +1,7 @@
 package kh.spring.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,5 +18,8 @@ public class PaymentDAO {
 	//해당 게시글 결제여부
 	public int isPayment(int parentseq) {
 		return mybatis.selectOne("Point.isPayment",parentseq);
+	}
+	public List<PaymentDTO> searchseqByPayment(String sessionID) {
+		return mybatis.selectList("Point.searchseqByPayment",sessionID);
 	}
 }

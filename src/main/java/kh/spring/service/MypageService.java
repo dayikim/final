@@ -196,6 +196,18 @@ public class MypageService {
 		param.put("talent", boardtype);
 		return bdao.buyRequestTalent(param);
 	}
+	//결제 완료된 예약 내역
+	public List<HashMap<String, Object>> buyRequestTalent2(String sessionID) {
+		String y = "y";
+		String boardtype="재능";
+		Map<String, String> param = new HashMap<>();
+		param.put("y", y);
+		param.put("id", sessionID);
+		param.put("talent", boardtype);
+		return bdao.buyRequestTalent2(param);
+	}
+	
+	
 
 	// 예약 내역 목록 - 물품
 	public List<HashMap<String, Object>> buyRequestProduct(String sessionID) {
@@ -286,15 +298,15 @@ public class MypageService {
 		return dao.dealEndTalentBuyList(param);
 	}
 // 해당 게시글의 거래 갯수
-	public int paymentCount(String sessionID) {
-		String paymentable = "y";
+	public int paymentCount(int seqnum) {
 		String boardtype="재능";
 		Map<Object, Object> param = new HashMap<>();
-		param.put("id", sessionID);
+		param.put("seq", seqnum);
 		param.put("talent", boardtype);
-		param.put("y", paymentable);
 		return dao.paymentCount(param);
 	}
+
+	
 	
 	
 

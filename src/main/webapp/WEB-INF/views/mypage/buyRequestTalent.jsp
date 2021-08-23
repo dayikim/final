@@ -397,10 +397,24 @@ img {
 					<input type=button id=cancel class="cnum-btn1" value="예약 취소">
 
 					<c:choose>
-						<c:if test="${count eq 1}">
-							<button type=button class="cnum-btn2" disabled='disabled'>
-								결제 완료</button>
-						</c:if>
+						<c:when test="${count eq 1}">
+
+							<c:forEach var="pay" items="${paymentlist}">
+								<c:choose>
+									<c:when test="${pay.paymentable ==y}">
+										<button type=button class="cnum-btn2" disabled='disabled'>결제
+											완료</button>
+									</c:when>
+									<c:otherwise>
+									<button type=button id=approval class="cnum-btn2"
+										disabled='disabled'>승인 대기 중</button>
+								</c:otherwise>
+								</c:choose>
+							</c:forEach>
+
+						</c:when>
+
+
 						<c:otherwise>
 							<c:choose>
 								<c:when test="${i.approval =='y'}">

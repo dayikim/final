@@ -35,6 +35,13 @@ select distinct selltalent.writer,booking.booker,selltalent.price,selltalent.tit
 	where booking.bookable=#{y} and booking.booker=#{id} and booking.boardtype=#{talent}
 </select>
 
+<!-- 구매자가 재능 결제까지 완료된 내역 출력 -->
+<select id="buyRequestTalent2" resultMap="selltalent" resultType="HashMap">
+select distinct selltalent.writer,booking.booker,selltalent.price,selltalent.title,booking.parentseq,approval.approval
+	from selltalent join booking on (selltalent.seq = booking.parentseq) join approval on (approval.buyer =booking.booker)
+	where booking.bookable=#{y} and booking.booker=#{id} and booking.boardtype=#{talent}
+</select>
+
 <!-- 구매자가 예약내역 취소 -->
 <delete id="bookingFail">
 	delete from booking where booker=#{sessionID} and parentseq=${parent}

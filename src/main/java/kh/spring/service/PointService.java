@@ -1,6 +1,7 @@
 package kh.spring.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +82,10 @@ public class PointService {
 //해당 게시글 결제 여부
 	public int isPayment(int parentseq) {
 		return paydao.isPayment(parentseq);
+	}
+//결제 y된 게시글 조회
+	public List<PaymentDTO> searchseqByPayment(String sessionID) {
+		return paydao.searchseqByPayment(sessionID);
 	}
 
 

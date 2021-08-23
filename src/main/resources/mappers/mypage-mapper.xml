@@ -28,9 +28,9 @@
 		where id=#{id}
 	</update>
 	
+	<!-- 결제 y인 건수 -->
 	<select id="paymentCount" resultType="int">
-	select count(*) from payment where buyer =#{id} and paymentable=#{y}and boardtype=#{talent}
-    and parentseq= (select parentseq from payment where boardtype=#{talent} and  buyer=#{id} and paymentable =#{y})
+	select count(*) from payment where parenseq=#{seq} and boardtype="#{talent}"
 	</select>
 	
 	

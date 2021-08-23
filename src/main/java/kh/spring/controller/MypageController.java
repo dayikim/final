@@ -17,11 +17,11 @@ import kh.spring.config.SHA256;
 import kh.spring.dao.ProfileFilesDAO;
 import kh.spring.dto.BorrowDTO;
 import kh.spring.dto.LendDTO;
+import kh.spring.dto.PaymentDTO;
 import kh.spring.dto.PersonDTO;
 import kh.spring.dto.PointAccountDTO;
 import kh.spring.dto.ProfileFilesDTO;
 import kh.spring.dto.RequestTalentDTO;
-import kh.spring.dto.ReviewDTO;
 import kh.spring.dto.SellTalentDTO;
 import kh.spring.dto.SnsDTO;
 import kh.spring.dto.SnsFilesDTO;
@@ -130,7 +130,7 @@ public class MypageController {
 	public String pointUseList(Model model) {
 		String sessionID = (String)session.getAttribute("loginID");
 		List<PointAccountDTO> dto = service.pointUseList(sessionID); 
-		
+
 		model.addAttribute("pointUse", dto);
 		return "/mypage/pointUse";
 	}
@@ -152,15 +152,15 @@ public class MypageController {
 
 
 	/////////////////////////////////////////////////////////////////////////////////////////// 거래 요청 목록 (판매자 입장)
-	
+
 
 	// 거래 요청 목록 - 대여(미완)
 	@RequestMapping("/requestRentalProduct")
 	public String requestRental(Model model) {
-//		String sessionID = (String)session.getAttribute("loginID");
-//		List<HashMap<String,Object>> list = service.requestRentalProduct(sessionID); // 예약리스트 꺼내기
-//
-//		model.addAttribute("requestRental", list);  // 들어온 예약 리스트
+		//		String sessionID = (String)session.getAttribute("loginID");
+		//		List<HashMap<String,Object>> list = service.requestRentalProduct(sessionID); // 예약리스트 꺼내기
+		//
+		//		model.addAttribute("requestRental", list);  // 들어온 예약 리스트
 		return "/mypage/requestRentalProduct";
 	}
 
@@ -224,13 +224,39 @@ public class MypageController {
 	@RequestMapping("buyRequestTalent")
 	public String buyRequestTalent(Model model) {
 		String sessionID = (String)session.getAttribute("loginID");
-		List<HashMap<String,Object>> result = service.buyRequestTalent(sessionID);
+
+		//갯수 판단
+		//결제 y인 갯수 0인 parentseq를 조회
+
+//		List<PaymentDTO> seqnum = (List<PaymentDTO>) PointService.searchseqByPayment(sessionID);
+//		  
+//		for(PaymentDTO seqNo: seqnum) {
+//			if(seqNo.getPaymentable().contentEquals("y")) {
+//				seq
+//			}
+//		}
 		
-		//결제여부 판단
-		int paymentCount = service.paymentCount(sessionID);
+		int paymentCount = service.paymentCount(seqnum);
 		System.out.println("갯수는 "+ paymentCount);
-        model.addAttribute("count",paymentCount);
-		model.addAttribute("requestRental", result);
+		
+		
+		int count =paymentresult.size();
+
+		if(paymentCount ==1) {
+			List<HashMap<String,Object>> paymentresult = service.buyRequestTalent2(sessionID);
+						
+			
+			model.addAttribute("paymentlist", paymentresult);
+//			model.addAttribute("count",paymentCount);
+		}else if(paymentCount<0) {
+			List<HashMap<String,Object>> bookingresult = service.buyRequestTalent(sessionID);
+			model.addAttribute("requestRental", bookingresult);
+//			int Count= 0;
+//			model.addAttribute("count",Count);
+		}
+
+
+
 		return "/mypage/buyRequestTalent";
 	}
 
@@ -255,7 +281,7 @@ public class MypageController {
 		String product="물품";
 		List<HashMap<Object, Object>> dealEndProductSellList =service.dealEndProductSellList(id,product);
 		model.addAttribute("productSellList",dealEndProductSellList);
-		
+
 		return "/mypage/dealEndProductSellList";
 	}
 
@@ -266,10 +292,10 @@ public class MypageController {
 		String product="물품";
 		List<HashMap<Object, Object>> dealEndProductBuyList =service.dealEndProductBuyList(id,product);
 		model.addAttribute("productBuyList",dealEndProductBuyList);
-			
+
 		return "/mypage/dealEndProductBuyList";
 	}
-	
+
 
 	// 거래 완료 목록 출력 - 재능 판매완료
 	@RequestMapping(value="/dealEndTalentSellList", produces="text/html;charset=utf8")
@@ -299,7 +325,7 @@ public class MypageController {
 	public String myRequestSellProduct(Model model) {
 		String sessionID = (String)session.getAttribute("loginID");
 		List<LendDTO> dto = service.myRequestSellProduct(sessionID);
-		
+
 		model.addAttribute("requestRental", dto);
 		return "/mypage/myRequestSellProduct";
 	}
@@ -309,7 +335,7 @@ public class MypageController {
 	public String myRequestBuyProduct(Model model){
 		String sessionID = (String)session.getAttribute("loginID");
 		List<BorrowDTO> dto = service.myRequestBuyProduct(sessionID);
-		
+
 		model.addAttribute("requestRental", dto);
 		return "/mypage/myRequestBuyProduct";
 	}
@@ -319,7 +345,7 @@ public class MypageController {
 	public String myRequestSellTalent(Model model){
 		String sessionID = (String)session.getAttribute("loginID");
 		List<SellTalentDTO> dto = service.myRequestSellTalent(sessionID);
-		
+
 		model.addAttribute("requestRental", dto);
 		return "/mypage/myRequestSellTalent";
 	}
@@ -329,7 +355,7 @@ public class MypageController {
 	public String myRequestBuyTalent(Model model){
 		String sessionID = (String)session.getAttribute("loginID");
 		List<RequestTalentDTO> dto = service.myRequestBuyTalent(sessionID);
-		
+
 		model.addAttribute("requestRental",dto);
 		return "/mypage/myRequestBuyTalent";
 	}
@@ -341,37 +367,37 @@ public class MypageController {
 	@RequestMapping(value="/selectMySns", produces="text/html;charset=utf8")
 	public String selectMySns(Model model) throws Exception{
 		String id= (String)session.getAttribute("loginID");
-		
+
 		PersonDTO dto = service.mypageList(id); // 내 정보 출력
 		session.setAttribute("myInfo", dto); // 내 정보
-		
+
 		ProfileFilesDTO pdto = service.profileSelect(id); // 내 프사 출력
 		model.addAttribute("profile",pdto); // 내 프사
-		
+
 		List<SnsDTO>list = sservice.mySelectAll(id); // 내 sns만 출력
 		model.addAttribute("list", list);
-		
+
 		List<String> initProfile = new ArrayList<String>(); // 내 프로필사진 출력
 		for(SnsDTO sd : list) {
 			initProfile.add(pffd.profileSelect(sd.getId()) != null?
-							fservice.toProfileBinary(session, pffd.profileSelect(sd.getId()).getSysName()):
-							null);
+					fservice.toProfileBinary(session, pffd.profileSelect(sd.getId()).getSysName()):
+						null);
 		}
 		model.addAttribute("initprofile", initProfile);
-		
+
 		for(SnsDTO sd : list) {
-		System.out.println("처음 로딩되는 페이지: " +sd.getSeq());
+			System.out.println("처음 로딩되는 페이지: " +sd.getSeq());
 		}
 		List<String> ldto = sservice.existlike(id); //좋아요목록
 		model.addAttribute("isLove",ldto);
 
 		List<SnsFilesDTO>fdto = fservice.sendList(session); //파일목록
 		model.addAttribute("file", fdto);
-		
-		
+
+
 		return "/mypage/mySnsPage"; 
 	}
-	
+
 	// 회원탈퇴
 	@ResponseBody
 	@RequestMapping("/memberOut")

@@ -38,6 +38,10 @@ public class BookingDAO {
    public List<HashMap<String,Object>> buyRequestTalent(Map<String, String> param) {
       return mybatis.selectList("Booking.buyRequestTalent", param);
    }
+   //결제까지 완료된 내역 출력 -재능(구매자)
+   public List<HashMap<String, Object>> buyRequestTalent2(Map<String, String> param) {
+	return  mybatis.selectList("Booking.buyRequestTalent2", param);
+}
    
    // 예약 취소 - 재능
    public int bookingFail(HashMap<String, Object> param) {
@@ -51,5 +55,7 @@ public class BookingDAO {
    public int checkBooking(Map<Object, Object> param) {
       return mybatis.selectOne("Booking.checkBooking",param);
    }
+
+
 
 }
