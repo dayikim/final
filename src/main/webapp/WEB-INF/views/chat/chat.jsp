@@ -185,7 +185,7 @@ function doNotReload(){
 }
 document.onkeydown = doNotReload;
 /* http://175.116.7.99/ */
-let ws = new WebSocket("ws://192.168.35.97/chat"); 
+let ws = new WebSocket("ws://175.116.7.99/chat"); 
 $(function(){
 	
 	let loginID;
@@ -210,7 +210,7 @@ $(function(){
 			
 			if(text.unreadcount != null){
 				window.parent.postMessage(text.unreadcount+
-						":"+text.roomid,'http://192.168.35.97/chat/waitingroom');
+						":"+text.roomid,'http://175.116.7.99/chat/waitingroom');
 				
 				
 				

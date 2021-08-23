@@ -90,10 +90,11 @@ style>body {
 </style>
 <script>
 	let fileList = [];
+	var count = 2;
 	$(function() {
 		//무한스크롤
 		var isScroll = true;
-		var count = 2;
+		console.log("count 값: "+count);
 		let loadNewPage = $(window).on("scroll",(function() {
 			if (((window.innerHeight + window.scrollY) >= document.body.offsetHeight)&& isScroll) {
 				$.ajax({
@@ -232,7 +233,7 @@ style>body {
 								 
 					}
 				}
-					count++;
+					count++;	
 				})
 				
 			}

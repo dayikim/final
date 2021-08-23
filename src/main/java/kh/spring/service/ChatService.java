@@ -203,7 +203,7 @@ public class ChatService  implements InitializingBean {
 //		}
 //	}
 	
-	public void sendImage(HttpSession hsession,ChatFileDTO cdf,String file) throws Exception { //이미지를 보낸다.
+	synchronized public void sendImage(HttpSession hsession,ChatFileDTO cdf,String file) throws Exception { //이미지를 보낸다.
 		SimpleDateFormat sdf = new SimpleDateFormat("a h:mm");
 		for(Session session :rs.get(cdf.getRoomid())) {
 			JsonObject json = new JsonObject();
