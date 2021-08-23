@@ -49,7 +49,7 @@ public class MypageService {
 
 	@Autowired
 	private PaymentDAO paydao;//결제
-	
+
 	@Autowired
 	private BookingDAO bdao; // 재능 예약 여부
 	@Autowired
@@ -131,70 +131,70 @@ public class MypageService {
 	}
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////거래 요청 목록(판매자 입장)
+	//////////////////////////////////////////////////////////////////////////////////////////////거래 요청 목록(판매자 입장)
 
-// 거래 요청 목록 - 대여
-public List<HashMap<String,Object>> requestRentalProduct(String sessionID) {
-String y = "y";
-String able = "물품";
-Map<String, String> param = new HashMap<>();
-param.put("y", y);
-param.put("able", able);      
-param.put("id", sessionID);
+	// 거래 요청 목록 - 대여
+	public List<HashMap<String,Object>> requestRentalProduct(String sessionID) {
+		String y = "y";
+		String able = "물품";
+		Map<String, String> param = new HashMap<>();
+		param.put("y", y);
+		param.put("able", able);      
+		param.put("id", sessionID);
 
-return bdao.requestRentalProduct(param);
-}
+		return bdao.requestRentalProduct(param);
+	}
 
-// 요청 거절을 눌렀을 경우 - 재능
-public int dealFailProduct(String sessionID, int parent) {
-String able = "물품";
-HashMap<String, Object> param = new HashMap<>();
-param.put("sessionID", sessionID);
-param.put("parent", parent);
-param.put("able", able);
+	// 요청 거절을 눌렀을 경우 - 물품
+	public int dealFailProduct(String sessionID, int parent) {
+		String able = "물품";
+		HashMap<String, Object> param = new HashMap<>();
+		param.put("sessionID", sessionID);
+		param.put("parent", parent);
+		param.put("able", able);
 
-return bdao.dealFailProduct(param);
-}
+		return bdao.dealFailProduct(param);
+	}
 
 
-// 거래 요청 목록 - 재능
-public List<HashMap<String,Object>> requestRentalTalent(String sessionID) {
-String y = "y";
-String able = "재능";
-Map<String, String> param = new HashMap<>();
-param.put("y", y);
-param.put("able", able);
-param.put("id", sessionID);
+	// 거래 요청 목록 - 재능
+	public List<HashMap<String,Object>> requestRentalTalent(String sessionID) {
+		String y = "y";
+		String able = "재능";
+		Map<String, String> param = new HashMap<>();
+		param.put("y", y);
+		param.put("able", able);
+		param.put("id", sessionID);
 
-return bdao.requestRentalTalent(param);
-}
+		return bdao.requestRentalTalent(param);
+	}
 
-// 거래 완료 버튼 뽑기 - 재능
-public int dealSuccessSelect(String sessionID, String booker, String parent) {
-HashMap<String, Object> param = new HashMap<>();
-param.put("id", sessionID);
-param.put("booker", booker);
-param.put("parent", parent);
+	// 거래 완료 버튼 뽑기 - 재능
+	public int dealSuccessSelect(String sessionID, String booker, String parent) {
+		HashMap<String, Object> param = new HashMap<>();
+		param.put("id", sessionID);
+		param.put("booker", booker);
+		param.put("parent", parent);
 
-return adao.dealSuccessSelect(param);
-}
+		return adao.dealSuccessSelect(param);
+	}
 
-// 요청 거절을 눌렀을 경우 - 재능
-public int dealFailTalent(String sessionID, int parent) {
-String able = "물품";
-HashMap<String, Object> param = new HashMap<>();
-param.put("sessionID", sessionID);
-param.put("parent", parent);
-param.put("able", able);
+	// 요청 거절을 눌렀을 경우 - 재능
+	public int dealFailTalent(String sessionID, int parent) {
+		String able = "재능";
+		HashMap<String, Object> param = new HashMap<>();
+		param.put("sessionID", sessionID);
+		param.put("parent", parent);
+		param.put("able", able);
 
-return bdao.dealFailTalent(param);
-}
+		return bdao.dealFailTalent(param);
+	}
 
-// 거래 승인을 눌렀을 경우 - 재능
-public int dealSuccess(String writer, String booker, int parent) {
-String y = "y";
-return adao.dealSuccess(new ApprovalDTO(0,writer,booker,y,parent,null));
-}
+	// 거래 승인을 눌렀을 경우 - 재능 / 물품
+	public int dealSuccess(String writer, String booker, int parent) {
+		String y = "y";
+		return adao.dealSuccess(new ApprovalDTO(0,writer,booker,y,parent,null));
+	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////// 예약 내역 (구매자 입장)
 
@@ -218,13 +218,18 @@ return adao.dealSuccess(new ApprovalDTO(0,writer,booker,y,parent,null));
 		param.put("talent", boardtype);
 		return bdao.buyRequestTalent2(param);
 	}
-	
-	
+
+
 
 	// 예약 내역 목록 - 물품
 	public List<HashMap<String, Object>> buyRequestProduct(String sessionID) {
-		// TODO Auto-generated method stub
-		return null;
+		String y = "y";
+		String boardtype="물품";
+		Map<String, String> param = new HashMap<>();
+		param.put("y", y);
+		param.put("id", sessionID);
+		param.put("product", boardtype);
+		return bdao.buyRequestProduct(param);
 	}
 
 	// 예약 취소 - 재능
@@ -242,17 +247,17 @@ return adao.dealSuccess(new ApprovalDTO(0,writer,booker,y,parent,null));
 		param.put("parentseq", parentseq);
 		return adao.isApproval(param);
 	}
-	
-//	//재능 결제 여부 check
-//		public List<HashMap<String, Object>> checkpayble(String sessionID) {
-//			String paymentable = "y";
-//			String boardtype="재능";
-//			Map<Object, Object> param = new HashMap<>();
-//			param.put("id", sessionID);
-//			param.put("y", paymentable);
-//			param.put("talent", boardtype);
-//			return dao.checkpayble(param);
-//		}
+
+	//	//재능 결제 여부 check
+	//		public List<HashMap<String, Object>> checkpayble(String sessionID) {
+	//			String paymentable = "y";
+	//			String boardtype="재능";
+	//			Map<Object, Object> param = new HashMap<>();
+	//			param.put("id", sessionID);
+	//			param.put("y", paymentable);
+	//			param.put("talent", boardtype);
+	//			return dao.checkpayble(param);
+	//		}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////// 내 게시물 보기
 
@@ -309,7 +314,7 @@ return adao.dealSuccess(new ApprovalDTO(0,writer,booker,y,parent,null));
 		param.put("talent", talent);
 		return dao.dealEndTalentBuyList(param);
 	}
-// 해당 게시글의 거래 갯수
+	// 해당 게시글의 거래 갯수
 	public int paymentCount(String sessionID) {
 		String paymentable ="y";
 		String boardtype="재능";
@@ -320,9 +325,9 @@ return adao.dealSuccess(new ApprovalDTO(0,writer,booker,y,parent,null));
 		return dao.paymentCount(param);
 	}
 
-	
-	
-	
+
+
+
 
 }
 

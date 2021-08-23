@@ -1,5 +1,6 @@
 package kh.spring.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,7 @@ public class AllSearchService {
 	}
 	
 	//대여하기 리스트
-	public List<LendDTO> getLdList(String choice, String search, String cpage){
+	public List<HashMap<String, Object>> getLdList(String choice, String search, String cpage){
 		
 		int currentPage = Integer.parseInt(cpage);
 		
@@ -69,7 +70,7 @@ public class AllSearchService {
 	
 	
 	//대여요청 리스트
-	public List<BorrowDTO> getBwList(String choice, String search, String cpage){
+	public List<HashMap<String, Object>> getBwList(String choice, String search, String cpage){
 		int currentPage = Integer.parseInt(cpage);
 		
 		System.out.println(choice);
@@ -88,7 +89,7 @@ public class AllSearchService {
 	}
 	
 	//재능대여 리스트
-	public List<SellTalentDTO> getTlsList(String choice, String search, String cpage){
+	public List<HashMap<String, Object>> getTlsList(String choice, String search, String cpage){
 		
 		int currentPage = Integer.parseInt(cpage);
 		
@@ -108,7 +109,7 @@ public class AllSearchService {
 	}
 	
 	//재능요청 리스트
-	public List<RequestTalentDTO> getTlrList(String choice, String search, String cpage){
+	public List<HashMap<String, Object>> getTlrList(String choice, String search, String cpage){
 		
 		int currentPage = Integer.parseInt(cpage);
 		
