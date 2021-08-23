@@ -333,58 +333,57 @@ img {
 	<div class="container2">
 		<div>거래 요청 내역 > 대여 요청</div>
 		<!-- forEach문 사용 -->
-		<%-- <c:forEach var="i" items="${requestRental }"> --%>
-		<form action="" method="get">
+		<c:forEach var="i" items="${requestRental }">
+
 			<div class="requestList">
 				<div class="row high">
 					<div class="col-8 information">
 						<div class="title">
 							<h4>
-								<b>자전거 대여가능합니다. 단 안망가뜨릴 자신 있으신분만</b>
+								<b>${i.title }</b>
 							</h4>
 						</div>
+
 						<div class=content>
 							<div class="row">
 								<div class="col-4 left">
 									<b>대여자</b>
 								</div>
-								<div class="col-8 right">이희정</div>
+								<div class="col-8 right">${i.writer}</div>
 							</div>
 							<div class="row">
 								<div class="col-4 left">
 									<b>구매요청자</b>
 								</div>
-								<div class="col-8 right">아무개</div>
+								<div class="col-8 right">${i.booker }</div>
 							</div>
 							<div class="row">
 								<div class="col-4 left">
-									<b>대여 일자</b>
+									<b>제시 가격</b>
 								</div>
-								<div class="col-8 right">2021-08-06 ~ 2021-09-27</div>
-							</div>
-							<div class="row">
-								<div class="col-4 left">
-									<b>결제 내역</b>
-								</div>
-								<div class="col-8 right">15000원</div>
+								<div class="col-8 right">${i.price }원</div>
 							</div>
 						</div>
+						<input type=hidden value=${i.writer } id=writer name=writer>
+						<input type=hidden value=${i.booker } id=booker name=booker>
+						<input type=hidden value=${i.parentseq } id=parent name=parent>
 
 					</div>
 					<div class="col-4">
 						<div class="image">
 							<img src="">
 						</div>
-
 					</div>
 				</div>
+
 				<div class="under">
-					<input type=button id=cancel class="cnum-btn1" value="요청 거절">
+					<button type=button id=cancel class="cnum-btn1">요청 거절</button>
 					<button type=button id=approval class="cnum-btn2">거래 승인</button>
 				</div>
+
 			</div>
-		</form>
-		<%-- </c:forEach> --%>
+
+		</c:forEach>
 
 	</div>
 
