@@ -51,7 +51,7 @@ public class LendDAO {
 	}
 	
 	//게시글 리스트 가져오기
-	public List<LendDTO> getList(String choice, String search,int cpage){
+	public List<HashMap<String, Object>> getList(String choice, String search,int cpage){
 				
 		if(search == null) {
 			search = "";
@@ -65,7 +65,7 @@ public class LendDAO {
 		map.put("endNum", endNum);
 		map.put("startNum", startNum);
 				
-		List<LendDTO> list = null;
+		List<HashMap<String,Object>> list = null;
 		
 		if(!search.equals("")) {
 			if(choice.equals("Allchoice")) {

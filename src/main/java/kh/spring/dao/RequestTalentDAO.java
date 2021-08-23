@@ -47,7 +47,7 @@ public class RequestTalentDAO {
 	}
 
 	//게시글 리스트
-	public List<RequestTalentDTO> getList(String category, String search,int cpage){
+	public List<HashMap<String, Object>> getList(String category, String search,int cpage){
 
 		if(search == null) {
 			search = "";
@@ -61,7 +61,7 @@ public class RequestTalentDAO {
 		map.put("endNum", endNum);
 		map.put("startNum", startNum);
 
-		List<RequestTalentDTO> list = null;
+		List<HashMap<String, Object>> list = null;
 
 		if(!search.equals("")) {
 			if(category.equals("AllCategory")) {
