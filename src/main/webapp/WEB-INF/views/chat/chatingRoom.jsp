@@ -20,7 +20,7 @@
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2cfa7967f01741c3dc098172b2a39ee7&libraries=services"></script>
 </head>
 <script>
-let ws = new WebSocket("ws://192.168.35.97/chat/main"); 
+let ws = new WebSocket("ws://175.116.7.99/chat/main"); 
 let existing_roomid =[];
 
 $(function(){
