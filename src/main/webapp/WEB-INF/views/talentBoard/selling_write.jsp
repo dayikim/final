@@ -449,7 +449,7 @@
 								
 									<div class="custom-file">
 										<input type="file" name="file" class="upload-hidden" id="file"  onchange="javascript:document.getElementById('fileName').value = this.value"  multiple>
-										<input type=text class="custom-file-label"  id="fileName" name="filename" style="width: 100%;">
+										<input type=text class="custom-file-label"  id="fileName" name="filename" style="width: 100%;" readonly>
 																		</div>
 									<div class="input-group-append">
 										<button class="btn btn-outline-secondary" type="button" onclick="filesUpload();"class="uploadBtn">업로드</button>

@@ -230,7 +230,7 @@
     $(function() {
 		$("#search").keyup(function(e) {
 			if (e.keyCode == 13) {
-				location.href = "/AllBoardList/tlRequestList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
+				location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
 			}
 		})
 		
@@ -413,10 +413,12 @@
                     </div>
 
                     <div class="btn_wrap">
-                        <button type="button" class="btn btn-outline-info btn btn-lg" id="chatting"><i class="far fa-comment-dots"></i>
-                            1:1 채팅</button>
-                            <a href="/tBoard/toSelling"><button type="button" class="btn btn-outline-info btn btn-lg" id="request">
+                    	<c:if test="${loginID !=  board.writer}">
+                        	<button type="button" class="btn btn-outline-info btn btn-lg" id="chatting"><i class="far fa-comment-dots"></i>
+                            	1:1 채팅</button>
+                            	<a href="/tBoard/toSelling"><button type="button" class="btn btn-outline-info btn btn-lg" id="request">
                                 재능 판매</button></a>
+                    	</c:if>
                     </div>
 
                 </section>

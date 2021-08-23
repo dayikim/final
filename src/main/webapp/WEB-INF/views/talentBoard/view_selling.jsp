@@ -228,7 +228,7 @@ p {
 $(function() {
 	$("#search").keyup(function(e) {
 		if (e.keyCode == 13) {
-			location.href = "/AllBoardList/tlSellList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
+			location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
 		}
 	})
 	
@@ -474,10 +474,12 @@ $(function(){
 						<p class="target">${board.contents }</p>
 					</div>
 					<div class="btn_wrap">
-						<button type="button" class="btn btn-outline-info btn btn-lg"
-							id="chatting">
-							<i class="far fa-comment-dots"></i> 1:1 채팅
-						</button>
+						<c:if test="${loginID !=  board.writer}">
+							<button type="button" class="btn btn-outline-info btn btn-lg"
+								id="chatting">
+								<i class="far fa-comment-dots"></i> 1:1 채팅
+							</button>
+						</c:if>
 					</div>
 				</section>
 			</div>
