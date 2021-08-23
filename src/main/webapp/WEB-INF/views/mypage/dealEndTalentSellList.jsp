@@ -405,11 +405,11 @@ $(function () { // 게시물 검색
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle1" href="#"
 					id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="false"> <b>물품대여 ▼</b>
+					aria-haspopup="true" aria-expanded="false"> <b>물품 ▼</b>
 				</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" href="/my/dealEndProductSellList">판매
-							완료</a> <a class="dropdown-item" href="/my/dealEndProductBuyList">구매
+						<a class="dropdown-item" href="/my/dealEndProductSellList"> 대여
+							완료</a> <a class="dropdown-item" href="/my/dealEndProductBuyList">빌림
 							완료</a>
 					</div></li>
 			</ul>
@@ -420,7 +420,7 @@ $(function () { // 게시물 검색
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle2" href="#"
 					id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="false"> <b>재능등록 ▼</b>
+					aria-haspopup="true" aria-expanded="false"> <b>재능 ▼</b>
 				</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 						<a class="dropdown-item" href="/my/dealEndTalentSellList">판매
@@ -449,14 +449,14 @@ $(function () { // 게시물 검색
 			<div class="row complet">
 				<div class="col-12 col-md-4 col-sm-4 completImgDiv">
 					<div class="completImg">
-				<a href="/tBoard/sellingView?id=${i.seller}&seq=${i.seq}"><img src="..."></a>
+				<a href="/tBoard/sellingView?id=${i.buyer}&seq=${i.parentseq}"><img src="..."></a>
 
 					</div>
 				</div>
 <div class="col-12 col-md-8 col-sm-8 information">
 						<div>
 							<h4>
-								<a href="/tBoard/sellingView?id=${i.buyer}&seq=${i.seq}"> <b>${i.item}</b>
+								<a href="/tBoard/sellingView?id=${i.buyer}&seq=${i.parentseq}"> <b>${i.item}</b>
 								</a>
 							</h4>
 						</div>

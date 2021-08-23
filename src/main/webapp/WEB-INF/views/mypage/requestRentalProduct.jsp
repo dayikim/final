@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>돈 빼고 다! 돈-고</title>
+<title>물품 대여 거래 요청</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free Website Template" name="keywords">
@@ -318,11 +318,11 @@ img {
 	<!-- 네비바 -->
 	<div class="navi">
 		<div class="requestProduct">
-			<a href="/my/requestRentalProduct"> <b>대여 요청</b>
+			<a href="/my/requestRentalProduct"> <b>물품 대여 거래 요청</b>
 			</a>
 		</div>
 		<div class="requestTalent">
-			<a href="/my/requestRentalTalent"> <b>재능 요청</b>
+			<a href="/my/requestRentalTalent"> <b>재능 거래 요청</b>
 			</a>
 		</div>
 	</div>
