@@ -331,16 +331,10 @@ img {
 					<div class="col-8 information">
 						<div class="title">
 							<h4>
-								<b>자전거 대여가능합니다. 단 안망가뜨릴 자신 있으신분만</b>
+								<b>${i.title }</b>
 							</h4>
 						</div>
-						<div class="row content">
-							<div class="col-4 left">
-								<b>대여 일자</b>
-							</div>
-							<div class="col-8 right">2021-08-06 ~ 2021-09-27</div>
-						</div>
-						<div class="row content">
+    						<div class="row content">
 							<div class="col-4 left">
 								<b>결제금</b>
 							</div>

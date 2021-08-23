@@ -382,7 +382,6 @@ div {
 		<div>예약 내역 > 재능 예약</div>
 
 		<c:forEach var="i" items="${requestRental}" varStatus="vs">
-
 			<div class="requestList">
 				<div class="row high">
 					<div class="col-8 information">
@@ -394,6 +393,7 @@ div {
 						<div class="row content">
 							<div class="col-4 left">
 								<b>재능 판매자</b>
+
 							</div>
 							<div class="col-8 right">${i.writer}</div>
 						</div>

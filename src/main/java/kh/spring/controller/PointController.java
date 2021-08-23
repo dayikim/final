@@ -108,7 +108,7 @@ public class PointController {
 		String sessionID = (String) session.getAttribute("loginID");
 		PersonDTO pdto = MypageService.mypageList(id); // 작성자 정보 출력
 		ProfileFilesDTO pfdto = MypageService.profileSelect(id); // 작성자 프사 출력
-		session.setAttribute("myInfo", pdto); // 작성자 프사 출력
+		session.setAttribute("writerInfo", pdto); // 작성자 정보 출력
 		model.addAttribute("profile",pfdto); //작성자 프사 출력
 
 		LendDTO dto = LService.detailView(seq);//글 상세보기
@@ -151,7 +151,7 @@ public class PointController {
 		paydto.setPaymentable(paymentable);
 
 		//lend인지 selltalent인지 구분
-		System.out.println(parentseq +":" + sessionID +":" + category);
+		System.out.println(parentseq +":" + sessionID +":" + category + ":" + paymentable);
 		int isitLendBoard =LService.isitLend(parentseq,sessionID,category);	
 		if(isitLendBoard>0) {
 			System.out.println("대여하기");
