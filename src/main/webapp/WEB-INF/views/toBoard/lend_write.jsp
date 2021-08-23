@@ -115,30 +115,11 @@
 				}
 
 				/* 이미지 파일 미리보기 */
-				.filebox input[type="file"] {
-					position: absolute;
-					width: 1px;
-					height: 1px;
-					padding: 0;
-					margin: -1px;
-					overflow: hidden;
-					clip: rect(0, 0, 0, 0);
-					border: 0;
-				}
-
-				.filebox label {
-					display: inline-block;
-					padding: .5em .75em;
-					color: #999;
-					font-size: inherit;
-					line-height: normal;
-					vertical-align: middle;
-					background-color: #fdfdfd;
-					cursor: pointer;
-					border: 1px solid #ebebeb;
-					border-bottom-color: #e2e2e2;
-					border-radius: .25em;
-				}
+				#preview {list-style-type: none; margin: 20px 0 0 0; padding: 0;}
+			    #preview li {background-color: #fff; border: 1px solid #ccc; border-radius: 5px; float: left; margin: 20px 20px 0 0; width: 150px; height: 150px; line-height: 150px; position: relative;}
+			    #preview li img.img-thumb {width: 100%; height: 100%;}
+			    #preview .ui-selected {background: red;}
+			    #preview .delete-btn {width: 13px; border: 0; position: absolute; top: -7px; right: -13px;}
 
 				/* named upload */
 				.filebox .upload-name {
@@ -199,135 +180,145 @@
 					location.href = "/chat";
 				})
 			})
+			function filesUpload() {
+				console.log("fileupload");
+				$("#file").trigger('click');
+			}
+			
+			$(document).ready(function() {        
+		           
+	            var storedFiles = [];
+	            var file = [];
+	           
+	            // 번호를 붙이는 함수
+	            function cvf_reload_order() {
+	                //order가 번호가 된다
+	                //sortable("toArray", {attribute: 'item'}); 아이템속성읜 현재 순서를 배열로 가져온다
+	                var order = $('#preview').sortable('toArray', {attribute: 'item'});
+	                $('.custom-file-label').val(order);
+	            }
+	            //번호를 새로 생성하는 함수
+	            //preview li에 있는 아이템의 수 만큼 번호를 생성한다
+	            function cvf_add_order() {
+	                $('#preview li').each(function(n) {
+	                    $(this).attr('item', n);
+	                    console.log(n);
+	                });
+	                // console.log(storedFiles);
+	            }
+	           
+	               //파일선택을 누르면 실행된다.    
+	            $('body').on('change', '#file', function() {
+	               //이미지 파일을 다 불러온다
+	                var files = this.files;
+	                var i = 0;
+	                //불러온 파일 만큼 돌린다         
+	                for (i = 0; i < files.length; i++) {
+	                    var readImg = new FileReader();
+	                    file = files[i];
+	                    if (file.type.match('image.*')){
+	                        //위에서 선언해준 storedFiles 배열에 이미지를 넣는다
+	                        storedFiles.push(file);
+	                        console.log(storedFiles.length);
+	                        //onload는 문서가 전부 준비된 상황 이후에 발동하도록하는데
+	                        //여기서 readImg = FileReader(); 이기 때문에 파일을 다 읽어오면 이미지를 어팬드시키도록한다
+	                        readImg.onload = (function(file) {
+	                            return function(e) {
+	                                $('#preview').append(
+	                                "<li file = '" + file.name + "'>" +                                
+	                                    "<img class = 'img-thumb' src = '" + e.target.result + "' />" +
+	                                    "<a href = '#' class = 'cvf_delete_image' title = 'Cancel'><img class = 'delete-btn' src = '/imgs/delete-btn.png' /></a>" +
+	                                "</li>"
+	                                );     
+	                            };
+	                        })(file);
+	                        //이미지파일을 URL로 읽어온다
+	                        readImg.readAsDataURL(file);
+	                       
+	                    } else {
+	                        alert('the file '+ file.name + ' is not an image<br/>');
+	                        $("#fileName").val("");
+	                        return;
+	                    }
+	                   //파일을 추가할때마다 실행해주는 테스트코드
+	                   //1000미리세컨드로 준상태면 파일이 올라오자마자 이미지를 움직일경우 번호가 늘어나서 업로드할때 배열이 섞여버린다
+	                    if(files.length === (i+1)){
+	                        console.log("파일이 늘어남");
+	                        setTimeout(function(){
+	                            cvf_add_order();
+	                        }, 100);
+	                    }
+	                }
+	          	});
+	           
+	            // 이미지를 지우는 함수
+	            $('body').on('click','a.cvf_delete_image',function(e){
+	                e.preventDefault();
+	                $(this).parent().remove('');       
+	               
+	                var file = $(this).parent().attr('file');
+	                for(var i = 0; i < storedFiles.length; i++) {
+	                    if(storedFiles[i].name == file) {
+	                        storedFiles.splice(i, 1);
+	                        break;
+	                    }
+	                }
+	                $("#fileName").val("");
+	                cvf_add_order();
+	             });
+								
+				let title = $("#title_input");
+				let contents = $("#contents");
+				let category = $("#category");
+				let price = $("#price");
+				
+			
 
-				//이미지 담을 배열
-				let preview_files = [];
+				$("#submitBtn").on("click", function () { //글 작성 전 제목 내용 입력여부 확인
+					let priceReg = /^[0-9]/g;
+					let resultprice = priceReg.test(price.val());
 
-				$(function () {
-					$("#file").on("change", preview)
+					if (title.val() == "") {
+						alert("요청할 물품명을 입력해주세요.");
+						title.focus();
+						return false;
 
-					$("#file").change(function() { 
-						$("#fileName").val(this.files && this.files.length ? this.files[0].name : this.value.replace(/^C:\\fakepath\\/i, '')); })
+					} else if (category.val() == "0") {
+						alert("카테고리를 선택해주세요.");
+						category.focus();
+						return false;
 
+					} else if (price.val() == "") {
+						alert("요청 가격을 입력해주세요.");
+						price.focus();
+						return false;
 
-					let fileTarget = $('.upload-hidden');
-					fileTarget.on('change', function () { // 값이 변경되면
-						if (window.FileReader) { // modern browser
-							var filename = this.files[0].name;
-						}
-						else { // old IE 
-							var filename = this.val().split('/').pop().split('\\').pop(); // 파일명만 추출 
-						}
-						// 추출한 파일명 삽입 
-						$(this).siblings("fileName").val(filename);
-					});
+					} else if (contents.val() == "") {
+						alert("세부내용을 입력해주세요.");
+						contents.focus();
+						return false;
 
-
-
-					$("#submitBtn").on("click", function () { //글 작성 전 제목 내용 입력여부 확인
-
-						let title = $("#title_input");
-						let contents = $("#contents");
-						let category = $("#category");
-						let price = $("#price");
-
-						let priceReg = /^[0-9]/g;
-						let resultprice = priceReg.test(price.val());
-
-						if (title.val() == "") {
-							alert("대여할 물품명을 입력해주세요.");
-							title.focus();
-							return false;
-
-						} else if (category.val() == "0") {
-							alert("카테고리를 선택해주세요.");
-							category.focus();
-							return false;
-
-						} else if (price.val() == "") {
-							alert("판매 가격을 입력해주세요.");
-							price.focus();
-							return false;
-
-						} else if (contents.val() == "") {
-							alert("세부내용을 입력해주세요.");
-							contents.focus();
-							return false;
-
-						} else if (resultprice) {
-							if (price.val() < 100) {
-								alert("최소 가격은 100 상추입니다. 가격을 다시 입력해주세요.");
-								price.val("");
-								price.focus();
-								return false;
-							} else {
-								$("#writeform").submit();
-
-							}
-						} else {
-							alert("숫자만 입력해주세요.")
+					} else if (resultprice) {
+						if (price.val() < 100) {
+							alert("최소 가격은 100 상추입니다. 가격을 다시 입력해주세요.");
 							price.val("");
 							price.focus();
 							return false;
-							console.log(resultprice)
-						}
-
-					});
-
-
-				})
-				function filesUpload() {
-					console.log("fileupload");
-					$("#file").trigger('click');
-				}
-
-				function preview(e) {
-
-					//이미지 정보들 초기화
-					preview_files = [];
-					$("#file").empty();
-
-					let files = e.target.files;
-					let filesArr = Array.prototype.slice.call(files);
-
-					let index = 0;
-					filesArr.forEach(function (f) {
-						if (!f.type.match("image.*")) {
-							$("#fileName").val("");
-							$("#file").val("");
-							alert("확장자는 이미지 확장자만 가능합니다.");
-							return;
-							
-						}
-						preview_files.push(f);
-
-						let reader = new FileReader();
-						reader.onload = function (e) {
-							let html = "<a href=\"javascript:void(0);\" onclick=\"deleteImage("
-								+ index
-								+ ")\" id=\"img_id_"
-								+ index
-								+ "\"><img src=\"" + e.target.result + "\" data-file='" + f.name + "' class='selProductFile' title='Click to remove'></a>";
-
-							$("#preview").append(html);
-							index++;
-							//  let img_html = "<img src=\"" +e.target.result + "\" />";
-							//  $("#preview").append(img_html);
+						} else {
+							$("#writeform").submit();
 
 						}
-						reader.readAsDataURL(f);
-					});
-				}
+					} else {
+						alert("숫자만 입력해주세요.")
+						price.val("");
+						price.focus();
+						return false;
+						console.log(resultprice)
+					}
 
-				function deleteImage(index) {
-					console.log("index : " + index);
-					preview_files.splice(index, 1);
-					let img_id = "#img_id_" + index;
-					$(img_id).remove();
-					$("#fileName").val("");
-					$("#file").val("");
-					console.log(preview_files);
-				}
+				});
+		
+			})
 
 			</script>
 		</head>
@@ -453,8 +444,8 @@
 								
 									<div class="custom-file">
 										<input type="file" name="file" class="upload-hidden" id="file"  onchange="javascript:document.getElementById('fileName').value = this.value"  multiple>
-										<input type=text class="custom-file-label"  id="fileName" name="filename" style="width: 980px;">
-																		</div>
+										<input type=text class="custom-file-label"  id="fileName" name="filename" style="width: 100%;">
+									</div>
 									<div class="input-group-append">
 										<button class="btn btn-outline-secondary" type="button" onclick="filesUpload();"class="uploadBtn">업로드</button>
 									</div>

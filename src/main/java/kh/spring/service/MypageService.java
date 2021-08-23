@@ -34,6 +34,7 @@ import kh.spring.dto.PointAccountDTO;
 import kh.spring.dto.PointDTO;
 import kh.spring.dto.ProfileFilesDTO;
 import kh.spring.dto.RequestTalentDTO;
+import kh.spring.dto.ReviewDTO;
 import kh.spring.dto.SellTalentDTO;
 
 @Service
@@ -220,7 +221,7 @@ public class MypageService {
 	public List<HashMap<Object, Object>> dealEndProductBuyList(String id, String product) {
 		Map<Object, Object> param = new HashMap<>();
 		param.put("id", id);
-		param.put("talent", product);
+		param.put("product", product);
 		return dao.dealEndProductBuyList(param);
 	}
 
@@ -234,16 +235,10 @@ public class MypageService {
 	public List<HashMap<Object, Object>> dealEndTalentSellList(String id, String talent) {
 		Map<Object, Object> param = new HashMap<>();
 		param.put("id", id);
-		param.put("product", talent);
+		param.put("talent", talent);
 		return dao.dealEndTalentSellList(param);
 	}
 
-	
-	
-	//거래완료 후, 판매자 정보 출력!!
-	public List<HashMap<Object, Object>> sellerInfo(String id) {
-		return dao.sellerInfo(id);
-	}
 	
 	
 

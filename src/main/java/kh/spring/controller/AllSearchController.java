@@ -28,10 +28,11 @@ public class AllSearchController {
 		List<String> ldPageNavi = service.getLdPageNavi(choice, search,cpage);
 		List<LendDTO> ldlist = service.getLdList(choice, search,cpage); //대여하기 리스트 
 		
-//		List<LendFilesDTO> flist = service.getFiles(ldlist);
-				
+		List<LendFilesDTO> flist = service.getFiles();
+		System.out.println(flist.get(0).getParentSeq());
+		
 		model.addAttribute("list", ldlist); //대여하기 리스트 
-//		model.addAttribute("flist",flist);
+		model.addAttribute("flist",flist);
 		model.addAttribute("navi", ldPageNavi); //대여하기 카운트
 		model.addAttribute("search", search); //검색어
 		model.addAttribute("choice",choice);

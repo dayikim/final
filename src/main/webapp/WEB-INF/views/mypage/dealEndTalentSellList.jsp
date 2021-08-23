@@ -6,7 +6,7 @@
 
 <head>
 <meta charset="utf-8">
-<title>돈 빼고 다! 돈-고</title>
+<title>재능 판매 완료 리스트</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free Website Template" name="keywords">
 <meta content="Free Website Template" name="description">
@@ -235,33 +235,76 @@ form {
 }
 </style>
 <script>
-        $(function () {
-        	// 게시물 검색
-    		$("#search").keyup(function(e) {
-    			if (e.keyCode == 13) {
-    				location.href = "/AllBoardList/lendList?category=AllCategory&search="+$("#search").val()+"&cpage=1";
-    			}
-    		})
-    		
-    		// 채팅
-    		$("#chat").on("click",function(){
-    			location.href = "/chat";
-    		})
-    		
-    		// 후기
-    		let messagecheck = $("#message");
-        	 $(".send").on("click", function () {
-                 
-                 if (messagecheck.val() == "") {
-                     alert("메세지를 입력해주세요.");
-                     message.focus();
-                     return false;
-                 }
-                 $("#reviewForm").submit();
-
-             })
-
-        });
+$(function () { // 게시물 검색
+    $("#search")
+        .keyup(function (e) {
+            if (e.keyCode == 13) {
+                location.href = "/AllBoardList/lendList?category=AllCategory&search=" + $("#search").val() + "&cpage=1";
+            }
+        })
+        // 채팅
+        $("#chat")
+        .on("click", function () {
+            location.href = "/chat";
+        })
+        // person
+        // 후기
+        $(".send")
+        .on("click", function () {
+            let message = $("#message-text");
+            if (message.val() == "") {
+                alert("메세지를 입력해주세요.");
+                message.focus();
+                return false;
+            } else {
+                let check = confirm("거래 후기를 보내시겠습니까?");
+                let recipient = $("#recipient").val();
+                let reviewer = $("#reviewer").val();
+                let boardtype = $("#boardtype").val();
+                let reviewable = $("#reviewable").val();
+                let contents = $(".contents").val();
+                let parentseq = $("#parentseq").val();
+                if (check) {
+                    $.ajax({
+                        url: "/profile/checkReview",
+                        data: {
+                            parentseq: parentseq
+                        }
+                    }).done(function (resp) {
+                        console.log(resp);
+                        if (resp == 0) {
+                            $.ajax({
+                                url: "/profile/review",
+                                data: {
+                                    recipient: recipient,
+                                    parentseq: parentseq,
+                                    reviewer: reviewer,
+                                    reviewable: reviewable,
+                                    contents: contents,
+                                    boardtype: boardtype
+                                }
+                            }).done(function (resp) {
+                                console.log(resp);
+                                if (resp == 1) {
+                                    alert("거래 후기 작성 완료!! \n마이페이지에서 거래완료 내역을 확인하세요.")
+                                    location.href = "${pageContext.request.contextPath}/my/mypageProc"
+                                } else {
+                                    alert("작성 실패!!")
+                                }
+                            })
+                        } else {
+                            alert("이미 후기를 작성하였습니다.\n마이페이지에서 거래완료 내역을 확인하세요.")
+                            location.href = "${pageContext.request.contextPath}/my/mypageProc"
+                            return;
+                        }
+                    })
+                } else {
+                    alert("거래 후기 작성 취소!")
+                    return;
+                }
+            }
+        })
+});
     </script>
 
 
@@ -395,89 +438,120 @@ form {
 	<div class="container2">
 
 		<div class="margin">
-			<div>재능 등록 > 판매 완료</div>
+			<div>재능 > 판매 완료</div>
 		</div>
 
 		<!---------forEach 사용 구간------------------------------------------------------------------------------>
 
 		<!-- 판매 완료 출력 -->
+		<c:forEach var="i" items="${talentsellList}" varStatus="vs">
 		<div class="completDiv">
 			<div class="row complet">
 				<div class="col-12 col-md-4 col-sm-4 completImgDiv">
 					<div class="completImg">
-						<img src="...">
-					</div>
-				</div>
-				<div class="col-12 col-md-8 col-sm-8 information">
-					<div>
-						<h4>
-							<b>혼자 공부하는 자바</b>
-						</h4>
-					</div>
-					<div>shoowghjk ㅣ 서울특별시 동대문구</div>
-					<div class="row foot">
-						<div class="col-3 completBg">
-							<h6>거래완료</h6>
-						</div>
-						<div class="col-9 price">
-							<h5>10000원</h5>
-						</div>
-					</div>
+				<a href="/tBoard/sellingView?id=${i.seller}&seq=${i.seq}"><img src="..."></a>
 
+					</div>
 				</div>
-			</div>
-			<hr>
+<div class="col-12 col-md-8 col-sm-8 information">
+						<div>
+							<h4>
+								<a href="/tBoard/sellingView?id=${i.buyer}&seq=${i.seq}"> <b>${i.item}</b>
+								</a>
+							</h4>
+						</div>
+						<div>재능 구매자: ${i.name}ㅣ${i.address1}</div>
+						<div>거래 완료 일시: ${i.paymentdate}</div>
+						<div class="row foot">
+							<div class="col-3 completBg">
+								<h6>거래완료</h6>
+							</div>
+							<div class="col-9 price">
+								<h5>${i.price}상추</h5>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr>
 
 			 <!-- 거래 후기 링크 걸기 -->
-                    <div class="review">
-
-                        <a href="" data-toggle="modal" data-target="#exampleModal" id="other">거래후기 보내기</a>
-
-                        <div class="modal fade modal_box" id="exampleModal" tabindex="-1"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">거래후기 보내기</h5>
-                                        
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <form action="/profile/review" id="reviewForm">
-                                           
-                                                <div class="mb-3 review_form">
-                                                    <label  class="col-form-label review_title">거래
-                                                        경험이 좋으셨나요?</label>
-                                                    <label  class="col-form-label review_text">00님에게
-                                                        감사인사 남겨보세요.</label>
-                                                    <img src="/imgs/letter.png">
-
-
-                                                </div>
-                                                <hr>
-                                                <div class="mb-3">
-										<form action="/profile/review?seq=${seq}" id="reviewForm">
-											<textarea class="form-control" name="contents"
-												id="message" placeholder="거래 후기 남겨주세요"></textarea>
-									</div>
-
+             			<div class="review">
+					<c:choose>
+						<c:when test="${i.reviewable =='y'}">
+							<a href="" data-toggle="modal" data-target="#sendModal${vs.index}"
+								id="openReview">작성한 후기 보기</a>
+						</c:when>
+						<c:otherwise>
+							<a href="" data-toggle="modal" data-target="#writeModal${vs.index}"
+								id="other">거래 후기 보내기</a>
+						</c:otherwise>
+					</c:choose>
+					<div class="modal fade modal_box" id="writeModal${vs.index}" tabindex="-1"
+						aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">거래후기 보내기</h5>
 								</div>
-								<input type="hidden" name="recipient" value="${seller}"> <input
-									type="hidden" name="reviewable" value="y">
-								<button type="button" class="btn btn-dark modalBtn"
-									data-dismiss="modal">취소</button>
-								<button type="button"
-									class="btn btn-outline-warning modalBtn send">보내기</button>
-								</form>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+								<div class="modal-body">
+									<div class="form-group">
+										<div class="mb-3 review_form">
+											<label class="col-form-label review_title">거래 경험이
+												좋으셨나요?</label> <label class="col-form-label review_text">${i.seller}님에게
+												감사인사 남겨보세요.</label> <img src="/imgs/letter.png">
+										</div>
+										<hr>
+										<div class="mb-3">
+											<textarea class="form-control contents" name="contents"
+												id="message-text" placeholder="거래 후기 남겨주세요"></textarea>
+										</div>
+									</div>
+									<input type="hidden" name="reviewer" value="${loginID}"
+										id="reviewer"> <input type="hidden" name="recipient"
+										value="${i.buyer}" id="recipient"> <input
+										type="hidden" name="boardtype" value="${i.boardtype}"
+										id="boardtype"> <input type="hidden" name="seq"
+										value="${i.parentseq}" id="parentseq"> <input
+										type="hidden" name="reviewable" value="y" id="reviewable">
+									<button type="button" class="btn btn-dark modalBtn"
+										data-dismiss="modal">취소</button>
+									<button type="button"
+										class="btn btn-outline-warning modalBtn send">보내기</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal fade modal_box" id="sendModal${vs.index}" tabindex="-1"
+						aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">내가 보낸 거래후기
+										보기</h5>
+								</div>
+								<div class="modal-body">
+									<div class="form-group">
+										<div class="mb-3 review_form">
+											<label class="col-form-label review_title">${i.name}님에게
+												감사인사를 남겼습니다.</label> <label class="col-form-label review_text"></label>
+											<img src="/imgs/letter.png">
+										</div>
+										<hr>
+										<div class="mb-3">
+											<input class="form-control contents" value="${i.contents}"
+												readonly="readonly"></input>
+										</div>
+									</div>
+									<button type="button" class="btn btn-dark modalBtn"
+										data-dismiss="modal">닫기</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</c:forEach>
+	</div>
 
 
 	<footer>

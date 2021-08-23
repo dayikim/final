@@ -55,9 +55,9 @@ public class AllSearchService {
 	}
 	
 	//대여하기 파일리스트
-//	public List<LendFilesDTO> getFiles(List<LendDTO> ldlist){
-//		return ldfdao.getFiles(ldlist);
-//	}
+	public List<LendFilesDTO> getFiles(){
+		return ldfdao.getFiles();
+	}
 	
 	//대여요청 리스트 네비
 	public List<String> getBwPageNavi(String choice, String search, String cpage) {

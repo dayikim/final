@@ -51,4 +51,8 @@ public class ChatRoomDao {
 		return mybatis.selectList("Chat.FriendList",id);
 	}
 	
+	public int dupleCheckRoom(Map<String,String> temp) {	
+		return mybatis.selectOne("Chat.dupleCheckRoom",temp);
+	}
+	
 }

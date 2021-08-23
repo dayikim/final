@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import kh.spring.config.BoardConfig;
+import kh.spring.dto.TBoardFilesDTO;
 import kh.spring.dto.TalentBoardDTO;
 
 @Component
@@ -38,6 +39,7 @@ public class TalentBoardDAO {
 	public int booking(Map<String, Object> param) {
 		return mybatis.delete("TBoard.booking",param);
 	}
+
 	
 		
 	

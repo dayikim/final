@@ -45,12 +45,14 @@ public class LendController {
 	//대여하기 글쓰기 데이터 받기
 	@RequestMapping(value="lendWrite",produces="text/html;charset=utf8")
 	public String sellingWrite(LendDTO dto,LendFilesDTO fdto, MultipartFile[] file) throws Exception {
+		
 		int seq =service.getSeq();
 		String sessionID = (String) session.getAttribute("loginID");
 		String realPath = session.getServletContext().getRealPath("resources/imgs/lend");
 		dto.setSeq(seq);
+		int parent = dto.getSeq();
 		dto.setWriter(sessionID);
-		service.lendWrite(dto,realPath,fdto,file);
+		service.lendWrite(dto,realPath,file,parent);
 		return "redirect:/AllBoardList/lendList?choice=Allchoice&search=&cpage=1";
 	}
 	
@@ -70,9 +72,9 @@ public class LendController {
         model.addAttribute("writerInfo",writerInfo);//작성자정보
         model.addAttribute("board",dto);//글내용		 
 		 
-		List<LendFilesDTO> fileList = service.selectAll(seq); //첨부파일 목록 출력   
+		List<LendFilesDTO> flist = service.selectAll(seq); //첨부파일 목록 출력   
 		//        System.out.println("파일이 비어 있나요?? "+fileList.isEmpty());//파일이 있나요?
-		model.addAttribute("filelist", fileList);//파일리스트를 request애 담는다.
+		model.addAttribute("flist", flist);//파일리스트를 request애 담는다.
 		
 		
 		return "/toBoard/lend_view";
@@ -99,9 +101,11 @@ public class LendController {
 	@RequestMapping(value="ldModify",produces="text/html;charset=utf8")
 	public String ldModify(LendDTO dto,LendFilesDTO fdto,String[] delSeq,MultipartFile[] file) throws Exception {
 			
-		String realPath = session.getServletContext().getRealPath("resources/imgs/borrow");
+		String realPath = session.getServletContext().getRealPath("resources/imgs/lend");
+		
+		int parent = dto.getSeq();
 			
-		service.boardModify(dto,realPath,fdto,delSeq,file);
+		service.boardModify(dto,realPath,delSeq,file,parent);
 
 		return "redirect:/AllBoardList/lendList?choice=Allchoice&search=&cpage=1";
 	}

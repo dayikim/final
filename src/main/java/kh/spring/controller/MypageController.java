@@ -17,11 +17,11 @@ import kh.spring.config.SHA256;
 import kh.spring.dao.ProfileFilesDAO;
 import kh.spring.dto.BorrowDTO;
 import kh.spring.dto.LendDTO;
-import kh.spring.dto.PaymentDTO;
 import kh.spring.dto.PersonDTO;
 import kh.spring.dto.PointAccountDTO;
 import kh.spring.dto.ProfileFilesDTO;
 import kh.spring.dto.RequestTalentDTO;
+import kh.spring.dto.ReviewDTO;
 import kh.spring.dto.SellTalentDTO;
 import kh.spring.dto.SnsDTO;
 import kh.spring.dto.SnsFilesDTO;
@@ -254,10 +254,13 @@ public class MypageController {
 		String product="물품";
 		List<HashMap<Object, Object>> dealEndProductBuyList =service.dealEndProductBuyList(id,product);
 		model.addAttribute("productBuyList",dealEndProductBuyList);
+			
 		return "/mypage/dealEndProductBuyList";
 	}
+	
+	
 
-	// 거래 완료 목록 출력 - 재능 판매완료(미완)
+	// 거래 완료 목록 출력 - 재능 판매완료
 	@RequestMapping(value="/dealEndTalentSellList", produces="text/html;charset=utf8")
 	public String dealEndTalentSellList(Model model) {
 		String id = (String)session.getAttribute("loginID");
@@ -274,11 +277,6 @@ public class MypageController {
 		String talent="재능";
 		List<HashMap<Object, Object>> dealEndTalentBuyList =service.dealEndTalentBuyList(id,talent);
 		model.addAttribute("talentbuyList",dealEndTalentBuyList);
-		
-//		int checkReview =RService.checkReview(parentseq);
-//		if(checkReview>0){
-//			System.out.println("이미 작성되어 있음!");
-//		}
 		return "/mypage/dealEndTalentBuyList";
 	}
 
