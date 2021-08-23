@@ -21,14 +21,24 @@ public class BookingDAO {
    
    //////////////////////////////////////////////////////////////////////////// 거래 요청 목록 (판매자 입장)
    
+   // 거래 요청 목록 - 물품(판매자)
+   public List<HashMap<String,Object>> requestRentalProduct(Map<String, String> param) {
+		return mybatis.selectList("Booking.requestRentalProduct", param);
+	}
+   
+   // 거래 요청 취소 - 물품(판매자)
+   public int dealFailProduct(HashMap<String, Object> param) {
+      return mybatis.delete("Booking.dealFailProduct", param);
+   }
+   
    // 거래 요청 목록 - 재능(판매자)
    public List<HashMap<String,Object>> requestRentalTalent(Map<String, String> param) {
       return mybatis.selectList("Booking.requestRentalTalent", param);
    }
    
    // 거래 요청 취소 - 재능(판매자)
-   public int dealFail(HashMap<String, Object> param) {
-      return mybatis.delete("Booking.dealFail", param);
+   public int dealFailTalent(HashMap<String, Object> param) {
+      return mybatis.delete("Booking.dealFailTalent", param);
    }
    
    

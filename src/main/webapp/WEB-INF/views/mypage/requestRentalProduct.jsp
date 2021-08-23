@@ -234,8 +234,8 @@ img {
 			if (result) {
 				let button = $(this);
 				$.ajax({
-					url:"/my/dealFail",
-					data:{parent:$($(this).parent().siblings().children().siblings().children("#parent")).val()}
+					url:"/my/dealFailProduct",
+					data:{parent:$($(this).parent().siblings().children().children("#parent")).val()}
 				}).done(function(resp){
 					if(resp=="1"){
 						alert("취소하였습니다.")
@@ -379,7 +379,7 @@ img {
 	<!-- 네비바 -->
 	<div class="navi">
 		<div class="requestProduct">
-			<a href="/my/requestRentalProduct"> <b>물품 대여 거래 요청</b>
+			<a href="/my/requestRentalProduct"> <b>물품 대여 요청</b>
 			</a>
 		</div>
 		<div class="requestTalent">
