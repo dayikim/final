@@ -71,10 +71,10 @@ public class ProfileController {
 		int result = RService.reviewCount(id);
 		model.addAttribute("reviewCount",result);//리뷰 갯수
 
-		int result1 = PService.sellingCount1(id);
+//		int result1 = PService.sellingCount1(id);
 		int result2 = PService.sellingCount2(id);
-		int sellingCount= result1+result2;
-		model.addAttribute("sellingCount",sellingCount);//판매목록 갯수
+//		int sellingCount= result1+result2;
+		model.addAttribute("sellingCount",result2);//판매목록 갯수
 
 		List<HashMap<String, String>> sellingList;
 		sellingList =PService.sellingList(id);//판매목록 리스트
@@ -97,10 +97,10 @@ public class ProfileController {
 		int result = RService.reviewCount(id);
 		model.addAttribute("reviewCount",result);//리뷰 갯수
 
-		int result1 = PService.sellingCount1(id);
+//		int result1 = PService.sellingCount1(id);
 		int result2 = PService.sellingCount2(id);
-		int sellingCount= result1+result2;
-		model.addAttribute("sellingCount",sellingCount);//판매목록 갯수
+//		int sellingCount= result1+result2;
+		model.addAttribute("sellingCount",result2);//판매목록 갯수
 
 		List<HashMap<String, String>> sellingList;
 		sellingList =PService.sellingList(id);//판매목록 리스트
@@ -122,10 +122,10 @@ public class ProfileController {
 		int result = RService.reviewCount(id);
 		model.addAttribute("reviewCount",result);//리뷰 갯수
 
-		int result1 = PService.sellingCount1(id);
+//		int result1 = PService.sellingCount1(id);
 		int result2 = PService.sellingCount2(id);
-		int sellingCount= result1+result2;
-		model.addAttribute("sellingCount",sellingCount);//판매목록 갯수
+//		int sellingCount= result1+result2;
+		model.addAttribute("sellingCount",result2);//판매목록 갯수
 
 		List<HashMap<String,String>> sellingList;
 		sellingList =PService.sellingList(id);//판매목록 리스트
@@ -144,10 +144,10 @@ public class ProfileController {
 
 		model.addAttribute("writer",id);
 
-		int result1 = PService.sellingCount1(id);
+//		int result1 = PService.sellingCount1(id);
 		int result2 = PService.sellingCount2(id);
-		int sellingCount= result1+result2;
-		model.addAttribute("sellingCount",sellingCount);//판매목록 갯수
+//		int sellingCount= result1+result2;
+		model.addAttribute("sellingCount",result2);//판매목록 갯수
 
 		int result = RService.reviewCount(id);
 		model.addAttribute("reviewCount",result);//리뷰 갯수
@@ -348,10 +348,10 @@ public class ProfileController {
 		//   PersonDTO pd = RService.memberInfoById(reviewer);//리뷰어 정보(이름,주소)
 		//    model.addAttribute("reviewer",pd);
 
-		int result1 = PService.sellingCount1(id);
+//		int result1 = PService.sellingCount1(id);
 		int result2 = PService.sellingCount2(id);
-		int sellingCount= result1+result2;
-		model.addAttribute("sellingCount",sellingCount);//판매목록 갯수
+//		int sellingCount= result1+result2;
+		model.addAttribute("sellingCount",result2);//판매목록 갯수
 
 		int result = RService.reviewCount(id);
 		model.addAttribute("reviewCount",result);//리뷰 갯수
@@ -384,10 +384,10 @@ public class ProfileController {
 		session.setAttribute("UserInfo", pdto); // 유저 정보
 		model.addAttribute("profile",pfdto); //프로필		
 
-		int result1 = PService.sellingCount1(id);
+//		int result1 = PService.sellingCount1(id);
 		int result2 = PService.sellingCount2(id);
-		int sellingCount= result1+result2;
-		model.addAttribute("sellingCount",sellingCount);//판매목록 갯수
+//		int sellingCount= result1+result2;
+		model.addAttribute("sellingCount",result2);//판매목록 갯수
 
 		int result = RService.reviewCount(id);
 		model.addAttribute("reviewCount",result);//리뷰 갯수

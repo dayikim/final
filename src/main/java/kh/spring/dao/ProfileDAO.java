@@ -24,9 +24,9 @@ public class ProfileDAO {
 		return mybatis.selectList("Profile.getSellingList",param);
 	}
 
-	public int sellingCount1(String id) { //판매갯수1
-		return mybatis.selectOne("Profile.sellingCount1",id);
-	}
+//	public int sellingCount1(String id) { //판매갯수1
+//		return mybatis.selectOne("Profile.sellingCount1",id);
+//	}
 	public int sellingCount2(String id) { //판매갯수2
 		return mybatis.selectOne("Profile.sellingCount2",id);
 	}

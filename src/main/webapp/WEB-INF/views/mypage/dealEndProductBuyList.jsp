@@ -405,29 +405,6 @@ form {
 
 		</div>
 	</div>
-	<!-- Nav Bar End -->
-
-	<!-- 네비바 -->
-	<!-- <div class="navi">
-		<div class="navi1">
-			<ul class="navbar-nav">
-				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle1" href="/my/dealEndProductSellList"
-					id="navbarDropdownMenuLink" role="button" aria-haspopup="true"
-					aria-expanded="false"> <b>물품대여</b>
-				</a></li>
-			</ul>
-		</div>
-		<div class="navi2">
-			<ul class="navbar-nav">
-				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle2" href="/my/dealEndProductBuyList"
-					id="navbarDropdownMenuLink" role="button" aria-haspopup="true"
-					aria-expanded="false"> <b>물품빌림</b>
-				</a></li>
-			</ul>
-		</div>
-	</div> -->
 	
 		<!-- 네비바 -->
 	<div class="navi">
