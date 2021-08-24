@@ -469,7 +469,7 @@
 						</h2>
 				</div>
 				<!-- slide -->
-					<div class="w3-content w3-display-container slcon" >
+					<div class="w3-content w3-display-container slcon" id="slcon">
 						<c:choose>
 							<c:when test="${flist != null}">
 								<c:forEach var="f" items="${flist}">

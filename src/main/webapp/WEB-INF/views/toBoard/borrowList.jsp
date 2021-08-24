@@ -39,7 +39,7 @@
 			*{box-sizing: border-box;}
    			div{display: block;}
     		.minicontainer{margin: auto; overflow: hidden;text-align: center; padding: 150px 80px; max-width:1100px}
-    		.miniboard{text-align: center; overflow: hidden; border:1px solid #1d2434; border-radius:20px}
+    		.miniboard{text-align: center; overflow: hidden; border:1px solid rgb(158, 157, 157); border-radius:20px}
     		.minibody{text-align: center;padding:30px 8px; overflow: hidden;}
     		    
     		.dropbtn {background-color: #1d2434; color: white;padding: 10px; font-size: 13px; border: none; cursor: pointer;border-radius: 3px;}
@@ -52,11 +52,11 @@
     		.inp_slct select{height:100%;}
     		.browseBtn{width:60px;background-color:#1d2434;color:white;}
     		.reservation{overflow: hidden; font-size: 0.5rem; position: absolute;  transform: translate( 5%, -10%);}
-    		.to-board{width: 25%;overflow: hidden; display:inline-block; margin-right:30px; margin-bottom: 56px;}
-    		.to-board img{width: 100%; height: 70%; border-radius: 20px;} 
+    		.to-board{min-width:220px; width: 25%;overflow: hidden; display:inline-block; margin-right:30px; margin-bottom: 56px;border: 1px solid rgba(0,0,0,.125);border-radius: 20px;}
+    		.to-board img{width: 100%; height: 180px; border-radius: 20px;} 
     		.minibody a{color: black; cursor: pointer; text-decoration: none;}
     		.minibody a:hover{color: black; text-decoration: none;}
-    		.minibody p{font-size: 18px; margin:0px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;}
+    		.minibody p{font-size: 18px; margin:0px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; padding: 0 5px 0 5px;}
     		.title{font-weight:600;}
     		
     		.board_page {margin-bottom:10px}
@@ -192,12 +192,12 @@
             <div class="dropdown">
                 <button class="dropbtn borrowBtn" id="borrowBtn">대여요청</button>
             </div>
-            <div class="dropdown">
-                <button class="dropbtn tlSellBtn" id="tlSellBtn">재능판매</button>
-            </div>
-            <div class="dropdown">
-                <button class="dropbtn tlRequestBtn" id="tlRequestBtn">재능요청</button>
-            </div>
+<!--             <div class="dropdown"> -->
+<!--                 <button class="dropbtn tlSellBtn" id="tlSellBtn">재능판매</button> -->
+<!--             </div> -->
+<!--             <div class="dropdown"> -->
+<!--                 <button class="dropbtn tlRequestBtn" id="tlRequestBtn">재능요청</button> -->
+<!--             </div> -->
 		</div>
 		
 		<!-- 검색 -->

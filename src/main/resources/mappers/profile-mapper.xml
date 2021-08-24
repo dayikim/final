@@ -12,6 +12,7 @@
 	<result column="contents" property="contents"/> 
 	<result column="price" property="price"/> 
 	<result column="address" property="address"/>
+	<result column="sysName" property="sysName"/>
 </resultMap>
 
 <resultMap type="HashMap" id="sellingView">
@@ -25,11 +26,14 @@
 </resultMap>
 	
 <select id="sellinglist" resultMap="selling" resultType="HashMap">
-select * from lendboard where writer =#{writer} union all select * from selltalent where writer =#{writer}
+select lb.*, lf.SYSNAME from lendboard lb left join (
+select SYSNAME, PARENTSEQ, REGDATE from (
+select ROW_NUMBER() over (PARTITION BY lendfiles.PARENTSEQ order by lendfiles.REGDATE asc ) AS RNUM, lendfiles.* from lendfiles ) TB
+where RNUM=1 ) lf on lb.SEQ=lf.PARENTSEQ  where writer =#{writer}
 </select>
 
 <select id="sellingView" resultMap="sellingView" resultType="HashMap">
-select * from lendboard where writer =#{writer} and seq=#{seq} and #{category} union all select * from selltalent where writer =#{writer} and seq=#{seq}
+select * from lendboard where writer =#{writer} and seq=#{seq} and #{category}
 </select>
 
 <select id="sellingCount1" resultType="int">
