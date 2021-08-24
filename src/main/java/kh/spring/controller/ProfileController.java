@@ -358,9 +358,9 @@ public class ProfileController {
 
 
 		//작은 프로필 출력!
-		List<HashMap<Object, Object>> sysName; 
-		sysName = RService.sysName(id); // 리뷰어 프사 출력
-		model.addAttribute("sysName",sysName);
+//		List<HashMap<Object, Object>> sysName; 
+//		sysName = RService.sysName(id); // 리뷰어 프사 출력
+//		model.addAttribute("sysName",sysName);
 
 		List<HashMap<Object, Object>> reviewList;//리뷰 리스트
 		reviewList= RService.reviewList(id);
@@ -393,9 +393,9 @@ public class ProfileController {
 		model.addAttribute("reviewCount",result);//리뷰 갯수
 
 		//작은 프로필 출력!
-		List<HashMap<Object, Object>> sysName; 
-		sysName = RService.sysName(id); // 리뷰어 프사 출력
-		model.addAttribute("sysName",sysName);
+//		List<HashMap<Object, Object>> sysName; 
+//		sysName = RService.sysName(id); // 리뷰어 프사 출력
+//		model.addAttribute("sysName",sysName);
 
 		List<HashMap<Object, Object>> reviewList;//리뷰 리스트
 		reviewList= RService.reviewList(id);

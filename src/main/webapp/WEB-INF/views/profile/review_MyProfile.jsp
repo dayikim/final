@@ -453,18 +453,16 @@
                                                     <a href="/profile/userProfile?id=${i.id}">${i.name} 님</a> <span
                                                         id="small_region_name">${i.address}</span>
                                                 </h2>
-                                                 <c:forEach var="sys" items="${sysName}">
-                                                      <div id="small_profile-image">
-                                                    <c:choose>
-                                                        <c:when test="${sys != null}">
-                                                            <img src="/imgs/mypage/${sys }" id=profile>
+                                                <div id="small_profile-image">
+                                                   <c:choose>
+                                                        <c:when test="${i.sysName != null}">
+                                                            <img src="/imgs/mypage/${i.sysName}" id=profile>
                                                         </c:when>
                                                         <c:otherwise>
                                                             <img src="/imgs/nomalProfile.jpg" id=profile>
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </div>
-												</c:forEach>
                                             </section>
                                         </div>
                                         <div class="comment_text">
