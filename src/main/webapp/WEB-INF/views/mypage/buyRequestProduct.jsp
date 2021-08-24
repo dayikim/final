@@ -190,9 +190,47 @@ img {
 	cursor: pointer;
 }
 </style>
+</head>
 
 <script>
 	$(function() {
+		
+		
+		$.ajax({
+			url:'/my/approved',
+			method:'get',
+			dataType:'json'
+		}).done(function(result){
+			
+			let arr =[];
+			
+			for(let i=0; i<result.length; i++){
+				arr.push(result[i].parentseq);
+			}
+			console.log(arr);
+			
+			for(let j=0; j<$(".parentseq").length; j++){
+					let node = "";
+					console.log($($(".parentseq")[j]).val());
+				if(arr.indexOf(Number($($(".parentseq")[j]).val()))==-1){
+					node += "<div class=under>"
+					node += "<input type=button id=cancel class=cnum-btn1 value=예약취소>";
+					node +=  "<button type=button id=approval class=cnum-btn2 disabled=disabled>승인 대기 중</button>"
+					node += "</div>"
+					$($(".parentseq")[j]).parent().append(node);
+					
+				}else{
+						node += "<div class=under>"
+						node += "<p> *판매자의 승인이 완료되었습니다! </p>"
+						node += "<button type=button class=cnum-btn2 id=payment>결제하기</button>";
+						node += "</div>"
+					$($(".parentseq")[j]).parent().append(node);
+				}
+				
+				
+			}
+			
+		})
 		// 게시물 검색
 		$("#search")
 				.keyup(
@@ -205,26 +243,15 @@ img {
 
 		// 채팅
 		$("#chat").on("click", function() {
-			location.href = "/chat";
+			location.href = "/chat/waitingroom";
 		})
 
 		// 결제하기 버튼을 눌렀을 경우
-		$("button[id^='payment']").on(
-				"click",
-				function() {
-					let button = $(this);
-					location.href = "/point/TopaymentBylend?seq="
-							+ $(
-									$(this).siblings().parent().siblings()
-											.children().siblings().children(
-													"#parentseq")).val()
-							+ "&id="
-							+ $(
-									$(this).siblings().parent().siblings()
-											.children().siblings().children()
-											.siblings("#writer")).val()
+		$(document).on("click","button[id^='payment']",function() {
 
-				})
+					location.href = "/point/TopaymentBylend?seq="
+							+ $(this).parent().siblings("#parentseq").val()+ "&id="+$(this).parent().siblings("#writer").val()
+						})
 
 		// 예약 취소 버튼을 눌렀을 경우
 		$(".cnum-btn1").on(
@@ -256,11 +283,11 @@ img {
 						return false;
 					}
 				})
-
 	})
+	
 </script>
 
-</head>
+
 <body>
 	<!-- Top Bar Start -->
 	<div class="top-bar d-none d-md-block">
@@ -404,9 +431,9 @@ img {
 				</div>
 
 
-				<div class="under">
+			<%-- 	<div class="under">
 					<input type=button id=cancel class="cnum-btn1" value="예약 취소">
-					<%-- <c:choose>
+					<c:choose>
 						<c:when test="${i.approval =='y'}">
 							<button type=button class="cnum-btn2" id="payment${vs.index}">
 								결제하기</button>
@@ -415,20 +442,20 @@ img {
 							<button type=button id=approval class="cnum-btn2"
 								disabled='disabled'>승인 거절</button>
 						</c:when>
-						<c:when test="${i.approval == null}"> --%>
+						<c:when test="${i.approval == null}">
 
 							<button type=button id=approval class="cnum-btn2"
 								disabled='disabled'>승인 대기 중</button>
-						<%-- </c:when>
+						</c:when>
 						<c:otherwise>
 							<button type=button class="cnum-btn2" disabled='disabled'>결제
 								완료</button>
 						</c:otherwise>
 
-					</c:choose> --%>
+					</c:choose>
 
 				</div>
-
+ --%>
 
 			</div>
 		</c:forEach>

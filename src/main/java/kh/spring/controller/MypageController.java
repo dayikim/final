@@ -108,6 +108,15 @@ public class MypageController {
 	}
 
 	
+	@RequestMapping("approved")
+	@ResponseBody
+	public String approved() {
+		List<ApprovalDTO> alist = service.customerDealSuccess((String)session.getAttribute("loginID"));
+		Gson gs = new Gson();	
+		return gs.toJson(alist);
+	}
+	
+	
 	@RequestMapping("/dealSuccessSelectProc")
 	@ResponseBody
 	public String approvallist() {
