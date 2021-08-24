@@ -198,12 +198,13 @@ img{
 	width: 330px;
 	height: 100px;
 	overflow: hidden;
-	margin-top: 5px;
 }
+
 
 /* 안에 들어갈 미리보기 설정 */
 .product {
 	width: 330px;
+	height:30px;
 	margin-left: 15px;
 }
 
@@ -293,6 +294,7 @@ img{
 	outline: none;
 	cursor: pointer;
 }
+
 
 </style>
 <script>
@@ -504,7 +506,7 @@ img{
 				<div class="row borrowIntro">
 					<div class="col-6">
 						<h5>
-							<b>현재 빌린 상품</b>
+							<b>내가 빌린 상품</b>
 						</h5>
 					</div>
 					<div class="col-6" align=right>
@@ -513,11 +515,11 @@ img{
 					</div>
 				</div>
 				<div class="row borrowList">
-					<!-- forEach 쓸 예정 -->
-					<div class="product">
-						<a href="#">현재 내가 빌려준 상품 목록 미리보기</a>
-					</div>
-
+					<c:forEach var="i" items="${borrowList}">
+						<div class="product">
+							<a href="/borrowBoard/borrowView?seq=${i.parentseq}&id=${i.seller}">${i.item }</a>
+						</div>
+					</c:forEach>
 				</div>
 			</div>
 			<hr>
@@ -527,7 +529,7 @@ img{
 				<div class="row lendIntro">
 					<div class="col-7">
 						<h5>
-							<b>현재 빌려준 상품</b>
+							<b>내가 빌려준 상품</b>
 						</h5>
 					</div>
 					<div class="col-5" align=right>
@@ -536,10 +538,11 @@ img{
 					</div>
 				</div>
 				<div class="row lendList">
-					<!-- forEach 쓸 예정 -->
-					<div class="product">
-						<a href="#">현재 내가 빌린 상품 목록 미리보기</a>
-					</div>
+					<c:forEach var="i" items="${lendList}">
+						<div class="product">
+							<a href="/lendBoard/lendView?seq=${i.parentseq}&id=${i.seller}">${i.item}</a>
+						</div>
+					</c:forEach>
 				</div>
 			</div>
 			
