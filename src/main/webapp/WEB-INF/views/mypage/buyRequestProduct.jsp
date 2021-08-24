@@ -409,7 +409,7 @@ img {
 
 				<div class="under">
 					<input type=button id=cancel class="cnum-btn1" value="예약 취소">
-					<c:choose>
+					<%-- <c:choose>
 						<c:when test="${i.approval =='y'}">
 							<button type=button class="cnum-btn2" id="payment${vs.index}">
 								결제하기</button>
@@ -418,17 +418,17 @@ img {
 							<button type=button id=approval class="cnum-btn2"
 								disabled='disabled'>승인 거절</button>
 						</c:when>
-						<c:when test="${i.approval == null}">
+						<c:when test="${i.approval == null}"> --%>
 
 							<button type=button id=approval class="cnum-btn2"
 								disabled='disabled'>승인 대기 중</button>
-						</c:when>
+						<%-- </c:when>
 						<c:otherwise>
 							<button type=button class="cnum-btn2" disabled='disabled'>결제
 								완료</button>
 						</c:otherwise>
 
-					</c:choose>
+					</c:choose> --%>
 
 				</div>
 

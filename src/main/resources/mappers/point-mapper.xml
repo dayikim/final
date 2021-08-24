@@ -41,7 +41,7 @@ select nvl(sum(amount),0) from charing where id=#{value}
 
 
 <!-- 포인트 충전 내역 출력 -->
-<select id="pointChargeList" resultType="kh.spring.dto.PointAccountDTO" resultMap="dealEndlist">
+<select id="pointChargeList" resultType="kh.spring.dto.PointAccountDTO" >
 	select pointamount,dealdate,TO_CHAR(dealdate, 'HH:MI:SS') as date,reason from pointaccount where id=#{id} and reason in(#{charge},#{insert}) order by 1 desc
 </select>
 

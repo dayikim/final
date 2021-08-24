@@ -218,10 +218,8 @@ public class MypageService {
 		param.put("talent", boardtype);
 		return bdao.buyRequestTalent2(param);
 	}
-
-
-
-	// 예약 내역 목록 - 물품
+	
+	// 예약 내역 목록 - 물품 (승인 대기중 상태)
 	public List<HashMap<String, Object>> buyRequestProduct(String sessionID) {
 		String y = "y";
 		String boardtype="물품";

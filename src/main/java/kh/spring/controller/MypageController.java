@@ -245,8 +245,6 @@ public class MypageController {
 
 		List<HashMap<String,Object>> bookingresult = service.buyRequestTalent(sessionID);
 		model.addAttribute("requestRental", bookingresult);
-
-
 		return "/mypage/buyRequestTalent";
 	}
 
