@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kh.spring.dto.BorrowBoardFilesDTO;
 import kh.spring.dto.BorrowDTO;
@@ -44,8 +45,9 @@ public class LendController {
 	
 	//대여하기 글쓰기 데이터 받기
 	@RequestMapping(value="lendWrite",produces="text/html;charset=utf8")
-	public String sellingWrite(LendDTO dto,LendFilesDTO fdto, MultipartFile[] file) throws Exception {
+	public String sellingWrite(LendDTO dto,LendFilesDTO fdto, MultipartHttpServletRequest request) throws Exception {
 		
+		List<MultipartFile> file = request.getFiles("file");
 		int seq =service.getSeq();
 		String sessionID = (String) session.getAttribute("loginID");
 		String realPath = session.getServletContext().getRealPath("resources/imgs/lend");
@@ -99,12 +101,14 @@ public class LendController {
 		
 	//수정 데이터 
 	@RequestMapping(value="ldModify",produces="text/html;charset=utf8")
-	public String ldModify(LendDTO dto,LendFilesDTO fdto,String[] delSeq,MultipartFile[] file) throws Exception {
+	public String ldModify(LendDTO dto,LendFilesDTO fdto,String[] delSeq,MultipartHttpServletRequest request) throws Exception {
 			
 		String realPath = session.getServletContext().getRealPath("resources/imgs/lend");
 		
 		int parent = dto.getSeq();
-			
+		
+		List<MultipartFile> file = request.getFiles("file");
+		
 		service.boardModify(dto,realPath,delSeq,file,parent);
 
 		return "redirect:/AllBoardList/lendList?choice=Allchoice&search=&cpage=1";

@@ -206,7 +206,7 @@
 		                });
 		                // console.log(storedFiles);
 		            }
-		           
+		            let fileCount = 0;
 		               //파일선택을 누르면 실행된다.    
 		            $('body').on('change', '#file', function() {
 		               //이미지 파일을 다 불러온다
@@ -229,7 +229,16 @@
 		                                    "<img class = 'img-thumb' src = '" + e.target.result + "' />" +
 		                                    "<a href = '#' class = 'cvf_delete_image' title = 'Cancel'><img class = 'delete-btn' src = '/imgs/delete-btn.png' /></a>" +
 		                                "</li>"
-		                                );     
+		                                );
+		                                
+		                                fileCount++
+		                                $(".upload-hidden").attr("class","upen"+fileCount);
+		                                $(".upen"+fileCount).attr("id","file"+fileCount);
+		                                $(".upen"+fileCount).attr("onchange","");
+		                                $(".upen"+fileCount).css("display","none");
+		                                
+		                                $(".custom-file").append("<input type='file' name='file' class='upload-hidden' id='file'  onchange='javascript:document.getElementById(\"fileName\").value = this.value'  multiple>")
+		     	                       
 		                            };
 		                        })(file);
 		                        //이미지파일을 URL로 읽어온다

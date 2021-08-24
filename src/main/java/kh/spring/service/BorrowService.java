@@ -61,7 +61,7 @@ public class BorrowService {
 	}
 	
 	//글수정
-	public void boardModify(BorrowDTO dto,String realPath, String[] delSeq,MultipartFile[] file,int parent)throws Exception{
+	public void boardModify(BorrowDTO dto,String realPath, String[] delSeq,List<MultipartFile> file,int parent)throws Exception{
 		
 		dao.boardModify(dto);
 		
@@ -97,7 +97,7 @@ public class BorrowService {
 	
 	//글쓰기
 	@Transactional //DML: insert,delete,update 트렌젝션에 영향을 받음!
-	public void boardwrite(BorrowDTO dto,String realPath,MultipartFile[] file, int parent)throws Exception{
+	public void boardwrite(BorrowDTO dto,String realPath,List<MultipartFile> file, int parent)throws Exception{
 		
 		dao.boardWrite(dto);
 		

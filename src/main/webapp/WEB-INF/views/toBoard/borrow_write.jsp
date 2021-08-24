@@ -76,7 +76,7 @@
 				}
 
 				#write {
-					padding-top: 100px;
+					padding-top: 120px;
 					padding-bottom: 30px;
 				}
 
@@ -206,11 +206,11 @@
 	                });
 	                // console.log(storedFiles);
 	            }
-	           
+	           let fileCount = 0;
 	               //파일선택을 누르면 실행된다.    
 	            $('body').on('change', '#file', function() {
 	               //이미지 파일을 다 불러온다
-	                var files = this[0].files[0];
+	                var files = this.files;
 	                var i = 0;
 	                //불러온 파일 만큼 돌린다         
 	                for (i = 0; i < files.length; i++) {
@@ -229,9 +229,17 @@
 	                                    "<img class = 'img-thumb' src = '" + e.target.result + "' />" +
 	                                    "<a href = '#' class = 'cvf_delete_image' title = 'Cancel'><img class = 'delete-btn' src = '/imgs/delete-btn.png' /></a>" +
 	                                "</li>"
-	                                );     
+	                                ); 
+	                                fileCount++
+	                                $(".upload-hidden").attr("class","upen"+fileCount);
+	                                $(".upen"+fileCount).attr("id","file"+fileCount);
+	                                $(".upen"+fileCount).attr("onchange","");
+	                                $(".upen"+fileCount).css("display","none");
+	                                
+	                                $(".custom-file").append("<input type='file' name='file' class='upload-hidden' id='file'  onchange='javascript:document.getElementById(\"fileName\").value = this.value'  multiple>")
+	     	                       
 	                            };
-	                        })(file);
+	                            })(file);
 	                        //이미지파일을 URL로 읽어온다
 	                        readImg.readAsDataURL(file);
 	                       
@@ -272,9 +280,9 @@
 				let category = $("#category");
 				let price = $("#price");
 				
-			
 
 				$("#submitBtn").on("click", function () { //글 작성 전 제목 내용 입력여부 확인
+										
 					let priceReg = /^[0-9]/g;
 					let resultprice = priceReg.test(price.val());
 
@@ -443,7 +451,7 @@
 								
 									<div class="custom-file">
 										<input type="file" name="file" class="upload-hidden" id="file"  onchange="javascript:document.getElementById('fileName').value = this.value"  multiple>
-										<input type=text class="custom-file-label"  id="fileName" name="filename" style="width: 100%;" readonly>
+										<input type=text class="custom-file-label"  id="fileName" name="filename" value="" style="width: 100%;" readonly>
 							</div>
 									<div class="input-group-append">
 										<button class="btn btn-outline-secondary" type="button" onclick="filesUpload();"class="uploadBtn">업로드</button>
