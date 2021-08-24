@@ -1,6 +1,7 @@
 package kh.spring.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -20,8 +21,8 @@ public class ApprovalDAO {
 	} 
 
 	// 거래 승인된 애들만 목록 출력(결제 완료 버튼을 위해)
-	public int dealSuccessSelect(HashMap<String,Object> param) {
-		return mybatis.selectOne("Approval.dealSuccessSelect",param);
+	public List<ApprovalDTO> dealSuccessSelect(String sessionID) {
+		return mybatis.selectList("Approval.dealSuccessSelect",sessionID);
 	}
 	
 
