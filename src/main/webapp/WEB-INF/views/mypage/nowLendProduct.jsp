@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>현재 대여 한 상품</title>
+    <title>내가 빌려준 상품 목록</title>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     
     <!-- bootstrap -->
@@ -82,7 +82,7 @@
             <a href="#" class="navbar-brand">
                 <p id=titlename>돈-다</p>
             </a>
-            <b id=titleNextName>현재 대여 한 상품</b>
+            <b id=titleNextName>내가 빌려준 상품 목록</b>
         </div>
         <div class="col-6"> </div>
     </div>
@@ -109,7 +109,7 @@
         <div class="col-2">
         <input type="hidden" val="${i.seller }">
         <input type="hidden" val="${i.parentseq }">
-            <a href="/lendBoard/lendView?seq=${i.parentseq}&id=${i.seller}"><i class="fas fa-arrow-circle-right"></i></a>
+        <a href="#" onclick=opener.top.location='/lendBoard/lendView?seq=${i.parentseq}&id=${i.seller}';self.close();><i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
     </c:forEach>
