@@ -317,6 +317,16 @@
             </style>
 
             <script>
+	           $(document).ready(function(){
+	        		let address = "${myInfo.address1}";
+	        		let addressReg = /^[가-힣]*\s+[가-힣]*/g;
+	        		let myaddress = address.match(addressReg);
+	        		console.log(myaddress);
+	        		if(myaddress != null){
+	        			$("#region_name").text(myaddress);
+	        		}
+	        	})
+            
                 $(function () {
 
                 });
@@ -411,7 +421,7 @@
                     <div class="form-control wrapper ">
                         <section id="user-profile">
                             <h2 id="nickname">
-                                <b>${myInfo.name}</b>님 <span id="region_name">${myInfo.address1}</span>
+                                <b>${myInfo.name}</b>님 <span id="region_name"></span>
                             </h2>
                             <div id="profile-image">
                                 <c:choose>
