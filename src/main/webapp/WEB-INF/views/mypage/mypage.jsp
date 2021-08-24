@@ -198,12 +198,13 @@ img{
 	width: 330px;
 	height: 100px;
 	overflow: hidden;
-	margin-top: 5px;
 }
+
 
 /* 안에 들어갈 미리보기 설정 */
 .product {
 	width: 330px;
+	height:30px;
 	margin-left: 15px;
 }
 
@@ -505,7 +506,7 @@ img{
 				<div class="row borrowIntro">
 					<div class="col-6">
 						<h5>
-							<b>현재 빌린 상품</b>
+							<b>내가 빌린 상품</b>
 						</h5>
 					</div>
 					<div class="col-6" align=right>
@@ -528,7 +529,7 @@ img{
 				<div class="row lendIntro">
 					<div class="col-7">
 						<h5>
-							<b>현재 빌려준 상품</b>
+							<b>내가 빌려준 상품</b>
 						</h5>
 					</div>
 					<div class="col-5" align=right>

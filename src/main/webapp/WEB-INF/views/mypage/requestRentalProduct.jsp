@@ -194,6 +194,7 @@ img {
 <script>
 	$(function() {
 		
+		// 거래 승인 목록 출력
 		$.ajax({
 			url:"/my/dealSuccessSelectProc",
 			method:"get",
@@ -213,7 +214,7 @@ img {
 					let node = "";
 					node +="<div class=under>"
 						node += "<button type=button id=cancel class=cnum-btn1>거래 취소</button>" 
-						node += "<button type=button id=approval class=cnum-btn2>거래 완료(대여중)</button>"
+						node += "<button type=button id=approval class=cnum-btn2 disabled=disabled>거래 완료(대여중)</button>"
 					node += "</div>"
 					$($(".parent")[z]).parent().append(node)
 				}else{
@@ -247,13 +248,14 @@ img {
 		
 		
 		// 요청 거절 및 거래 취소 버튼을 눌렀을 경우
-		$(".cnum-btn1").on("click", function() {
+		$(document).on("click",".cnum-btn1" ,function() {
 			let result = confirm("취소 하시겠습니까?");
+			console.log($($(this).parent().siblings("#parent")).val())
 			if (result) {
 				let button = $(this);
 				$.ajax({
 					url:"/my/dealFailProduct",
-					data:{parent:$($(this).parent().siblings().children().siblings().children("#parent")).val()}
+					data:{parent:$($(this).parent().siblings("#parent")).val()}
 				}).done(function(resp){
 					if(resp=="1"){
 						alert("취소하였습니다.")
@@ -269,7 +271,7 @@ img {
 		})
 
 
-		// 거래 승인 버튼을 눌렀을 경우(DB에 거래승인 insert하기) <- 여기가 안된다는거에연?네!
+		// 거래 승인 버튼을 눌렀을 경우(DB에 거래승인 insert하기)
  		$(document).on("click",".cnum-btn2" ,function() {
 			let result = confirm("거래 승인 하시겠습니까?");
 			console.log($($(this).parents().siblings("#writer")).val());
@@ -398,7 +400,7 @@ img {
 
 	<!-- 네비바 -->
 
- <!-- 지금 안되는거 정확하게 좀 알려주세연~ 아예 목록자체가 나오지않습니다..ㅜㅜ -->
+
 
 	<!-- 대여 요청 내역 -->
 	<div class="container2">
