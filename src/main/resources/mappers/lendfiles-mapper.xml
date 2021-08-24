@@ -31,5 +31,10 @@
 		delete from lendfiles where seq=#{seq}
 	</delete>
 	
+	<!-- 대여하기 채팅 하기 대표 사진-->
+	<select id="repre_picture" resultType="kh.spring.dto.LendFilesDTO">
+		select * from lendfiles where seq= (select min(seq) from lendfiles where parentseq =#{value})
+	</select>
+	
 
 </mapper>

@@ -24,5 +24,11 @@
 	<delete id="delete">
 		delete from borrowboardpicturefiles where seq=#{seq}
 	</delete>
+	
+	<!-- 채팅 게시글 대표 사진 추가 -->
+	<select id="repre_picture" resultType="kh.spring.dto.BorrowBoardFilesDTO">
+		select * from borrowboardpicturefiles where seq =(select min(seq) from borrowboardpicturefiles where parentseq =#{value});
+	</select>
+	
 
 </mapper>

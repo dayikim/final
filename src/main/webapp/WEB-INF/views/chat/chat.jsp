@@ -56,6 +56,7 @@ height:75px;
 #boardimg{
 width: 70px;
 height: 70px;
+margin-left: 3%;
 }
 .preview_picture_box{
 width:100%;
@@ -172,6 +173,7 @@ background-color: #FAFAFA;
 
 .media-body{
 height: 65px;
+margin-left: 2%;
 }
 #media-title{
 font-weight: bolder;
@@ -489,7 +491,7 @@ $(function(){
         		
         		let chat_avatar_name= $("<div class=chat-name>"); 
         		let option_picture = $("<div class =option_picture >");
-        		let option = $("<div class=option id=option>");
+        		let option = $("<div class=option id=option style =\"text-align: center;\">");
         		let download = $("<a>");
         		download.attr("href","/file/download?seq="+text.seq);
         		download.text("다운로드");
@@ -894,7 +896,14 @@ $(function(){
 	                      <div class="col-12" id = drag_display>
                             <div class="selected-user">
                                 <div class="media">
-								  <img src="/imgs/lend/noimage.jpg" class="rounded float-left" alt="..." id = boardimg> <!-- 이미지 출력 -->
+                                <c:choose>
+                                	<c:when test="${repre_picture != null }">
+                                		 <img src="data:image/png;base64,${repre_picture}" class="rounded float-left" alt="..." id = boardimg> <!-- 이미지 출력 -->
+                                	</c:when>
+                                	<c:otherwise>
+                                		 <img src="/imgs/noimage.jpg" class="rounded float-left" alt="..." id = boardimg> <!-- 이미지 출력 -->
+                                	</c:otherwise>
+                                </c:choose>
 								  <div class="media-body">
 								    <h5 class="mt-0" id= media-title>[${info.title }]</h5> 
 								    <c:choose>
@@ -911,7 +920,7 @@ $(function(){
 								    		<a href="/tBoard/sellingView?id=${info.writer }&seq=${info.seq }" target="_blank" id= media-link>게시글 보기</a>
 								    	</c:otherwise>
 								    </c:choose>
-								    <p id=media-price>${info.price }상추<p>
+								    <p id=media-price>가격: ${info.price }상추<p>
 								  </div>
 								</div>
                             </div>
