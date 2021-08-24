@@ -516,7 +516,7 @@ img{
 				<div class="row borrowList">
 					<c:forEach var="i" items="${borrowList}">
 						<div class="product">
-							<a href="#">${i.item }</a>
+							<a href="/borrowBoard/borrowView?seq=${i.parentseq}&id=${i.seller}">${i.item }</a>
 						</div>
 					</c:forEach>
 				</div>
@@ -539,7 +539,7 @@ img{
 				<div class="row lendList">
 					<c:forEach var="i" items="${lendList}">
 						<div class="product">
-							<a href="#">${i.item}</a>
+							<a href="/lendBoard/lendView?seq=${i.parentseq}&id=${i.seller}">${i.item}</a>
 						</div>
 					</c:forEach>
 				</div>
