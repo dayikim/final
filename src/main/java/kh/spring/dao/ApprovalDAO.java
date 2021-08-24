@@ -30,5 +30,9 @@ public class ApprovalDAO {
 	public String isApproval(Map<Object,Object>param) {
 		return mybatis.selectOne("Approval.isApproval",param);
 	}
+	//구매자 기준 승인 완료된 리스트.
+	public List<ApprovalDTO> customerDealSuccess(String sessionID) {
+		return mybatis.selectList("Approval.customerDealSuccess",sessionID);
+	}
 	
 }
