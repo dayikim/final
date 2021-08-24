@@ -498,12 +498,12 @@ form {
 										</div>
 									</div>
 									<input type="hidden" name="reviewer" value="${loginID}"
-										id="reviewer"> <input type="hidden" name="recipient"
-										value="${i.seller}" id="recipient"> <input
-										type="hidden" name="boardtype" value="${i.boardtype}"
+										id="reviewer"> 
+										<input type="hidden" name="recipient" value="${i.seller}" id="recipient"> 
+										<input 	type="hidden" name="boardtype" value="${i.boardtype}"
 										id="boardtype"> <input type="hidden" name="seq"
-										value="${i.parentseq}" id="parentseq"> <input
-										type="hidden" name="reviewable" value="y" id="reviewable">
+										value="${i.parentseq}" id="parentseq"> 
+										<input type="hidden" name="reviewable" value="y" id="reviewable">
 									<button type="button" class="btn btn-dark modalBtn"
 										data-dismiss="modal">취소</button>
 									<button type="button"

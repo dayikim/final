@@ -330,6 +330,7 @@ public class ProfileController {
 	@RequestMapping("review")//거래 후기 작성
 	public String Review(ReviewDTO dto, Model model) {
 		String sessionID = (String) session.getAttribute("loginID");
+		
 		int result =RService.write(dto);
 		if(result>0){
 			System.out.println(" 작성 성공!");
