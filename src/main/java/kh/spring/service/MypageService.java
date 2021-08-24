@@ -193,7 +193,7 @@ public class MypageService {
 
 	////////////////////////////////////////////////////////////////////////////////////////////// 예약 내역 (구매자 입장)
 
-	// 예약 내역 목록 - 재능
+	// 예약 내역 목록 - 재능(승인 대기중)
 	public List<HashMap<String,Object>> buyRequestTalent(String sessionID) {
 		String y = "y";
 		String boardtype="재능";
@@ -203,6 +203,16 @@ public class MypageService {
 		param.put("talent", boardtype);
 		return bdao.buyRequestTalent(param);
 	}
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
 	//결제 완료된 예약 내역
 	public List<HashMap<String, Object>> buyRequestTalent2(String sessionID) {
 		String y = "y";
@@ -213,10 +223,8 @@ public class MypageService {
 		param.put("talent", boardtype);
 		return bdao.buyRequestTalent2(param);
 	}
-
-
-
-	// 예약 내역 목록 - 물품
+	
+	// 예약 내역 목록 - 물품 (승인 대기중 상태)
 	public List<HashMap<String, Object>> buyRequestProduct(String sessionID) {
 		String y = "y";
 		String boardtype="물품";
@@ -226,6 +234,30 @@ public class MypageService {
 		param.put("product", boardtype);
 		return bdao.buyRequestProduct(param);
 	}
+	
+	// 예약 내역 목록 - (결제하기 버튼 생성)
+		public List<HashMap<String, Object>> buyRequestProduct2(String sessionID) {
+			String y = "y";
+			String boardtype="물품";
+			Map<String, String> param = new HashMap<>();
+			param.put("y", y);
+			param.put("id", sessionID);
+			param.put("product", boardtype);
+			return bdao.buyRequestProduct2(param);
+		}
+	
+		// 예약 내역 목록 - (결제하기 버튼 생성)
+		public List<HashMap<String, Object>> paymentcomplete(String sessionID) {
+			String y = "y";
+			String boardtype="물품";
+			Map<String, String> param = new HashMap<>();
+			param.put("y", y);
+			param.put("id", sessionID);
+			param.put("product", boardtype);
+			
+			return bdao.paymentcomplete(param);
+		}
+
 
 	// 예약 취소 - 재능
 	public int bookingFail(String sessionID, int parent) {
@@ -310,6 +342,7 @@ public class MypageService {
 		return dao.paymentCount(param);
 	}
 
+	
 
 
 

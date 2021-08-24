@@ -152,15 +152,15 @@ public class PointController {
 
 		//lend인지 selltalent인지 구분
 		System.out.println(parentseq +":" + sessionID +":" + category + ":" + paymentable);
-		int isitLendBoard =LService.isitLend(parentseq,sessionID,category);	
-		if(isitLendBoard>0) {
+//		int isitLendBoard =LService.isitLend(parentseq,sessionID,category);	
+//		if(isitLendBoard>0) {
 			System.out.println("대여하기");
 			paydto.setBoardtype("물품");
 		
-		}else {
-			System.out.println("재능판매");
-			paydto.setBoardtype("재능");
-		}
+//		}else {
+//			System.out.println("재능판매");
+//			paydto.setBoardtype("재능");
+//		}
 		// 결제 하기 
 		paydto.setSeller(seller);
 		paydto.setItem(item);

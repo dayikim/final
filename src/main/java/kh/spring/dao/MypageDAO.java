@@ -65,4 +65,6 @@ public class MypageDAO {
 		return mybatis.selectOne("MyPage.paymentCount",param);
 	}
 
+	
+
 }

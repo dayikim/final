@@ -209,7 +209,7 @@ public class MypageController {
 	////////////////////////////////////////////////////////////////////////////////////////// 예약 내역 목록(구매자 입장)
 
 
-	// 예약 내역 목록 - 대여
+	// 예약 내역 목록 - 대여 (승인 대기중)
 	@RequestMapping("/buyRequestProduct")
 	public String buyRequestProduct(Model model) {
 		String sessionID = (String)session.getAttribute("loginID");
@@ -218,6 +218,36 @@ public class MypageController {
 		model.addAttribute("requestRental", result);
 		return "/mypage/buyRequestProduct";
 	}
+	
+	
+	// 구매자가 대여 예약 내역 출력 (결제하기 버튼 생성)
+		@RequestMapping("/buyRequestProduct2")
+		public String buyRequestProduct2(Model model) {
+			String sessionID = (String)session.getAttribute("loginID");
+			List<HashMap<String,Object>> result = service.buyRequestProduct2(sessionID);
+
+			model.addAttribute("requestRental", result);
+			return "/mypage/buyRequestProduct";
+		}
+		
+	
+		// 구매자가 대여 예약 내역 출력 (결제하기 완료 생성)
+				@RequestMapping("/paymentcomplete")
+				public String paymentcomplete(Model model) {
+					String sessionID = (String)session.getAttribute("loginID");
+					List<HashMap<String,Object>> result = service.paymentcomplete(sessionID);
+
+					model.addAttribute("requestRental", result);
+					return "/mypage/buyRequestProduct";
+				}
+				
+	
+	
+	
+	
+	
+	
+	
 
 	// 예약 내역 목록 - 재능
 	@RequestMapping("buyRequestTalent")
@@ -233,8 +263,6 @@ public class MypageController {
 
 		List<HashMap<String,Object>> bookingresult = service.buyRequestTalent(sessionID);
 		model.addAttribute("requestRental", bookingresult);
-
-
 		return "/mypage/buyRequestTalent";
 	}
 
@@ -267,6 +295,10 @@ public class MypageController {
 	@RequestMapping(value="/dealEndProductBuyList", produces="text/html;charset=utf8")
 	public String dealEndProductBuyList(Model model) {
 		String id = (String)session.getAttribute("loginID");
+		
+		
+		
+		
 		String product="물품";
 		List<HashMap<Object, Object>> dealEndProductBuyList =service.dealEndProductBuyList(id,product);
 		model.addAttribute("productBuyList",dealEndProductBuyList);
