@@ -170,6 +170,22 @@ height:100%;
 background-color: #FAFAFA;
 }
 
+.media-body{
+height: 65px;
+}
+#media-title{
+font-weight: bolder;
+
+}
+#media-link{
+position: absolute;
+top: 1%;
+}
+#media-price{
+position: absolute;
+top: 4%;
+}
+
 </style>
 
 <script>
@@ -185,7 +201,7 @@ function doNotReload(){
 }
 document.onkeydown = doNotReload;
 /* http://175.116.7.99/ */
-let ws = new WebSocket("ws://175.116.7.99/chat"); 
+let ws = new WebSocket("ws://192.168.35.97/chat"); 
 $(function(){
 	
 	let loginID;
@@ -210,10 +226,7 @@ $(function(){
 			
 			if(text.unreadcount != null){
 				window.parent.postMessage(text.unreadcount+
-						":"+text.roomid,'http://175.116.7.99/chat/waitingroom');
-				
-				
-				
+						":"+text.roomid,'http://192.168.35.97/chat/waitingroom');
 			}
 			
 			if(text.isNaver == "true"){
@@ -883,8 +896,22 @@ $(function(){
                                 <div class="media">
 								  <img src="/imgs/lend/noimage.jpg" class="rounded float-left" alt="..." id = boardimg> <!-- 이미지 출력 -->
 								  <div class="media-body">
-								    <a><h5 class="mt-0">${info.title }</h5></a>
-								    <p>${info.price }상추<p>
+								    <h5 class="mt-0" id= media-title>[${info.title }]</h5> 
+								    <c:choose>
+								    	<c:when test="${info['class'].name == 'kh.spring.dto.LendDTO'}">
+								    		<a href="/lendBoard/lendView?id=${info.writer }&seq=${info.seq }" target="_blank" id= media-link>게시글 보기</a>
+								    	</c:when>
+								    	<c:when test="${info['class'].name == 'kh.spring.dto.BorrowDTO'}">
+								    		<a href="/borrowBoard/borrowView?id=${info.writer }&seq=${info.seq }" target="_blank" id= media-link>게시글 보기</a>
+								    	</c:when>
+								    	<c:when test="${info['class'].name == 'kh.spring.dto.RequestDTO'}">
+								    		<a href="/tBoard/RequestView?id=${info.writer }&seq=${info.seq }" target="_blank" id= media-link>게시글 보기</a>
+								    	</c:when>
+								    	<c:otherwise>
+								    		<a href="/tBoard/sellingView?id=${info.writer }&seq=${info.seq }" target="_blank" id= media-link>게시글 보기</a>
+								    	</c:otherwise>
+								    </c:choose>
+								    <p id=media-price>${info.price }상추<p>
 								  </div>
 								</div>
                             </div>

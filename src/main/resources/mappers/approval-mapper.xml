@@ -20,4 +20,9 @@
 <select id="isApproval" resultType="string">
  select approval from approval where buyer=#{id}and parentseq=#{parentseq}
 </select>
+
+<!-- 구매자 기준 승인 리스트 출력-->
+<select id="customerDealSuccess" resultType="kh.spring.dto.ApprovalDTO">
+	select * from approval where buyer=#{id}
+</select>
 </mapper>
