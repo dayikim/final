@@ -384,10 +384,7 @@ img {
 							<div class="col-8 right">${i.writer}</div>
 						</div>
 						<div class="row">
-							<div class="col-4 left">
-								<b>재능 구매자</b>
-							</div>
-							<div class="col-8 right">${i.booker}</div>
+							
 						</div>
 						<div class="row">
 							<div class="col-4 left">

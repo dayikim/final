@@ -14,6 +14,29 @@
 	<result column="approval" property="approval"/>
 </resultMap>
 
+
+<resultMap type="HashMap" id="booking1"> 
+	<result column="title" property="title"/> 
+	<result column="writer" property="writer"/> 
+	<result column="price" property="price"/> 
+	<result column="booker" property="booker"/> 
+	<result column="parentseq" property="parentseq"/>
+	<result column="approval" property="approval"/>
+</resultMap>
+
+
+<resultMap type="HashMap" id="booking2"> 
+	<result column="title" property="title"/> 
+	<result column="writer" property="writer"/> 
+	<result column="price" property="price"/> 
+	<result column="booker" property="booker"/> 
+	<result column="parentseq" property="parentseq"/>
+	<result column="approval" property="approval"/>	
+	<result column="paymentable" property="paymentable"/>
+	
+</resultMap>
+
+
 <!-- 판매자에게 들어온 예약 요청 목록 출력(물품) -->
 <select id="requestRentalProduct" resultMap="product" resultType="HashMap">
 	select distinct lendboard.writer,booking.booker,lendboard.price,lendboard.title,booking.parentseq
@@ -40,22 +63,24 @@
 
 
 <!-- 구매자가 대여 예약 내역 출력 (승인 대기중)-->
-<select id="buyRequestProduct" resultMap="product" resultType="HashMap">
+<select id="buyRequestProduct" resultMap="booking1" resultType="HashMap">
 select distinct lendboard.writer,booking.booker,lendboard.price,lendboard.title,booking.parentseq
 	from lendboard join booking on (lendboard.seq = booking.parentseq) where booking.bookable=#{y} and booking.booker=#{id} and booking.boardtype=#{product}
 </select>
 
 <!-- 구매자가 대여 예약 내역 출력 (결제하기 버튼 생성)-->
-<select id="buyRequestProduct2" resultMap="product" resultType="HashMap">
+<select id="buyRequestProduct2" resultMap="booking1" resultType="HashMap">
 select distinct lendboard.writer,booking.booker,lendboard.price,lendboard.title,booking.parentseq,approval.approval
-	from lendboard join booking on (lendboard.seq = booking.parentseq) join approval on (approval.buyer =booking.booker)
+	from lendboard join booking on (lendboard.seq = booking.parentseq) join approval on (approval.parentseq =booking.parentseq)
 	where booking.bookable=#{y} and booking.booker=#{id} and booking.boardtype=#{product}
 </select>
 
-<!-- 구매자가 대여 예약 내역 출력 (결제하기 버튼 생성)-->
-<!-- <select id="paymentcomplete" resultMap="product" resultType="HashMap">
-
-</select> -->
+<!-- 구매자가 대여 예약 내역 출력 (결제완료 버튼 생성)-->
+<select id="paymentcomplete" resultMap="booking2" resultType="HashMap">
+ select distinct lendboard.writer,booking.booker,lendboard.price,lendboard.title,booking.parentseq,approval.approval,payment.paymentable
+	from lendboard join booking on (lendboard.seq = booking.parentseq) join approval on (approval.parentseq =booking.parentseq) join payment on(payment.parentseq = booking.parentseq)
+	where payment.paymentable=#{y} and booking.bookable=#{y} and payment.buyer=#{id} and payment.boardtype=#{product};
+</select>
 
 
 <!-- 구매자가 예약내역 취소 -->
