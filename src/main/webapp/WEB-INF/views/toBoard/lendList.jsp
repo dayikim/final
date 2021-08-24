@@ -106,6 +106,7 @@ img{
 		})
 		
 		$(function(){
+			
 	 		$("#lendBtn").on("click",function(){	
 	    		location.href="/AllBoardList/lendList?choice=${choice}&search=${search}&cpage=1";
 	    	})

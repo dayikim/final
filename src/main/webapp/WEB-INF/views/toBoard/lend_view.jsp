@@ -306,6 +306,17 @@
 	
     $(function(){
     	$("#booking").on("click", function () { //예약 하기 
+    		if(${loginID == null}){
+    			let checkID = confirm("로그인후 이용이 가능합니다!");
+    			if(checkID){
+    				location.href="/person/login";
+    				return;
+    			}else{
+    				alert("예약하기 실패!")
+                    return;
+    			}
+    			
+    		}
             let check = confirm("정말 예약하시겠습니까?");
             let seller= $("#seller").val();
             let booker =$("#booker").val();

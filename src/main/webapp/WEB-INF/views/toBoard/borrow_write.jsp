@@ -210,7 +210,7 @@
 	               //파일선택을 누르면 실행된다.    
 	            $('body').on('change', '#file', function() {
 	               //이미지 파일을 다 불러온다
-	                var files = this.files;
+	                var files = this[0].files[0];
 	                var i = 0;
 	                //불러온 파일 만큼 돌린다         
 	                for (i = 0; i < files.length; i++) {
