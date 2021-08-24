@@ -256,15 +256,7 @@ public class MypageController {
 					model.addAttribute("requestRental", result);
 					return "/mypage/buyRequestProduct";
 				}
-				
 	
-	
-	
-	
-	
-	
-	
-
 	// 예약 내역 목록 - 재능
 	@RequestMapping("buyRequestTalent")
 	public String buyRequestTalent(Model model) {
@@ -304,6 +296,8 @@ public class MypageController {
 		List<HashMap<Object, Object>> dealEndProductSellList =service.dealEndProductSellList(id,product);
 		model.addAttribute("productSellList",dealEndProductSellList);
 
+				
+		
 		return "/mypage/dealEndProductSellList";
 	}
 
@@ -312,8 +306,7 @@ public class MypageController {
 	public String dealEndProductBuyList(Model model) {
 		String id = (String)session.getAttribute("loginID");
 		
-		
-		
+				
 		
 		String product="물품";
 		List<HashMap<Object, Object>> dealEndProductBuyList =service.dealEndProductBuyList(id,product);
@@ -323,25 +316,25 @@ public class MypageController {
 	}
 
 
-	// 거래 완료 목록 출력 - 재능 판매완료
-	@RequestMapping(value="/dealEndTalentSellList", produces="text/html;charset=utf8")
-	public String dealEndTalentSellList(Model model) {
-		String id = (String)session.getAttribute("loginID");
-		String talent="재능";
-		List<HashMap<Object, Object>> dealEndTalentSellList =service.dealEndTalentSellList(id,talent);
-		model.addAttribute("talentsellList",dealEndTalentSellList);
-		return "/mypage/dealEndTalentSellList";
-	}
-
-	// 거래 완료 목록 출력 - 재능 구매완료
-	@RequestMapping(value="/dealEndTalentBuyList", produces="text/html;charset=utf8")
-	public String dealEndTalentBuyList(Model model) {
-		String id = (String)session.getAttribute("loginID");
-		String talent="재능";
-		List<HashMap<Object, Object>> dealEndTalentBuyList =service.dealEndTalentBuyList(id,talent);
-		model.addAttribute("talentbuyList",dealEndTalentBuyList);
-		return "/mypage/dealEndTalentBuyList";
-	}
+//	// 거래 완료 목록 출력 - 재능 판매완료
+//	@RequestMapping(value="/dealEndTalentSellList", produces="text/html;charset=utf8")
+//	public String dealEndTalentSellList(Model model) {
+//		String id = (String)session.getAttribute("loginID");
+//		String talent="재능";
+//		List<HashMap<Object, Object>> dealEndTalentSellList =service.dealEndTalentSellList(id,talent);
+//		model.addAttribute("talentsellList",dealEndTalentSellList);
+//		return "/mypage/dealEndTalentSellList";
+//	}
+//
+//	// 거래 완료 목록 출력 - 재능 구매완료
+//	@RequestMapping(value="/dealEndTalentBuyList", produces="text/html;charset=utf8")
+//	public String dealEndTalentBuyList(Model model) {
+//		String id = (String)session.getAttribute("loginID");
+//		String talent="재능";
+//		List<HashMap<Object, Object>> dealEndTalentBuyList =service.dealEndTalentBuyList(id,talent);
+//		model.addAttribute("talentbuyList",dealEndTalentBuyList);
+//		return "/mypage/dealEndTalentBuyList";
+//	}
 
 
 	/////////////////////////////////////////////////////////////////////////////////////////// 내가 쓴 게시글 목록

@@ -254,35 +254,27 @@ img {
 						})
 
 		// 예약 취소 버튼을 눌렀을 경우
-		$(".cnum-btn1").on(
-				"click",
-				function() {
-					let result = confirm("예약을 취소 하시겠습니까?");
-					if (result) {
-						let button = $(this);
-						$.ajax(
-								{
-									url : "/my/bookingFail",
-									data : {
-										parent : $(
-												$(this).parent().siblings()
-														.children().children(
-																"#parentseq"))
-												.val()
-									}
-								}).done(function(resp) {
-							if (resp == "1") {
-								alert("취소하였습니다.")
-								location.reload();
-							} else {
-								alert("에러 발생, 다시 시도해주세요.")
-								return false;
-							}
-						})
-					} else {
-						return false;
-					}
-				})
+      $(document).on("click",".cnum-btn1" ,function() {
+         let result = confirm("취소 하시겠습니까?");
+         console.log($($(this).parent().siblings("#parent")).val())
+         if (result) {
+            let button = $(this);
+            $.ajax({
+               url:"/my/bookingFail",
+               data:{parent:$($(this).parent().siblings("#parent")).val()}
+            }).done(function(resp){
+               if(resp=="1"){
+                  alert("취소하였습니다.")
+                  location.reload();
+               }else{
+                  alert("에러 발생, 다시 시도해주세요.")
+                  return false;
+               }
+            })
+         } else {
+            return false;
+         }
+      })
 	})
 	
 </script>

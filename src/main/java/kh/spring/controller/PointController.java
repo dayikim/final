@@ -30,7 +30,7 @@ public class PointController {
 
 	@Autowired
 	private LendService LService;
-
+	
 	@Autowired
 	private SellTalentService STService;
 
@@ -101,7 +101,7 @@ public class PointController {
 		model.addAttribute("point",pointAmount);
 		return "/point/payment_talent";
 	}
-	
+
 	//대여하기 결제하기 폼으로
 	@RequestMapping("TopaymentBylend")
 	public String TopaymentBylend(int seq, String id, Model model) {
@@ -116,9 +116,9 @@ public class PointController {
 
 		int pointAmount =PointService.checkAmount(sessionID);//잔고금액
 		model.addAttribute("point",pointAmount);
-		
+
 		return "/point/payment_lend";
-	
+
 	}
 	//잔여 포인트 check
 	@ResponseBody
@@ -132,14 +132,14 @@ public class PointController {
 	@ResponseBody
 	@RequestMapping(value="isPayment",produces="text/html;charset=utf8")
 	public String isPayment(int parentseq) {
-		 System.out.println("seq :" + parentseq);
+		System.out.println("seq :" + parentseq);
 		int isPayment =PointService.isPayment(parentseq);
 		if(isPayment>0) {
 			System.out.println("이미 결제된 거래글 입니다.");
 		}
 		return String.valueOf(isPayment);	
 	}
-	
+
 	//구매자가 확인버튼 누른다음 결제하기
 	@RequestMapping(value="payment",produces="text/html;charset=utf8")
 	public String payment(int parentseq, String item,String seller, String category, int price, String paymentable, Model model, PaymentDTO paydto, PointAccountDTO padto) {
@@ -152,15 +152,15 @@ public class PointController {
 
 		//lend인지 selltalent인지 구분
 		System.out.println(parentseq +":" + sessionID +":" + category + ":" + paymentable);
-//		int isitLendBoard =LService.isitLend(parentseq,sessionID,category);	
-//		if(isitLendBoard>0) {
-			System.out.println("대여하기");
-			paydto.setBoardtype("물품");
-		
-//		}else {
-//			System.out.println("재능판매");
-//			paydto.setBoardtype("재능");
-//		}
+		//		int isitLendBoard =LService.isitLend(parentseq,sessionID,category);	
+		//		if(isitLendBoard>0) {
+		System.out.println("대여하기");
+		paydto.setBoardtype("물품");
+
+		//		}else {
+		//			System.out.println("재능판매");
+		//			paydto.setBoardtype("재능");
+		//		}
 		// 결제 하기 
 		paydto.setSeller(seller);
 		paydto.setItem(item);
@@ -183,20 +183,20 @@ public class PointController {
 				System.out.println("구매자 포인트 차감 성공");
 				//구매자/판매자가 오프라인 거래 후, 구매자가 확인버튼 누르면 판매자에게 입금
 				//pointaccount insert value(seq,id=seller(approval테이블),'0','0','500','판매금액',sysdate)	
-//				int isitLendBoard1 =LService.isitLend(parentseq,sessionID,category);	
-//				if(isitLendBoard1>0) {
-//					System.out.println("대여하기");
-//					String writer = LService.getId(parentseq);
-//					System.out.println("판매자 :" +writer);
-//					padto.setId(writer);
-//
-//				}else {
-//					System.out.println("재능판매");
-//					String writer =STService.getWriter(parentseq);
-//					System.out.println("판매자 :" +writer);
-//					padto.setId(writer);
-//				}
-				
+				//				int isitLendBoard1 =LService.isitLend(parentseq,sessionID,category);	
+				//				if(isitLendBoard1>0) {
+				//					System.out.println("대여하기");
+				//					String writer = LService.getId(parentseq);
+				//					System.out.println("판매자 :" +writer);
+				//					padto.setId(writer);
+				//
+				//				}else {
+				//					System.out.println("재능판매");
+				//					String writer =STService.getWriter(parentseq);
+				//					System.out.println("판매자 :" +writer);
+				//					padto.setId(writer);
+				//				}
+
 				padto.setId(seller);
 				padto.setEarnpoint(price);
 				padto.setPointamount(price);
@@ -208,6 +208,21 @@ public class PointController {
 
 				if(inputPoint_result>0) {
 					System.out.println("판매자에게 포인트 입금 완료");
+
+					//approval and booking 기록 삭제
+					System.out.println("거래 완료 ");
+					int approvalDelete =MypageService.approvalDelete(sessionID,parentseq);
+					if(approvalDelete>0) {
+						System.out.println("승인내역 삭제");
+						int bookingDelete =MypageService.bookingDelete(sessionID,parentseq);
+						if(bookingDelete>0) {
+							System.out.println("예약 내역 삭제");
+
+						}
+					}
+
+
+
 				}else {
 					System.out.println();
 				}
@@ -219,6 +234,12 @@ public class PointController {
 		}else {
 			System.out.println("구매자 결제 실패");
 		}
+
+
+
+
+
+
 		return "redirect:/my/mypageProc";
 	}
 

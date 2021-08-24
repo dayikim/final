@@ -207,10 +207,6 @@ public class MypageService {
 	}
 	
 	
-	
-	
-	
-	
 	//결제 완료된 예약 내역
 	public List<HashMap<String, Object>> buyRequestTalent2(String sessionID) {
 		String y = "y";
@@ -300,9 +296,11 @@ public class MypageService {
 
 	// 거래 완료 목록 출력 - 물품 대여
 	public  List<HashMap<Object, Object>> dealEndProductSellList(String id, String product) {
+		String y="y";
 		Map<Object, Object> param = new HashMap<>();
 		param.put("id", id);
 		param.put("product", product);
+		param.put("y", y);
 		return dao.dealEndProductSellList(param);
 	}
 
@@ -338,6 +336,21 @@ public class MypageService {
 		param.put("talent", boardtype);
 		param.put("y", paymentable);
 		return dao.paymentCount(param);
+	}
+	//거래 완료 후 승인 내역 삭제
+	public int approvalDelete(String sessionID, int parentseq) {
+		Map<Object, Object> param = new HashMap<>();
+		param.put("id", sessionID);
+		param.put("parentseq", parentseq);
+		
+		return adao.approvalDelete(param);
+	}
+	//거래 후 거래후 booking 내역 삭제
+	public int bookingDelete(String sessionID, int parentseq) {
+		Map<Object, Object> param = new HashMap<>();
+		param.put("id", sessionID);
+		param.put("parentseq", parentseq);
+		return bdao.bookingDelete(param);
 	}
 
 	
