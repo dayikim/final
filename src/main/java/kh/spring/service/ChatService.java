@@ -26,8 +26,10 @@ import com.google.gson.JsonObject;
 import kh.spring.API.NaverApi;
 import kh.spring.config.ChatRegx;
 import kh.spring.dao.BorrowDAO;
+import kh.spring.dao.BwBoardFilesDAO;
 import kh.spring.dao.ChatRoomDao;
 import kh.spring.dao.LendDAO;
+import kh.spring.dao.LendFilesDAO;
 import kh.spring.dao.MessageDao;
 import kh.spring.dao.ProfileFilesDAO;
 import kh.spring.dao.RequestTalentDAO;
@@ -71,6 +73,12 @@ public class ChatService  implements InitializingBean {
 	
 	@Autowired
 	ProfileFilesDAO pffd;
+	
+	@Autowired
+	BwBoardFilesDAO bbfd;
+	
+	@Autowired
+	LendFilesDAO lfdao;
 	
 	private static Map<String, List<Session>> rs = Collections.synchronizedMap(new HashMap<String, List<Session>>());
 	
@@ -133,6 +141,26 @@ public class ChatService  implements InitializingBean {
 			return rtd.detailView(room_temp.getBoard_seq());
 		default: return null;
 		}
+	}
+	
+	public String getChatPicture(String roomid,String id,HttpSession session) {
+		Map<String, String> temp = new HashMap<String, String>();
+		temp.put("roomid", roomid);
+		temp.put("id", id);
+		ChatRoomDto room_temp = crd.FindByRoominfo(temp);
+		String toBinary ="";
+		switch (room_temp.getBoard_category()) {
+		case "lend": 
+			toBinary = lfdao.repre_picture(room_temp.getBoard_seq()) != null?  
+					Base64.getEncoder().encodeToString(getFileBinary(session.getServletContext().getRealPath("resources/imgs/lend")+"/"+lfdao.repre_picture(room_temp.getBoard_seq()).getSysName())): null;
+			break;
+			
+		case "borrow": 
+			toBinary = bbfd.repre_picture(room_temp.getBoard_seq()) != null?  
+					Base64.getEncoder().encodeToString(getFileBinary(session.getServletContext().getRealPath("resources/imgs/borrow")+"/"+bbfd.repre_picture(room_temp.getBoard_seq()).getSysName())): null;
+			break;
+		}
+		return toBinary;
 	}
 	
 	

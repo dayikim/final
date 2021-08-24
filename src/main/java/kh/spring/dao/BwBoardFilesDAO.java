@@ -38,4 +38,9 @@ public class BwBoardFilesDAO {
 	public int delete(int seq) {
 		return mybatis.delete("BwFiles.delete", seq);
 	}
+	
+	public BorrowBoardFilesDTO repre_picture(int parentseq) {
+		return mybatis.selectOne("BwFiles.repre_picture", parentseq);
+	}
+	
 }
