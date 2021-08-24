@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>마이페이지</title>
+<title>돈-다 마이페이지</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
 <!-- bootstrap -->
@@ -204,7 +204,7 @@ img{
 /* 안에 들어갈 미리보기 설정 */
 .product {
 	width: 330px;
-	height:30px;
+	height:31px;
 	margin-left: 15px;
 }
 
@@ -298,17 +298,17 @@ img{
 
 </style>
 <script>
-	$(function(){		
+	$(function(){	
 		// 게시물 검색
-/* 		$("#search").keyup(function(e) {
+		$("#search").keyup(function(e) {
 			if (e.keyCode == 13) {
-				location.href = "/AllBoardList/lendList?category=AllCategory&search="+$("#search").val()+"&cpage=1";
+				location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
 			}
-		}) */
+		})
 		
 		// 채팅
 		$("#chat").on("click",function(){
-			location.href = "/chat";
+				location.href = "/chat/waitingroom";
 		})
 		
 		// 프로필 사진 업로드

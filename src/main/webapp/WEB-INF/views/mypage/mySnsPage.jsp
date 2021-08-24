@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>돈 빼고 다! 돈-고</title>
+<title>돈 빼고 다! 돈-다</title>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free Website Template" name="keywords">
@@ -459,15 +459,17 @@ $(function() {
 	})
 
 	
-	$("#search").keyup(function(e) {
-		if (e.keyCode == 13) {
-			location.href = "/AllBoardList/allList?search="+ $("#search").val();
-		}
-	})
-	
-	$("#chat").on("click",function(){
-		location.href = "/chat";
-	})
+	// 게시물 검색
+		$("#search").keyup(function(e) {
+				if (e.keyCode == 13) {
+					location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
+				}
+		})
+
+		// 채팅
+		$("#chat").on("click",function(){
+				location.href = "/chat/waitingroom";
+		})
 		
 	})
 </script>
