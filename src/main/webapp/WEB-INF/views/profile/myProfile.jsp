@@ -137,7 +137,6 @@ div {
 	height: 100px;
 	margin-top: 10px;
 	margin-left: 40px;
-	border-radius: 40px;
 	overflow: hidden;
 	vertical-align: middle;
 }
