@@ -139,6 +139,10 @@ public class ProfileController {
 	@RequestMapping("userSelling")//판매목록(유저 프로필)
 	public String sellingList(String id, Model model) {
 		String sessionID = (String) session.getAttribute("loginID");
+		
+		ProfileFilesDTO pfdto = MypageService.profileSelect(id); // 프사 출력
+		model.addAttribute("profile",pfdto); //프로필
+		
 		PersonDTO writerInfo = STService.memberInfoById(id);//글 작성자 정보(이름,주소)
 		model.addAttribute("writerInfo",writerInfo);
 
@@ -166,7 +170,6 @@ public class ProfileController {
 	public String sellingViewByMe(int seq,String category,Model model) throws Exception {
 		System.out.println(seq);
 		String id = (String) session.getAttribute("loginID");
-
 		ProfileFilesDTO pfdto = MypageService.profileSelect(id); // 프사 출력
 		model.addAttribute("profile",pfdto); //프로필
 

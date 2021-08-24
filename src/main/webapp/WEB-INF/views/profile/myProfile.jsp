@@ -354,7 +354,7 @@ border-bottom: solid 3px #39d9c8;
 					<div id="profile-image">
 						<c:choose>
 							<c:when test="${profile != null}">
-								<img src="/imgs/mypage/${profile.sysName }" id=profile>
+								<img src="/imgs/mypage/${profile.sysName}" id=profile>
 							</c:when>
 							<c:otherwise>
 								<img src="/imgs/nomalProfile.jpg" id=profile>
