@@ -43,6 +43,7 @@
 	</select> -->
 
 	<resultMap type="HashMap" id="dealEndlist">
+		
 		<result column="name" property="name" />
 		<result column="address1" property="address1" />
 		<result column="buyer" property="buyer" />
@@ -57,22 +58,23 @@
 			jdbcType="VARCHAR" />
 	</resultMap>
 
+
+	<!-- 물품 대여 완료 내역 출력 판매자(session)=> 구매자에게 -->
 	<select id="dealEndProductSellList" resultMap="dealEndlist"
 		resultType="HashMap">
 		select distinct name,address1,payment.item,payment.buyer,payment.seller,payment.parentseq,price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype
 		from payment join person on
-		(person.id=payment.seller)where payment.buyer=#{id} and payment.boardtype=#{product} and payment.paymentable=#{y}
+		(person.id=payment.buyer)where payment.seller=#{id} and payment.boardtype=#{product} and payment.paymentable=#{y}
 	</select>
 
 
 
-	<!-- 물품 대여 완료 내역 출력 판매자(session)=> 구매자에게 -->
 	<select id="reviewNow" resultMap="dealEndlist"
 		resultType="HashMap">
-		select distinct name,contents,payment.item,payment.buyer,payment.seller,payment.parentseq,price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype,review.reviewable
-		from payment join person on
-		(person.id=payment.buyer)join review on (review.reviewer =payment.seller and review.recipient = payment.buyer and review.parentseq = payment.parentseq
-        )where
+	select distinct name,payment.item,payment.buyer,payment.seller,payment.parentseq,price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype
+     from payment join person on
+		(person.id=payment.buyer)     
+        where
 		payment.seller=#{id} and
 		payment.boardtype=#{product}
 	</select>
@@ -93,8 +95,9 @@
 	<select id="dealEndProductBuyList" resultMap="dealEndlist"
 		resultType="HashMap">
 		 select distinct name,payment.item,payment.buyer,payment.seller,payment.parentseq,price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype
-		from payment join person on
-		(person.id=payment.seller)where
+     from payment join person on
+		(person.id=payment.seller)     
+        where
 		payment.buyer=#{id} and
 		payment.boardtype=#{product}and payment.paymentable='y'
 	</select>

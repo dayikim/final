@@ -25,6 +25,7 @@ import kh.spring.dto.PersonDTO;
 import kh.spring.dto.PointAccountDTO;
 import kh.spring.dto.ProfileFilesDTO;
 import kh.spring.dto.RequestTalentDTO;
+import kh.spring.dto.ReviewDTO;
 import kh.spring.dto.SellTalentDTO;
 import kh.spring.dto.SnsDTO;
 import kh.spring.dto.SnsFilesDTO;
@@ -295,11 +296,17 @@ public class MypageController {
 		String product="물품";
 		List<HashMap<Object, Object>> dealEndProductSellList =service.dealEndProductSellList(id,product);
 		model.addAttribute("productSellList",dealEndProductSellList);
-
-				
-		
 		return "/mypage/dealEndProductSellList";
 	}
+	
+	@RequestMapping("reviewed")
+	@ResponseBody
+	public String reviewed() {
+		List<ReviewDTO> alist = service.reviewd((String)session.getAttribute("loginID"));
+		Gson gs = new Gson();	
+		return gs.toJson(alist);
+	}
+	
 
 	// 거래 완료 목록 출력 -물품 빌리기
 	@RequestMapping(value="/dealEndProductBuyList", produces="text/html;charset=utf8")

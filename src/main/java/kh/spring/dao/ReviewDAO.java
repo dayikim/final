@@ -15,6 +15,7 @@ public class ReviewDAO {
 	
 	@Autowired
 	private SqlSessionTemplate mybatis;
+	public List<ReviewDTO> reveiwed;
 	
 	
 	public int write(ReviewDTO dto) {
@@ -47,5 +48,9 @@ public class ReviewDAO {
 
 	public int checkReview(int seq) {
 		return mybatis.selectOne("Review.checkReview",seq);
+	}
+
+	public List<ReviewDTO> reveiwed(String id) {
+		return mybatis.selectList("Review.reviwed",id);
 	}
 }

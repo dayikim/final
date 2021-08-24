@@ -22,6 +22,7 @@ import kh.spring.dao.PointAccountDAO;
 import kh.spring.dao.PointDAO;
 import kh.spring.dao.ProfileFilesDAO;
 import kh.spring.dao.RequestTalentDAO;
+import kh.spring.dao.ReviewDAO;
 import kh.spring.dao.SellTalentDAO;
 import kh.spring.dao.SnsDAO;
 import kh.spring.dao.TalentBoardDAO;
@@ -46,6 +47,9 @@ public class MypageService {
 	private ProfileFilesDAO pdao; // 프로필
 	@Autowired
 	private PointAccountDAO ppdao; // 포인트
+	
+	@Autowired
+	private ReviewDAO rdao; // 포인트
 
 	@Autowired
 	private PaymentDAO paydao;//결제
@@ -351,6 +355,10 @@ public class MypageService {
 		param.put("id", sessionID);
 		param.put("parentseq", parentseq);
 		return bdao.bookingDelete(param);
+	}
+
+	public List<ReviewDTO> reviewd(String id) {
+		return rdao.reveiwed(id);
 	}
 
 	

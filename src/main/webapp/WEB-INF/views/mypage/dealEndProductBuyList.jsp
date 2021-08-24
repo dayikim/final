@@ -313,7 +313,36 @@ form {
 							}
 						})
 						
-						
+			$.ajax({
+			url:'/my/reviewed',
+			method:'get',
+			dataType:'json'
+		}).done(function(result){
+			
+			let arr =[];
+			
+			for(let i=0; i<result.length; i++){
+				arr.push(result[i].parentseq);
+			}
+			console.log(arr);
+			
+			for(let j=0; j<$(".parentseq").length; j++){
+					let node = "";
+					console.log($($(".parentseq")[j]).val());
+				if(arr.indexOf(Number($($(".parentseq")[j]).val()))==-1){
+					
+					node += "<div class=review>"
+					
+					node +=	"<a href="" data-toggle=modal data-target=#sendModal${vs.index} id=openReview>작성한 후기 보기</a>
+					node += "</div>"
+					$($(".parentseq")[j]).parent().append(node);
+					
+				}
+				
+				
+			}
+			
+		})			
 						
 						
 						
@@ -468,7 +497,7 @@ form {
 					</div>
 				</div>
 				<hr>
-
+                   <input type=hidden value="${i.parentseq}" class="parentseq">
 				<!-- 거래 후기 링크 걸기 -->
 				<div class="review">
 					<c:choose>
