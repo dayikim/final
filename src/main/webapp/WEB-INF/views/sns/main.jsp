@@ -8,9 +8,13 @@
 <title>Insert title here</title>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link
+	href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+	rel="stylesheet" id="bootstrap-css">
+<script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script
+	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
 <link rel="stylesheet"
@@ -22,9 +26,11 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
 	integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
 	crossorigin="anonymous"></script>
-	
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
+
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+	integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+	crossorigin="anonymous"></script>
 
 
 
@@ -79,16 +85,40 @@ style>body {
 	font-size: 50px;
 }
 
-#hiddencomment{
-	display : none;
+#hiddencomment {
+	display: none;
 }
 
 #photo {
 	max-width: 300px;
 	max-height: 400px;
 }
+
+#loading {
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	position: fixed;
+	display: block;
+	opacity: 0.6;
+	background: #e4e4e4;
+	z-index: 99;
+	text-align: center;
+}
+
+#loading>img {
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	z-index: 100;
+}
 </style>
 <script>
+$(document).ready(function() {
+	$('#loading').hide();
+	})
+	
 	let fileList = [];
 	var count = 2;
 	$(function() {
@@ -97,147 +127,157 @@ style>body {
 		console.log("count 값: "+count);
 		let loadNewPage = $(window).on("scroll",(function() {
 			if (((window.innerHeight + window.scrollY) >= document.body.offsetHeight)&& isScroll) {
-				$.ajax({
-					url : "/sns/page",
-					type : "get",
-					data : {"count" : count},
-					dataType : "json"
-				}).done(function(e){
-					if (count > Number($("#length").val()) / 5) isScroll = false;
-					console.log(isScroll);
-					for(let i =0; i<e.length; i++){
-					if(isScroll){
-					var node ="";
-					
-					node += "<div class=\"card gedf-card\">"
-					node +="<div class=card-header>"
-					     node +="<div class=\"d-flex justify-content-between align-items-center\">"
-					         node +="<div class=\"d-flex justify-content-between align-items-center\">"
-						node +="<div class=mr-2>"
+				 $('#loading').show();
+				    return true;
+				setTimeout(function(){
+					$.ajax({
+						url : "/sns/page",
+						type : "get",
+						data : {"count" : count},
+						async: false,
+						dataType : "json"
+					}).done(function(e){
 						
-							  $.ajax({
-						    	  url: "/sns/snsprofileimage",
-						    	  type : "get",
-								  data : {"id":e[i].id},
-								  async: false,
-								  dataType : "TEXT"
-						      }).done(function(result){
-						    	  if(result !=null){
-						    		  node += "<img class=rounded-circle style =\"width :50px; height :50px;\" src=\"data:image/png;base64,"+result+"\">";
-						    	  }else{
-						    		  node += "<img class=rounded-circle style =\"width :50px; height :50px;\" src = \"/imgs/nomalProfile.jpg\">";
-						    	  }
+						if (count > Number($("#length").val()) / 5) isScroll = false;
+						console.log(isScroll);
+						for(let i =0; i<e.length; i++){
+						if(isScroll){
+						var node ="";
+						
+						node += "<div class=\"card gedf-card\">"
+						node +="<div class=card-header>"
+						     node +="<div class=\"d-flex justify-content-between align-items-center\">"
+						         node +="<div class=\"d-flex justify-content-between align-items-center\">"
+							node +="<div class=mr-2>"
+							
+								  $.ajax({
+							    	  url: "/sns/snsprofileimage",
+							    	  type : "get",
+									  data : {"id":e[i].id},
+									  async: false,
+									  dataType : "TEXT"
+							      }).done(function(result){
+							    	  if(result !=null){
+							    		  node += "<img class=rounded-circle style =\"width :50px; height :50px;\" src=\"data:image/png;base64,"+result+"\">";
+							    	  }else{
+							    		  node += "<img class=rounded-circle style =\"width :50px; height :50px;\" src = \"/imgs/nomalProfile.jpg\">";
+							    	  }
 
-						      })
+							      })
 
-						node += "</div>"
-							node +="<div class=ml-2>"
-								node +="<div class=\"h5 m-0\">"+e[i].id + "<input type=hidden id=hiddenseq value="+e[i].seq+">"
-								
-								if(e[i].id == $("#session").val()){
-									node +="<a href=/sns/delete?seq="+e[i].seq+" id=del style =\"position:relative; left:5%\">삭제</a>"
-									node +="<a href=/sns/modify?seq="+e[i].seq+" id=modi style =\"position:relative; left:10%\">수정</a>"
-								}						
-														
+							node += "</div>"
+								node +="<div class=ml-2>"
+									node +="<div class=\"h5 m-0\">"+e[i].id + "<input type=hidden id=hiddenseq value="+e[i].seq+">"
+									
+									if(e[i].id == $("#session").val()){
+										node +="<a href=/sns/delete?seq="+e[i].seq+" id=del style =\"position:relative; left:5%\">삭제</a>"
+										node +="<a href=/sns/modify?seq="+e[i].seq+" id=modi style =\"position:relative; left:10%\">수정</a>"
+									}						
+															
+								node +="</div>"
+
+										node +="<div class=\"h7 text-muted\">"+e[i].region+"</div>"
 							node +="</div>"
-
-									node +="<div class=\"h7 text-muted\">"+e[i].region+"</div>"
-						node +="</div>"
-					node += "</div>"
-				node +="<div></div>"
+						node += "</div>"
+					node +="<div></div>"
+					node +="</div>"
 				node +="</div>"
-			node +="</div>"
-					node +="<div class=card-body id="+e[i].seq+">"
-						node +="<div class=\"text-muted h7 mb-2\">"
-						      node +="<i class=\"fa fa-clock-o\"></i>"+e[i].category+"</div>"
-						      $.ajax({
-						    	  url: "/sns/snspicture",
-						    	  type : "get",
-								  data : {"firstseq":e[e.length-1].seq  , "lastseq" :e[0].seq},
-								  async: false,
-								  dataType : "json"
-						      }).done(function(result){
-						    	  for(let p=0; p<result.length; p++){
-						    		  if(result[p].parent == e[i].seq){
-						  
-						    			  node += "<a href=\"/sns/download?oriName="+result[p].oriName+"\">";
-						    			  node += "<img src=\"data:image/png;base64,"+result[p].sysName+"\" id=photo>";
-						    			  node += "</a>";
+						node +="<div class=card-body id="+e[i].seq+">"
+							node +="<div class=\"text-muted h7 mb-2\">"
+							      node +="<i class=\"fa fa-clock-o\"></i>"+e[i].category+"</div>"
+							      $.ajax({
+							    	  url: "/sns/snspicture",
+							    	  type : "get",
+									  data : {"firstseq":e[e.length-1].seq  , "lastseq" :e[0].seq},
+									  async: false,
+									  dataType : "json"
+							      }).done(function(result){
+							    	  for(let p=0; p<result.length; p++){
+							    		  if(result[p].parent == e[i].seq){
+							  
+							    			  node += "<a href=\"/sns/download?oriName="+result[p].oriName+"\">";
+							    			  node += "<img src=\"data:image/png;base64,"+result[p].sysName+"\" id=photo>";
+							    			  node += "</a>";
 
-						    		  }
+							    		  }
 
-						    	  }
+							    	  }
 
-						      })
-						      
-									 node +="<p class=card-text>"+e[i].contents+"</p>"
-									 node +="</div>"
-									 node +="<div class=card-footer>"
-										
-						
-										 $.ajax({
-									    	  url: "/sns/isliked",
-									    	  type : "get",
-											  async: false,
-											  dataType : "json"
-									      }).done(function(result){
-									    	  var likearr = [];
-									    	  for(let z=0; z<result.length; z++){
-									    		  likearr.push(Number(result[z]));
-									    	  }
-									    	  console.log(likearr.indexOf(e[i].seq));
-									    	  console.log("내가 좋아요 게시글 누른 리스트: "+ likearr);
-									    	  console.log("불러오는 sns 게시글 seq"+e[i].seq);
-									    		  if(likearr.indexOf(e[i].seq)!= -1 ){
-									    			  node +="<a class=card-link id=love style=\"color: #FF6B6B\">"
-													  node +="<i class=\"fas fa-heart\"></i>"+e[i].love+"</a>"
-									    		  }else{
-									    			  node +="<a class=card-link id=love style=\"color: #FDD2BF\">"
-													  node +="<i class=\"far fa-heart\"></i>"+e[i].love+"</a>"
-									    		  }
-									    	  
+							      })
+							      
+										 node +="<p class=card-text>"+e[i].contents+"</p>"
+										 node +="</div>"
+										 node +="<div class=card-footer>"
+											
+							
+											 $.ajax({
+										    	  url: "/sns/isliked",
+										    	  type : "get",
+												  async: false,
+												  dataType : "json"
+										      }).done(function(result){
+										    	  var likearr = [];
+										    	  for(let z=0; z<result.length; z++){
+										    		  likearr.push(Number(result[z]));
+										    	  }
+										    	  console.log(likearr.indexOf(e[i].seq));
+										    	  console.log("내가 좋아요 게시글 누른 리스트: "+ likearr);
+										    	  console.log("불러오는 sns 게시글 seq"+e[i].seq);
+										    		  if(likearr.indexOf(e[i].seq)!= -1 ){
+										    			  node +="<a class=card-link id=love style=\"color: #FF6B6B\">"
+														  node +="<i class=\"fas fa-heart\"></i>"+e[i].love+"</a>"
+										    		  }else{
+										    			  node +="<a class=card-link id=love style=\"color: #FDD2BF\">"
+														  node +="<i class=\"far fa-heart\"></i>"+e[i].love+"</a>"
+										    		  }
+										    	  
 
-									      })			 
-					/* 	if(Number(e[i].love) ==0){				
-						 node +="<a class=card-link id=love style=\"color: #FDD2BF\">"
-						 node +="<i class=\"far fa-heart\"></i>"+e[i].love+"</a>"
-						}else{
-						 node +="<a class=card-link id=love style=\"color: #FF6B6B\">"
-						 node +="<i class=\"fas fa-heart\"></i>"+e[i].love+"</a>"
-						} */
-																					
-				 node += "<a class=card-link id=commenticon>"
-			     node +="<i class=\"fas fa-comment-dots\"></i>"
-			 node += "Comment</a>"
-						 node +="</div>"
+										      })			 
+						/* 	if(Number(e[i].love) ==0){				
+							 node +="<a class=card-link id=love style=\"color: #FDD2BF\">"
+							 node +="<i class=\"far fa-heart\"></i>"+e[i].love+"</a>"
+							}else{
+							 node +="<a class=card-link id=love style=\"color: #FF6B6B\">"
+							 node +="<i class=\"fas fa-heart\"></i>"+e[i].love+"</a>"
+							} */
+																						
+					 node += "<a class=card-link id=commenticon>"
+				     node +="<i class=\"fas fa-comment-dots\"></i>"
+				 node += "Comment</a>"
+							 node +="</div>"
 
-									<!-- 댓글작성 -->
-									 node += "<div id=hiddencomment>"
-										 node += "<div class=\"input-group mb-3\">"
-			 node += "<input type=text class=form-control id=comment placeholder=\"댓글을 작성해주세요\" aria-label=Recipient's username aria-describedby=button-addon2>"
-											 node +="<div class=input-group-append>"
-						 node += "<button class=\"btn btn-outline-secondary\" type=button id=sendcomment>"
-													 node += "<i class=\"fas fa-pen\"></i>"
-												 node += "</button>"
+										<!-- 댓글작성 -->
+										 node += "<div id=hiddencomment>"
+											 node += "<div class=\"input-group mb-3\">"
+				 node += "<input type=text class=form-control id=comment placeholder=\"댓글을 작성해주세요\" aria-label=Recipient's username aria-describedby=button-addon2>"
+												 node +="<div class=input-group-append>"
+							 node += "<button class=\"btn btn-outline-secondary\" type=button id=sendcomment>"
+														 node += "<i class=\"fas fa-pen\"></i>"
+													 node += "</button>"
+												 node += "</div>"
+						 node += "<input type=hidden id=hidden value="+e[i].seq+"> <input type=hidden id=lovecount value="+e[i].love+">"
 											 node += "</div>"
-					 node += "<input type=hidden id=hidden value="+e[i].seq+"> <input type=hidden id=lovecount value="+e[i].love+">"
+
+											<!-- 댓글리스트 -->
+											
 										 node += "</div>"
-
-										<!-- 댓글리스트 -->
-										
 									 node += "</div>"
-								 node += "</div>"
 
-					$("#snsbody").append(node); 
-							 
+						$("#snsbody").append(node); 
 								 
+									 
+						}
 					}
-				}
-					count++;	
-				})
+						count++;	
+					})
+				},2000)
 				
+				$('#loading').hide();
 			}
 		}));	
+
+			
+
 		
 		let fileList = [];
 		//파일명출력
@@ -498,61 +538,61 @@ style>body {
 </script>
 </head>
 <body>
-<jsp:include page= "/WEB-INF/views/navi.jsp" />
+	<jsp:include page="/WEB-INF/views/navi.jsp" />
 	<div class="container-fluid gedf-wrapper" id=SnSbody>
 		<div class="row" id=row>
 			<div class="col-md-3"></div>
 			<div class="col-md-6 gedf-main">
 				<!--- 글쓰기-->
-					<div class="card gedf-card">
-						<div class="card-header">
-							<ul class="nav nav-tabs card-header-tabs" id="myTab"
-								role="tablist">
-								<li class="nav-item"><a class="nav-link active"
-									id="posts-tab" data-toggle="tab" href="#posts" role="tab"
-									aria-controls="posts" aria-selected="true">글 작성</a></li>
-								<li class="nav-item"><a class="nav-link" id="images-tab"
-									data-toggle="tab" role="tab" aria-controls="images"
-									aria-selected="false" href="#images">사진첨부</a></li>
-							</ul>
-						</div>
-						<div class="card-body">
-							<div class="tab-content" id="myTabContent">
-								<div class="tab-pane fade show active" id="posts"
-									role="tabpanel" aria-labelledby="posts-tab">
-									<div class="form-group">
-										<label class="sr-only" for="contents">post</label>
-										<textarea class="form-control" id="contents" name=contents
-											rows="3" placeholder="사람들과 공유하고 싶은 내용을 작성해주세요"></textarea>
-									</div>
-								</div>
-								<div class="tab-pane fade" id="images" role="tabpanel"
-									aria-labelledby="images-tab">
-									<div class="form-group">
-										<div class="custom-file">
-											<input type=file name=file id=file accept=".gif, .jpg, .png"
-												multiple>
-											<div id=upload></div>
-										</div>
-									</div>
-									<div class="py-4"></div>
+				<div class="card gedf-card">
+					<div class="card-header">
+						<ul class="nav nav-tabs card-header-tabs" id="myTab"
+							role="tablist">
+							<li class="nav-item"><a class="nav-link active"
+								id="posts-tab" data-toggle="tab" href="#posts" role="tab"
+								aria-controls="posts" aria-selected="true">글 작성</a></li>
+							<li class="nav-item"><a class="nav-link" id="images-tab"
+								data-toggle="tab" role="tab" aria-controls="images"
+								aria-selected="false" href="#images">사진첨부</a></li>
+						</ul>
+					</div>
+					<div class="card-body">
+						<div class="tab-content" id="myTabContent">
+							<div class="tab-pane fade show active" id="posts" role="tabpanel"
+								aria-labelledby="posts-tab">
+								<div class="form-group">
+									<label class="sr-only" for="contents">post</label>
+									<textarea class="form-control" id="contents" name=contents
+										rows="3" placeholder="사람들과 공유하고 싶은 내용을 작성해주세요"></textarea>
 								</div>
 							</div>
-							<div class="btn-toolbar justify-content-between">
-								<div class="btn-group">
-									<button type="button" id=submit class="btn btn-success">작성하기</button>
+							<div class="tab-pane fade" id="images" role="tabpanel"
+								aria-labelledby="images-tab">
+								<div class="form-group">
+									<div class="custom-file">
+										<input type=file name=file id=file accept=".gif, .jpg, .png"
+											multiple>
+										<div id=upload></div>
+									</div>
 								</div>
-								<!-- 카테고리 -->
-								<div class="btn-group">
-									<select name=category id=category>
-										<option>우리동네질문</option>
-										<option>동네홍보</option>
-										<option>기타</option>
-									</select>
-								</div>
+								<div class="py-4"></div>
+							</div>
+						</div>
+						<div class="btn-toolbar justify-content-between">
+							<div class="btn-group">
+								<button type="button" id=submit class="btn btn-success">작성하기</button>
+							</div>
+							<!-- 카테고리 -->
+							<div class="btn-group">
+								<select name=category id=category>
+									<option>우리동네질문</option>
+									<option>동네홍보</option>
+									<option>기타</option>
+								</select>
 							</div>
 						</div>
 					</div>
+				</div>
 
 				<!--- 게시글-->
 				<div id=snsbody>
@@ -648,6 +688,9 @@ style>body {
 							</div>
 						</div>
 					</c:forEach>
+					<div id="loading" style="margin-left: 0px;">
+						<img src="/imgs/img.gif">
+					</div>
 				</div>
 				<div class="col-md-3">
 					<i class="fas fa-arrow-up" id=top></i>
