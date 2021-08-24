@@ -137,7 +137,6 @@ div {
 	height: 100px;
 	margin-top: 10px;
 	margin-left: 40px;
-	border-radius: 40px;
 	overflow: hidden;
 	vertical-align: middle;
 }
@@ -375,9 +374,7 @@ border-bottom: solid 3px #39d9c8;
 										<h5 class="card-title"><a href="/lendBoard/lendView?id=${i.writer}&seq=${i.seq}">${i.title}</a></h5>
 										<div class="card-price ">${i.price} 상추</div>
 										<div class="card-region-name">${i.address}</div>
-										<div class="card-counts">
-											<span> 채팅 <span class="badge badge-danger">3</span></span>
-										</div>
+									
 									</div>
 								</div>
 							</div>
@@ -405,7 +402,7 @@ border-bottom: solid 3px #39d9c8;
 								<input type=hidden id=cpage value=${cpage }>
 							</div> -->
 				<div class="text-right">
-					<input type=button class="btn btn-secondary" value="메인으로" id="back">
+					<a href="/my/mypageProc" class="btn btn-secondary">메인으로</a>
 
 
 				</div>

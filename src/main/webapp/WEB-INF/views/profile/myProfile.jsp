@@ -392,7 +392,6 @@ border-bottom: solid 3px #39d9c8;
 										<div class="card-price ">${i.price}상추</div>
 										<div class="card-region-name">${i.address}</div>
 										<div class="card-counts">
-											<span> 채팅 <span class="badge badge-danger">3</span></span>
 										</div>
 									</div>
 								</div>

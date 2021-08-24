@@ -116,6 +116,8 @@ public class ProfileController {
 		String sessionID = (String) session.getAttribute("loginID");
 		PersonDTO writerInfo = STService.memberInfoById(id);//글 작성자 정보(이름,주소)
 		model.addAttribute("writerInfo",writerInfo);
+		ProfileFilesDTO pfdto = MypageService.profileSelect(id); // 프사 출력
+		model.addAttribute("profile",pfdto); //프로필
 
 		model.addAttribute("writer",id);
 

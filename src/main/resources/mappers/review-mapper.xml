@@ -21,11 +21,12 @@ select count(*) from review where recipient=#{value}
 	<result column="contents" property="contents"/>
 	<result column="regdate" property="regdate"/>
 	<result column="sysName" property="sysName"/>
+	<result column="regdate" property="regdate" jdbcType="VARCHAR"/>
 </resultMap>
 
 <select id="reviewList" resultMap="reviewList" resultType="HashMap">
 select 
-    p.name,p.id,p.address1,rv.contents,rv.regdate,pf.sysname 
+    p.name,p.id,p.address1,rv.contents,to_char(rv.regdate,'yyyy-mm-dd hh24:mi')as regdate, pf.sysname 
 from person p 
     left join review rv on rv.reviewer = p.id 
     left join PROFILEFILES pf on pf.parentseq = p.id
