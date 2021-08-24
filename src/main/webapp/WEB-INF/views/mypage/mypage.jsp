@@ -294,6 +294,7 @@ img{
 	cursor: pointer;
 }
 
+
 </style>
 <script>
 	$(function(){		
@@ -513,11 +514,11 @@ img{
 					</div>
 				</div>
 				<div class="row borrowList">
-					<!-- forEach 쓸 예정 -->
-					<div class="product">
-						<a href="#">현재 내가 빌려준 상품 목록 미리보기</a>
-					</div>
-
+					<c:forEach var="i" items="${borrowList}">
+						<div class="product">
+							<a href="#">${i.item }</a>
+						</div>
+					</c:forEach>
 				</div>
 			</div>
 			<hr>
@@ -536,10 +537,11 @@ img{
 					</div>
 				</div>
 				<div class="row lendList">
-					<!-- forEach 쓸 예정 -->
-					<div class="product">
-						<a href="#">현재 내가 빌린 상품 목록 미리보기</a>
-					</div>
+					<c:forEach var="i" items="${lendList}">
+						<div class="product">
+							<a href="#">${i.item}</a>
+						</div>
+					</c:forEach>
 				</div>
 			</div>
 			

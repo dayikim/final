@@ -62,12 +62,16 @@ public class MypageController {
 		String sessionID = (String) session.getAttribute("loginID");
 		PersonDTO dto = service.mypageList(sessionID); // 내 정보 출력
 		ProfileFilesDTO pdto = service.profileSelect(sessionID); // 내 프사 출력
-		int checkAmount =PointService.checkAmount(sessionID);
-		//		int pointAmount =PointService.amount(sessionID);//잔고금액
+		int checkAmount =PointService.checkAmount(sessionID); // 내 포인트 출력
+		List<PaymentDTO> borrowList = service.borrowProduct(sessionID); // 현재 빌린 상품 출력
+		List<PaymentDTO> lendList = service.lendProduct(sessionID); // 현재 빌려준 상품 출력
+		
 
 		session.setAttribute("myInfo", dto); // 내 정보
 		model.addAttribute("profile",pdto); // 내 프사
 		model.addAttribute("point",checkAmount); // 내 포인트
+		model.addAttribute("borrowList", borrowList); // 현재 빌린 상품
+		model.addAttribute("lendList", lendList); // 현재 빌려준 상품
 
 		return "mypage/mypage";
 	}
@@ -142,9 +146,9 @@ public class MypageController {
 	@RequestMapping(value="/borrowProduct", produces="text/html;charset=utf8")
 	public String borrowProduct(Model model) {
 		String sessionID = (String)session.getAttribute("loginID");
-		List<PaymentDTO> list = service.borrowProduct(sessionID);
+		List<PaymentDTO> borrowList = service.borrowProduct(sessionID);
 		
-		model.addAttribute("borrowList", list);
+		model.addAttribute("borrowList", borrowList);
 		return "/mypage/nowBorrowProduct";
 	}
 
@@ -152,9 +156,9 @@ public class MypageController {
 	@RequestMapping(value="/lendProduct", produces="text/html;charset=utf8")
 	public String lendProduct(Model model) {
 		String sessionID = (String)session.getAttribute("loginID");
-		List<PaymentDTO> list = service.borrowProduct(sessionID);
+		List<PaymentDTO> lendList = service.lendProduct(sessionID);
 		
-		model.addAttribute("lendList",list);
+		model.addAttribute("lendList",lendList);
 		return "/mypage/nowLendProduct";
 	}
 
