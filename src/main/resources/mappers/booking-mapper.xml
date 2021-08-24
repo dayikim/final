@@ -88,6 +88,10 @@ select distinct lendboard.writer,booking.booker,lendboard.price,lendboard.title,
 	delete from booking where booker=#{sessionID} and parentseq=${parent}
 </delete>
 
+<!--거래 완료 후 예약내역 삭제 -->
+<delete id="bookingDelete">
+delete from booking where booker=#{id} and parentseq=${parentseq}
+</delete>
 <!-- 예약하기 -->
 <insert id="booking">
 insert into booking values(booking_seq.nextval,#{seller},#{booker},#{bookable},#{parentseq},sysdate,#{boardtype})

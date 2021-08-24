@@ -72,6 +72,10 @@ public class BookingDAO {
    public int checkBooking(Map<Object, Object> param) {
       return mybatis.selectOne("Booking.checkBooking",param);
    }
+//거래 이후 booking 삭제 
+public int bookingDelete(Map<Object, Object> param) {
+	return mybatis.delete("Booking.bookingDelete",param);
+}
 
 
 

@@ -13,8 +13,12 @@
 
 	<!-- 거래 승인된 애들 출력 -->
 	<select id="dealSuccessSelect" resultType="kh.spring.dto.ApprovalDTO">
-		select * from approval where seller=#{id}
+		select * from approval where seller=#{value}
 	</select>
+	
+	<delete id="approvalDelete">
+	delete from approval where buyer=#{value}
+	</delete>
 	
 <!--구매자와 해당 게시글 승인여부  -->
 <select id="isApproval" resultType="string">

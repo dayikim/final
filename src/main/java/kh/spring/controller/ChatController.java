@@ -113,6 +113,7 @@ public class ChatController {
 		md.addAttribute("friend_profile_img",friendprofile_tobinary);
 		md.addAttribute("regex",cr);
 		md.addAttribute("info", cs.getboardInfo(roomid, (String)session.getAttribute("loginID")));
+		md.addAttribute("repre_picture", cs.getChatPicture(roomid,(String)session.getAttribute("loginID"), session));
 		return "chat/chat";
 	}
 	

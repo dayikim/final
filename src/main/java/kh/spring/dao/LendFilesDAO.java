@@ -43,4 +43,8 @@ public class LendFilesDAO {
 				
 		return mybatis.selectList("LendFiles.getList");
 	}
+	
+	public LendFilesDTO repre_picture(int parentseq) {
+		return mybatis.selectOne("LendFiles.repre_picture",parentseq);
+	}
 }

@@ -34,5 +34,9 @@ public class ApprovalDAO {
 	public List<ApprovalDTO> customerDealSuccess(String sessionID) {
 		return mybatis.selectList("Approval.customerDealSuccess",sessionID);
 	}
+
+	public int approvalDelete(Map<Object, Object> param) {
+		return mybatis.delete("Approval.approvalDelete",param);
+	}
 	
 }

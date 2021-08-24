@@ -359,7 +359,7 @@ height:60px;
 		                                       </div>
 		                                       		<c:choose>
 		                                       			<c:when test="${profile.get(status.index) != null}">
-		                                       				<img class=rounded-circle src="data:image/png;base64,${profile.get(status.index)} " alt="Retail Admin"> 
+		                                       				<img class=rounded-circle src="data:image/png;base64,${profile.get(status.index)}"> 
 		                                       			</c:when>
 		                                       			<c:otherwise>
 		                                       				<img class=rounded-circle src="/imgs/nomalProfile.jpg">
