@@ -83,7 +83,7 @@ img {
 /* 네비바 */
 .navi>div {
 	float: left;
-	width: 25%;
+	width: 50%;
 	text-align: center;
 }
 
@@ -284,19 +284,11 @@ img {
 	<!-- 네비바 -->
 	<div class="navi">
 		<div class="requestSellProduct">
-			<a href="/my/myRequestSellProduct"> <b>대여 하기</b>
+			<a href="/my/myRequestSellProduct"> <b>물품 대여 하기</b>
 			</a>
 		</div>
 		<div class="requestBuyProduct">
-			<a href="/my/myRequestBuyProduct"> <b>대여 요청</b>
-			</a>
-		</div>
-		<div class="requestSellTalent">
-			<a href="/my/myRequestSellTalent"> <b>재능 등록</b>
-			</a>
-		</div>
-		<div class="requestBuyTalent">
-			<a href="/my/myRequestBuyTalent"> <b>재능 요청</b>
+			<a href="/my/myRequestBuyProduct"> <b>물품 대여 요청</b>
 			</a>
 		</div>
 

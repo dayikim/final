@@ -31,16 +31,6 @@ public class BookingDAO {
       return mybatis.delete("Booking.dealFailProduct", param);
    }
    
-   // 거래 요청 목록 - 재능(판매자)
-   public List<HashMap<String,Object>> requestRentalTalent(Map<String, String> param) {
-      return mybatis.selectList("Booking.requestRentalTalent", param);
-   }
-   
-   // 거래 요청 취소 - 재능(판매자)
-   public int dealFailTalent(HashMap<String, Object> param) {
-      return mybatis.delete("Booking.dealFailTalent", param);
-   }
-   
    
    //////////////////////////////////////////////////////////////////////////// 예약 내역 출력 (구매자 입장)
    

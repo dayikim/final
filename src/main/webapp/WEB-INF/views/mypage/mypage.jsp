@@ -561,7 +561,7 @@ img{
 						<div class="col-10 titleDiv">
 							<div class="title">
 								<h3>
-									<b>거래 요청 내역</b>
+									<b>물품 거래 요청 내역</b>
 								</h3>
 							</div>
 							<div class="stitle">
@@ -582,7 +582,7 @@ img{
 						<div class="col-10 titleDiv">
 							<div class="title">
 								<h3>
-									<b>예약 내역</b>
+									<b>물품 예약 내역</b>
 								</h3>
 							</div>
 							<div class="stitle">
@@ -602,7 +602,7 @@ img{
 						<div class="col-10 titleDiv">
 							<div class="title">
 								<h3>
-									<b>거래 완료 목록</b>
+									<b>물품 거래 완료 내역</b>
 								</h3>
 							</div>
 							<div class="stitle">

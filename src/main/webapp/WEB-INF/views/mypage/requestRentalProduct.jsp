@@ -121,6 +121,7 @@ img {
 .container2 {
 	margin: auto;
 	width: 1000px;
+	margin-top:115px;
 	padding-top: 35px;
 	padding-left: 50px;
 	padding-right: 50px;
@@ -206,7 +207,7 @@ img {
 		
 		// 거래 승인 목록 가져오기
 		$.ajax({
-			url:"/my/requestRentalTalentProc",
+			url:"/my/requestRentalProductProc",
 			data:{booker:$("#booker").val(),parent:$("#parent").val()}
 		
 		}).done(function(resp){
@@ -377,22 +378,12 @@ img {
 
 
 	<!-- 네비바 -->
-	<div class="navi">
-		<div class="requestProduct">
-			<a href="/my/requestRentalProduct"> <b>물품 대여 요청</b>
-			</a>
-		</div>
-		<div class="requestTalent">
-			<a href="/my/requestRentalTalent"> <b>재능 거래 요청</b>
-			</a>
-		</div>
-	</div>
 
 
 
 	<!-- 대여 요청 내역 -->
 	<div class="container2">
-		<div>거래 요청 내역 > 대여 요청</div>
+		<div>거래 요청 내역 > 물품 대여 요청</div>
 		<!-- forEach문 사용 -->
 		<c:forEach var="i" items="${requestRental }">
 

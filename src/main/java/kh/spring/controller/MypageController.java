@@ -140,13 +140,21 @@ public class MypageController {
 
 	// 현재 빌린 상품 출력(미완)
 	@RequestMapping(value="/borrowProduct", produces="text/html;charset=utf8")
-	public String borrowProduct() {
+	public String borrowProduct(Model model) {
+		String sessionID = (String)session.getAttribute("loginID");
+		List<PaymentDTO> list = service.borrowProduct(sessionID);
+		
+		model.addAttribute("borrowList", list);
 		return "/mypage/nowBorrowProduct";
 	}
 
 	// 현재 빌려준 상품 출력(미완)
 	@RequestMapping(value="/lendProduct", produces="text/html;charset=utf8")
-	public String lendProduct() {
+	public String lendProduct(Model model) {
+		String sessionID = (String)session.getAttribute("loginID");
+		List<PaymentDTO> list = service.borrowProduct(sessionID);
+		
+		model.addAttribute("lendList",list);
 		return "/mypage/nowLendProduct";
 	}
 
@@ -176,19 +184,9 @@ public class MypageController {
 		return String.valueOf(result);
 	}
 
-	// 거래 요청 목록 - 재능
-	@RequestMapping("/requestRentalTalent")
-	public String requestRentalTalent(Model model) {
-		String sessionID = (String)session.getAttribute("loginID");
-		List<HashMap<String,Object>> list = service.requestRentalTalent(sessionID); // 예약리스트 꺼내기
-
-		model.addAttribute("requestRental", list);  // 들어온 예약 리스트
-		return "/mypage/requestRentalTalent";
-	}
-
-	// 거래 승인 버튼 출력하기 - 재능
+	// 거래 승인 버튼 출력하기 - 물품
 	@ResponseBody
-	@RequestMapping("/requestRentalTalentProc")
+	@RequestMapping("/requestRentalProductProc")
 	public String requestRentalTalentProc(String booker, String parent) {
 		System.out.println("대여자 : " + booker + " 부모 : " + parent);
 		String sessionID = (String)session.getAttribute("loginID");
@@ -197,18 +195,8 @@ public class MypageController {
 		return String.valueOf(result);
 	}
 
-	// 요청 거절 버튼을 눌렀을 때 - 재능
-	@ResponseBody
-	@RequestMapping("/dealFailTalent")
-	public String dealFailTalent(int parent) {
-		System.out.println(parent);
-		String sessionID = (String)session.getAttribute("loginID");
-		int result = service.dealFailTalent(sessionID,parent);
 
-		return String.valueOf(result);
-	}
-
-	// 거래 승인 완료 버튼 눌렀을 때 - 재능 / 물품
+	// 거래 승인 완료 버튼 눌렀을 때 - 물품
 	@ResponseBody
 	@RequestMapping("/dealSuccess")
 	public String dealSuccess(String writer, String booker, int parent) {
@@ -360,26 +348,6 @@ public class MypageController {
 
 		model.addAttribute("requestRental", dto);
 		return "/mypage/myRequestBuyProduct";
-	}
-
-	// 내가 쓴 게시글 목록 - 재능등록
-	@RequestMapping("/myRequestSellTalent")
-	public String myRequestSellTalent(Model model){
-		String sessionID = (String)session.getAttribute("loginID");
-		List<SellTalentDTO> dto = service.myRequestSellTalent(sessionID);
-
-		model.addAttribute("requestRental", dto);
-		return "/mypage/myRequestSellTalent";
-	}
-
-	// 내가 쓴 게시글 목록 = 재능요청
-	@RequestMapping("/myRequestBuyTalent")
-	public String myRequestBuyTalent(Model model){
-		String sessionID = (String)session.getAttribute("loginID");
-		List<RequestTalentDTO> dto = service.myRequestBuyTalent(sessionID);
-
-		model.addAttribute("requestRental",dto);
-		return "/mypage/myRequestBuyTalent";
 	}
 
 
