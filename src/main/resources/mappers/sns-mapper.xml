@@ -81,7 +81,7 @@
 	
 	<!-- 내 sns 출력 -->
 	<select id="mySelectAll" resultType="kh.spring.dto.SnsDTO">
-		select * from snsBoard where id=#{value}
+		select * from snsBoard where id=#{value} order by 1 desc
 	</select>
 	
 </mapper>
