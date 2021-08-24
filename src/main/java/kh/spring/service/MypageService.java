@@ -201,7 +201,10 @@ public class MypageService {
 	
 	
 
-	
+	//구매자 기준 승인 완료 출력
+	public List<ApprovalDTO> customerDealSuccess(String id){
+		return adao.customerDealSuccess(id);
+	}
 	
 	
 	
