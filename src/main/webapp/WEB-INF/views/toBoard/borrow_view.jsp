@@ -226,6 +226,7 @@
         }
     </style>
     <script type="text/javascript">
+   
 
     $(function() {
 		$("#search").keyup(function(e) {
@@ -262,9 +263,6 @@
 						return;
 					}
 				});
-		
-		
-
     })
     
     </script>
@@ -362,9 +360,9 @@
                     <h2 class="title_msg"><b>${board.title}<b></h2>
                 </div>
                <!-- slide -->
-					<div class="w3-content w3-display-container slcon" >
+					<div class="w3-content w3-display-container slcon" id="slcon">
 						<c:choose>
-							<c:when test="${flist != null}">
+							<c:when test="${flist != null  || flist.length != 0}">
 								<c:forEach var="f" items="${flist}">
 		  							<img class="mySlides" src="/imgs/borrow/${f.sysName}">
 		  						</c:forEach>	
@@ -511,25 +509,26 @@
     </footer>
 	<script>
 	//슬라이드
-    var slideIndex = 1;
-	showDivs(slideIndex);
 	
-	function plusDivs(n) {
-  		showDivs(slideIndex += n);
-	}
-	
-	function showDivs(n) {
-		  var i;
-		  var x = document.getElementsByClassName("mySlides");
-		  
-		  if (n > x.length) {slideIndex = 1}
-		  if (n < 1) {slideIndex = x.length}
-		  for (i = 0; i < x.length; i++) {
-		    x[i].style.display = "none";
-		   }
-		  x[slideIndex-1].style.display = "block"; 
-	}
-	
+	    var slideIndex = 1;
+		showDivs(slideIndex);
+		
+		function plusDivs(n) {
+	  		showDivs(slideIndex += n);
+		}
+		
+		function showDivs(n) {
+			  var i;
+			  var x = document.getElementsByClassName("mySlides");
+			  
+			  if (n > x.length) {slideIndex = 1}
+			  if (n < 1) {slideIndex = x.length}
+			  for (i = 0; i < x.length; i++) {
+			    x[i].style.display = "none";
+			   }
+			  x[slideIndex-1].style.display = "block"; 
+		}
+
 	</script>
 	
 </body>

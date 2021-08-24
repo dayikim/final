@@ -229,11 +229,28 @@ border-bottom: solid 3px #39d9c8;
 	height: auto;
 	margin-bottom: 20px;
 }
+
+/*카드 이미지&타이틀길이*/
+.card-img-top{height:150px; margin-bottom:5px;}
+.card-title{overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
 </style>
 
 <script>
+	$(document).ready(function(){
+		let address = "${writerInfo.address1}";
+		let addressReg = /^[가-힣]*\s+[가-힣]*/g;
+		let myaddress = address.match(addressReg);
+		console.log(myaddress);
+		if(myaddress != null){
+			$("#region_name").text(myaddress);
+		}
+	})
 	$(function() {
-
+		$("#search").keyup(function(e) {
+			if (e.keyCode == 13) {
+				location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
+			}
+		})
 	});
 </script>
 </head>
@@ -320,7 +337,7 @@ border-bottom: solid 3px #39d9c8;
 			<div class="form-control wrapper ">
 				<section id="user-profile">
 					<h2 id="nickname">
-						<b>${writerInfo.name}</b>님 <span id="region_name">${writerInfo.address1}</span>
+						<b>${writerInfo.name}</b>님 <span id="region_name"></span>
 					</h2>
 					<div id="profile-image">
 						<c:choose>
@@ -354,8 +371,8 @@ border-bottom: solid 3px #39d9c8;
 								<div class="card">
 									<div class="card-body">
 										<div class="card-category">[${i.category}]</div>
-									    <a href="/profile/sellingViewByUser?id=${writer}&seq=${i.seq}&category=${i.category}" }><img src="..." class="card-img-top" alt="..."></a>
-										<h5 class="card-title"><a href="/profile/sellingViewByUser?id=${writer}&seq=${i.seq}&category=${i.category}">${i.title}</a></h5>
+									    <a href="/lendBoard/lendView?id=${i.writer}&seq=${i.seq}" }><img src="/imgs/lend/${i.sysName}" class="card-img-top"></a>
+										<h5 class="card-title"><a href="/lendBoard/lendView?id=${i.writer}&seq=${i.seq}">${i.title}</a></h5>
 										<div class="card-price ">${i.price} 상추</div>
 										<div class="card-region-name">${i.address}</div>
 										<div class="card-counts">
