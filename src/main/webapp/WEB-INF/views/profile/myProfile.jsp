@@ -137,7 +137,6 @@ div {
 	height: 100px;
 	margin-top: 10px;
 	margin-left: 40px;
-	border-radius: 40px;
 	overflow: hidden;
 	vertical-align: middle;
 }
@@ -354,7 +353,7 @@ border-bottom: solid 3px #39d9c8;
 					<div id="profile-image">
 						<c:choose>
 							<c:when test="${profile != null}">
-								<img src="/imgs/mypage/${profile.sysName }" id=profile>
+								<img src="/imgs/mypage/${profile.sysName}" id=profile>
 							</c:when>
 							<c:otherwise>
 								<img src="/imgs/nomalProfile.jpg" id=profile>
@@ -393,7 +392,6 @@ border-bottom: solid 3px #39d9c8;
 										<div class="card-price ">${i.price}상추</div>
 										<div class="card-region-name">${i.address}</div>
 										<div class="card-counts">
-											<span> 채팅 <span class="badge badge-danger">3</span></span>
 										</div>
 									</div>
 								</div>

@@ -71,10 +71,10 @@ public class ProfileController {
 		int result = RService.reviewCount(id);
 		model.addAttribute("reviewCount",result);//리뷰 갯수
 
-		int result1 = PService.sellingCount1(id);
+//		int result1 = PService.sellingCount1(id);
 		int result2 = PService.sellingCount2(id);
-		int sellingCount= result1+result2;
-		model.addAttribute("sellingCount",sellingCount);//판매목록 갯수
+//		int sellingCount= result1+result2;
+		model.addAttribute("sellingCount",result2);//판매목록 갯수
 
 		List<HashMap<String, String>> sellingList;
 		sellingList =PService.sellingList(id);//판매목록 리스트
@@ -97,10 +97,10 @@ public class ProfileController {
 		int result = RService.reviewCount(id);
 		model.addAttribute("reviewCount",result);//리뷰 갯수
 
-		int result1 = PService.sellingCount1(id);
+//		int result1 = PService.sellingCount1(id);
 		int result2 = PService.sellingCount2(id);
-		int sellingCount= result1+result2;
-		model.addAttribute("sellingCount",sellingCount);//판매목록 갯수
+//		int sellingCount= result1+result2;
+		model.addAttribute("sellingCount",result2);//판매목록 갯수
 
 		List<HashMap<String, String>> sellingList;
 		sellingList =PService.sellingList(id);//판매목록 리스트
@@ -116,16 +116,18 @@ public class ProfileController {
 		String sessionID = (String) session.getAttribute("loginID");
 		PersonDTO writerInfo = STService.memberInfoById(id);//글 작성자 정보(이름,주소)
 		model.addAttribute("writerInfo",writerInfo);
+		ProfileFilesDTO pfdto = MypageService.profileSelect(id); // 프사 출력
+		model.addAttribute("profile",pfdto); //프로필
 
 		model.addAttribute("writer",id);
 
 		int result = RService.reviewCount(id);
 		model.addAttribute("reviewCount",result);//리뷰 갯수
 
-		int result1 = PService.sellingCount1(id);
+//		int result1 = PService.sellingCount1(id);
 		int result2 = PService.sellingCount2(id);
-		int sellingCount= result1+result2;
-		model.addAttribute("sellingCount",sellingCount);//판매목록 갯수
+//		int sellingCount= result1+result2;
+		model.addAttribute("sellingCount",result2);//판매목록 갯수
 
 		List<HashMap<String,String>> sellingList;
 		sellingList =PService.sellingList(id);//판매목록 리스트
@@ -139,15 +141,19 @@ public class ProfileController {
 	@RequestMapping("userSelling")//판매목록(유저 프로필)
 	public String sellingList(String id, Model model) {
 		String sessionID = (String) session.getAttribute("loginID");
+		
+		ProfileFilesDTO pfdto = MypageService.profileSelect(id); // 프사 출력
+		model.addAttribute("profile",pfdto); //프로필
+		
 		PersonDTO writerInfo = STService.memberInfoById(id);//글 작성자 정보(이름,주소)
 		model.addAttribute("writerInfo",writerInfo);
 
 		model.addAttribute("writer",id);
 
-		int result1 = PService.sellingCount1(id);
+//		int result1 = PService.sellingCount1(id);
 		int result2 = PService.sellingCount2(id);
-		int sellingCount= result1+result2;
-		model.addAttribute("sellingCount",sellingCount);//판매목록 갯수
+//		int sellingCount= result1+result2;
+		model.addAttribute("sellingCount",result2);//판매목록 갯수
 
 		int result = RService.reviewCount(id);
 		model.addAttribute("reviewCount",result);//리뷰 갯수
@@ -166,7 +172,6 @@ public class ProfileController {
 	public String sellingViewByMe(int seq,String category,Model model) throws Exception {
 		System.out.println(seq);
 		String id = (String) session.getAttribute("loginID");
-
 		ProfileFilesDTO pfdto = MypageService.profileSelect(id); // 프사 출력
 		model.addAttribute("profile",pfdto); //프로필
 
@@ -348,19 +353,19 @@ public class ProfileController {
 		//   PersonDTO pd = RService.memberInfoById(reviewer);//리뷰어 정보(이름,주소)
 		//    model.addAttribute("reviewer",pd);
 
-		int result1 = PService.sellingCount1(id);
+//		int result1 = PService.sellingCount1(id);
 		int result2 = PService.sellingCount2(id);
-		int sellingCount= result1+result2;
-		model.addAttribute("sellingCount",sellingCount);//판매목록 갯수
+//		int sellingCount= result1+result2;
+		model.addAttribute("sellingCount",result2);//판매목록 갯수
 
 		int result = RService.reviewCount(id);
 		model.addAttribute("reviewCount",result);//리뷰 갯수
 
 
 		//작은 프로필 출력!
-		List<HashMap<Object, Object>> sysName; 
-		sysName = RService.sysName(id); // 리뷰어 프사 출력
-		model.addAttribute("sysName",sysName);
+//		List<HashMap<Object, Object>> sysName; 
+//		sysName = RService.sysName(id); // 리뷰어 프사 출력
+//		model.addAttribute("sysName",sysName);
 
 		List<HashMap<Object, Object>> reviewList;//리뷰 리스트
 		reviewList= RService.reviewList(id);
@@ -384,18 +389,18 @@ public class ProfileController {
 		session.setAttribute("UserInfo", pdto); // 유저 정보
 		model.addAttribute("profile",pfdto); //프로필		
 
-		int result1 = PService.sellingCount1(id);
+//		int result1 = PService.sellingCount1(id);
 		int result2 = PService.sellingCount2(id);
-		int sellingCount= result1+result2;
-		model.addAttribute("sellingCount",sellingCount);//판매목록 갯수
+//		int sellingCount= result1+result2;
+		model.addAttribute("sellingCount",result2);//판매목록 갯수
 
 		int result = RService.reviewCount(id);
 		model.addAttribute("reviewCount",result);//리뷰 갯수
 
 		//작은 프로필 출력!
-		List<HashMap<Object, Object>> sysName; 
-		sysName = RService.sysName(id); // 리뷰어 프사 출력
-		model.addAttribute("sysName",sysName);
+//		List<HashMap<Object, Object>> sysName; 
+//		sysName = RService.sysName(id); // 리뷰어 프사 출력
+//		model.addAttribute("sysName",sysName);
 
 		List<HashMap<Object, Object>> reviewList;//리뷰 리스트
 		reviewList= RService.reviewList(id);

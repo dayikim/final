@@ -16,9 +16,9 @@ public class ProfileService {
 	private ProfileDAO pdao;
 
 
-	public int sellingCount1(String id) { //판매목록 갯수1
-		return pdao.sellingCount1(id);
-	}
+//	public int sellingCount1(String id) { //판매목록 갯수1
+//		return pdao.sellingCount1(id);
+//	}
 
 	public int sellingCount2(String id) { //판매목록 갯수2
 

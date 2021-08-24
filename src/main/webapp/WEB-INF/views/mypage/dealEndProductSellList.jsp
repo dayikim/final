@@ -80,40 +80,45 @@ img {
 	margin-top: 5%;
 }
 
-/* 네비바 */
-.navi {
-	margin: auto;
-	margin-top: 115px;
-	width: 500px;
-	height: 60px;
-	border: 1px solid black;
-	border-radius: 7px;
-}
 
-.navi1, .navi2 {
+/* 네비바 */
+.navi>div {
 	float: left;
 	width: 50%;
-	height: 100%;
 	text-align: center;
 }
 
-.navi1 {
-	/* 물품대여 네비 */
+.navi {
+	margin: auto;
+	margin-top: 115px;
+	width: 900px;
+	height: 60px;
+	border: 1px solid black;
+	border-radius: 7px;
+	overflow: hidden;
+}
+
+.requestSellProduct { /* 물품 빌림하기 네비 */
 	height: 100%;
 	background-color: #334257;
 }
 
-.dropdown-toggle1>b {
+.requestSellProduct>a>b {
 	color: white;
-	font-size: 20px;
-	line-height: 40px;
+	font-size: 30px;
+	line-height: 60px;
 }
 
-.dropdown-toggle2>b {
-	color: black;
-	font-size: 20px;
-	line-height: 40px;
+.requestBuyProduct, .requestSellTalent, .requestBuyTalent {
+	/* 대여하기 제외한 나머지 네비 */
+	height: 100%;
 }
+
+.requestBuyProduct, .requestSellTalent, .requestBuyTalent>a>b {
+	font-size: 30px;
+	line-height: 60px;
+}
+
 
 /* 시작 */
 .container2 {
@@ -410,37 +415,38 @@ form {
 		</div>
 	</div>
 	<!-- Nav Bar End -->
-
 	<!-- 네비바 -->
-	<div class="navi">
+	
+	<!-- <div class="navi">
 		<div class="navi1">
 			<ul class="navbar-nav">
 				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle1" href="#"
-					id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="false"> <b>물품 ▼</b>
-				</a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" href="/my/dealEndProductSellList">물품대여
-							완료</a> <a class="dropdown-item" href="/my/dealEndProductBuyList">물품빌리기
-							완료</a>
-					</div></li>
+					class="nav-link dropdown-toggle1" href="/my/dealEndProductSellList"
+					id="navbarDropdownMenuLink" role="button" aria-haspopup="true"
+					aria-expanded="false"> <b>물품대여</b>
+				</a></li>
 			</ul>
 		</div>
 		<div class="navi2">
 			<ul class="navbar-nav">
 				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle2" href="#"
-					id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="false"> <b>재능 ▼</b>
-				</a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" href="/my/dealEndTalentSellList">재능
-							판매</a> <a class="dropdown-item" href="/my/dealEndTalentBuyList">재능
-							구매</a>
-					</div></li>
+					class="nav-link dropdown-toggle2" href="/my/dealEndProductBuyList"
+					id="navbarDropdownMenuLink" role="button" aria-haspopup="true"
+					aria-expanded="false"> <b>물품빌림</b>
+				</a></li>
 			</ul>
 		</div>
+	</div> -->
+	<div class="navi">
+		<div class="requestSellProduct">
+			<a href="/my/dealEndProductSellList"> <b>물품 대여</b>
+			</a>
+		</div>
+		<div class="requestBuyProduct">
+			<a href="/my/dealEndProductBuyList"> <b>물품 빌림</b>
+			</a>
+		</div>
+
 	</div>
 	<br>
 	<div class="container2">

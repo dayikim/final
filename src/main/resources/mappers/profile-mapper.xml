@@ -36,9 +36,9 @@ where RNUM=1 ) lf on lb.SEQ=lf.PARENTSEQ  where writer =#{writer}
 select * from lendboard where writer =#{writer} and seq=#{seq} and #{category}
 </select>
 
-<select id="sellingCount1" resultType="int">
+<!-- <select id="sellingCount1" resultType="int">
 select count(*) from selltalent where writer=#{writer}
-</select>
+</select> -->
 <select id="sellingCount2" resultType="int">
 select count(*) from lendboard where writer =#{writer}
 </select>
