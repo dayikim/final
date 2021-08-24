@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <title> 대여 요청 게시글 상세보기</title>
-    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free Website Template" name="keywords">
     <meta content="Free Website Template" name="description">
 
@@ -362,7 +363,7 @@
                <!-- slide -->
 					<div class="w3-content w3-display-container slcon" id="slcon">
 						<c:choose>
-							<c:when test="${flist != null  || flist.length != 0}">
+							<c:when test="${fn:length(flist) != 0}">
 								<c:forEach var="f" items="${flist}">
 		  							<img class="mySlides" src="/imgs/borrow/${f.sysName}">
 		  						</c:forEach>	
