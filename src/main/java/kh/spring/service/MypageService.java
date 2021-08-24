@@ -162,6 +162,11 @@ public class MypageService {
 
 		return bdao.requestRentalProduct(param);
 	}
+	
+	// 거래 완료 버튼 뽑기 - 물품
+	public List<ApprovalDTO> dealSuccessSelect(String sessionID) {
+		return adao.dealSuccessSelect(sessionID);
+	}
 
 	// 요청 거절을 눌렀을 경우 - 물품
 	public int dealFailProduct(String sessionID, int parent) {
@@ -172,16 +177,6 @@ public class MypageService {
 		param.put("able", able);
 
 		return bdao.dealFailProduct(param);
-	}
-
-	// 거래 완료 버튼 뽑기 - 물품
-	public int dealSuccessSelect(String sessionID, String booker, String parent) {
-		HashMap<String, Object> param = new HashMap<>();
-		param.put("id", sessionID);
-		param.put("booker", booker);
-		param.put("parent", parent);
-
-		return adao.dealSuccessSelect(param);
 	}
 
 

@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
+
 import kh.spring.config.SHA256;
 import kh.spring.dao.ProfileFilesDAO;
+import kh.spring.dto.ApprovalDTO;
 import kh.spring.dto.BorrowDTO;
 import kh.spring.dto.LendDTO;
 import kh.spring.dto.PaymentDTO;
@@ -104,6 +107,15 @@ public class MypageController {
 		return "mypage/profile";
 	}
 
+	
+	@RequestMapping("/dealSuccessSelectProc")
+	@ResponseBody
+	public String approvallist() {
+		List<ApprovalDTO> alist = service.dealSuccessSelect((String)session.getAttribute("loginID")); // 거래 승인 버
+		Gson gs = new Gson();	
+		return gs.toJson(alist);
+	}
+	
 	// 프로필 사진 업데이트
 	@RequestMapping("/profileUpdate")
 	public String profileUpdate(String profile, MultipartFile after_profile, Model model) {
@@ -142,7 +154,7 @@ public class MypageController {
 
 	/////////////////////////////////////////////////////////////////////////////////////////// 현재 빌린, 빌려준 상품
 
-	// 현재 빌린 상품 출력(미완)
+	// 현재 빌린 상품 출력
 	@RequestMapping(value="/borrowProduct", produces="text/html;charset=utf8")
 	public String borrowProduct(Model model) {
 		String sessionID = (String)session.getAttribute("loginID");
@@ -152,7 +164,7 @@ public class MypageController {
 		return "/mypage/nowBorrowProduct";
 	}
 
-	// 현재 빌려준 상품 출력(미완)
+	// 현재 빌려준 상품 출력
 	@RequestMapping(value="/lendProduct", produces="text/html;charset=utf8")
 	public String lendProduct(Model model) {
 		String sessionID = (String)session.getAttribute("loginID");
@@ -172,8 +184,10 @@ public class MypageController {
 	public String requestRental(Model model) {
 		String sessionID = (String)session.getAttribute("loginID");
 		List<HashMap<String,Object>> list = service.requestRentalProduct(sessionID); // 예약리스트 꺼내기
+		List<ApprovalDTO> alist = service.dealSuccessSelect(sessionID); // 거래 승인 버튼
 
 		model.addAttribute("requestRental", list);  // 들어온 예약 리스트
+		model.addAttribute("approval", alist); //이게 예약 완료된? 리스트 인가융?네!
 		return "/mypage/requestRentalProduct";
 	}
 
@@ -188,24 +202,13 @@ public class MypageController {
 		return String.valueOf(result);
 	}
 
-	// 거래 승인 버튼 출력하기 - 물품
-	@ResponseBody
-	@RequestMapping("/requestRentalProductProc")
-	public String requestRentalTalentProc(String booker, String parent) {
-		System.out.println("대여자 : " + booker + " 부모 : " + parent);
-		String sessionID = (String)session.getAttribute("loginID");
-		int result = service.dealSuccessSelect(sessionID, booker, parent); // 거래 완료 버튼(booker와 parent의 값은 어디서 갖고오지?)
-
-		return String.valueOf(result);
-	}
-
 
 	// 거래 승인 완료 버튼 눌렀을 때 - 물품
 	@ResponseBody
 	@RequestMapping("/dealSuccess")
-	public String dealSuccess(String writer, String booker, int parent) {
+	public String dealSuccess(String writer, String booker, String parent) {
 		System.out.println(writer +":"+":"+ booker+":"+ parent);
-		int result = service.dealSuccess(writer,booker,parent); 
+		int result = service.dealSuccess(writer,booker, Integer.parseInt(parent)); 
 
 		return String.valueOf(result);
 	}

@@ -193,6 +193,46 @@ img {
 
 <script>
 	$(function() {
+		
+		$.ajax({
+			url:"/my/dealSuccessSelectProc",
+			method:"get",
+			dataType:"json"
+		}).done(function(result){
+			
+			let arr = [];
+			for(let i=0; i<result.length; i++){
+				arr.push(result[i].parentseq);
+			}
+			console.log(arr);
+			for(let z=0; z<$(".parent").length; z++){
+				
+				console.log("해당 seq값" + $($(".parent")[z]).val())
+				if(arr.indexOf(Number($($(".parent")[z]).val())) != -1){
+					console.log(console.log("승인이 되었던거" + $($(".parent")[z]).val()))
+					let node = "";
+					node +="<div class=under>"
+						node += "<button type=button id=cancel class=cnum-btn1>거래 취소</button>" 
+						node += "<button type=button id=approval class=cnum-btn2>거래 완료(대여중)</button>"
+					node += "</div>"
+					$($(".parent")[z]).parent().append(node)
+				}else{
+					console.log("승인 안되었던거" + $($(".parent")[z]).val())
+					let node = "";
+					node +="<div class=under>"
+						node += "<button type=button id=cancel class=cnum-btn1>요청 거절</button>"
+						node += "<button type=button id=approval class=cnum-btn2>거래 승인</button>"
+					node += "</div>"
+						$($(".parent")[z]).parent().append(node)
+				}	
+			}
+			
+		})
+		
+		
+		
+		
+		
 		// 게시물 검색
 		$("#search").keyup(function(e) {
 			if (e.keyCode == 13) {
@@ -203,29 +243,6 @@ img {
 		// 채팅
 		$("#chat").on("click",function(){
 			location.href = "/chat";
-		})
-		
-		// 거래 승인 목록 가져오기
-		$.ajax({
-			url:"/my/requestRentalProductProc",
-			data:{booker:$("#booker").val(),parent:$("#parent").val()}
-		
-		}).done(function(resp){
-			console.log(resp) // 해당 시퀀스가 나옴
-			if(resp!=null){
-				// 거래 완료 버튼으로 바꾸기
-				$("#approval").attr("id","dealComplete")
-				$("#approval").attr("class","dComplete")
-				$("#approval").attr("disabled","false")
-				$("#approval").text("거래 완료(대여중)")
-				
-				
-				// 거래 취소 버튼으로 바꾸기
-				$("#cancel").attr("id","dealCancel")
-				$("#cancel").attr("class","dCancel")
-				$("#cancel").text("거래 취소")
-			}
-			
 		})
 		
 		
@@ -252,16 +269,18 @@ img {
 		})
 
 
-		// 거래 승인 버튼을 눌렀을 경우(DB에 거래승인 insert하기)
- 		$(".cnum-btn2").on("click", function() {
+		// 거래 승인 버튼을 눌렀을 경우(DB에 거래승인 insert하기) <- 여기가 안된다는거에연?네!
+ 		$(document).on("click",".cnum-btn2" ,function() {
 			let result = confirm("거래 승인 하시겠습니까?");
+			console.log($($(this).parents().siblings("#writer")).val());
+			
 			if (result) {
 				let button = $(this);				
 				$.ajax({
 					url:"/my/dealSuccess",
-					data:{writer:$($(this).siblings().parent().siblings().children().siblings().children().siblings().siblings("#writer")).val(), 
-						booker:$($(this).siblings().parent().siblings().children().siblings().children().siblings("#booker")).val(), 
-						parent:$($(this).siblings().parent().siblings().children().siblings().children("#parent")).val()}
+					data:{writer:$($(this).parents().siblings("#writer")).val(), 
+						booker:$($(this).parents().siblings("#booker")).val(), 
+						parent:$($(this).parents().siblings("#parent")).val()}
 				}).done(function(resp){
 					console.log(resp)
 					if(resp=="1"){
@@ -379,7 +398,7 @@ img {
 
 	<!-- 네비바 -->
 
-
+ <!-- 지금 안되는거 정확하게 좀 알려주세연~ 아예 목록자체가 나오지않습니다..ㅜㅜ -->
 
 	<!-- 대여 요청 내역 -->
 	<div class="container2">
@@ -418,7 +437,7 @@ img {
 						</div>
 						<input type=hidden value=${i.writer } id=writer name=writer>
 						<input type=hidden value=${i.booker } id=booker name=booker>
-						<input type=hidden value=${i.parentseq } id=parent name=parent>
+						<input type=hidden class =parent value=${i.parentseq } id=parent name=parent>
 
 					</div>
 					<div class="col-4">
@@ -428,11 +447,37 @@ img {
 
 					</div>
 				</div>
-
-				<div class="under">
-					<button type=button id=cancel class="cnum-btn1">요청 거절</button>
-					<button type=button id=approval class="cnum-btn2">거래 승인</button>
-				</div>
+				
+					<%-- <c:forEach var="app" items="${approval }">
+					
+						<c:choose>
+							<c:when test="${app.parentseq == i.parentseq}">
+								<div class="under">
+									<button type=button id=cancel class="cnum-btn1">거래 취소</button>
+									<button type=button id=dealComplete class="dComplete" disabled="disabled">거래 완료(대여중)</button>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<div class="under">
+									<button type=button id=cancel class="cnum-btn1">요청 거절</button>
+									<button type=button id=approval class="cnum-btn2">거래 승인</button>
+								</div>
+							</c:otherwise>						
+						</c:choose>
+					
+					</c:forEach> --%>
+ 			<%-- 	<c:if test="${i.parentseq == approval.parentseq}">
+						<div class="under">
+							<button type=button id=cancel class="cnum-btn1">거래 취소</button>
+							<button type=button id=dealComplete class="dComplete" disabled="disabled">거래 완료(대여중)</button>
+						</div>
+					</c:if>
+					<c:if test="${i.parentseq != approval.parentseq}">
+						<div class="under">
+							<button type=button id=cancel class="cnum-btn1">요청 거절</button>
+							<button type=button id=approval class="cnum-btn2">거래 승인</button>
+						</div>
+					</c:if>  --%>
 
 			</div>
 
