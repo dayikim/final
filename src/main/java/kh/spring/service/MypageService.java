@@ -130,10 +130,28 @@ public class MypageService {
 		return ppdao.pointUseList(param);
 	}
 
+	// 현재 빌린 상품 출력(미완)
+	public List<PaymentDTO> borrowProduct(String sessionID) {
+		String y = "y";
+		HashMap<String, String> param = new HashMap<>();
+		param.put("y", y);
+		param.put("id", sessionID);
+		return paydao.borrowProduct(param);
+	}
+
+	// 현재 빌려준 상품 출력(미완)
+	public List<PaymentDTO> lendProduct(String sessionID) {
+		String y = "y";
+		HashMap<String, String> param = new HashMap<>();
+		param.put("y", y);
+		param.put("id", sessionID);
+		return paydao.lendProduct(param);
+	}
+
 
 	//////////////////////////////////////////////////////////////////////////////////////////////거래 요청 목록(판매자 입장)
 
-	// 거래 요청 목록 - 대여
+	// 거래 요청 목록 - 물품
 	public List<HashMap<String,Object>> requestRentalProduct(String sessionID) {
 		String y = "y";
 		String able = "물품";
@@ -156,20 +174,7 @@ public class MypageService {
 		return bdao.dealFailProduct(param);
 	}
 
-
-	// 거래 요청 목록 - 재능
-	public List<HashMap<String,Object>> requestRentalTalent(String sessionID) {
-		String y = "y";
-		String able = "재능";
-		Map<String, String> param = new HashMap<>();
-		param.put("y", y);
-		param.put("able", able);
-		param.put("id", sessionID);
-
-		return bdao.requestRentalTalent(param);
-	}
-
-	// 거래 완료 버튼 뽑기 - 재능
+	// 거래 완료 버튼 뽑기 - 물품
 	public int dealSuccessSelect(String sessionID, String booker, String parent) {
 		HashMap<String, Object> param = new HashMap<>();
 		param.put("id", sessionID);
@@ -179,18 +184,8 @@ public class MypageService {
 		return adao.dealSuccessSelect(param);
 	}
 
-	// 요청 거절을 눌렀을 경우 - 재능
-	public int dealFailTalent(String sessionID, int parent) {
-		String able = "재능";
-		HashMap<String, Object> param = new HashMap<>();
-		param.put("sessionID", sessionID);
-		param.put("parent", parent);
-		param.put("able", able);
 
-		return bdao.dealFailTalent(param);
-	}
-
-	// 거래 승인을 눌렀을 경우 - 재능 / 물품
+	// 거래 승인을 눌렀을 경우 - 물품
 	public int dealSuccess(String writer, String booker, int parent) {
 		String y = "y";
 		return adao.dealSuccess(new ApprovalDTO(0,writer,booker,y,parent,null));
@@ -269,16 +264,6 @@ public class MypageService {
 	// 내가 쓴 게시글 목록 - 대여 요청글
 	public List<BorrowDTO> myRequestBuyProduct(String sessionID) {
 		return bwdao.myRequestBuyProduct(sessionID);
-	}
-
-	// 내가 쓴 게시글 목록 = 재능판매글
-	public List<SellTalentDTO> myRequestSellTalent(String sessionID) {
-		return stdao.myRequestSellTalent(sessionID);
-	}
-
-	// 내가 쓴 게시글 목록 - 재능대여글
-	public List<RequestTalentDTO> myRequestBuyTalent(String sessionID) {
-		return rtdao.myRequestBuyTalent(sessionID);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////거래 완료 목록

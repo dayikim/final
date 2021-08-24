@@ -49,4 +49,14 @@ select nvl(sum(amount),0) from charing where id=#{value}
 	select usepoint,dealdate,TO_CHAR(dealdate, 'HH:MI:SS'),reason from pointaccount where id=#{id} and reason=#{use} order by 1 desc
 </select>
 
+<!-- 현재 빌린 상품 출력 -->
+<select id="borrowProduct" resultType="kh.spring.dto.PaymentDTO">
+	select * from payment where buyer=#{id} and paymentable=#{y}
+</select>
+
+<!-- 현재 빌려준 상품 출력 -->
+<select id="lendProduct" resultType="kh.spring.dto.PaymentDTO">
+	select * from payment where seller=#{id} and paymentable=#{y}
+</select>
+
 </mapper>

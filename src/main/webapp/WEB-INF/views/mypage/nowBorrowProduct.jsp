@@ -87,29 +87,32 @@
         <div class="col-6"> </div>
     </div>
 
-	<!-- forEach 사용 예정 -->
+	<c:forEach var="i" items="${borrowList }">
     <div class="row list">
         <div class="col-10 listcontents">
             <div class="title">
-                <h4><b>자전거 대여가능합니다.</b></h4> 
+                <h4><b>${i.item }</b></h4> 
             </div>
             <div class="row content">
                 <div class="col-4 left"><b>대여 일자</b></div>
-                <div class="col-8 right">2021-08-06</div> 
+                <div class="col-8 right">${i.paymentDate }</div> 
             </div>
             <div class="row content">
                 <div class="col-4 left"><b>결제 내역</b></div>
-                <div class="col-8 right">15000원</div> 
+                <div class="col-8 right">${i.price }상추</div> 
             </div>
             <div class="row content">
                 <div class="col-4 left"><b>대여자</b></div>
-                <div class="col-8 right">이희정</div> 
+                <div class="col-8 right">${i.seller }</div> 
             </div>
         </div>
         <div class="col-2">
-            <i class="fas fa-arrow-circle-right"></i>
+        <input type="hidden" val="${i.seller }">
+        <input type="hidden" val="${i.parentseq }">
+            <a href="/borrowBoard/borrowView?seq=${i.parentseq}&id=${i.seller}"><i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
+    </c:forEach>
     
     
 </body>
