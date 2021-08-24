@@ -109,7 +109,7 @@
         <div class="col-2">
         <input type="hidden" val="${i.seller }">
         <input type="hidden" val="${i.parentseq }">
-        <a href="#" onclick=opener.top.location='/borrowBoard/borrowView?seq=${i.parentseq}&id=${i.seller}';self.close();><i class="fas fa-arrow-circle-right"></i></a>
+        <a href="#" onclick=opener.top.location='/lendBoard/lendView?seq=${i.parentseq}&id=${i.seller}';self.close();><i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
     </c:forEach>
