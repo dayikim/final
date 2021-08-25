@@ -256,12 +256,12 @@ img {
 		// 예약 취소 버튼을 눌렀을 경우
       $(document).on("click",".cnum-btn1" ,function() {
          let result = confirm("취소 하시겠습니까?");
-         console.log($($(this).parent().siblings("#parent")).val())
+         console.log($($(this).parent().siblings("#parentseq")).val())
          if (result) {
             let button = $(this);
             $.ajax({
                url:"/my/bookingFail",
-               data:{parent:$($(this).parent().siblings("#parent")).val()}
+               data:{parent:$($(this).parent().siblings("#parentseq")).val()}
             }).done(function(resp){
                if(resp=="1"){
                   alert("취소하였습니다.")
