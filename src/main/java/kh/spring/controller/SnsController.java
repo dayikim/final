@@ -120,11 +120,12 @@ public class SnsController {
 	@ResponseBody
 	public String write(String contents,String category) throws Exception{
 		String id = (String)session.getAttribute("loginID");
-		seq = service.seq();
+		int seq = service.seq();
 		String region = service.region(id);
-		service.insert(seq, id, contents, category, region);	
+		service.insert(seq, id, contents, category, region);
+		session.setAttribute("temp_seq", seq);
 		System.out.println(seq);
-		return "redirect:/sns/main";
+		return String.valueOf(seq);
 	}
 	
 	@RequestMapping("/file")
@@ -143,7 +144,7 @@ public class SnsController {
 			for(MultipartFile tmp : fileList ) {
 				String oriName = tmp.getOriginalFilename();
 				String sysName = UUID.randomUUID().toString().replaceAll("-", "")+"_"+oriName;	
-				fservice.insert(oriName, sysName, seq, (String)session.getAttribute("loginID"));
+				fservice.insert(oriName, sysName, (Integer)session.getAttribute("temp_seq"), (String)session.getAttribute("loginID"));
 				tmp.transferTo(new File(filesPath.getAbsolutePath()+"/"+sysName)); 
 				istransfer = "ture"; 				  
 			}	

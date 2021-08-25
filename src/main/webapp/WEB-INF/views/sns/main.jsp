@@ -93,6 +93,10 @@ style>body {
 	max-width: 300px;
 	max-height: 400px;
 }
+
+.row{
+	margin-top : 10px;
+}
 </style>
 <script>
 	
@@ -288,6 +292,7 @@ style>body {
         	 console.log("파일리스트 지우고 나온 값: "+fileList);
          })
          
+         //글작성
          $("#submit").on("click", function(){
         	 if(${loginID == null}){
  	            alert('로그인 후 이용해주세요')
@@ -300,11 +305,12 @@ style>body {
 	         	for (var i = 0; i < fileList.length; i++) {
 	         		formData.append("file",fileList[i]);
 	         	}
+	         	let seq=0;
 		         $.ajax({
 		        	 url:"/sns/write",
 		        	 method:"get",
 		        	 data:{"contents":$("#contents").val(),"category":$("#category").val()}
-		         }).done(function(){
+		         }).done(function(resp){
 		        	 location.reload();
 		         })
 	         	         

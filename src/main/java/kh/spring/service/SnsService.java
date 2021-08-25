@@ -6,8 +6,10 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kh.spring.dao.SnsDAO;
+import kh.spring.dao.SnsFilesDAO;
 import kh.spring.dto.LoveDTO;
 import kh.spring.dto.SnsDTO;
 
@@ -16,6 +18,9 @@ public class SnsService {
 	
 	@Autowired
 	private SnsDAO dao;
+	
+	@Autowired
+	private SnsFilesDAO sfd;
 	
 	public void insert(int seq,String id, String contents, String category, String region) throws Exception{
 		//dto.setSeq(seq);
