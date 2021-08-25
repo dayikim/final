@@ -444,7 +444,7 @@ img {
 					</div>
 					<div class="col-4">
 						<div class="image">
-							<img src="${i.sysName }">
+							<img src="/imgs/lend/${i.sysName }">
 						</div>
 
 					</div>
