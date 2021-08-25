@@ -146,6 +146,10 @@ img {
 	margin-left: 32px;
 	margin-top: 15px;
 }
+.completImg>a>img{
+	width:100%;
+	height:100%;
+}
 
 /* 상품 정보 부분 */
 .information {
@@ -346,7 +350,7 @@ form {
 
 							}else{
 								node += "<div class=review>"
-								node += "<a data-toggle=modal href=#myModal id=payment>거래 후기 보내기</button>";
+								node += "<a data-toggle=modal href=#writeModal id=payment>거래 후기 보내기</a>";
 									
 								$($(".parentseq")[j]).parent().append(node);
 							}
@@ -478,8 +482,7 @@ form {
 						<div class="completImg">
 
 							<!-- lendboard 주소로 수정 -->
-							<a href="/lendBoard/lendView?id=${i.buyer}&seq=${i.parentseq}"><img
-								src="..."></a>
+							<a href="/lendBoard/lendView?id=${i.buyer}&seq=${i.parentseq}"><img src="/imgs/lend/${i.sysName }"></a>
 						</div>
 					</div>
 					<div class="col-12 col-md-8 col-sm-8 information">
@@ -505,10 +508,11 @@ form {
 					</div>
 				</div>
 				<hr>
+				<input type=hidden value="${i.parentseq}" class="parentseq">
 
 				<!-- 거래 후기 링크 걸기 -->
 				<div class="review">
-					<c:choose>
+					<%-- <c:choose>
 						<c:when test="${i.reviewable =='y'}">
 							<a href="" data-toggle="modal"
 								data-target="#sendModal${vs.index}" id="openReview">작성한 후기
@@ -518,8 +522,8 @@ form {
 							<a href="" data-toggle="modal"
 								data-target="#writeModal${vs.index}" id="other">거래 후기 보내기</a>
 						</c:otherwise>
-					</c:choose>
-					<div class="modal fade modal_box" id="writeModal${vs.index}"
+					</c:choose> --%>
+					<div class="modal fade modal_box" id="writeModal"
 						tabindex="-1" aria-labelledby="exampleModalLabel"
 						aria-hidden="true">
 						<div class="modal-dialog">
@@ -555,7 +559,7 @@ form {
 							</div>
 						</div>
 					</div>
-					<div class="modal fade modal_box" id="sendModal${vs.index}"
+					<div class="modal fade modal_box" id="sendModal"
 						tabindex="-1" aria-labelledby="exampleModalLabel"
 						aria-hidden="true">
 						<div class="modal-dialog">

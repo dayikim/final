@@ -71,27 +71,31 @@
 		<result column="contents" property="contents" />
 		<result column="paymentdate" property="paymentdate"
 			jdbcType="VARCHAR" />
+		<result column="sysname" property="sysName"/>
 	</resultMap>
 
 
 	<!-- 물품 대여 완료 내역 출력 판매자(session)=> 구매자에게 -->
-	<select id="dealEndProductSellList" resultMap="dealEndlist"
-		resultType="HashMap">
-		select distinct name,address1,payment.item,payment.buyer,payment.seller,payment.parentseq,price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype
-		from payment join person on
-		(person.id=payment.buyer)where payment.seller=#{id} and payment.boardtype=#{product} and payment.paymentable=#{y}
+	<select id="dealEndProductSellList" resultMap="dealEndlist" resultType="HashMap">
+		select distinct name,address1,payment.item,payment.buyer,payment.seller,payment.parentseq,payment.price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype,lf.sysname
+		from lendboard lb left join (select SYSNAME, PARENTSEQ, REGDATE from (
+		select ROW_NUMBER() over (PARTITION BY lendfiles.PARENTSEQ order by lendfiles.REGDATE asc ) AS RNUM, lendfiles.* from lendfiles ) TB where RNUM=1 ) 
+		lf on lb.SEQ=lf.PARENTSEQ 
+		join payment on(lb.seq = payment.parentseq)
+		join person on (person.id=payment.buyer)
+		where payment.seller=#{id} and payment.boardtype=#{product} and payment.paymentable=#{y}
 	</select>
 
 
 
-	<select id="reviewNow" resultMap="dealEndlist"
-		resultType="HashMap">
-	select distinct name,payment.item,payment.buyer,payment.seller,payment.parentseq,price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype
-     from payment join person on
-		(person.id=payment.buyer)     
-        where
-		payment.seller=#{id} and
-		payment.boardtype=#{product}
+	<select id="reviewNow" resultMap="dealEndlist" resultType="HashMap">
+		select distinct name,payment.item,payment.buyer,payment.seller,payment.parentseq,payment.price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype,lf.sysname
+		from lendboard lb left join (select SYSNAME, PARENTSEQ, REGDATE from (
+		select ROW_NUMBER() over (PARTITION BY lendfiles.PARENTSEQ order by lendfiles.REGDATE asc ) AS RNUM, lendfiles.* from lendfiles ) TB where RNUM=1 ) 
+		lf on lb.SEQ=lf.PARENTSEQ 
+		join payment on(lb.seq = payment.parentseq)
+		join person on(person.id=payment.buyer)     
+		where payment.seller=#{id} and payment.boardtype=#{product}
 	</select>
 
 	
@@ -107,24 +111,25 @@
 	</select> -->
 	
 	<!-- 물품 빌림 완료 내역 출력 구매자(session)=> 판매자에게 -->
-	<select id="dealEndProductBuyList" resultMap="dealEndlist"
-		resultType="HashMap">
-		 select distinct name,payment.item,payment.buyer,payment.seller,payment.parentseq,price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype
-     from payment join person on
-		(person.id=payment.seller)     
-        where
-		payment.buyer=#{id} and
-		payment.boardtype=#{product}and payment.paymentable='y'
+	<select id="dealEndProductBuyList" resultMap="dealEndlist" resultType="HashMap">
+		select distinct name,payment.item,payment.buyer,payment.seller,payment.parentseq,payment.price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype,lf.sysname
+		from lendboard lb left join (select SYSNAME, PARENTSEQ, REGDATE from (
+		select ROW_NUMBER() over (PARTITION BY lendfiles.PARENTSEQ order by lendfiles.REGDATE asc ) AS RNUM, lendfiles.* from lendfiles ) TB where RNUM=1 ) 
+		lf on lb.SEQ=lf.PARENTSEQ 
+		join payment on(lb.seq = payment.parentseq)
+		join person on (person.id=payment.seller)     
+		where payment.buyer=#{id} and payment.boardtype=#{product} and payment.paymentable=#{y}
 	</select>
 	
-	<select id="dealEndProductBuyList2" resultMap="dealEndlist"
-		resultType="HashMap">
-		 select distinct name,contents,payment.item,payment.buyer,payment.seller,payment.parentseq,price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype,review.reviewable
-		from payment join person on
-		(person.id=payment.seller)join review on (review.reviewer =payment.buyer and review.recipient = payment.seller and review.parentseq = payment.parentseq
-        )where 
-		payment.buyer=#{id} and
-		payment.boardtype=#{product}and payment.paymentable='y'
+	<select id="dealEndProductBuyList2" resultMap="dealEndlist" resultType="HashMap">
+		select distinct name,review.contents,payment.item,payment.buyer,payment.seller,payment.parentseq,payment.price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype,review.reviewable,lf.sysname
+		from lendboard lb left join (select SYSNAME, PARENTSEQ, REGDATE from (
+		select ROW_NUMBER() over (PARTITION BY lendfiles.PARENTSEQ order by lendfiles.REGDATE asc ) AS RNUM, lendfiles.* from lendfiles ) TB where RNUM=1 ) 
+		lf on lb.SEQ=lf.PARENTSEQ 
+		join payment on(lb.seq = payment.parentseq)
+		join person on (person.id=payment.seller)
+		join review on (review.reviewer =payment.buyer and review.recipient = payment.seller and review.parentseq = payment.parentseq )
+		where payment.buyer=#{id} and payment.boardtype=#{product} and payment.paymentable=#{y}
 	</select>
 	
 

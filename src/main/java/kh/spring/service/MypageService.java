@@ -325,9 +325,11 @@ public class MypageService {
 
 	// 거래 완료 목록 출력 -물품 빌리기
 	public List<HashMap<Object, Object>> dealEndProductBuyList(String id, String product) {
+		String y="y";
 		Map<Object, Object> param = new HashMap<>();
 		param.put("id", id);
 		param.put("product", product);
+		param.put("y", y);
 		return dao.dealEndProductBuyList(param);
 	}
 
