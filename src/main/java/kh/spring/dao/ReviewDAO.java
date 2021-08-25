@@ -50,7 +50,15 @@ public class ReviewDAO {
 		return mybatis.selectOne("Review.checkReview",seq);
 	}
 
-	public List<ReviewDTO> reveiwed(String id) {
+	public List<HashMap<String, Object>> reveiwed(String id) {
 		return mybatis.selectList("Review.reviwed",id);
+	}
+
+	public List<HashMap<String, Object>> reviewedBySeller(String id) {
+		return mybatis.selectList("Review.reviewedBySeller",id);
+	}
+
+	public List<HashMap<String, Object>> reviewedByBuyer(String id) {
+		return mybatis.selectList("Review.reviewedByBuyer",id);
 	}
 }

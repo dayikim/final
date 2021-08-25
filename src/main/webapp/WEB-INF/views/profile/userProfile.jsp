@@ -6,7 +6,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>${writerInfo.name} 프로필</title>
+<title>${writerInfo.name}프로필</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free Website Template" name="keywords">
 <meta content="Free Website Template" name="description">
@@ -174,33 +174,33 @@ li {
 /* 내 판매목록 */
 #selling {
 	background-color: grey;
-	width:250px;
-	text-align:center;
-border: solid 1px black;
-}
-.card{
-margin:10px;
+	width: 250px;
+	text-align: center;
+	border: solid 1px black;
 }
 
+.card {
+	margin: 10px;
+}
 
 /* 거래후기 */
-#review{
-width:250px;
-text-align:center;
-border: solid 1px black;
-
+#review {
+	width: 250px;
+	text-align: center;
+	border: solid 1px black;
 }
-
 
 .list li a:hover {
 	/* color: #43c4a4; */
-/* 	background-color: rgb(0, 139, 7);
- */}
+	/* 	background-color: rgb(0, 139, 7);
+ */
+	
+}
 
 .list li a:after {
 	display: block;
 	content: '';
-border-bottom: solid 3px #39d9c8;
+	border-bottom: solid 3px #39d9c8;
 	transform: scaleX(0);
 	background-color: greenyellow;
 	transition: transform 250ms ease-in-out;
@@ -230,8 +230,16 @@ border-bottom: solid 3px #39d9c8;
 }
 
 /*카드 이미지&타이틀길이*/
-.card-img-top{height:150px; margin-bottom:5px;}
-.card-title{overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+.card-img-top {
+	height: 150px;
+	margin-bottom: 5px;
+}
+
+.card-title {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
 </style>
 
 <script>
@@ -250,6 +258,11 @@ border-bottom: solid 3px #39d9c8;
 				location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
 			}
 		})
+		
+		
+			$("#chat").on("click",function(){
+				location.href = "/chat/waitingroom";
+			})
 	});
 </script>
 </head>
@@ -284,52 +297,63 @@ border-bottom: solid 3px #39d9c8;
 	</div>
 	<!-- Top Bar End -->
 
-	 <!-- Nav Bar Start -->
-        <div class="navbar navbar-expand-lg bg-dark navbar-dark">
-            <div class="container-fluid">
-                <a href="/" class="navbar-brand"><p id= titlename>돈-다</a></p>
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <c:choose>
-                	<c:when test="${loginID == null }">
-                		<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                    	<div class="navbar-nav ml-auto">
-                        	<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
-                        	<a href="/person/login" class="nav-item nav-link active">Login</a> <!-- Login Page 이동 -->
-                        	<a href="/person/join" class="nav-item nav-link">Sign Up</a>  <!-- SignUp Page 이동 -->
-                    	</div>
-                		</div>
-                	</c:when>
-                	<c:otherwise>
-                		<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                    		<div class="navbar-nav ml-auto">
-                        		<input class="form-control mr-sm-5" type="search" placeholder="물품, 지역을 검색해주세요." id =search aria-label="Search">
-                        		<a href="/person/logout" class="nav-item nav-link active">Logout</a> <!-- Logout -->
-                        		 <div class="collapse navbar-collapse" id="navbarNavDropdown">
-	                        		 <ul class="navbar-nav">
-	                        			<li class="nav-item dropdown">
-									        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									         Menu
-									        </a>
-									        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-									          <a class="dropdown-item" href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
-									          <a class="dropdown-item" href="/sns/main">SNS</a>
-									          <a class="dropdown-item" href="/my/mypageProc">My page</a>
-									          <a class="dropdown-item" href="/point/ToCharging">Charging</a>
-									        </div>
-								      	</li>
-								      </ul>
-								      <button type="button" class="btn btn-outline-warning" id="chat">Chatting</button>
-							      </div>
-                    		</div>
-                		</div>
-                	</c:otherwise>
-                </c:choose>
+	<!-- Nav Bar Start -->
+	<div class="navbar navbar-expand-lg bg-dark navbar-dark">
+		<div class="container-fluid">
+			<a href="/" class="navbar-brand"><p id=titlename>돈-다</a>
+			</p>
+			<button type="button" class="navbar-toggler" data-toggle="collapse"
+				data-target="#navbarCollapse">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<c:choose>
+				<c:when test="${loginID == null }">
+					<div class="collapse navbar-collapse justify-content-between"
+						id="navbarCollapse">
+						<div class="navbar-nav ml-auto">
+							<input class="form-control mr-sm-5" type="search"
+								placeholder="물품, 지역을 검색해주세요." id=search aria-label="Search">
+							<a href="/person/login" class="nav-item nav-link active">Login</a>
+							<!-- Login Page 이동 -->
+							<a href="/person/join" class="nav-item nav-link">Sign Up</a>
+							<!-- SignUp Page 이동 -->
+						</div>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div class="collapse navbar-collapse justify-content-between"
+						id="navbarCollapse">
+						<div class="navbar-nav ml-auto">
+							<input class="form-control mr-sm-5" type="search"
+								placeholder="물품, 지역을 검색해주세요." id=search aria-label="Search">
+							<a href="/person/logout" class="nav-item nav-link active">Logout</a>
+							<!-- Logout -->
+							<div class="collapse navbar-collapse" id="navbarNavDropdown">
+								<ul class="navbar-nav">
+									<li class="nav-item dropdown"><a
+										class="nav-link dropdown-toggle" href="#"
+										id="navbarDropdownMenuLink" role="button"
+										data-toggle="dropdown" aria-haspopup="true"
+										aria-expanded="false"> Menu </a>
+										<div class="dropdown-menu"
+											aria-labelledby="navbarDropdownMenuLink">
+											<a class="dropdown-item"
+												href="/AllBoardList/lendList?category=AllCategory&search=&cpage=1">Board</a>
+											<a class="dropdown-item" href="/sns/main">SNS</a> <a
+												class="dropdown-item" href="/my/mypageProc">My page</a> <a
+												class="dropdown-item" href="/point/ToCharging">Charging</a>
+										</div></li>
+								</ul>
+								<button type="button" class="btn btn-outline-warning" id="chat">Chatting</button>
+							</div>
+						</div>
+					</div>
+				</c:otherwise>
+			</c:choose>
 
-            </div>
-        </div>
-        <!-- Nav Bar End -->
+		</div>
+	</div>
+	<!-- Nav Bar End -->
 
 	<section id="body">
 		<div class="container">
@@ -355,7 +379,8 @@ border-bottom: solid 3px #39d9c8;
 					<ul class="nav justify-content-center list">
 						<li class="nav-item"><a class="nav-link active" id="selling"
 							aria-current="page" href="/profile/userSelling?id=${writer}">
-								판매 목록<span class="badge badge-pill badge-dark">  ${sellingCount}</span>
+								판매 목록<span class="badge badge-pill badge-dark">
+									${sellingCount}</span>
 						</a></li>
 						<li class="nav-item"><a class="nav-link" id="review"
 							href="/profile/reviewListForUser?id=${writer}">거래후기<span
@@ -370,11 +395,14 @@ border-bottom: solid 3px #39d9c8;
 								<div class="card">
 									<div class="card-body">
 										<div class="card-category">[${i.category}]</div>
-									    <a href="/lendBoard/lendView?id=${i.writer}&seq=${i.seq}" }><img src="/imgs/lend/${i.sysName}" class="card-img-top"></a>
-										<h5 class="card-title"><a href="/lendBoard/lendView?id=${i.writer}&seq=${i.seq}">${i.title}</a></h5>
-										<div class="card-price ">${i.price} 상추</div>
+										<a href="/lendBoard/lendView?id=${i.writer}&seq=${i.seq}"}><img
+											src="/imgs/lend/${i.sysName}" class="card-img-top"></a>
+										<h5 class="card-title">
+											<a href="/lendBoard/lendView?id=${i.writer}&seq=${i.seq}">${i.title}</a>
+										</h5>
+										<div class="card-price ">${i.price}상추</div>
 										<div class="card-region-name">${i.address}</div>
-									
+
 									</div>
 								</div>
 							</div>

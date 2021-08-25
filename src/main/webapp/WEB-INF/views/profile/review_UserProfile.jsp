@@ -338,6 +338,11 @@ li {
 				location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
 			}
 		})
+		
+		
+			$("#chat").on("click",function(){
+				location.href = "/chat/waitingroom";
+			})
 	});
             </script>
 </head>

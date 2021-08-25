@@ -304,11 +304,20 @@ public class MypageController {
 		model.addAttribute("productSellList",dealEndProductSellList);
 		return "/mypage/dealEndProductSellList";
 	}
-	
-	@RequestMapping("reviewed")
+	//구매자-> 판매자
+	@RequestMapping("reviewedByBuyer")
 	@ResponseBody
-	public String reviewed() {
-		List<ReviewDTO> alist = service.reviewd((String)session.getAttribute("loginID"));
+	public String reviewedByBuyer() {
+		List<HashMap<String,Object>> alist = service.reviewedByBuyer((String)session.getAttribute("loginID"));
+		Gson gs = new Gson();	
+		return gs.toJson(alist);
+	}
+	
+	//판매자-> 구매자
+	@RequestMapping("reviewedBySeller")
+	@ResponseBody
+	public String reviewedBySeller() {
+		List<HashMap<String,Object>> alist = service.reviewedBySeller((String)session.getAttribute("loginID"));
 		Gson gs = new Gson();	
 		return gs.toJson(alist);
 	}
