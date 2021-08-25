@@ -37,12 +37,13 @@ public class ChatMainEndPoint {
 	public void onMessage(Session self, String message, boolean last) throws Exception { 
 			
 		if(!message.equalsIgnoreCase("")) {
-			String friend = chatService.findFriendid(message.split(":")[1],(String)hsession.getAttribute("loginID"));
+			String friend = chatService.findFriendid(message.split(":")[1].substring(0,36),(String)hsession.getAttribute("loginID"));
 			System.out.println((String)hsession.getAttribute("loginID")+"안읽은 message갯수"+message);
 			JsonObject json = new JsonObject();
 			System.out.println(message);
 			json.addProperty("unread", message.split(":")[0]);
-			json.addProperty("roomid", message.split(":")[1]);
+			json.addProperty("roomid", message.split(":")[1].substring(0,36));
+			json.addProperty("message", message.substring(message.split(":")[1].substring(0,36).length()+2));
 			if(chatmain.get(friend) != null) {
 				chatmain.get(friend).getBasicRemote().sendText(json.toString());
 				}
@@ -52,7 +53,9 @@ public class ChatMainEndPoint {
 	// 접속했던 session 객체가 연결을 종료하는 순간 해당 룸 아이디를 통해 룸을 확인하고 그 안에 session객체를 삭제한다.
 	@OnClose
 	public void onClose(Session session) {
+		System.out.println("끊기기 전:" + chatmain);
 		chatmain.remove((String)hsession.getAttribute("loginID"));
+		System.out.println("끊기기 후:" + chatmain);
 		System.out.println("ChatMainEndPoint 연결 끊김.");
 	}
 }

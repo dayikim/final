@@ -69,6 +69,7 @@ public class ChatController {
 	public String chat(Model md) throws Exception {
 		md.addAttribute("list", cs.getfreindList((String)session.getAttribute("loginID")));
 		md.addAttribute("unread_count", ms);
+		md.addAttribute("lastestMessage", ms);
 		md.addAttribute("waiting", "true");
 		List<String> li = new ArrayList<String>();
 		for(ChatRoomDto crd:  cs.getChatRoomlist((String)session.getAttribute("loginID"))) {
@@ -98,10 +99,7 @@ public class ChatController {
 	@RequestMapping("")
 	public String joinroom(String roomid, Model md) throws Exception {
 		System.out.println("toChat으로 들어올때 확인된 roomid: "+roomid);
-		if(session.getAttribute(roomid) == null) session.setAttribute("roomid", roomid);
-		else {
-			session.setAttribute("roomid", roomid);
-		}
+		session.setAttribute("roomid", roomid);
 		md.addAttribute("list", cs.getChatRoomlist((String)session.getAttribute("loginID"))); // 이거 친구 리스트로 가져와야함.
 		md.addAttribute("pastMessage", ms.pastMessage(roomid));
 		md.addAttribute("time", new SimpleDateFormat("a h:mm"));

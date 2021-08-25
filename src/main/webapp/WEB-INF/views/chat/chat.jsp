@@ -224,7 +224,9 @@ $(function(){
 		
 		
 		if(text.isCheck != "true"){
-			window.parent.postMessage(text.unreadcount+":"+text.roomid,'http://192.168.35.97/chat/waitingroom');
+			console.log(text.message);
+			console.log(text.message);
+			window.parent.postMessage(text.unreadcount+":"+text.roomid+text.message,'http://192.168.35.97/chat/waitingroom');
 			if(text.isNaver == "true"){
 				let hashimage = JSON.parse(text.HashImage);
 				let hashblog = JSON.parse(text.HashBlog);

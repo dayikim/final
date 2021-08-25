@@ -123,8 +123,6 @@ public class SnsController {
 		int seq = service.seq();
 		String region = service.region(id);
 		service.insert(seq, id, contents, category, region);
-		session.setAttribute("temp_seq", seq);
-		System.out.println(seq);
 		return String.valueOf(seq);
 	}
 	
@@ -135,7 +133,6 @@ public class SnsController {
 			List<MultipartFile> fileList = request.getFiles("file");
 			String realPath = session.getServletContext().getRealPath("files");
 			String istransfer = "false";
-			
 			File filesPath = new File(realPath);
 			if(!filesPath.exists()) {filesPath.mkdir();}
 			for(MultipartFile tmp : fileList ) {
@@ -144,7 +141,7 @@ public class SnsController {
 			for(MultipartFile tmp : fileList ) {
 				String oriName = tmp.getOriginalFilename();
 				String sysName = UUID.randomUUID().toString().replaceAll("-", "")+"_"+oriName;	
-				fservice.insert(oriName, sysName, (Integer)session.getAttribute("temp_seq"), (String)session.getAttribute("loginID"));
+				fservice.insert(oriName, sysName, Integer.parseInt(request.getParameter("seq")), (String)session.getAttribute("loginID"));
 				tmp.transferTo(new File(filesPath.getAbsolutePath()+"/"+sysName)); 
 				istransfer = "ture"; 				  
 			}	

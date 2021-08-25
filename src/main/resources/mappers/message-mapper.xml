@@ -31,4 +31,8 @@
 		update message set unread_message ='N' where roomid = #{value}
 	</update>
 	
+	<select id="lastestMessage" resultType="String">
+		select message from message where seq = (select max(seq) from message where roomid = #{value})
+	</select>
+	
 </mapper>

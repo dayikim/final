@@ -12,13 +12,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
 @Component
 public class NaverApi {
 	private static String clientId = "2HFs7dbsd4zRLycDtPnY";
-	private static String clientSecret = "0nUlxagiRE";
+	private static String clientSecret = "";
 	
 		public  String returnImageJson(String search) throws Exception {
 			String transfer_utf8 = URLEncoder.encode(search, "UTF-8");
