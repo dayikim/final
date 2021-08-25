@@ -90,7 +90,7 @@ select distinct lendboard.writer,booking.booker,lendboard.price,lendboard.title,
 
 <!--거래 완료 후 예약내역 삭제 -->
 <delete id="bookingDelete">
-delete from booking where booker=#{id} and parentseq=${parentseq}
+delete from booking where booker=#{id} and parentseq=#{parentseq}
 </delete>
 <!-- 예약하기 -->
 <insert id="booking">
