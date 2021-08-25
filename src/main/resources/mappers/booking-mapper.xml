@@ -22,6 +22,7 @@
 	<result column="booker" property="booker"/> 
 	<result column="parentseq" property="parentseq"/>
 	<result column="approval" property="approval"/>
+	<result column="sysname" property="sysName"/>
 </resultMap>
 
 
@@ -33,7 +34,7 @@
 	<result column="parentseq" property="parentseq"/>
 	<result column="approval" property="approval"/>	
 	<result column="paymentable" property="paymentable"/>
-	
+	<result column="sysname" property="sysName"/>
 </resultMap>
 
 
@@ -66,14 +67,21 @@
 
 <!-- 구매자가 대여 예약 내역 출력 (승인 대기중)-->
 <select id="buyRequestProduct" resultMap="booking1" resultType="HashMap">
-select distinct lendboard.writer,booking.booker,lendboard.price,lendboard.title,booking.parentseq
-	from lendboard join booking on (lendboard.seq = booking.parentseq) where booking.bookable=#{y} and booking.booker=#{id} and booking.boardtype=#{product}
+	select distinct lb.writer,booking.booker,lb.price,lb.title,booking.parentseq,lf.sysname
+	from lendboard lb left join (select SYSNAME, PARENTSEQ, REGDATE from (
+	select ROW_NUMBER() over (PARTITION BY lendfiles.PARENTSEQ order by lendfiles.REGDATE asc ) AS RNUM, lendfiles.* from lendfiles ) TB where RNUM=1 ) 
+	lf on lb.SEQ=lf.PARENTSEQ 
+	join booking on (lb.seq = booking.parentseq) 
+	where booking.bookable=#{y} and booking.booker=#{id} and booking.boardtype=#{product}
 </select>
 
 <!-- 구매자가 대여 예약 내역 출력 (결제하기 버튼 생성)-->
 <select id="buyRequestProduct2" resultMap="booking1" resultType="HashMap">
-select distinct lendboard.writer,booking.booker,lendboard.price,lendboard.title,booking.parentseq,approval.approval
-	from lendboard join booking on (lendboard.seq = booking.parentseq) join approval on (approval.parentseq =booking.parentseq)
+	select distinct lb.writer,booking.booker,lb.price,lb.title,booking.parentseq,approval.approval,lf.sysname
+	from lendboard lb left join (select SYSNAME, PARENTSEQ, REGDATE from (
+	select ROW_NUMBER() over (PARTITION BY lendfiles.PARENTSEQ order by lendfiles.REGDATE asc ) AS RNUM, lendfiles.* from lendfiles ) TB where RNUM=1 ) 
+	lf on lb.SEQ=lf.PARENTSEQ 
+	join booking on (lb.seq = booking.parentseq) join approval on (approval.parentseq =booking.parentseq)
 	where booking.bookable=#{y} and booking.booker=#{id} and booking.boardtype=#{product}
 </select>
 

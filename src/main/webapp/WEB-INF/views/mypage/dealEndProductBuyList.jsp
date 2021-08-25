@@ -136,6 +136,11 @@ img {
 	border-radius: 10px;
 }
 
+.completImg>a>img{
+	width:100%;
+	height:100%;
+}
+
 /* 상품 이미지 부분 */
 .completImg {
 	width: 200px;
@@ -471,8 +476,7 @@ form {
 					<div class="col-12 col-md-4 col-sm-4 completImgDiv">
 						<div class="completImg">
 							<!-- lendboard 링크 수정!!!! -->
-							<a href="/lendBoard/lendView?id=${i.seller}&seq=${i.parentseq}"><img
-								src="..."></a>
+							<a href="/lendBoard/lendView?id=${i.seller}&seq=${i.parentseq}"><img src="/imgs/lend/${i.sysName }"></a>
 						</div>
 					</div>
 					<div class="col-12 col-md-8 col-sm-8 information">

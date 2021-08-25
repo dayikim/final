@@ -146,6 +146,10 @@ img {
 	margin-left: 32px;
 	margin-top: 15px;
 }
+.completImg>a>img{
+	width:100%;
+	height:100%;
+}
 
 /* 상품 정보 부분 */
 .information {
@@ -442,8 +446,7 @@ form {
 						<div class="completImg">
 
 							<!-- lendboard 주소로 수정 -->
-							<a href="/lendBoard/lendView?id=${i.buyer}&seq=${i.parentseq}"><img
-								src="..."></a>
+							<a href="/lendBoard/lendView?id=${i.buyer}&seq=${i.parentseq}"><img src="/imgs/lend/${i.sysName }"></a>
 						</div>
 					</div>
 					<div class="col-12 col-md-8 col-sm-8 information">
