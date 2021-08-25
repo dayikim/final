@@ -39,8 +39,10 @@
 
 <!-- 판매자에게 들어온 예약 요청 목록 출력(물품) -->
 <select id="requestRentalProduct" resultMap="product" resultType="HashMap">
-	select distinct lendboard.writer,booking.booker,lendboard.price,lendboard.title,booking.parentseq,lendfiles.sysname
-	from lendboard join booking on (lendboard.seq = booking.parentseq) join lendfiles on (booking.parentseq = lendfiles.parentseq)
+	select distinct lb.writer,booking.booker,lb.price,lb.title,booking.parentseq,lf.sysname
+	from lendboard lb left join (select SYSNAME, PARENTSEQ, REGDATE from (
+	select ROW_NUMBER() over (PARTITION BY lendfiles.PARENTSEQ order by lendfiles.REGDATE asc ) AS RNUM, lendfiles.* from lendfiles ) TB where RNUM=1 ) 
+	lf on lb.SEQ=lf.PARENTSEQ join booking on(lb.seq = booking.parentseq)
 	where booking.bookable=#{y} and booking.seller=#{id} and booking.boardtype=#{able}
 </select>
 

@@ -137,16 +137,18 @@ img {
 }
 
 .image {
-	width: 200px;
-	height: 200px;
+	width: 250px;
+	height: 230px;
 	overflow: hidden;
-	padding-top: 10px;
+	margin-top:11px;
+	margin-left:10px;
+	border-radius: 5px;
+	border:1px solid gray;
 }
 
 img {
-	width: 200px;
-	height: 200px;
-	border-radius: 5px;
+	width: 100%;
+	height: 100%;
 }
 
 .information {
@@ -413,7 +415,7 @@ img {
 					<div class="col-8 information">
 						<div class="title">
 							<h4>
-								<b>${i.title }</b>
+								<b><a href="/lendBoard/lendView?seq=${i.parentseq}&id=${i.writer}">${i.title }</a></b>
 							</h4>
 						</div>
 
@@ -434,7 +436,7 @@ img {
 								<div class="col-4 left">
 									<b>제시 가격</b>
 								</div>
-								<div class="col-8 right">${i.price }원</div>
+								<div class="col-8 right">${i.price }상추</div>
 							</div>
 						</div>
 						<input type=hidden value=${i.writer } id=writer name=writer>
@@ -444,7 +446,7 @@ img {
 					</div>
 					<div class="col-4">
 						<div class="image">
-							<img src="/imgs/lend/${i.sysName }">
+							<a href="/lendBoard/lendView?seq=${i.parentseq}&id=${i.writer}"><img src="/imgs/lend/${i.sysName }"></a>
 						</div>
 
 					</div>
