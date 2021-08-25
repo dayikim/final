@@ -450,7 +450,7 @@ img {
 						</div>
 
 					</div>
-				</div>
+				</div> 
 				
 					<%-- <c:forEach var="app" items="${approval }">
 					
