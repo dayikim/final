@@ -99,7 +99,7 @@
             </div>
             <div class="row content">
                 <div class="col-4 left"><b>결제 내역</b></div>
-                <div class="col-8 right">${i.price }</div> 
+                <div class="col-8 right">${i.price }상추</div> 
             </div>
             <div class="row content">
                 <div class="col-4 left"><b>대여자</b></div>
