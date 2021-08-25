@@ -93,31 +93,8 @@ style>body {
 	max-width: 300px;
 	max-height: 400px;
 }
-
-#loading {
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
-	position: fixed;
-	display: block;
-	opacity: 0.6;
-	background: #e4e4e4;
-	z-index: 99;
-	text-align: center;
-}
-
-#loading>img {
-	position: absolute;
-	top: 100%;
-	left: 50%;
-	z-index: 100;
-}
 </style>
 <script>
-$(document).ready(function() {
-	$('#loading').hide();
-	})
 	
 	let fileList = [];
 	var count = 2;
@@ -127,8 +104,7 @@ $(document).ready(function() {
 		console.log("count 값: "+count);
 		let loadNewPage = $(window).on("scroll",(function() {
 			if (((window.innerHeight + window.scrollY) >= document.body.offsetHeight)&& isScroll) {
-				 $('#loading').show();
-				    return true;
+				   // return true;
 				setTimeout(function(){
 					$.ajax({
 						url : "/sns/page",
@@ -263,16 +239,12 @@ $(document).ready(function() {
 										 node += "</div>"
 									 node += "</div>"
 
-						$("#snsbody").append(node); 
-								 
-									 
+						$("#snsbody").append(node); 									 
 						}
 					}
 						count++;	
 					})
-				},2000)
-				
-				$('#loading').hide();
+				},750)
 			}
 		}));	
 
@@ -688,9 +660,6 @@ $(document).ready(function() {
 							</div>
 						</div>
 					</c:forEach>
-					<div id="loading" style="margin-left: 0px;">
-						<img src="/imgs/img.gif">
-					</div>
 				</div>
 				<div class="col-md-3">
 					<i class="fas fa-arrow-up" id=top></i>
