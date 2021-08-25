@@ -119,46 +119,6 @@
 		let isMonth = false; 
 		let isDay = false; 
 		
-		
-		/* $("#signup-birth-yy").on("blur",function(){
-			let yearRegex = /[0-9]{4}/g;
-			let year = yearRegex.test($("#signup-birth-yy").val());
-			if(year){
-				if($("#signup-birth-yy").val() < 1920){
-					$("#birthday").css("color","red");
-					$("#birthday").text("정말이세요?");
-				}else if($("#signup-birth-yy").val() > 2021){
-					$("#birthday").css("color","red");
-					$("#birthday").text("미래에서 오셨군요!");
-				}else{
-					isYear = true; 
-				}
-			}else{
-				$("#birthday").css("color","red");
-				$("#birthday").text("태어난 년도 4자리를 정확하게 입력하세요.");
-			}			
-		}) 
-			
-		$("#signup-birth-mm").on("blur",function(){
-			console.log($("#signup-birth-mm").val())
-			if($("#signup-birth-mm").val() == "month"){
-				$("#birthday").css("color","red");
-				$("#birthday").text("태어난 월을 선택하세요.");
-			}else{
-				isMonth =true; 
-			}
-		})
-		
-		$("#signup-birth-dd").on("blur",function(){
-			if( $("#signup-birth-dd").val()<1 || $("#signup-birth-dd").val()>31) {
-				$("#birthday").css("display","block");
-				$("#birthday").css("color","red");
-				$("#birthday").text("날짜를 잘못 입력하셨네요!");
-		    }else{
-		    	isDay = true;
-		    }
-		}) */
-		
 		 $(".birth").on("change", function(){
 	          for(let i=0; i<$(".birth").length; i++){
 	            if($($(".birth")[i]).val() != null){
@@ -229,25 +189,25 @@
 			}
 			/*let color = $(".next_box").css("color");*/
 			if($("#idcheck").css("color") == "rgb(255, 0, 0)"){
-				alert("아이디체크에서 발생된 형식에 맞게 기입하셨는지 확인해주세요.");
+				alert("형식에 맞게 기입하셨는지 확인해주세요.");
 				return false;
 			}
 			if($("#regexPw").css("color") == "rgb(255, 0, 0)"){
-				alert("패스워드에서 발생 형식에 맞게 기입하셨는지 확인해주세요.");
+				alert("형식에 맞게 기입하셨는지 확인해주세요.");
 				return false;
 			}
 			if($("#val").css("color") == "rgb(255, 0, 0)"){
-				alert("아이디 중복 체크 형식에 맞게 기입하셨는지 확인해주세요.");
+				alert("형식에 맞게 기입하셨는지 확인해주세요.");
 				return false;
 			}
 			if($("#birthday").css("color") == "rgb(255, 0, 0)"){
-				alert("생일에서 발생된 형식에 맞게 기입하셨는지 확인해주세요.");
+				alert("형식에 맞게 기입하셨는지 확인해주세요.");
 				return false;
 			}
-			/*if(count <= 0){
+			if(count <= 0){
 				alert("핸드폰인증을 진행해주세요.")
 				return false;
-			}*/
+			}
 		})
 		 
 	})

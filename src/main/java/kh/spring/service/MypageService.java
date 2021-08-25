@@ -86,6 +86,21 @@ public class MypageService {
 	public String modifyProc(PersonDTO dto) {
 		return dao.modifyProc(dto);
 	}
+	
+	//마이페이지 년도가져오기
+	public String year(String id) {
+		return dao.year(id);
+	}
+	
+	//마이페이지 월 가져오기
+	public String month(String id) {
+		return dao.month(id);
+	}
+	
+	//마이페이지 날짜 가져오기
+	public String day(String id) {
+		return dao.day(id);
+	}
 
 	// 프로필 사진 입력
 	public int profileInsert(MultipartFile after_profile, String parents, String realPath){

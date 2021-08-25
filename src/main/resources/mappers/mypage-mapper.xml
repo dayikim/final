@@ -16,6 +16,21 @@
 		select * from person where
 		id=#{id}
 	</select>
+	
+	<!-- 마이페이지 년도가져오기 -->
+	<select id="year" resultType="String">
+		select substrb(birth,1,4) from person where id=#{value}		
+	</select>
+	
+	<!-- 마이페이지 월 가져오기 -->
+	<select id="month" resultType="String">
+		select substrb(birth,5,2) from person where id=#{value}
+	</select>
+	
+	<!-- 마이페이지 날짜 가져오기 -->
+	<select id="day" resultType="String">
+		select substrb(birth,7,2) from person where id=#{value}
+	</select>
 
 	<!-- <select id="reviewContents" resultType="kh.spring.dto.ReviewDTO">
 		select * from review where reviewer=#{id} and boardtype=#{talent}
@@ -24,7 +39,7 @@
 	<!-- 마이페이지 정보수정 -->
 	<update id="modifyProc">
 		update person set
-		pw=#{pw},phone=#{phone},email=#{email},birth=#{birth},postcode=#{postcode},address1=#{address1},address2=#{address2}
+		pw=#{pw},phone=#{phone},email=#{email},postcode=#{postcode},address1=#{address1},address2=#{address2}
 		where id=#{id}
 	</update>
 	
