@@ -313,7 +313,7 @@ form {
 							}
 						})
 						
-			$.ajax({
+		/* 	$.ajax({
 			url:'/my/reviewed',
 			method:'get',
 			dataType:'json'
@@ -342,7 +342,7 @@ form {
 				
 			}
 			
-		})			
+		}) */			
 						
 						
 						

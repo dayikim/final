@@ -17,7 +17,7 @@
 	</select>
 	
 	<delete id="approvalDelete">
-	delete from approval where buyer=#{value}
+	delete from approval where buyer=#{id}and parentseq=#{parentseq}
 	</delete>
 	
 <!--구매자와 해당 게시글 승인여부  -->

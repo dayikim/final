@@ -176,6 +176,10 @@
 					}
 				})
 				
+				$("#cancel").on("clcik",function(){
+					
+				})
+				
 				$("#chat").on("click",function(){
 					location.href = "/chat";
 				})
@@ -484,7 +488,7 @@
 							</div>
 							<div class="btn_wrap text-right">
 								<button type="button" class="btn btn-primary btn-lg" id="submitBtn">등록</button>
-								<button type="reset" id="cancel" class="btn btn-secondary btn-lg">취소</button>
+								<button type="reset" id="cancel" onclick="history.back()" class="btn btn-secondary btn-lg">취소</button>
 
 							</div>
 						</div>

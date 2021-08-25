@@ -219,7 +219,7 @@
 	                    if (file.type.match('image.*')){
 	                        //위에서 선언해준 storedFiles 배열에 이미지를 넣는다
 	                        storedFiles.push(file);
-	                        console.log(storedFiles.length);
+	                        console.log(storedFiles + " : "+storedFiles.length);
 	                        //onload는 문서가 전부 준비된 상황 이후에 발동하도록하는데
 	                        //여기서 readImg = FileReader(); 이기 때문에 파일을 다 읽어오면 이미지를 어팬드시키도록한다
 	                        readImg.onload = (function(file) {
@@ -235,6 +235,7 @@
 	                                $(".upen"+fileCount).attr("id","file"+fileCount);
 	                                $(".upen"+fileCount).attr("onchange","");
 	                                $(".upen"+fileCount).css("display","none");
+									$(".upload-hidden").css("display","none");
 	                                
 	                                $(".custom-file").append("<input type='file' name='file' class='upload-hidden' id='file'  onchange='javascript:document.getElementById(\"fileName\").value = this.value'  multiple>")
 	     	                       
@@ -262,12 +263,13 @@
 	            // 이미지를 지우는 함수
 	            $('body').on('click','a.cvf_delete_image',function(e){
 	                e.preventDefault();
-	                $(this).parent().remove('');       
+	                $(this).parent().remove();       
 	               
 	                var file = $(this).parent().attr('file');
 	                for(var i = 0; i < storedFiles.length; i++) {
 	                    if(storedFiles[i].name == file) {
-	                        storedFiles.splice(i, 1);
+	                    	console.log(storedFiles[i].name);
+	                        storedFiles.splice(i);
 	                        break;
 	                    }
 	                }
@@ -478,7 +480,7 @@
 							</div>
 							<div class="btn_wrap text-right">
 								<button type="button" class="btn btn-primary" id="submitBtn">요청하기</button>
-								<button type="reset" id="cancel" class="btn btn-dark">취소</button>
+								<button type="reset" id="cancel" onclick="history.back()" class="btn btn-dark">취소</button>
 
 							</div>
 						</div>
