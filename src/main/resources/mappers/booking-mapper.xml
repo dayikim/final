@@ -11,7 +11,7 @@
 	<result column="price" property="price"/> 
 	<result column="booker" property="booker"/> 
 	<result column="parentseq" property="parentseq"/>
-	<result column="approval" property="approval"/>
+	<result column="sysname" property="sysName"/>
 </resultMap>
 
 
@@ -39,8 +39,8 @@
 
 <!-- 판매자에게 들어온 예약 요청 목록 출력(물품) -->
 <select id="requestRentalProduct" resultMap="product" resultType="HashMap">
-	select distinct lendboard.writer,booking.booker,lendboard.price,lendboard.title,booking.parentseq
-	from lendboard join booking on (lendboard.seq = booking.parentseq) 
+	select distinct lendboard.writer,booking.booker,lendboard.price,lendboard.title,booking.parentseq,lendfiles.sysname
+	from lendboard join booking on (lendboard.seq = booking.parentseq) join lendfiles on (booking.parentseq = lendfiles.parentseq)
 	where booking.bookable=#{y} and booking.seller=#{id} and booking.boardtype=#{able}
 </select>
 
