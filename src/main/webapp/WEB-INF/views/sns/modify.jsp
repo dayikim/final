@@ -81,6 +81,10 @@ style>body {
 	max-height: 400px;
 }
 
+.row{
+	margin-top : 10px;
+}
+
 </style>
 <script>
 	$(function() {
