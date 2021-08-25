@@ -86,12 +86,12 @@ public class ChatController {
 	public String createRoom(String board_seq, String board_category) {
 		String roomid = cs.roomid();
 		
-		if(cs.dupleCheckRoom((String)session.getAttribute("loginID"), board_seq, board_category)==0)
-		{
+		if(cs.dupleCheckRoom((String)session.getAttribute("loginID"), board_seq, board_category)==0){
 			cs.createRoomMy(roomid,ls.detailView(Integer.parseInt(board_seq)),session ,Integer.parseInt(board_seq) , board_category);
 			session.setAttribute("roomid", roomid);
 			session.setAttribute("createRoom",true);
 		}
+		
 		return "redirect:waitingroom";
 	}
 	

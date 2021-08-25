@@ -58,7 +58,7 @@ public class ChatEndPoint {
 		}else {
 			chatService.joinroom(roomid, session);
 		}
-		messageService.readTounread(roomid,(String) hsession.getAttribute("loginID"));
+		messageService.readTounread(roomid,(String) hsession.getAttribute("loginID")); //입장할때 읽지 않은 모든 메세지를 읽음처리 함.
 		}
 	
 	
@@ -66,7 +66,7 @@ public class ChatEndPoint {
 	public void onMessage(Session self, String message, boolean last) throws Exception { // 자기 자신의 메세지를 받을 수있다.
 
 		int seq = messageService.getSeq();
-		String unread = chatService.getRoomList().get((String) hsession.getAttribute("roomid")).size() ==1 ? "Y":"N";
+		String unread = chatService.getRoomList().get((String) hsession.getAttribute("roomid")).size() ==1 ? "Y":"N"; //1:1 대화 기준 
 		messageService.insertMessage(seq, (String) hsession.getAttribute("roomid"),
 										  (String) hsession.getAttribute("loginID"),message,unread);
 		chatService.sendMessage(messageService.getMessage(seq),hsession);

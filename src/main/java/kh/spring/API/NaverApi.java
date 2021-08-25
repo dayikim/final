@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class NaverApi {
 	private static String clientId = "2HFs7dbsd4zRLycDtPnY";
-	private static String clientSecret = "GqQoPpq6Vm";
+	private static String clientSecret = "0nUlxagiRE";
 	
 		public  String returnImageJson(String search) throws Exception {
 			String transfer_utf8 = URLEncoder.encode(search, "UTF-8");
