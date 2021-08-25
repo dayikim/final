@@ -39,15 +39,20 @@ $(function(){
 	
 	ws.onmessage=function(event){
 		
+		
 		let text  = JSON.parse(event.data);
 		console.log(existing_roomid);
 		console.log(existing_roomid.indexOf(text.roomid));
+		console.log("과거 메세지: "+text.message);
+		console.log("룸 아이디: "+text.roomid);
+		
 		if(text.unread != 0){
 			if(existing_roomid.indexOf(text.roomid)!= -1){
 				for(let i =0; i<$(".user").length; i++){
 					if($($(".user")[i]).attr("id")==text.roomid){
 						$($(".user")[i]).children("#unread").css("display","block");
 						$($(".user")[i]).children("#unread").text(text.unread);
+						$($(".user")[i]).children("#pastmessage").text(text.message);
 					}
 				}
 			}else{
@@ -93,6 +98,7 @@ $(function(){
 			for(let i =0; i<$(".user").length; i++){
 				if($($(".user")[i]).attr("id")==text.roomid){
 					$($(".user")[i]).children("#unread").css("display","none");
+					$($(".user")[i]).children("#pastmessage").text(text.message);
 				}
 			}
 		}
@@ -286,7 +292,7 @@ font-size: 12px;
 text-align: center;
 line-height: 25px;
 position: absolute;
-left: 85%;
+left: 24%;
 }
 #chatdisplay{
 
@@ -306,6 +312,15 @@ img{
 width:60px;
 height:60px;
 
+}
+
+#pastmessage{
+position: absolute;
+top:30%;
+left:40%;
+overflow:hidden;
+font-size: 17px;
+height: 50px;
 }
 
 
@@ -365,8 +380,10 @@ height:60px;
 		                                       				<img class=rounded-circle src="/imgs/nomalProfile.jpg">
 		                                       			</c:otherwise>
 		                                       		</c:choose>
-		                           
+		                                       		<span class="pastmessage" id ="pastmessage">${lastestMessage.lastestMessage(item.roomid) }</span>
+		                           					<div>
 		                                            <span class="title">${item.sessions }</span> <!-- 상태 표시가 가능함!-->
+		                                            </div>
 		                                        </div>           
 		                                   </li>
                                     </c:forEach>          

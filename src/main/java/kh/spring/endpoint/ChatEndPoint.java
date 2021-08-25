@@ -56,7 +56,9 @@ public class ChatEndPoint {
 			chatService.addRoom(roomid, session);
 			//session.getBasicRemote().sendText(chatService.toGson(chatService.findFriendid(roomid, (String)hsession.getAttribute("loginID"))));
 		}else {
+			System.out.println("조인하기 전 룸리스트"+chatService.getRoomList());
 			chatService.joinroom(roomid, session);
+			System.out.println("조인 후 룸리스트"+chatService.getRoomList());
 		}
 		messageService.readTounread(roomid,(String) hsession.getAttribute("loginID")); //입장할때 읽지 않은 모든 메세지를 읽음처리 함.
 		}
@@ -67,6 +69,7 @@ public class ChatEndPoint {
 
 		int seq = messageService.getSeq();
 		String unread = chatService.getRoomList().get((String) hsession.getAttribute("roomid")).size() ==1 ? "Y":"N"; //1:1 대화 기준 
+		System.out.println("룸 리스트에서 사이즈 좀:"+chatService.getRoomList().get((String) hsession.getAttribute("roomid")).size());
 		messageService.insertMessage(seq, (String) hsession.getAttribute("roomid"),
 										  (String) hsession.getAttribute("loginID"),message,unread);
 		chatService.sendMessage(messageService.getMessage(seq),hsession);
@@ -87,9 +90,10 @@ public class ChatEndPoint {
 	// 접속했던 session 객체가 연결을 종료하는 순간 해당 룸 아이디를 통해 룸을 확인하고 그 안에 session객체를 삭제한다.
 	@OnClose
 	public void onClose(Session session) {
+		System.out.println("세션 종료 되기 전"+chatService.getRoomList().get(roomid));
 		System.out.println("세션이 종료됨.");
-		String createroom = (String)hsession.getAttribute("createroom");
-		chatService.getRoomList().get(roomid).remove(session);
+		chatService.remove(roomid, session);
+		System.out.println("세션 종료 된 후"+chatService.getRoomList().get(roomid));
 	}
 	
 

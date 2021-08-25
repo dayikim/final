@@ -200,4 +200,8 @@ public class MessageService {
 	public int readTounread(String roomid,String id) {
 		return md.readTounread(roomid,id);
 	}	
+	
+	public String lastestMessage(String roomid) {
+		return md.lastestMessage(roomid);
+	}
 }

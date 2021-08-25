@@ -174,11 +174,15 @@ public class ChatService  implements InitializingBean {
 //	}
 	//룸에 접속한다.
 	synchronized public void joinroom(String roomid ,Session session) {
-			rs.get(roomid).add(session);
+			rs.get((String)roomid).add(session);
+	}
+	
+	synchronized public void remove(String roomid,Session session) {
+		rs.get((String)roomid).remove(session);
 	}
 	
 	//룸리스트에서 해당룸을 찾아, 그 안에 있는 세션 리스트에게 메세지를 보낸다. 
-	public void sendMessage(MessageDTO md,HttpSession hsession) throws Exception {
+	public synchronized void sendMessage(MessageDTO md,HttpSession hsession) throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("a h:mm"); //날짜 형식
 		List<Session> sessionList = rs.get(md.getRoomid());
 		
@@ -231,7 +235,7 @@ public class ChatService  implements InitializingBean {
 //		}
 //	}
 	
-	public void sendImage(HttpSession hsession,ChatFileDTO cdf,String file) throws Exception { //이미지를 보낸다.
+	public synchronized void sendImage(HttpSession hsession,ChatFileDTO cdf,String file) throws Exception { //이미지를 보낸다.
 		SimpleDateFormat sdf = new SimpleDateFormat("a h:mm");
 		List<Session> sessionList = rs.get(cdf.getRoomid());
 		for(Session session :sessionList) {
