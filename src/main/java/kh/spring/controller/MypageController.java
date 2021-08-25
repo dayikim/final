@@ -85,7 +85,13 @@ public class MypageController {
 	public String modify(Model model) {
 		String id = (String)session.getAttribute("loginID");
 		List<PersonDTO>list = service.modify(id);
+		String year = service.year(id);		
+		String month = service.month(id);		
+		String day = service.day(id);
 		model.addAttribute("list", list);
+		model.addAttribute("year", year);
+		model.addAttribute("month", month);
+		model.addAttribute("day", day);
 		return "mypage/modify";
 	}
 

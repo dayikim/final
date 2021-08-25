@@ -27,6 +27,21 @@ public class MypageDAO {
 	public List<PersonDTO> modify(String id){
 		return mybatis.selectList("MyPage.modify", id);
 	}
+	
+	//마이페이지 년도가져오기
+	public String year(String id) {
+		return mybatis.selectOne("MyPage.year", id);
+	}
+	
+	//마이페이지 월 가져오기
+	public String month(String id) {
+		return mybatis.selectOne("MyPage.month", id);
+	}
+	
+	//마이페이지 날짜 가져오기
+	public String day(String id) {
+		return mybatis.selectOne("MyPage.day", id);
+	}
 
 	//정보수정
 	public String modifyProc(PersonDTO dto) {

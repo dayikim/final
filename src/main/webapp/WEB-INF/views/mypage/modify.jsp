@@ -84,59 +84,6 @@
 			}
 		})
 		
-		let isYear = false; 
-		let isMonth = false; 
-		let isDay = false; 
-		
-		 $(".birth").on("change", function(){
-	          for(let i=0; i<$(".birth").length; i++){
-	            if($($(".birth")[i]).val() != null){
-	            	var birth_day = $("#signup-birth-dd").val();
-	            	if(birth_day.length == 1){
-	            		birth_day = "0"+birth_day;
-	            	}
-	                $("#birth").val($("#signup-birth-yy").val()+$("#signup-birth-mm").val()+birth_day);
-	            }
-	          }
-	        })
-	        
-	        $(".birth").on("blur", function(){
-	        	 for(let i=0; i<$(".birth").length; i++){
-	        		 if($($(".birth")[i]).val() != null){
-	        			 $("#birthday").css("display","block");
-	        			 if($("#signup-birth-yy").val() < 1920){
-	        				 isYear = false; 
-	     					$("#birthday").css("color","red");
-	     					$("#birthday").text("정말이세요?");
-	     				}else if($("#signup-birth-yy").val() > 2021){
-	     					isYear = false;
-	     					$("#birthday").css("color","red");
-	     					$("#birthday").text("미래에서 오셨군요!");
-	     				}else{
-	     					 isYear = true; 
-	     				}
-	        			 if( $("#signup-birth-dd").val()<1 || $("#signup-birth-dd").val()>31) {
-	        				 	isDay =false;
-	        					$("#birthday").css("color","red");
-	        					$("#birthday").text("날짜를 잘못 입력하셨네요!");
-	        			    }else{
-	        			    	isDay = true;
-	        			    }
-	        			 if($("#signup-birth-mm").val() == "month"){
-	        					 isMonth =false; 
-	        					$("#birthday").css("color","red");
-	        					$("#birthday").text("태어난 월을 선택하세요.");
-	        	 			}else{
-	        					isMonth =true; 
-	        				}
-	        			 if(isYear && isMonth && isDay){
-	        				 $("#birthday").css("display","none");
-	        				 console.log("여기 들어오면 안됌")
-	        			 }
-	        	 }
-	        	 }
-	        })
-		
 		document.getElementById("search").onclick = function() {
             new daum.Postcode({
                 oncomplete: function(data) {
@@ -155,15 +102,27 @@
 				alert("입력하지 않은 항목이 있는지 확인해주세요.")
 				return false;
 			}
-			let color = $(".next_box").css("color");
-			if(color == "rgb(255, 0, 0)"){
-				alert("가입시 형식에 맞게 기입하셨는지 확인해주세요.");
+			/*let color = $(".next_box").css("color");*/
+			if($("#idcheck").css("color") == "rgb(255, 0, 0)"){
+				alert("형식에 맞게 기입하셨는지 확인해주세요.");
 				return false;
 			}
-			/*if(count <= 0){
+			if($("#regexPw").css("color") == "rgb(255, 0, 0)"){
+				alert("형식에 맞게 기입하셨는지 확인해주세요.");
+				return false;
+			}
+			if($("#val").css("color") == "rgb(255, 0, 0)"){
+				alert("형식에 맞게 기입하셨는지 확인해주세요.");
+				return false;
+			}
+			if($("#birthday").css("color") == "rgb(255, 0, 0)"){
+				alert("형식에 맞게 기입하셨는지 확인해주세요.");
+				return false;
+			}
+			if(count <= 0){
 				alert("핸드폰인증을 진행해주세요.")
 				return false;
-			}*/
+			}
 		})
 		 
 	})
@@ -353,27 +312,13 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
                 <h3>생년월일</h3>
                 <span style="display: flex;">
                     <span class="signup-input-birth">
-                        <input class = birth id="signup-birth-yy" type="text"placeholder="년(4자)"  maxlength="4"></input>
+                        <input class = birth id="signup-birth-yy" type="text"  maxlength="4" value="${year}" readonly></input>
                     </span>
                     <span class="signup-input-birth" style="margin-left: 10px;">
-                        <select id="signup-birth-mm" class="selectbox birth" onchange="">
-                            <option value="month">월</option>
-                            <option value="01">1</option>
-                            <option value="02">2</option>
-                            <option value="03">3</option>
-                            <option value="04">4</option>
-                            <option value="05">5</option>
-                            <option value="06">6</option>
-                            <option value="07">7</option>
-                            <option value="08">8</option>
-                            <option value="09">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                        </select>
+                    	<input class = birth id="signup-birth-mm" type="text" maxlength="2" value="${month}" readonly></input>
                     </span>
                     <span class="signup-input-birth" style="margin-left: 10px;">
-                        <input class = birth id="signup-birth-dd" type="text" placeholder="일" maxlength="2"></input>
+                        <input class = birth id="signup-birth-dd" type="text" maxlength="2" value="${day}" readonly></input>
                     </span>
                     <input type = "hidden" name = birth id = birth>
                 </span>

@@ -356,6 +356,7 @@ style>body {
 									<div class="form-group">
 										<div class="custom-file">
 											<input type=file name=file id=file accept=".gif, .jpg, .png" multiple>
+											<label class="custom-file-label" for="file">Upload image</label>
 											<div id=fileList></div>
 											<div id=upload></div>
 										</div>
