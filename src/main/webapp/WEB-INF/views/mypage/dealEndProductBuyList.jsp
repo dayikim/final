@@ -492,20 +492,10 @@ $(function() { // 게시물 검색
 					</div>
 				</div>
 				<hr>
-				<input type=hidden value="${i.parentseq}" class="parentseq">
 				<!-- 거래 후기 링크 걸기 -->
 				<div class="review">
-					<%-- <c:choose>
-								<c:when test="${i.reviewable =='y'}">
-									<a href="" data-toggle="modal" data-target="#sendModal${vs.index}"
-										id="openReview">작성한 후기
-										보기</a>
-								</c:when>
-								<c:otherwise> --%>
-					<%-- <a href="" data-toggle="modal" data-target="#writeModal${vs.index}" id="other">거래 후기
-										보내기</a> --%>
-					<%-- </c:otherwise>
-							</c:choose --%>
+							<input type=hidden value="${i.parentseq}" class="parentseq">
+			
 					<div class="modal fade modal_box" id="writeModal${vs.index}"
 						tabindex="-1" aria-labelledby="exampleModalLabel"
 						aria-hidden="true">
