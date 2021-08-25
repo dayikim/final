@@ -29,14 +29,21 @@ public class SnsCommentController {
 	
 	@RequestMapping("/write")
 	@ResponseBody
-	public int write(SnsCommentDTO dto,int seq, String contents) {
+	public String write(SnsCommentDTO dto,int seq, String contents) {
 		String id = (String)session.getAttribute("loginID");
+		int comment_seq = service.comment_seq();
 		dto.setId(id);
 		dto.setContents(contents);
 		dto.setParentSeq(seq);
+		dto.setSeq(comment_seq);
 		
-		int result = service.insert(dto);
-		return result;
+		System.out.println(comment_seq);
+		service.insert(dto);
+		
+		
+		Gson gs = new Gson();
+		System.out.println(service.getComment(comment_seq).getId());
+		return gs.toJson(service.getComment(comment_seq));
 		
 	}
 	

@@ -27,12 +27,16 @@ public class SnsCommentDAO {
 		return mybatis.delete("Snscomm.delete", seq);
 	}
 	
-	public String getComment(int seq) {
+	public SnsCommentDTO getComment(int seq) {
 		return mybatis.selectOne("Snscomm.getComment", seq);
 	}
 	
 	public int modify(Map<String,Object>param) {
 		return mybatis.update("Snscomm.modify", param);
+	}
+	
+	public int getCommentSeq() {
+		return mybatis.selectOne("Snscomm.getCommentSeq");
 	}
 	
 }
