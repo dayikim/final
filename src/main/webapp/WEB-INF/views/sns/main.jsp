@@ -544,6 +544,7 @@ style>body {
 									<div class="custom-file">
 										<input type=file name=file id=file accept=".gif, .jpg, .png"
 											multiple>
+										<label class="custom-file-label" for="file">Upload image</label>
 										<div id=upload></div>
 									</div>
 								</div>
@@ -557,8 +558,11 @@ style>body {
 							<!-- 카테고리 -->
 							<div class="btn-group">
 								<select name=category id=category>
+									<option>일상</option>
 									<option>우리동네질문</option>
-									<option>동네홍보</option>
+									<option>동네맛집</option>
+									<option>동네사건사고</option>
+									<option>분실/실종센터</option>
 									<option>기타</option>
 								</select>
 							</div>
