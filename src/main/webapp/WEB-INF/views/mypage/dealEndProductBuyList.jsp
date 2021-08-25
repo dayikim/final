@@ -312,8 +312,7 @@ form {
 								}
 							}
 						})
-						
-		/* 	$.ajax({
+		 	$.ajax({
 			url:'/my/reviewed',
 			method:'get',
 			dataType:'json'
@@ -342,7 +341,7 @@ form {
 				
 			}
 			
-		}) */			
+		}) 		
 						
 						
 						
@@ -461,8 +460,7 @@ form {
 		<div class="margin">
 			<div>물품 > 물품빌리기 완료</div>
 		</div>
-
-		<!---------forEach 사용 구간------------------------------------------------------------------------------>
+			<!---------forEach 사용 구간------------------------------------------------------------------------------>
 
 		<!-- 빌림 완료 출력 -->
 		<c:forEach var="i" items="${productBuyList}" varStatus="vs">
@@ -472,7 +470,7 @@ form {
 						<div class="completImg">
 							<!-- lendboard 링크 수정!!!! -->
 							<a href="/lendBoard/lendView?id=${i.seller}&seq=${i.parentseq}"><img
-								src="..."></a>
+								src="/imgs/lend/${i.sysName }"></a>
 						</div>
 					</div>
 					<div class="col-12 col-md-8 col-sm-8 information">
