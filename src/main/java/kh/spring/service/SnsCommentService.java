@@ -28,7 +28,7 @@ public class SnsCommentService {
 		return dao.delete(seq);
 	}
 	
-	public String getComment(int seq) {
+	public SnsCommentDTO getComment(int seq) {
 		return dao.getComment(seq);
 	}
 	
@@ -37,6 +37,10 @@ public class SnsCommentService {
 		param.put("seq", seq);
 		param.put("contents", contents);
 		return dao.modify(param);
+	}
+	
+	public int comment_seq() {
+		return dao.getCommentSeq();
 	}
 	
 }

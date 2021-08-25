@@ -178,7 +178,7 @@ public class ChatService  implements InitializingBean {
 	}
 	
 	//룸리스트에서 해당룸을 찾아, 그 안에 있는 세션 리스트에게 메세지를 보낸다. 
-	synchronized public void sendMessage(MessageDTO md,HttpSession hsession) throws Exception {
+	public void sendMessage(MessageDTO md,HttpSession hsession) throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("a h:mm"); //날짜 형식
 		List<Session> sessionList = rs.get(md.getRoomid());
 		
@@ -231,9 +231,10 @@ public class ChatService  implements InitializingBean {
 //		}
 //	}
 	
-	synchronized public void sendImage(HttpSession hsession,ChatFileDTO cdf,String file) throws Exception { //이미지를 보낸다.
+	public void sendImage(HttpSession hsession,ChatFileDTO cdf,String file) throws Exception { //이미지를 보낸다.
 		SimpleDateFormat sdf = new SimpleDateFormat("a h:mm");
-		for(Session session :rs.get(cdf.getRoomid())) {
+		List<Session> sessionList = rs.get(cdf.getRoomid());
+		for(Session session :sessionList) {
 			JsonObject json = new JsonObject();
 			json.addProperty("loginID", cdf.getId());
 			String profile_binary =pffd.profileSelect((String)hsession.getAttribute("loginID")) != null ? 

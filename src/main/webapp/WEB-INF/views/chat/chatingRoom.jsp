@@ -319,7 +319,7 @@ height:60px;
     <div class="page-title">
         <div class="row gutters">
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                <h5 class="title" id = "titlename">돈-다 Chat</h5>
+                <a href ="/" style ="text-decoration: none"><h5 class="title" id = "titlename">돈-다 Chat</h5></a>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12"> </div>
         </div>
@@ -380,7 +380,7 @@ height:60px;
 	         
 	                       		<div class="col-9" id="waiting">
 	                       			<div class=chatinfo>
-		                       			<p>안녕하세요! <span id=titlename>돈-다 Chat</span> 입니다!</p>
+		                       			<p>안녕하세요! <a href ="/"><span id=titlename>돈-다 Chat</span></a> 입니다!</p>
 		                       			<p> <i class="fas fa-arrow-left"></i> 왼쪽 채팅방 목록을 확인해주세요! <p>
 	                       			</div>
 	                       		
