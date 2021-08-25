@@ -122,7 +122,6 @@ img {
 .container2 {
 	margin: auto;
 	width: 1000px;
-	margin-top:100px;
 	padding-top: 35px;
 	padding-left: 50px;
 	padding-right: 50px;
@@ -164,6 +163,7 @@ img {
 	margin-top: 30px;
 	margin-left: 50px;
 }
+div{}
 </style>
 
 <script>
