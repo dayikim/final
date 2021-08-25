@@ -370,16 +370,13 @@ img {
 
 
 	<!-- 네비바 -->
-	<div class="navi">
+<!-- 	<div class="navi">
 		<div class="requestProduct">
 			<a href="/my/buyRequestProduct"> <b>대여 예약</b>
 			</a>
 		</div>
-		<div class="requestTalent">
-			<a href="/my/buyRequestTalent"> <b>재능 예약</b>
-			</a>
-		</div>
-	</div>
+		
+	</div> -->
 
 
 
