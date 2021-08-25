@@ -137,16 +137,18 @@ img {
 }
 
 .image {
-	width: 200px;
-	height: 200px;
+	width: 250px;
+	height: 205px;
 	overflow: hidden;
-	padding-top: 10px;
+	margin-top:11px;
+	margin-left:10px;
+	border-radius: 5px;
+	border:1px solid gray;
 }
 
 img {
-	width: 200px;
-	height: 200px;
-	border-radius: 5px;
+	width: 100%;
+	height: 100%;
 }
 
 .information {
@@ -390,7 +392,7 @@ img {
 					<div class="col-8 information">
 						<div class="title">
 							<h4>
-								<b>${i.title }</b>
+								<b><a href="/lendBoard/lendView?seq=${i.parentseq}&id=${i.writer}">${i.title }</a></b>
 							</h4>
 						</div>
 						<div class="row content">
@@ -414,7 +416,7 @@ img {
 					</div>
 					<div class="col-4">
 						<div class="image">
-							<img src="">
+							<a href="/lendBoard/lendView?seq=${i.parentseq}&id=${i.writer}"><img src="/imgs/lend/${i.sysName }"></a>
 						</div>
 
 					</div>
