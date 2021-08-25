@@ -415,7 +415,7 @@ img {
 					<div class="col-8 information">
 						<div class="title">
 							<h4>
-								<b>${i.title }</b>
+								<b><a href="/lendBoard/lendView?seq=${i.parentseq}&id=${i.writer}">${i.title }</a></b>
 							</h4>
 						</div>
 
@@ -446,7 +446,7 @@ img {
 					</div>
 					<div class="col-4">
 						<div class="image">
-							<img src="/imgs/lend/${i.sysName }">
+							<a href="/lendBoard/lendView?seq=${i.parentseq}&id=${i.writer}"><img src="/imgs/lend/${i.sysName }"></a>
 						</div>
 
 					</div>
