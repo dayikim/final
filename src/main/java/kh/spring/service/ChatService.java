@@ -85,7 +85,7 @@ public class ChatService  implements InitializingBean {
 	public ChatService() {}
 	
 	@Override  // 전체 Roomlist를 가져온다.
-	public void afterPropertiesSet() throws Exception {
+	synchronized public void afterPropertiesSet() throws Exception {
 		for(ChatRoomDto crdto: crd.allChatRoomlist()) {
 			List<Session> tempList = new ArrayList<Session>();
 			rs.put(crdto.getRoomid(),tempList);
@@ -94,7 +94,7 @@ public class ChatService  implements InitializingBean {
 	
 
 	//룸DB에 자신의 룸을 만든다. (1:1 대화)
-	public void createRoomMy(String roomid,Object ld,HttpSession session,int board_seq,String board_category) {
+	synchronized public void createRoomMy(String roomid,Object ld,HttpSession session,int board_seq,String board_category) {
 		
 		String writer = "";
 		String title ="";

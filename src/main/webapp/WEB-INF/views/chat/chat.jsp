@@ -542,7 +542,7 @@ $(function(){
 	function updateScroll(){
 		/* var element = document.getElementById("chat-container");
 		element.scrollTop = element.scrollHeight+400; */
-		$('#chat-container').scrollTop($('#chat-container')[0].scrollHeight);
+		$('#chat-container').scrollTop($('#chat-container')[0].scrollHeight+500);
 	}
 	
 /* 	$("#send").on("click", function(){

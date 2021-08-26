@@ -134,7 +134,7 @@ public class SnsController {
 //			System.out.println(fileList.get(fileList.size()-1).getOriginalFilename());
 			String realPath = session.getServletContext().getRealPath("files");
 			String istransfer = "false";
-			int parentseq = (Integer)session.getAttribute("temp_seq");
+			int parentseq = Integer.parseInt(request.getParameter("seq"));
 			
 			File filesPath = new File(realPath);
 			if(!filesPath.exists()) {filesPath.mkdir();}
