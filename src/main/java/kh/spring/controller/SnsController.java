@@ -134,7 +134,6 @@ public class SnsController {
 //			System.out.println(fileList.get(fileList.size()-1).getOriginalFilename());
 			String realPath = session.getServletContext().getRealPath("files");
 			String istransfer = "false";
-			int seq = fservice.getSeq();
 			int parentseq = (Integer)session.getAttribute("temp_seq");
 			
 			File filesPath = new File(realPath);
@@ -143,6 +142,7 @@ public class SnsController {
 				System.out.println(tmp.getOriginalFilename());
 			}
 			for(MultipartFile tmp : fileList ) {
+				int seq = fservice.getSeq();
 				String oriName = tmp.getOriginalFilename();
 				String sysName = UUID.randomUUID().toString().replaceAll("-", "")+"_"+oriName;	
 				fservice.insert(seq,oriName, sysName, parentseq, (String)session.getAttribute("loginID"));
@@ -197,6 +197,9 @@ public class SnsController {
 	public String modiProc(String contents, String category, int seq) throws Exception{
 		String id = (String)session.getAttribute("loginID");
 		service.modify(contents, category, seq, id);
+		session.setAttribute("temp_seq", seq);
+		System.out.println("글수정seq : " + (Integer)session.getAttribute("temp_seq"));
+		
 		
 		return "redirect:/sns/main";
 	}

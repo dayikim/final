@@ -312,7 +312,7 @@ style>body {
 		        	 method:"get",
 		        	 data:{"contents":$("#contents").val(),"category":$("#category").val()}
 		         }).done(function(resp){
-		        	 location.reload();
+		        	 location.href = "/sns/main"	
 		        	 if(fileList.length !=0){
 		        	 $.ajax({
 		        		  	url:"/sns/file",
@@ -323,7 +323,7 @@ style>body {
 		                  	processData: false,
 		                  	contentType: false
 						}).done(function(){
-							location.reload();
+							location.href = "/sns/main"	
 						})
 		        	 }
 		         })
