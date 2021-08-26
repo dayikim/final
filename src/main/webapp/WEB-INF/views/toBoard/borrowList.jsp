@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -46,7 +47,7 @@
     		.dropdown {position: relative; display: inline-block;margin-bottom: 40px;}
     		.dropbtn:hover {background-color: skyblue}
     		
-    		.borrowBtn{color:#1d2434;background:none;font-size:1.2rem;font-weight:bold;}
+    		.borrowBtn{color:#1d2434;background:none;font-size:30px;font-weight:bold;}
     		.browse{display:inline-block; text-align:end; width:100%; margin-bottom:40px;}
     		.inp_slct{width:10%; height:28px; display:inline-block; margin-right:5px;}
     		.inp_slct select{height:100%;}
@@ -99,7 +100,14 @@
 	    	$("#writeBtn").on("click",function(){
 	    		location.href="/borrowBoard/toBorrow";
 	    	})
-	      	  
+
+	    	let list = $(".to-board").length
+	    	if(list == 0){
+	    		alert("검색내역이 없습니다!");
+	    		location.href="/AllBoardList/borrowList?choice=${choice}&search=&cpage=1";
+	    	}
+	    	
+	    	
 		})
 	</script>
 
