@@ -445,9 +445,19 @@ img {
 
 					</div>
 					<div class="col-4">
-						<div class="image">
-							<a href="/lendBoard/lendView?seq=${i.parentseq}&id=${i.writer}"><img src="/imgs/lend/${i.sysName }"></a>
-						</div>
+						<c:choose>
+							<c:when test="${i.sysName != null }">
+								<div class="image">
+									<a href="/lendBoard/lendView?seq=${i.parentseq}&id=${i.writer}"><img src="/imgs/lend/${i.sysName }"></a>
+								</div>	
+							</c:when>
+							<c:otherwise>
+								<div class="image">
+									<a href="/lendBoard/lendView?seq=${i.parentseq}&id=${i.writer}"><img src="/imgs/noimage.jpg"></a>
+								</div>
+							</c:otherwise>
+						</c:choose>
+						
 
 					</div>
 				</div> 

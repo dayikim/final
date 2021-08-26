@@ -44,7 +44,7 @@
 	from lendboard lb left join (select SYSNAME, PARENTSEQ, REGDATE from (
 	select ROW_NUMBER() over (PARTITION BY lendfiles.PARENTSEQ order by lendfiles.REGDATE asc ) AS RNUM, lendfiles.* from lendfiles ) TB where RNUM=1 ) 
 	lf on lb.SEQ=lf.PARENTSEQ join booking on(lb.seq = booking.parentseq)
-	where booking.bookable=#{y} and booking.seller=#{id} and booking.boardtype=#{able}
+	where booking.bookable=#{y} and booking.seller=#{id} and booking.boardtype=#{able} order by 1 desc
 </select>
 
 <!-- 판매자에게 들어온 예약 요청 취소(물품) -->
