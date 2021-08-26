@@ -510,9 +510,7 @@ li {
 					</c:forEach>
 
 				</section>
-				<div class="text-right">
-					<a href="/my/mypageProc" class="btn btn-secondary">메인으로</a>
-				</div>
+				
 			</div>
 		</div>
 	</section>

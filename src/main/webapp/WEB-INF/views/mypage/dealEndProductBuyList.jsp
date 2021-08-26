@@ -80,6 +80,12 @@ img {
 	margin-top: 5%;
 }
 
+#title{
+font-size:20px;
+font-weight:800;
+color:black;
+}
+
 /* 네비바 */
 .navi>div {
 	float: left;
@@ -184,7 +190,10 @@ img {
 }
 
 .btn{
-color:orange;}
+color:orange;
+font-weight:800;
+font-size:20px;
+}
 
 /* 모달창 */
 .modal-title {
@@ -350,12 +359,12 @@ $(function() {
 						
 						// 쓰기 버튼을 눌렀을 경우	
 						$(document).on("click","button[id^='write']",function() {
-						 window.open('/my/ReviewwriteForBuy?parentseq='+ $(this).parent().siblings(".parentseq").val(),"리뷰 쓰기",'width=400px,height=300px,scrollbars=no,resizable=no');
+						 window.open('/my/ReviewwriteForBuy?parentseq='+ $(this).parent().siblings(".parentseq").val(),"리뷰 쓰기",'width=500px,height=310px,scrollbars=no,resizable=no');
 				})
 				
 				// 보기 버튼을 눌렀을 경우	
 						$(document).on("click","button[id^='openReview']",function() {
-						 window.open('/my/ReadReviewForBuy?parentseq='+ $(this).parent().siblings(".parentseq").val(),"리뷰 보기",'width=400px,height=300px,scrollbars=no,resizable=no');
+						 window.open('/my/ReadReviewForBuy?parentseq='+ $(this).parent().siblings(".parentseq").val(),"리뷰 보기",'width=500px,height=310px,scrollbars=no,resizable=no');
 				})
 
 				});
@@ -468,7 +477,7 @@ $(function() {
 	<div class="container2">
 
 		<div class="margin">
-			<div>물품 > 물품빌리기 완료</div>
+			<div id="title">물품 > 물품빌림 완료</div>
 		</div>
 		<!---------forEach 사용 구간------------------------------------------------------------------------------>
 

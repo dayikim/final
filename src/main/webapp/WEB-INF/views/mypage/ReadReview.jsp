@@ -81,7 +81,7 @@ font-weight:800;
 								<div class="modal-body">
 									<div class="form-group">
 										<div class="mb-3 review_form">
-											<label class="col-form-label review_title">${i.name}님에게
+											<label class="col-form-label review_title"><b>${i.name}</b>님에게
 												감사인사를 남겼습니다.</label> <label class="col-form-label review_text"></label>
 											<img src="/imgs/letter.png">
 										</div>

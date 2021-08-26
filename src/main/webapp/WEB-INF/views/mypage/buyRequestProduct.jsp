@@ -97,6 +97,11 @@ img {
 	overflow: hidden;
 }
 
+#title{
+font-size:20px;
+font-weight:800;
+}
+
 .requestProduct { /* 대여요청 네비 */
 	height: 100%;
 	background-color: #334257;
@@ -166,6 +171,11 @@ img {
 	padding: 10px;
 	margin-top: 10px;
 }
+#complete{
+font-size:18px;
+font-weight:800;
+	color:blue;
+}
 
 .cnum-btn1 {
 	/* 취소 */
@@ -224,7 +234,7 @@ img {
 					
 				}else{
 						node += "<div class=under>"
-						node += "<p> *판매자의 승인이 완료되었습니다! </p>"
+						node += "<p id=complete> *판매자의 승인이 완료되었습니다! </p>"
 						node += "<button type=button class=cnum-btn2 id=payment>결제하기</button>";
 						node += "</div>"
 					$($(".parentseq")[j]).parent().append(node);
@@ -382,7 +392,7 @@ img {
 
 	<!-- 대여 요청 내역 -->
 	<div class="container2">
-		<div>예약 내역 > 대여 예약</div>
+		<div id="title">예약 내역 > 대여 예약</div>
 		<c:forEach var="i" items="${requestRental}" varStatus="vs">
 			<div class="requestList">
 				<div class="row high">
@@ -394,7 +404,7 @@ img {
 						</div>
 						<div class="row content">
 							<div class="col-4 left">
-								<b>재능 판매자</b>
+								<b>물품 판매자</b>
 
 							</div>
 							<div class="col-8 right">${i.writer}</div>
@@ -427,33 +437,6 @@ img {
 
 					</div>
 				</div>
-
-
-			<%-- 	<div class="under">
-					<input type=button id=cancel class="cnum-btn1" value="예약 취소">
-					<c:choose>
-						<c:when test="${i.approval =='y'}">
-							<button type=button class="cnum-btn2" id="payment${vs.index}">
-								결제하기</button>
-						</c:when>
-						<c:when test="${i.approval =='n'}">
-							<button type=button id=approval class="cnum-btn2"
-								disabled='disabled'>승인 거절</button>
-						</c:when>
-						<c:when test="${i.approval == null}">
-
-							<button type=button id=approval class="cnum-btn2"
-								disabled='disabled'>승인 대기 중</button>
-						</c:when>
-						<c:otherwise>
-							<button type=button class="cnum-btn2" disabled='disabled'>결제
-								완료</button>
-						</c:otherwise>
-
-					</c:choose>
-
-				</div>
- --%>
 
 			</div>
 		</c:forEach>

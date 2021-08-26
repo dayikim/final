@@ -65,19 +65,18 @@
 	display: block;
 	text-align: start;
 }
+.btn-wrap{
+margin:0 auto;
+text-align:center;
+}
 
 .modalBtn {
-display:block;
-	margin-top:300px;
-	margin:auto;
-	float:right;
-	text-align:center;
+	padding-left:10px;
 }
 
 .send {
-display:block;
-	margin-right: 40px;
 	margin:auto;
+	margin-right:50px;
 }
  
  
@@ -133,7 +132,7 @@ display:block;
 																		console
 																				.log(resp);
 																		if (resp == 1) {
-																			alert("거래 후기 작성 완료!! \n마이페이지에서 거래완료 내역을 확인하세요.")
+																			alert("거래 후기 작성 완료!! \n해당 페이지를 새로 고침 해주세요.")
 																			window.close();
 																		} else {
 																			alert("작성 실패!!")
@@ -169,7 +168,7 @@ display:block;
 									<div class="form-group">
 										<div class="mb-3 review_form">
 											<label class="col-form-label review_title">거래 경험이
-												좋으셨나요?</label> <label class="col-form-label review_text">${i.name}님에게
+												좋으셨나요?</label> <label class="col-form-label review_text"><b>${i.name}</b>님에게
 												감사인사 남겨보세요.</label> <img src="/imgs/letter.png">
 										</div>
 										<hr>
@@ -185,7 +184,7 @@ display:block;
 										id="boardtype"> <input type="hidden" name="seq"
 										value="${i.parentseq}" id="parentseq"> <input
 										type="hidden" name="reviewable" value="y" id="reviewable">
-										<div class="btn-wrap text-right">
+										<div class="btn-wrap text-center">
 											<button type="button" class="btn btn-dark modalBtn" onclick="window.close();"
 										>취소</button>
 									<button type="button"

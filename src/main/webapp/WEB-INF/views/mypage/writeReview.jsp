@@ -56,85 +56,91 @@
 	text-align: start;
 }
 
+.btn-wrap{
+margin:0 auto;
+text-align:center;
+}
+
 .modalBtn {
-display:block;
-	margin-left: 10px;
-	margin:auto;
-	text-align:center;
+	padding-left:10px;
 }
 
 .send {
-display:inline-block;
 	margin:auto;
+	margin-right:50px;
 }
+ 
  
  </style>
  <script>
- $(".send")
-	.on("click",
-			function() {
-				let message = $("#message-text");
-				if (message.val() == "") {
-					alert("메세지를 입력해주세요.");
-					message.focus();
-					return false;
-				} else {
-					let check = confirm("거래 후기를 보내시겠습니까?");
-					let recipient = $("#recipient").val();
-					let reviewer = $("#reviewer").val();
-					let boardtype = $("#boardtype").val();
-					let reviewable = $("#reviewable").val();
-					let contents = $(".contents").val();
-					let parentseq = $("#parentseq").val();
-					if (check) {
-						$
-								.ajax({
-									url : "/profile/checkReview",
-									data : {
-										parentseq : parentseq
-									}
-								})
-								.done(
-										function(resp) {
-											console.log(resp);
-											if (resp == 0) {
-												$
-														.ajax(
-																{
-																	url : "/profile/review",
-																	data : {
-																		recipient : recipient,
-																		parentseq : parentseq,
-																		reviewer : reviewer,
-																		reviewable : reviewable,
-																		contents : contents,
-																		boardtype : boardtype
-																	}
-																})
-														.done(
-																function(
-																		resp) {
-																	console
-																			.log(resp);
-																	if (resp == 1) {
-																		alert("거래 후기 작성 완료!! \n마이페이지에서 거래완료 내역을 확인하세요.")
-																		location.href = "${pageContext.request.contextPath}/my/mypageProc"
-																	} else {
-																		alert("작성 실패!!")
-																	}
-																})
-											} else {
-												alert("이미 후기를 작성하였습니다.\n마이페이지에서 거래완료 내역을 확인하세요.")
-												location.href = "${pageContext.request.contextPath}/my/mypageProc"
-												return;
-											}
-										})
+ $(function(){
+	 $(".send")
+		.on("click",
+				function() {
+					let message = $("#message-text");
+					if (message.val() == "") {
+						alert("메세지를 입력해주세요.");
+						message.focus();
+						return false;
 					} else {
-						alert("거래 후기 작성 취소!")
-						return;
+						let check = confirm("거래 후기를 보내시겠습니까?");
+						let recipient = $("#recipient").val();
+						let reviewer = $("#reviewer").val();
+						let boardtype = $("#boardtype").val();
+						let reviewable = $("#reviewable").val();
+						let contents = $(".contents").val();
+						let parentseq = $("#parentseq").val();
+						if (check) {
+							$
+									.ajax({
+										url : "/profile/checkReview",
+										data : {
+											parentseq : parentseq
+										}
+									})
+									.done(
+											function(resp) {
+												console.log(resp);
+												if (resp == 0) {
+													$
+															.ajax(
+																	{
+																		url : "/profile/review",
+																		data : {
+																			recipient : recipient,
+																			parentseq : parentseq,
+																			reviewer : reviewer,
+																			reviewable : reviewable,
+																			contents : contents,
+																			boardtype : boardtype
+																		}
+																	})
+															.done(
+																	function(
+																			resp) {
+																		console
+																				.log(resp);
+																		if (resp == 1) {
+																			alert("거래 후기 작성 완료!! \해당 페이지를 새로 고침 해주세요.")
+																			window.close();
+																		} else {
+																			alert("작성 실패!!")
+																		}
+																	})
+												} else {
+													alert("이미 후기를 작성하였습니다.\n마이페이지에서 거래완료 내역을 확인하세요.")
+													window.close();
+													return;
+												}
+											})
+						} else {
+							alert("거래 후기 작성 취소!")
+							return;
+						}
 					}
-				}
-			})
+				})
+ })
+ 
 
  </script>
 </head>
@@ -151,7 +157,7 @@ display:inline-block;
 									<div class="form-group">
 										<div class="mb-3 review_form">
 											<label class="col-form-label review_title">거래 경험이
-												좋으셨나요?</label> <label class="col-form-label review_text">${i.name}님에게
+												좋으셨나요?</label> <label class="col-form-label review_text"><b>${i.name}</b>님에게
 												감사인사 남겨보세요.</label> <img src="/imgs/letter.png">
 										</div>
 										<hr>
@@ -167,10 +173,13 @@ display:inline-block;
 										id="boardtype"> <input type="hidden" name="seq"
 										value="${i.parentseq}" id="parentseq"> <input
 										type="hidden" name="reviewable" value="y" id="reviewable">
-									<button type="button" class="btn btn-dark modalBtn"
+									<div class="btn-wrap text-center">
+											<button type="button" class="btn btn-dark modalBtn" onclick="window.close();"
 										>취소</button>
 									<button type="button"
 										class="btn btn-outline-warning modalBtn send">보내기</button>
+										
+										</div>
 								</div>
 							</div>
 						</div>

@@ -439,14 +439,7 @@ li {
 								</ul>
 								<input type=hidden id=cpage value=${cpage }>
 							</div> -->
-				<div class="text-right">
-					<a href="/my/mypageProc" class="btn btn-secondary">메인으로</a>
-
-
-				</div>
-
-
-
+			
 			</div>
 
 		</div>
