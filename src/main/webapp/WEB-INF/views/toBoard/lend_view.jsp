@@ -527,10 +527,10 @@
 						<!-- 프로필 이미지 -->
 							<c:choose>
 					<c:when test="${profile != null}">
-						<a href="/profilie/userProfile?id=${board.writer}"><img src="/imgs/mypage/${profile.sysName }" id=profile></a>
+						<a href="/profile/userProfile?id=${board.writer}"><img src="/imgs/mypage/${profile.sysName }" id=profile></a>
 					</c:when>
 					<c:otherwise>
-						<a href="/profilie/userProfile?id=${board.writer}"><img src="/imgs/nomalProfile.jpg" id=profile></a>
+						<a href="/profile/userProfile?id=${board.writer}"><img src="/imgs/nomalProfile.jpg" id=profile></a>
 					</c:otherwise>
 				</c:choose>
 					</div>
