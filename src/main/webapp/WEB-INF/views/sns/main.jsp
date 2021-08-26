@@ -305,8 +305,6 @@ style>body {
 	         	for (var i = 0; i < fileList.length; i++) {
 	         		formData.append("file",fileList[i]);
 	         	}
-	         	formData.append("last","테스트");
-	         	let seq=0;
 		         $.ajax({
 		        	 url:"/sns/write",
 		        	 method:"get",
@@ -314,17 +312,18 @@ style>body {
 		         }).done(function(resp){
 		        	 location.href = "/sns/main"	
 		        	 if(fileList.length !=0){
-		        	 $.ajax({
-		        		  	url:"/sns/file",
-		        		  	enctype: 'multipart/form-data',
-		                  	method: 'post',
-		                  	data: formData,
-		                  	dataType: 'TEXT',
-		                  	processData: false,
-		                  	contentType: false
-						}).done(function(){
-							location.href = "/sns/main"	
-						})
+		        		 formData.append("seq",resp);
+			        	 $.ajax({
+			        		  	url:"/sns/file",
+			        		  	enctype: 'multipart/form-data',
+			                  	method: 'post',
+			                  	data: formData,
+			                  	dataType: 'TEXT',
+			                  	processData: false,
+			                  	contentType: false
+							}).done(function(){
+								location.href = "/sns/main"	
+							})
 		        	 }
 		         })
  	         }
