@@ -210,21 +210,22 @@ style>body {
 				type : "POST",
 				data : {"contents":$("#contents").val(),"category":$("#category").val(),"seq":$(this).siblings("#hiddenfile").val()},
 			}).done(function(){
-				//location.reload();
-				})
-				
-			$.ajax({
-        		 url:"/sns/file",
-        		 enctype: 'multipart/form-data',
-                 method: 'post',
-                 data: formData,
-                 dataType: 'TEXT',
-                 processData: false,
-                 contentType: false
-			}).done(function(){
-				//location.reload();	
-				})
 				location.href = "/sns/main"
+	        	 if(fileList.length !=0){
+				$.ajax({
+	        		 url:"/sns/file",
+	        		 enctype: 'multipart/form-data',
+	                 method: 'post',
+	                 data: formData,
+	                 dataType: 'TEXT',
+	                 processData: false,
+	                 contentType: false
+				}).done(function(){
+					location.href = "/sns/main"	
+					})
+					
+	        	 }
+				})
 		})
 		
 		//댓글버튼눌렀을때
