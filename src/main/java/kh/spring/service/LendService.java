@@ -152,10 +152,13 @@ public class LendService {
 		return dao.isitLend(param);
 	}
 
-	public int booking(String seller, String booker, String bookable, int parentseq) {
-		// TODO Auto-generated method stub
-		return 0;
+	public List<HashMap<String, Object>> detailViewPic(int seq, String id) {
+		Map<Object, Object> param = new HashMap<>();
+		param.put("writer", id);
+		param.put("seq",seq);
+		return dao.detailViewPic(param);
 	}
+
 
 	
 	

@@ -58,19 +58,61 @@ select count(*) from review where parentseq=#{value}
     <result column="contents" property="contents"/>
     </resultMap>
 
+<resultMap type="HashMap" id="review">
+		
+		<result column="name" property="name" />
+		<result column="address1" property="address1" />
+		<result column="buyer" property="buyer" />
+		<result column="seller" property="seller" />
+		<result column="price" property="price" />
+		<result column="item" property="item" />
+		<result column="boardtype" property="boardtype" />
+		<result column="parentseq" property="parentseq" />
+		<result column="reviewable" property="reviewable" />
+		<result column="contents" property="contents" />
+		<result column="paymentdate" property="paymentdate"
+			jdbcType="VARCHAR" />
+		<result column="sysname" property="sysName"/>
+	</resultMap>
 
-<select id ="reviewedBySeller" resultMap="reviewed" resultType="HashMap" >
-	 select distinct name,address1,review.contents,payment.item,payment.buyer,payment.seller,payment.parentseq,price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype,review.reviewable
+
+<select id="ReadReviewForSell" resultMap="review" resultType="HashMap">
+ select distinct name,review.contents,payment.item,payment.buyer,payment.seller,payment.parentseq,price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype,review.reviewable
 		from payment join person on
 		(person.id=payment.buyer)join review on (review.reviewer =payment.seller and review.recipient = payment.buyer and review.parentseq = payment.parentseq
-        )where payment.seller=#{id}
+        )where payment.parentseq=#{parentseq}
 </select>
 
-<select id ="reviewedByBuyer" resultMap="reviewed" resultType="HashMap" >
-	select distinct name,address1,contents,payment.item,payment.buyer,payment.seller,payment.parentseq,price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype,review.reviewable
+<select id="ReadReviewForBuy" resultMap="review" resultType="HashMap">
+ select distinct name,address1,review.contents,payment.item,payment.buyer,payment.seller,payment.parentseq,price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype,review.reviewable
 		from payment join person on
 		(person.id=payment.seller)join review on (review.reviewer =payment.buyer and review.recipient = payment.seller and review.parentseq = payment.parentseq
-        )where payment.buyer=#{id}
+        )where payment.parentseq=#{parentseq}
+</select>
+<!-- 판매자에게 -->
+<select id="writeReviewForBuy" resultMap="review" resultType="HashMap">
+select distinct name,payment.item,payment.buyer,payment.seller,payment.parentseq,price,payment.boardtype
+		from payment join person on
+		(person.id=payment.seller)
+        where payment.parentseq=#{parentseq}
+</select>
+
+<select id="writeReviewForSell" resultMap="review" resultType="HashMap">
+select distinct name,payment.item,payment.buyer,payment.seller,payment.parentseq,price,payment.boardtype
+		from payment join person on
+		(person.id=payment.buyer)
+       where payment.parentseq=#{parentseq}
+</select>
+
+
+
+<select id ="reviewedBySeller" resultType="kh.spring.dto.ReviewDTO" >
+select * from payment join review on (payment.seller= review.reviewer and payment.buyer= review.recipient and payment.parentseq = review.parentseq) where reviewer=#{id}
+</select>
+
+<select id ="reviewedByBuyer"  resultType="kh.spring.dto.ReviewDTO" >
+select * from payment join review on (payment.buyer= review.reviewer  and payment.seller= review.recipient and payment.parentseq = review.parentseq) where reviewer=#{id}
+
 </select>
 
 

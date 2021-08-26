@@ -288,16 +288,6 @@ public class MypageService {
 		return adao.isApproval(param);
 	}
 
-	//	//재능 결제 여부 check
-	//		public List<HashMap<String, Object>> checkpayble(String sessionID) {
-	//			String paymentable = "y";
-	//			String boardtype="재능";
-	//			Map<Object, Object> param = new HashMap<>();
-	//			param.put("id", sessionID);
-	//			param.put("y", paymentable);
-	//			param.put("talent", boardtype);
-	//			return dao.checkpayble(param);
-	//		}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////// 내 게시물 보기
 
@@ -379,13 +369,37 @@ public class MypageService {
 	}
 	
 	//판매자-> 구매자
-	public List<HashMap<String, Object>> reviewedBySeller(String id) {
+	public List<ReviewDTO> reviewedBySeller(String id) {
 		return rdao.reviewedBySeller(id);
 	}
 	//구매자-> 판매자
-	public List<HashMap<String, Object>> reviewedByBuyer(String id) {
+	public List<ReviewDTO> reviewedByBuyer(String id) {
 		return rdao.reviewedByBuyer(id);
 	}
+	
+	// 리뷰 쓰기 팝업 띄우기 - 구매상품
+	public List<HashMap<Object, Object>> ReviewwriteForSell(int parentseq) {
+		return rdao.ReviewwriteForSell(parentseq);
+	}
+	// 리뷰 쓰기 팝업 띄우기 - 빌린상품
+
+	public List<HashMap<Object, Object>> ReviewwriteForBuy(int parentseq) {
+		// TODO Auto-generated method stub
+		return rdao.ReviewwriteForBuy(parentseq);
+	}
+	// 리뷰 보기 팝업 띄우기 -구매상품
+
+	public List<HashMap<Object, Object>> ReadReviewForSell(int parentseq) {
+		return rdao.ReadReviewForSell(parentseq);
+	}
+	
+	// 리뷰 보기 팝업 띄우기 -빌린상품
+	public List<HashMap<Object, Object>> ReadReviewForBuy(int parentseq) {
+		return rdao.ReadReviewForBuy(parentseq);
+	}
+	
+	
+
 
 	
 

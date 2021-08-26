@@ -12,19 +12,19 @@ import kh.spring.dto.ReviewDTO;
 
 @Component
 public class ReviewDAO {
-	
+
 	@Autowired
 	private SqlSessionTemplate mybatis;
 	public List<ReviewDTO> reveiwed;
-	
-	
+
+
 	public int write(ReviewDTO dto) {
 		return mybatis.insert("Review.write",dto);
 	}
-	
+
 	public List<ReviewDTO> getAllList(String sessionID){
 		return mybatis.selectList("Review.getAllList",sessionID);
-		
+
 	}
 
 	public int reviewCount(String id) {
@@ -54,11 +54,35 @@ public class ReviewDAO {
 		return mybatis.selectList("Review.reviwed",id);
 	}
 
-	public List<HashMap<String, Object>> reviewedBySeller(String id) {
+	public List<ReviewDTO> reviewedBySeller(String id) {
 		return mybatis.selectList("Review.reviewedBySeller",id);
 	}
 
-	public List<HashMap<String, Object>> reviewedByBuyer(String id) {
+	public List<ReviewDTO> reviewedByBuyer(String id) {
 		return mybatis.selectList("Review.reviewedByBuyer",id);
 	}
+	//판매자 리뷰쓰기
+	public List<HashMap<Object, Object>> ReviewwriteForSell(int parentseq) {
+		return mybatis.selectList("Review.writeReviewForSell",parentseq);
+	}
+	//구매자 리뷰쓰기
+	public List<HashMap<Object, Object>> ReviewwriteForBuy(int parentseq) {
+		return mybatis.selectList("Review.writeReviewForBuy",parentseq);
+	}
+	//판매자 리뷰 보기
+	public List<HashMap<Object, Object>> ReadReviewForSell(int parentseq) {
+		return mybatis.selectList("Review.ReadReviewForSell",parentseq);
+	}
+	//구매자 리뷰 보기
+	public List<HashMap<Object, Object>> ReadReviewForBuy(int parentseq) {
+		return mybatis.selectList("Review.ReadReviewForBuy",parentseq);
+
+	}
+
+
+
+
+
+
+
 }

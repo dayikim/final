@@ -183,6 +183,9 @@ img {
 	color: orange;
 }
 
+.btn{
+color:orange;}
+
 /* 모달창 */
 .modal-title {
 	margin: auto;
@@ -248,23 +251,21 @@ $(function() {
 	})
 	// person
 	// 후기
-	$(".send")
-			.on(
-					"click",
-					function() {
+	$(document).on("click",".send" ,function() {
 						let message = $("#message-text");
 						if (message.val() == "") {
 							alert("메세지를 입력해주세요.");
 							message.focus();
 							return false;
 						} else {
+							let button =$(this);
 							let check = confirm("거래 후기를 보내시겠습니까?");
-							let recipient = $("#recipient").val();
-							let reviewer = $("#reviewer").val();
-							let boardtype = $("#boardtype").val();
-							let reviewable = $("#reviewable").val();
-							let contents = $(".contents").val();
-							let parentseq = $("#parentseq").val();
+							let recipient = $($(this).parents().siblings("#recipient")).val();
+							let reviewer = $($(this).parents().siblings("#reviewer")).val();
+							let boardtype = $($(this).parents().siblings("#boardtype")).val();
+							let reviewable = $($(this).parents().siblings("#reviewable")).val();
+							let contents = $($(this).parents().siblings(".contents")).val();
+							let parentseq = $($(this).parents().siblings("#parentseq")).val();
 							if (check) {
 								$
 										.ajax({
@@ -277,10 +278,7 @@ $(function() {
 												function(resp) {
 													console.log(resp);
 													if (resp == 0) {
-														$
-																.ajax(
-																		{
-																			url : "/profile/review",
+														$ .ajax( { url : "/profile/review",
 																			data : {
 																				recipient : recipient,
 																				parentseq : parentseq,
@@ -330,24 +328,36 @@ $(function() {
 								let node = "";
 								console.log($($(".parentseq")[j]).val());
 								if (arr.indexOf(Number($($(".parentseq")[j]).val())) == -1) {
-
 									node += "<div class=review>"
-									node +=	"<a data-toggle=modal href=#sendModal id=openReview>작성한 후기 보기</a>"
-									node += "</div>"
-
-									$($(".parentseq")[j]).parent().append(node);
+										node += "<button type=button class=btn btn-success id=write >거래 후기 보내기</button>";
+											
+										$($(".parentseq")[j]).parent().append(node);
+							
 
 								}else{
-									node += "<div class=review>"
-									node += "<a data-toggle=modal href=#writeModal id=payment>거래 후기 보내기</a>";
-										
-									$($(".parentseq")[j]).parent().append(node);
+									
+	             						node += "<div class=review>"
+	    								node += "<button type=button class=btn btn-success id=openReview>작성한 후기 보기</button>"
+										node += "</div>"
+
+										$($(".parentseq")[j]).parent().append(node);
 								}
 
 
 							}
 
 						})
+						
+						// 쓰기 버튼을 눌렀을 경우	
+						$(document).on("click","button[id^='write']",function() {
+						 window.open('/my/ReviewwriteForBuy?parentseq='+ $(this).parent().siblings(".parentseq").val(),"리뷰 쓰기",'width=400px,height=300px,scrollbars=no,resizable=no');
+				})
+				
+				// 보기 버튼을 눌렀을 경우	
+						$(document).on("click","button[id^='openReview']",function() {
+						 window.open('/my/ReadReviewForBuy?parentseq='+ $(this).parent().siblings(".parentseq").val(),"리뷰 보기",'width=400px,height=300px,scrollbars=no,resizable=no');
+				})
+
 				});
 			</script>
 </head>
@@ -507,7 +517,7 @@ $(function() {
 				<div class="review">
 							<input type=hidden value="${i.parentseq}" class="parentseq">
 			
-					<div class="modal fade modal_box" id="writeModal${vs.index}"
+					<div class="modal fade modal_box" id="writeModal"
 						tabindex="-1" aria-labelledby="exampleModalLabel"
 						aria-hidden="true">
 						<div class="modal-dialog">
@@ -519,7 +529,7 @@ $(function() {
 									<div class="form-group">
 										<div class="mb-3 review_form">
 											<label class="col-form-label review_title">거래 경험이
-												좋으셨나요?</label> <label class="col-form-label review_text">${i.seller}님에게
+												좋으셨나요?</label> <label class="col-form-label review_text">${i.name}님에게
 												감사인사 남겨보세요.</label> <img src="/imgs/letter.png">
 										</div>
 										<hr>

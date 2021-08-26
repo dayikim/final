@@ -1,6 +1,7 @@
 package kh.spring.controller;
 
 import java.util.HashMap;
+
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -23,7 +24,6 @@ import kh.spring.service.ProfileService;
 import kh.spring.service.RequestTalentService;
 import kh.spring.service.ReviewService;
 import kh.spring.service.SellTalentService;
-import kh.spring.service.TBoardFilesService;
 import kh.spring.service.TalentBoardService;
 
 @Controller
@@ -39,8 +39,6 @@ public class ProfileController {
 	@Autowired
 	private LendService LService;
 
-	@Autowired
-	private TBoardFilesService TFService;
 
 	@Autowired
 	private MypageService MypageService;

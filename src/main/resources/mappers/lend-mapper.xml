@@ -5,23 +5,33 @@
 
 <mapper namespace="Lend">
 	<resultMap type="HashMap" id="LendDTO">
-		<result column="seq" property="seq"/>
-		<result column="writer" property="writer"/>
-		<result column="title" property="title"/>
-		<result column="category" property="category"/>
-		<result column="contents" property="contents"/>
-		<result column="price" property="price"/>
-		<result column="address" property="address"/>
-		<result column="regdate" property="regdate"/>
-		<result column="sysName" property="sysName"/>
+		<result column="seq" property="seq" />
+		<result column="writer" property="writer" />
+		<result column="title" property="title" />
+		<result column="category" property="category" />
+		<result column="contents" property="contents" />
+		<result column="price" property="price" />
+		<result column="address" property="address" />
+		<result column="regdate" property="regdate" />
+		<result column="sysName" property="sysName" />
 	</resultMap>
-		
+
 	<!-- 게시글 상세보기 -->
 	<select id="detailView" resultType="kh.spring.dto.LendDTO">
-		select * from lendboard where
+	select * from lendboard where seq=#{value}
+	</select>
+	
+	<select id="detailViewPic" resultMap="LendDTO" resultType="HashMap" >
+		select * from lendboard lb
+		left join (
+		select SYSNAME, PARENTSEQ, REGDATE from (
+		select ROW_NUMBER() over (PARTITION BY lendfiles.PARENTSEQ order by
+		lendfiles.REGDATE asc ) AS RNUM, lendfiles.* from lendfiles ) TB
+		where RNUM=1 ) lf on lb.SEQ=lf.PARENTSEQ where lb.writer =#{writer} and 
 		seq =#{seq}
 	</select>
-
+	
+	
 	<!-- 게시글번호 -->
 	<select id="getSeq" resultType="int">
 		select lendboard_seq.nextval from
@@ -99,10 +109,13 @@
 
 	<!-- 검색 지역 & 타이틀 & 컨텐츠 카운트 -->
 	<select id="numAllList" resultType="int">
-		select count(*) from lendboard l inner join lendfiles f on l.seq = f.parentSeq  
+		select count(*) from
+		lendboard l inner join lendfiles f on l.seq = f.parentSeq
 		where l.address like '%'||#{value}||'%' or l.title like
-		'%'||#{value}||'%' or l.contents like '%'||#{value}||'%' or l.category
-		like '%'||#{value}||'%'
+		'%'||#{value}||'%'
+		or l.contents like '%'||#{value}||'%' or l.category
+		like
+		'%'||#{value}||'%'
 	</select>
 
 	<!-- 검색 지역 카운트 -->
@@ -131,18 +144,22 @@
 
 	<!-- 판매자 찾기 -->
 	<select id="getId" resultType="String">
-		select writer from lendboard where seq=#{value}
+		select writer from lendboard where
+		seq=#{value}
 	</select>
 
 
 	<select id="isitLend" resultType="int">
-		select count(*) from lendboard where writer=#{writer} and seq=#{seq} and
+		select count(*) from lendboard
+		where writer=#{writer} and seq=#{seq} and
 		category=#{category}
 	</select>
-	
-	<!-- 마이페이지 내 게시물 대여하기 출력	 -->
-	<select id="myRequestSellProduct" resultType="kh.spring.dto.LendDTO">
-		select * from lendboard where writer=#{value} order by 1 desc
+
+	<!-- 마이페이지 내 게시물 대여하기 출력 -->
+	<select id="myRequestSellProduct"
+		resultType="kh.spring.dto.LendDTO">
+		select * from lendboard where writer=#{value} order by 1
+		desc
 	</select>
 
 

@@ -4,6 +4,7 @@ package kh.spring.controller;
 
 import java.util.List;
 
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ import kh.spring.dto.TalentBoardPictureFilesDTO;
 import kh.spring.service.MypageService;
 import kh.spring.service.RequestTalentService;
 import kh.spring.service.SellTalentService;
-import kh.spring.service.TBoardFilesService;
+
 import kh.spring.service.TalentBoardService;
 
 @Controller
@@ -39,9 +40,7 @@ public class TalentBoardController {
 		
 	@Autowired
 	private RequestTalentService RTService;
-    
-	@Autowired
-	private TBoardFilesService TFService;
+    	
 	
 	@Autowired
 	private MypageService MypageService;

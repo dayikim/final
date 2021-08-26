@@ -80,7 +80,6 @@ img {
 	margin-top: 5%;
 }
 
-
 /* 네비바 */
 .navi>div {
 	float: left;
@@ -119,7 +118,6 @@ img {
 	line-height: 60px;
 }
 
-
 /* 시작 */
 .container2 {
 	margin: auto;
@@ -146,9 +144,10 @@ img {
 	margin-left: 32px;
 	margin-top: 15px;
 }
-.completImg>a>img{
-	width:100%;
-	height:100%;
+
+.completImg>a>img {
+	width: 100%;
+	height: 100%;
 }
 
 /* 상품 정보 부분 */
@@ -183,6 +182,9 @@ img {
 	text-decoration: none;
 	color: orange;
 }
+
+.btn{
+color:orange;}
 /*모달창  */
 .modal-title {
 	margin: auto;
@@ -238,18 +240,18 @@ img {
 	display: inline-block;
 }
 
-form {
-	margin: 0;
-}
 </style>
 <script>
-	$(function() { 
+	$(function() {
 		// 게시물 검색
-		$("#search").keyup(function(e) {
-			if (e.keyCode == 13) {
-				location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
-			}
-		})
+		$("#search")
+				.keyup(
+						function(e) {
+							if (e.keyCode == 13) {
+								location.href = "/AllBoardList/lendList?choice=Allchoice&search="
+										+ $("#search").val() + "&cpage=1";
+							}
+						})
 
 		// 채팅
 		$("#chat").on("click", function() {
@@ -258,8 +260,7 @@ form {
 		// person
 		// 후기
 		$(".send")
-				.on(
-						"click",
+				.on("click",
 						function() {
 							let message = $("#message-text");
 							if (message.val() == "") {
@@ -323,45 +324,54 @@ form {
 								}
 							}
 						})
-				
-						
-					 $.ajax({
-						url: '/my/reviewedBySeller',
-						method: 'get',
-						dataType: 'json'
-					}).done(function (result) {
 
-						let arr = [];
+		$.ajax({
+					url : '/my/reviewedBySeller',
+					method : 'get',
+					dataType : 'json'
+				})
+				.done(
+						function(result) {
 
-						for (let i = 0; i < result.length; i++) {
-							arr.push(result[i].parentseq);
-						}
-						console.log(arr);
+							let arr = [];
 
-						for (let j = 0; j < $(".parentseq").length; j++) {
-							let node = "";
-							console.log($($(".parentseq")[j]).val());
-							if (arr.indexOf(Number($($(".parentseq")[j]).val())) == -1) {
+							for (let i = 0; i < result.length; i++) {
+								arr.push(result[i].parentseq);
+							}
+							console.log(arr);
 
-								node += "<div class=review>"
-								node +=	"<a data-toggle=modal href=#sendModal id=openReview>작성한 후기 보기</a>"
-								node += "</div>"
+							for (let j = 0; j < $(".parentseq").length; j++) {
+								let node = "";
+								console.log($($(".parentseq")[j]).val());
+								if (arr.indexOf(Number($($(".parentseq")[j]).val())) == -1) {
+									node += "<div class=review>"
+									node += "<button type=button class=btn btn-success id=write >거래 후기 보내기</button>";
 
-								$($(".parentseq")[j]).parent().append(node);
+									$($(".parentseq")[j]).parent().append(node);
 
-							}else{
-								node += "<div class=review>"
-								node += "<a data-toggle=modal href=#writeModal id=payment>거래 후기 보내기</a>";
-									
-								$($(".parentseq")[j]).parent().append(node);
+								} else {
+									node += "<div class=review>"
+									node += "<button type=button class=btn btn-success id=openReview>작성한 후기 보기</button>"
+									node += "</div>"
+									$($(".parentseq")[j]).parent().append(node);
+
+								}
+
 							}
 
+						})
+						
+				// 쓰기 버튼을 눌렀을 경우	
+				$(document).on("click","button[id^='write']",function() {
+				 window.open('/my/ReviewwriteForSell?parentseq='+ $(this).parent().siblings(".parentseq").val(),"리뷰 쓰기",'width=400px,height=400px,scrollbars=no,resizable=no');
+		})
+		
+		// 보기 버튼을 눌렀을 경우	
+				$(document).on("click","button[id^='openReview']",function() {
+				 window.open('/my/ReadReviewForSell?parentseq='+ $(this).parent().siblings(".parentseq").val(),"리뷰 보기",'width=400px,height=300px,scrollbars=no,resizable=no');
+		})
 
-						}
-
-					})	
-				 
-	});
+});
 </script>
 
 
@@ -455,7 +465,7 @@ form {
 
 		</div>
 	</div>
-	
+
 	<div class="navi">
 		<div class="requestSellProduct">
 			<a href="/my/dealEndProductSellList"> <b>물품 대여</b>
@@ -483,12 +493,14 @@ form {
 						<c:choose>
 							<c:when test="${i.sysName != null }">
 								<div class="completImg">
-									<a href="/lendBoard/lendView?id=${i.seller}&seq=${i.parentseq}"><img src="/imgs/lend/${i.sysName }"></a>
-								</div>	
+									<a href="/lendBoard/lendView?id=${i.seller}&seq=${i.parentseq}"><img
+										src="/imgs/lend/${i.sysName }"></a>
+								</div>
 							</c:when>
 							<c:otherwise>
 								<div class="completImg">
-									<a href="/lendBoard/lendView?id=${i.seller}&seq=${i.parentseq}"><img src="/imgs/noimage.jpg"></a>
+									<a href="/lendBoard/lendView?id=${i.seller}&seq=${i.parentseq}"><img
+										src="/imgs/noimage.jpg"></a>
 								</div>
 							</c:otherwise>
 						</c:choose>
@@ -520,10 +532,9 @@ form {
 				<!-- 거래 후기 링크 걸기 -->
 				<div class="review">
 					<input type=hidden value="${i.parentseq}" class="parentseq">
-					
-					<div class="modal fade modal_box" id="writeModal"
-						tabindex="-1" aria-labelledby="exampleModalLabel"
-						aria-hidden="true">
+
+					<div class="modal fade modal_box"  tabindex="-1"
+						aria-labelledby="exampleModalLabel" aria-hidden="true">
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -533,7 +544,7 @@ form {
 									<div class="form-group">
 										<div class="mb-3 review_form">
 											<label class="col-form-label review_title">거래 경험이
-												좋으셨나요?</label> <label class="col-form-label review_text">${i.seller}님에게
+												좋으셨나요?</label> <label class="col-form-label review_text">${i.buyer}님에게
 												감사인사 남겨보세요.</label> <img src="/imgs/letter.png">
 										</div>
 										<hr>
@@ -557,9 +568,8 @@ form {
 							</div>
 						</div>
 					</div>
-					<div class="modal fade modal_box" id="sendModal"
-						tabindex="-1" aria-labelledby="exampleModalLabel"
-						aria-hidden="true">
+					<div class="modal fade modal_box" id="sendModal" tabindex="-1"
+						aria-labelledby="exampleModalLabel" aria-hidden="true">
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">

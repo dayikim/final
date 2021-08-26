@@ -1,5 +1,8 @@
 package kh.spring.controller;
 
+import java.util.HashMap;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,21 +89,21 @@ public class PointController {
 	}
 
 	//재능 판매 결제하기 폼으로
-	@RequestMapping("TopaymentByTalent")
-	public String Topayment(int seq, String id, Model model) {
-		String sessionID = (String) session.getAttribute("loginID");
-		PersonDTO pdto = MypageService.mypageList(id); // 작성자 정보 출력
-		ProfileFilesDTO pfdto = MypageService.profileSelect(id); // 작성자 프사 출력
-		session.setAttribute("writerInfo", pdto); // 작성자 정보 출력
-		model.addAttribute("profile",pfdto); //작성자 정보 출력
-
-		SellTalentDTO dto = STService.detailView(seq);//글 상세보기
-		model.addAttribute("board",dto);
-
-		int pointAmount =PointService.checkAmount(sessionID);//잔고금액
-		model.addAttribute("point",pointAmount);
-		return "/point/payment_talent";
-	}
+//	@RequestMapping("TopaymentByTalent")
+//	public String Topayment(int seq, String id, Model model) {
+//		String sessionID = (String) session.getAttribute("loginID");
+//		PersonDTO pdto = MypageService.mypageList(id); // 작성자 정보 출력
+//		ProfileFilesDTO pfdto = MypageService.profileSelect(id); // 작성자 프사 출력
+//		session.setAttribute("writerInfo", pdto); // 작성자 정보 출력
+//		model.addAttribute("profile",pfdto); //작성자 정보 출력
+//
+//		SellTalentDTO dto = STService.detailView(seq);//글 상세보기
+//		model.addAttribute("board",dto);
+//
+//		int pointAmount =PointService.checkAmount(sessionID);//잔고금액
+//		model.addAttribute("point",pointAmount);
+//		return "/point/payment_talent";
+//	}
 
 	//대여하기 결제하기 폼으로
 	@RequestMapping("TopaymentBylend")
@@ -111,9 +114,10 @@ public class PointController {
 		session.setAttribute("writerInfo", pdto); // 작성자 정보 출력
 		model.addAttribute("profile",pfdto); //작성자 프사 출력
 
-		LendDTO dto = LService.detailView(seq);//글 상세보기
-		model.addAttribute("board",dto);
-
+		List<HashMap<String, Object>> list = LService.detailViewPic(seq,id);//글 상세보기
+		
+		model.addAttribute("board",list);
+		
 		int pointAmount =PointService.checkAmount(sessionID);//잔고금액
 		model.addAttribute("point",pointAmount);
 

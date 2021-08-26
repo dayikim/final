@@ -308,7 +308,7 @@ public class MypageController {
 	@RequestMapping("reviewedByBuyer")
 	@ResponseBody
 	public String reviewedByBuyer() {
-		List<HashMap<String,Object>> alist = service.reviewedByBuyer((String)session.getAttribute("loginID"));
+		List<ReviewDTO> alist = service.reviewedByBuyer((String)session.getAttribute("loginID"));
 		Gson gs = new Gson();	
 		return gs.toJson(alist);
 	}
@@ -317,7 +317,7 @@ public class MypageController {
 	@RequestMapping("reviewedBySeller")
 	@ResponseBody
 	public String reviewedBySeller() {
-		List<HashMap<String,Object>> alist = service.reviewedBySeller((String)session.getAttribute("loginID"));
+		List<ReviewDTO> alist = service.reviewedBySeller((String)session.getAttribute("loginID"));
 		Gson gs = new Gson();	
 		return gs.toJson(alist);
 	}
@@ -327,36 +327,45 @@ public class MypageController {
 	@RequestMapping(value="/dealEndProductBuyList", produces="text/html;charset=utf8")
 	public String dealEndProductBuyList(Model model) {
 		String id = (String)session.getAttribute("loginID");
-		
-				
-		
 		String product="물품";
 		List<HashMap<Object, Object>> dealEndProductBuyList =service.dealEndProductBuyList(id,product);
 		model.addAttribute("productBuyList",dealEndProductBuyList);
 
 		return "/mypage/dealEndProductBuyList";
 	}
-
-
-//	// 거래 완료 목록 출력 - 재능 판매완료
-//	@RequestMapping(value="/dealEndTalentSellList", produces="text/html;charset=utf8")
-//	public String dealEndTalentSellList(Model model) {
-//		String id = (String)session.getAttribute("loginID");
-//		String talent="재능";
-//		List<HashMap<Object, Object>> dealEndTalentSellList =service.dealEndTalentSellList(id,talent);
-//		model.addAttribute("talentsellList",dealEndTalentSellList);
-//		return "/mypage/dealEndTalentSellList";
-//	}
-//
-//	// 거래 완료 목록 출력 - 재능 구매완료
-//	@RequestMapping(value="/dealEndTalentBuyList", produces="text/html;charset=utf8")
-//	public String dealEndTalentBuyList(Model model) {
-//		String id = (String)session.getAttribute("loginID");
-//		String talent="재능";
-//		List<HashMap<Object, Object>> dealEndTalentBuyList =service.dealEndTalentBuyList(id,talent);
-//		model.addAttribute("talentbuyList",dealEndTalentBuyList);
-//		return "/mypage/dealEndTalentBuyList";
-//	}
+	// 리뷰 쓰기 팝업 띄우기 - 구매상품
+		@RequestMapping("ReviewwriteForSell")
+		public String ReviewwriteForSell(int parentseq, Model model) {
+			List<HashMap<Object, Object>> ReviewwriteForSell =service.ReviewwriteForSell(parentseq);
+			model.addAttribute("write", ReviewwriteForSell); 
+			return "mypage/writeReview";
+		}
+		
+		// 리뷰 쓰기 팝업 띄우기 - 빌린상품
+				@RequestMapping("ReviewwriteForBuy")
+				public String ReviewwriteForBuy(int parentseq, Model model) {
+					List<HashMap<Object, Object>> ReviewwriteForBuy =service.ReviewwriteForBuy(parentseq);
+					System.out.println(ReviewwriteForBuy.isEmpty());
+					model.addAttribute("write", ReviewwriteForBuy); 
+					return "mypage/writeReview_borrow";
+				}
+		
+		// 리뷰 보기 팝업 띄우기 -구매상품
+				@RequestMapping("/ReadReviewForSell")
+				public String ReadReviewForSell(int parentseq, Model model) {
+					List<HashMap<Object, Object>> ReadReviewForSell =service.ReadReviewForSell(parentseq);
+					System.out.println(ReadReviewForSell.isEmpty());
+					model.addAttribute("read", ReadReviewForSell);
+					return "mypage/ReadReview";
+				}
+				
+				// 리뷰 보기 팝업 띄우기 -빌린상품
+				@RequestMapping("/ReadReviewForBuy")
+				public String ReadReviewForBuy(int parentseq, Model model) {
+					List<HashMap<Object, Object>> ReadReviewForBuy =service.ReadReviewForBuy(parentseq);
+					model.addAttribute("read",ReadReviewForBuy ); 
+					return "mypage/ReadReview";
+				}
 
 
 	/////////////////////////////////////////////////////////////////////////////////////////// 내가 쓴 게시글 목록

@@ -175,6 +175,10 @@ public class LendDAO {
 	public List<LendDTO> myRequestSellProduct(String sessionID) {
 		return mybatis.selectList("Lend.myRequestSellProduct", sessionID);
 	}
+
+	public List<HashMap<String, Object>>detailViewPic(Map<Object, Object> param) {
+		return mybatis.selectList("Lend.detailViewPic",param);
+	}
 	
 	
 
