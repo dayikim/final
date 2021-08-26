@@ -76,9 +76,9 @@ public class BorrowDAO {
 			list = mybatis.selectList("Borrow.toList", map);
 		}
 		
-		if(list.isEmpty()) {
-			list = mybatis.selectList("Borrow.toList", map);
-		}
+//		if(list.isEmpty()) {
+//			list = mybatis.selectList("Borrow.toList", map);
+//		}
 		
 		return list;
 		

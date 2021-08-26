@@ -227,7 +227,7 @@
 	                                $('#preview').append(
 	                                "<li file = '" + file.name + "'>" +                                
 	                                    "<img class = 'img-thumb' src = '" + e.target.result + "' />" +
-	                                    "<a href = '#' class = 'cvf_delete_image' title = 'Cancel'><img class = 'delete-btn' src = '/imgs/delete-btn.png' /></a>" +
+// 	                                    "<a href = '#' class = 'cvf_delete_image' title = 'Cancel'><img class = 'delete-btn' src = '/imgs/delete-btn.png' /></a>" +
 	                                "</li>"
 	                                ); 
 	                                fileCount++

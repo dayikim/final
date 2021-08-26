@@ -72,7 +72,7 @@ img{
     		.dropdown {position: relative; display: inline-block;margin-bottom: 40px;}
     		.dropbtn:hover {background-color: skyblue}
     		
-    		.lendBtn{color:#1d2434;background:none;font-size:1.2rem;font-weight:bold;}
+    		.lendBtn{color:#1d2434;background:none;font-size:30px;font-weight:bold;}
     		.browse{display:inline-block; text-align:end; width:100%; margin-bottom:40px;}
     		.inp_slct{width:10%; height:28px; display:inline-block; margin-right:5px;}
     		.inp_slct select{height:100%;}
@@ -126,6 +126,12 @@ img{
 	    	$("#writeBtn").on("click",function(){
 	    		location.href="/lendBoard/toLend";
 	    	})
+	    	
+	    	let list = $(".to-board").length
+	    	if(list == 0){
+	    		alert("검색내역이 없습니다!");
+	    		location.href="/AllBoardList/lendList?choice=${choice}&search=&cpage=1";
+	    	}
 	      	  
 		})
 	</script>

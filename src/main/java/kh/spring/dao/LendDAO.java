@@ -83,9 +83,9 @@ public class LendDAO {
 			list = mybatis.selectList("Lend.toList", map);
 		}
 		
-		if(list.isEmpty()) {
-			list = mybatis.selectList("Lend.toList", map);
-		}
+//		if(list.isEmpty()) {
+//			list = mybatis.selectList("Lend.toList", map);
+//		}
 			
 		return list;
 		
