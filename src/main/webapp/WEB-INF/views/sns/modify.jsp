@@ -208,8 +208,9 @@ style>body {
 			$.ajax({
 				url  : "/sns/modiProc",
 				type : "POST",
-				data : {"contents":$("#contents").val(),"category":$("#category").val(),"seq1":$(this).siblings("#hiddenfile").val()},
+				data : {"contents":$("#contents").val(),"category":$("#category").val(),"seq":$(this).siblings("#hiddenfile").val()},
 			}).done(function(){
+				//location.reload();
 				})
 				
 			$.ajax({
@@ -221,7 +222,7 @@ style>body {
                  processData: false,
                  contentType: false
 			}).done(function(){
-					
+				//location.reload();	
 				})
 				location.href = "/sns/main"
 		})

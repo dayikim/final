@@ -305,40 +305,28 @@ style>body {
 	         	for (var i = 0; i < fileList.length; i++) {
 	         		formData.append("file",fileList[i]);
 	         	}
+	         	formData.append("last","테스트");
+	         	let seq=0;
 		         $.ajax({
 		        	 url:"/sns/write",
 		        	 method:"get",
-		        	 data:{"contents":$("#contents").val(),"category":$("#category").val()},
-		        	 dataType:"TEXT"
+		        	 data:{"contents":$("#contents").val(),"category":$("#category").val()}
 		         }).done(function(resp){
-		        	 console.log(resp);
+		        	 location.reload();
 		        	 if(fileList.length !=0){
-		        		 formData.append("seq",resp);
-			        	 $.ajax({
-			        		  	url:"/sns/file",
-			        		  	enctype: 'multipart/form-data',
-			                  	method: 'post',
-			                  	data: formData,
-			                  	dataType: 'TEXT',
-			                  	processData: false,
-			                  	contentType: false
-							}).done(function(){
-								location.reload();
-							})
+		        	 $.ajax({
+		        		  	url:"/sns/file",
+		        		  	enctype: 'multipart/form-data',
+		                  	method: 'post',
+		                  	data: formData,
+		                  	dataType: 'TEXT',
+		                  	processData: false,
+		                  	contentType: false
+						}).done(function(){
+							location.reload();
+						})
 		        	 }
 		         })
-	         	         
-        	 	$.ajax({
-        		  	url:"/sns/file",
-        		  	enctype: 'multipart/form-data',
-                  	method: 'post',
-                  	data: formData,
-                  	dataType: 'TEXT',
-                  	processData: false,
-                  	contentType: false
-				}).done(function(){
-					location.reload();
-				})
  	         }
          })
 		
@@ -379,8 +367,9 @@ style>body {
 						modify_tag.attr("id","modicomm");
 						modify_tag.text("수정");
 											
-						let input = $("<input type=hidden id=commentseq>");
-						input.text(resp[i].seq);
+						let input = $("<input type=hidden>");
+						input.attr("id","commentseq");
+						input.attr("value",resp[i].seq);
 						
 						let comment = $("<div>");
 						comment.attr("id","comment");
@@ -413,7 +402,7 @@ style>body {
 		//댓글수정
 		$(document).on("click","#modicomm",function(){
 			console.log($(this).parents(".comment-heading").siblings("#comment").attr("contenteditable"));
-			console.log($(this).parent().siblings("#commentseq").text());
+			console.log($(this).parent().siblings("#commentseq").val());
 			if($(this).parents(".comment-heading").siblings("#comment").attr("contenteditable") === "false" || $(this).parents(".comment-heading").siblings("#comment").attr("contenteditable") == undefined  ){ // 첫 클릭 했을 때 
 				$(this).parents(".comment-heading").siblings("#comment").attr("contenteditable","true");
 				$(this).parents(".comment-heading").siblings("#comment").focus();	//수정 시작
@@ -421,7 +410,7 @@ style>body {
 				$(this).parents(".comment-heading").siblings("#comment").blur();
 				$.ajax({
 					url: "/snscomm/modify",
-					data:{"seq":$(this).parent().siblings("#commentseq").text(),"contents":$(this).parents(".comment-heading").siblings("#comment").text()},
+					data:{"seq":$(this).parent().siblings("#commentseq").val(),"contents":$(this).parents(".comment-heading").siblings("#comment").text()},
 					dataType:"TEXT",
 				}).done(function(e){
 					if(e == 'success'){
@@ -447,8 +436,8 @@ style>body {
 	            }).done(function(resp){
 	            	console.log(resp);
 	               if(resp != null){
-	                  /* alert('댓글작성완료!')
-	                  console.log(resp);
+	                   alert('댓글작성완료!')
+	                  /*console.log(resp);
 	                   let ul = $("<ul>")
 						ul.attr("class","comment-list");
 						ul.attr("id", "commentList");
@@ -494,10 +483,10 @@ style>body {
 						node += "<ul class=comment-list id=commentList>"
 						node += "<div class=comment-body>"
 							node += "<div class=comment-heading>"
-								node += "<h6>"+resp.id+"<a href=/snscomm/delete?seq="+resp.seq+ "id=delcomm>삭제</a>"
+								node += "<h6>"+resp.id+"<a id=delcomm href=/snscomm/delete?seq="+resp.seq+ ">삭제</a>"
 								node += "<a href=\"#\" id=modicomm>수정</a></h6>"
 
-								node +="<input type=hidden id=commentseq>" +resp.seq +"</input>"
+								node +="<input type=hidden id=commentseq value="+resp.seq+"></input>"
 
 							node += "</div>"
 								node += "<div id=comment>"+resp.contents+"</div>"
