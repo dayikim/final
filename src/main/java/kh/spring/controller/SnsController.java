@@ -60,9 +60,6 @@ public class SnsController {
 		}
 		model.addAttribute("initprofile", initProfile);
 		
-		for(SnsDTO sd : list) {
-		System.out.println("처음 로딩되는 페이지: " +sd.getSeq());
-		}
 		List<String> ldto = service.existlike(id); //좋아요목록
 		model.addAttribute("isLove",ldto);
 
@@ -85,9 +82,6 @@ public class SnsController {
 		String id = (String)session.getAttribute("loginID");
 		int viewcount = 5;
 		List<SnsDTO>list = service.page(id,viewcount,count);
-		for(SnsDTO sd : list) {
-			System.out.println("페이스북에서 가져오는 seq: " +sd.getSeq());
-			}
 		Gson g = new Gson();
 		String result = g.toJson(list);
 		return result;
@@ -123,16 +117,26 @@ public class SnsController {
 		int seq = service.seq();
 		String region = service.region(id);
 		service.insert(seq, id, contents, category, region);
+		session.setAttribute("temp_seq", seq);
+		System.out.println("글작성seq : " + (Integer)session.getAttribute("temp_seq"));
 		return String.valueOf(seq);
 	}
 	
 	@RequestMapping("/file")
 	@ResponseBody
 	public String file(MultipartHttpServletRequest request) throws Exception{
-		System.out.println(seq);
 			List<MultipartFile> fileList = request.getFiles("file");
+//			System.out.println((String)request.getAttribute("last"));
+//			System.out.println(request.getFile("last"));
+//			System.out.println(request.getFile("last").getName());
+//			System.out.println(request.getFile("last").getOriginalFilename());
+//			System.out.println(fileList.get(fileList.size()-1).getName());
+//			System.out.println(fileList.get(fileList.size()-1).getOriginalFilename());
 			String realPath = session.getServletContext().getRealPath("files");
 			String istransfer = "false";
+			int seq = fservice.getSeq();
+			int parentseq = (Integer)session.getAttribute("temp_seq");
+			
 			File filesPath = new File(realPath);
 			if(!filesPath.exists()) {filesPath.mkdir();}
 			for(MultipartFile tmp : fileList ) {
@@ -141,7 +145,8 @@ public class SnsController {
 			for(MultipartFile tmp : fileList ) {
 				String oriName = tmp.getOriginalFilename();
 				String sysName = UUID.randomUUID().toString().replaceAll("-", "")+"_"+oriName;	
-				fservice.insert(oriName, sysName, Integer.parseInt(request.getParameter("seq")), (String)session.getAttribute("loginID"));
+				fservice.insert(seq,oriName, sysName, parentseq, (String)session.getAttribute("loginID"));
+				System.out.println("사진seq : " + parentseq);
 				tmp.transferTo(new File(filesPath.getAbsolutePath()+"/"+sysName)); 
 				istransfer = "ture"; 				  
 			}	
@@ -189,9 +194,7 @@ public class SnsController {
 	}
 	
 	@RequestMapping("/modiProc")
-	public String modiProc(String contents, String category, int seq1) throws Exception{
-		seq = seq1;
-		System.out.println(contents + category + seq);
+	public String modiProc(String contents, String category, int seq) throws Exception{
 		String id = (String)session.getAttribute("loginID");
 		service.modify(contents, category, seq, id);
 		
