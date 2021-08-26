@@ -15,6 +15,10 @@ public class SnsFilesDAO {
 	@Autowired
 	private SqlSessionTemplate mybatis;
 	
+	public int getSeq() {
+		return mybatis.selectOne("SnsFile.getSeq");
+	}
+	
 	public int insert(Map<String,Object>param) {
 		return mybatis.insert("SnsFile.insert",param );
 	}

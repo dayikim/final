@@ -22,12 +22,16 @@ public class SnsFilesService {
 	@Autowired
 	private SnsFilesDAO dao;
 	
+	public int getSeq() {
+		return dao.getSeq();
+	}
 	
-	public void insert(String oriName, String sysName, int seq,String id) {
+	public void insert(int seq, String oriName, String sysName, int parentseq,String id) {
 		Map<String,Object> param = new HashMap();
+		param.put("seq", seq);
 		param.put("oriName", oriName);
 		param.put("sysName", sysName);
-		param.put("parent", seq);
+		param.put("parent", parentseq);
 		param.put("id", id);
 		dao.insert(param);
 	}
