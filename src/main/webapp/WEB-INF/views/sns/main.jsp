@@ -229,17 +229,17 @@ style>body {
 										<!-- 댓글작성 -->
 										 node += "<div id=hiddencomment>"
 											 node += "<div class=\"input-group mb-3\">"
-				 node += "<input type=text class=form-control id=comment placeholder=\"댓글을 작성해주세요\" aria-label=Recipient's username aria-describedby=button-addon2>"
+				 								node += "<input type=text class=form-control id=comment placeholder=\"댓글을 작성해주세요\" aria-label=Recipient's username aria-describedby=button-addon2>"
 												 node +="<div class=input-group-append>"
-							 node += "<button class=\"btn btn-outline-secondary\" type=button id=sendcomment>"
-														 node += "<i class=\"fas fa-pen\"></i>"
+													 node += "<button class=\"btn btn-outline-secondary\" type=button id=sendcomment>"
+																				 node += "<i class=\"fas fa-pen\"></i>"
 													 node += "</button>"
 												 node += "</div>"
-						 node += "<input type=hidden id=hidden value="+e[i].seq+"> <input type=hidden id=lovecount value="+e[i].love+">"
+						 						node += "<input type=hidden id=hidden value="+e[i].seq+"> <input type=hidden id=lovecount value="+e[i].love+">"
 											 node += "</div>"
 
 											<!-- 댓글리스트 -->
-											
+											node += "<div class =comment-contain></div>"
 										 node += "</div>"
 									 node += "</div>"
 
@@ -342,6 +342,7 @@ style>body {
 					dataType:"JSON",
 				}).done(function(resp){ 
 					//댓글뿌리기
+					console.log(resp);
 					for(var i = 0; i < resp.length; i++){
 						
 						let ul = $("<ul>")
@@ -386,7 +387,8 @@ style>body {
 						body_div.append(comment_head);
 						body_div.append(comment);						
 												
-						ul.append(body_div);						
+						ul.append(body_div);				
+						
 						$(hidden_comment).append(ul);						
 					}					
 				})
@@ -432,7 +434,8 @@ style>body {
 	               url : "/snscomm/write",
 	               type : "GET",
 	               data : {"contents":$(this).parent().siblings("#comment").val(),"seq":$(this).parent().siblings("#hidden").val()} ,             
-	            	dataType:'json'
+	               async: false,
+	               dataType:'json'
 	            }).done(function(resp){
 	            	console.log(resp);
 	               if(resp != null){
