@@ -145,6 +145,10 @@ img {
 	margin-left: 32px;
 	margin-top: 15px;
 }
+.completImg>a>img{
+	width:100%;
+	height:100%;
+}
 
 /* 상품 정보 부분 */
 .information {
@@ -230,18 +234,17 @@ form {
 }
 </style>
 <script>
-$(function() { // 게시물 검색
-	$("#search")
-			.keyup(
-					function(e) {
-						if (e.keyCode == 13) {
-							location.href = "/AllBoardList/lendList?category=AllCategory&search="
-									+ $("#search").val() + "&cpage=1";
-						}
-					})
+$(function() { 
+	// 게시물 검색
+	$("#search").keyup(function(e) {
+		if (e.keyCode == 13) {
+			location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
+		}
+	})
+
 	// 채팅
 	$("#chat").on("click", function() {
-		location.href = "/chat";
+		location.href = "/chat/waitingroom";
 	})
 	// person
 	// 후기
@@ -464,11 +467,19 @@ $(function() { // 게시물 검색
 			<div class="completDiv">
 				<div class="row complet">
 					<div class="col-12 col-md-4 col-sm-4 completImgDiv">
-						<div class="completImg">
-							<!-- lendboard 링크 수정!!!! -->
-							<a href="/lendBoard/lendView?id=${i.seller}&seq=${i.parentseq}"><img
-								src="/imgs/lend/${i.sysName }"></a>
-						</div>
+						<c:choose>
+							<c:when test="${i.sysName != null }">
+								<div class="completImg">
+									<a href="/lendBoard/lendView?id=${i.seller}&seq=${i.parentseq}"><img src="/imgs/lend/${i.sysName }"></a>
+								</div>	
+							</c:when>
+							<c:otherwise>
+								<div class="completImg">
+									<a href="/lendBoard/lendView?id=${i.seller}&seq=${i.parentseq}"><img src="/imgs/noimage.jpg"></a>
+								</div>
+							</c:otherwise>
+						</c:choose>
+						
 					</div>
 					<div class="col-12 col-md-8 col-sm-8 information">
 						<div>
