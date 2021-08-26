@@ -101,7 +101,7 @@ img{
 			})
 			
 			$("#chat").on("click",function(){
-				location.href = "/chat";
+				location.href = "/chat/waitingroom";
 			})
 		})
 		
@@ -193,7 +193,7 @@ img{
                         		<a href="/person/logout" class="nav-item nav-link active">Logout</a> <!-- Logout -->
                         		 <div class="collapse navbar-collapse" id="navbarNavDropdown">
 	                        		 <ul class="navbar-nav">
-	                        			<li class="nav-item dropdown">
+	                        			<li class="nav-item dropdown" style = "margin:0px;">
 									        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									         Menu
 									        </a>

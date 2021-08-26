@@ -243,18 +243,17 @@ form {
 }
 </style>
 <script>
-	$(function() { // 게시물 검색
-		$("#search")
-				.keyup(
-						function(e) {
-							if (e.keyCode == 13) {
-								location.href = "/AllBoardList/lendList?category=AllCategory&search="
-										+ $("#search").val() + "&cpage=1";
-							}
-						})
+	$(function() { 
+		// 게시물 검색
+		$("#search").keyup(function(e) {
+			if (e.keyCode == 13) {
+				location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
+			}
+		})
+
 		// 채팅
 		$("#chat").on("click", function() {
-			location.href = "/chat";
+			location.href = "/chat/waitingroom";
 		})
 		// person
 		// 후기
@@ -324,6 +323,44 @@ form {
 								}
 							}
 						})
+				
+						
+					 $.ajax({
+						url: '/my/reviewedBySeller',
+						method: 'get',
+						dataType: 'json'
+					}).done(function (result) {
+
+						let arr = [];
+
+						for (let i = 0; i < result.length; i++) {
+							arr.push(result[i].parentseq);
+						}
+						console.log(arr);
+
+						for (let j = 0; j < $(".parentseq").length; j++) {
+							let node = "";
+							console.log($($(".parentseq")[j]).val());
+							if (arr.indexOf(Number($($(".parentseq")[j]).val())) == -1) {
+
+								node += "<div class=review>"
+								node +=	"<a data-toggle=modal href=#sendModal id=openReview>작성한 후기 보기</a>"
+								node += "</div>"
+
+								$($(".parentseq")[j]).parent().append(node);
+
+							}else{
+								node += "<div class=review>"
+								node += "<a data-toggle=modal href=#writeModal id=payment>거래 후기 보내기</a>";
+									
+								$($(".parentseq")[j]).parent().append(node);
+							}
+
+
+						}
+
+					})	
+				 
 	});
 </script>
 
@@ -443,11 +480,18 @@ form {
 			<div class="completDiv">
 				<div class="row complet">
 					<div class="col-12 col-md-4 col-sm-4 completImgDiv">
-						<div class="completImg">
-
-							<!-- lendboard 주소로 수정 -->
-							<a href="/lendBoard/lendView?id=${i.buyer}&seq=${i.parentseq}"><img src="/imgs/lend/${i.sysName }"></a>
-						</div>
+						<c:choose>
+							<c:when test="${i.sysName != null }">
+								<div class="completImg">
+									<a href="/lendBoard/lendView?id=${i.seller}&seq=${i.parentseq}"><img src="/imgs/lend/${i.sysName }"></a>
+								</div>	
+							</c:when>
+							<c:otherwise>
+								<div class="completImg">
+									<a href="/lendBoard/lendView?id=${i.seller}&seq=${i.parentseq}"><img src="/imgs/noimage.jpg"></a>
+								</div>
+							</c:otherwise>
+						</c:choose>
 					</div>
 					<div class="col-12 col-md-8 col-sm-8 information">
 						<div>
@@ -475,18 +519,9 @@ form {
 
 				<!-- 거래 후기 링크 걸기 -->
 				<div class="review">
-					<c:choose>
-						<c:when test="${i.reviewable =='y'}">
-							<a href="" data-toggle="modal"
-								data-target="#sendModal${vs.index}" id="openReview">작성한 후기
-								보기</a>
-						</c:when>
-						<c:otherwise>
-							<a href="" data-toggle="modal"
-								data-target="#writeModal${vs.index}" id="other">거래 후기 보내기</a>
-						</c:otherwise>
-					</c:choose>
-					<div class="modal fade modal_box" id="writeModal${vs.index}"
+					<input type=hidden value="${i.parentseq}" class="parentseq">
+					
+					<div class="modal fade modal_box" id="writeModal"
 						tabindex="-1" aria-labelledby="exampleModalLabel"
 						aria-hidden="true">
 						<div class="modal-dialog">
@@ -522,7 +557,7 @@ form {
 							</div>
 						</div>
 					</div>
-					<div class="modal fade modal_box" id="sendModal${vs.index}"
+					<div class="modal fade modal_box" id="sendModal"
 						tabindex="-1" aria-labelledby="exampleModalLabel"
 						aria-hidden="true">
 						<div class="modal-dialog">

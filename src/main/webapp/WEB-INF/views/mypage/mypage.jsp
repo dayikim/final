@@ -204,7 +204,7 @@ img{
 /* 안에 들어갈 미리보기 설정 */
 .product {
 	width: 330px;
-	height:31px;
+	height:32px;
 	margin-left: 15px;
 }
 

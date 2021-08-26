@@ -39,15 +39,20 @@ $(function(){
 	
 	ws.onmessage=function(event){
 		
+		
 		let text  = JSON.parse(event.data);
 		console.log(existing_roomid);
 		console.log(existing_roomid.indexOf(text.roomid));
+		console.log("과거 메세지: "+text.message);
+		console.log("룸 아이디: "+text.roomid);
+		
 		if(text.unread != 0){
 			if(existing_roomid.indexOf(text.roomid)!= -1){
 				for(let i =0; i<$(".user").length; i++){
 					if($($(".user")[i]).attr("id")==text.roomid){
 						$($(".user")[i]).children("#unread").css("display","block");
 						$($(".user")[i]).children("#unread").text(text.unread);
+						$($(".user")[i]).children("#pastmessage").text(text.message);
 					}
 				}
 			}else{
@@ -93,6 +98,7 @@ $(function(){
 			for(let i =0; i<$(".user").length; i++){
 				if($($(".user")[i]).attr("id")==text.roomid){
 					$($(".user")[i]).children("#unread").css("display","none");
+					$($(".user")[i]).children("#pastmessage").text(text.message);
 				}
 			}
 		}
@@ -286,7 +292,7 @@ font-size: 12px;
 text-align: center;
 line-height: 25px;
 position: absolute;
-left: 85%;
+left: 24%;
 }
 #chatdisplay{
 
@@ -308,6 +314,15 @@ height:60px;
 
 }
 
+#pastmessage{
+position: absolute;
+top:30%;
+left:40%;
+overflow:hidden;
+font-size: 17px;
+height: 50px;
+}
+
 
 </style>
 
@@ -319,7 +334,7 @@ height:60px;
     <div class="page-title">
         <div class="row gutters">
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                <h5 class="title" id = "titlename">돈-다 Chat</h5>
+                <a href ="/" style ="text-decoration: none"><h5 class="title" id = "titlename">돈-다 Chat</h5></a>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12"> </div>
         </div>
@@ -365,8 +380,10 @@ height:60px;
 		                                       				<img class=rounded-circle src="/imgs/nomalProfile.jpg">
 		                                       			</c:otherwise>
 		                                       		</c:choose>
-		                           
+		                                       		<span class="pastmessage" id ="pastmessage">${lastestMessage.lastestMessage(item.roomid) }</span>
+		                           					<div>
 		                                            <span class="title">${item.sessions }</span> <!-- 상태 표시가 가능함!-->
+		                                            </div>
 		                                        </div>           
 		                                   </li>
                                     </c:forEach>          
@@ -380,7 +397,7 @@ height:60px;
 	         
 	                       		<div class="col-9" id="waiting">
 	                       			<div class=chatinfo>
-		                       			<p>안녕하세요! <span id=titlename>돈-다 Chat</span> 입니다!</p>
+		                       			<p>안녕하세요! <a href ="/"><span id=titlename>돈-다 Chat</span></a> 입니다!</p>
 		                       			<p> <i class="fas fa-arrow-left"></i> 왼쪽 채팅방 목록을 확인해주세요! <p>
 	                       			</div>
 	                       		

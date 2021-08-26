@@ -173,33 +173,33 @@ li {
 /* 내 판매목록 */
 #selling {
 	background-color: grey;
-	width:250px;
-	text-align:center;
-border: solid 1px black;
+	width: 250px;
+	text-align: center;
+	border: solid 1px black;
 }
 
-.card{
-margin:10px;
+.card {
+	margin: 10px;
 }
 
 /* 거래후기 */
-#review{
-width:250px;
-text-align:center;
-border: solid 1px black;
-
+#review {
+	width: 250px;
+	text-align: center;
+	border: solid 1px black;
 }
 
 .list li a:hover {
-/* 	color: black;
- */	/* 	background-color: rgb(0, 139, 7);
+	/* 	color: black;
+ */ /* 	background-color: rgb(0, 139, 7);
  */
+	
 }
 
 .list li a:after {
 	display: block;
 	content: '';
-border-bottom: solid 3px #39d9c8;
+	border-bottom: solid 3px #39d9c8;
 	transform: scaleX(0);
 	background-color: greenyellow;
 	transition: transform 250ms ease-in-out;
@@ -229,27 +229,41 @@ border-bottom: solid 3px #39d9c8;
 }
 
 /*카드 이미지&타이틀길이*/
-.card-img-top{height:150px; margin-bottom:5px;}
-.card-title{overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+.card-img-top {
+	height: 150px;
+	margin-bottom: 5px;
+}
 
+.card-title {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
 </style>
 
 <script>
-	$(document).ready(function(){
+	$(document).ready(function() {
 		let address = "${myInfo.address1}";
 		let addressReg = /^[가-힣]*\s+[가-힣]*/g;
 		let myaddress = address.match(addressReg);
 		console.log(myaddress);
-		if(myaddress != null){
+		if (myaddress != null) {
 			$("#region_name").text(myaddress);
 		}
 	})
-	
+
 	$(function() {
-		$("#search").keyup(function(e) {
-			if (e.keyCode == 13) {
-				location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
-			}
+		$("#search")
+				.keyup(
+						function(e) {
+							if (e.keyCode == 13) {
+								location.href = "/AllBoardList/lendList?choice=Allchoice&search="
+										+ $("#search").val() + "&cpage=1";
+							}
+						})
+
+		$("#chat").on("click", function() {
+			location.href = "/chat/waitingroom";
 		})
 	});
 </script>
@@ -384,15 +398,21 @@ border-bottom: solid 3px #39d9c8;
 								<div class="card">
 									<div class="card-body">
 										<div class="card-category">[${i.category}]</div>
-										<a href="/lendBoard/lendView?id=${i.writer}&seq=${i.seq}"><img
-											src="/imgs/lend/${i.sysName}" class="card-img-top"></a>
+										<c:choose>
+											<c:when test="${i.sysName != null }">
+												<a href="/lendBoard/lendView?id=${i.writer}&seq=${i.seq}"><img src="/imgs/lend/${i.sysName}" class="card-img-top"></a>	
+											</c:when>
+											<c:otherwise>
+												<a href="/lendBoard/lendView?id=${i.writer}&seq=${i.seq}"><img src="/imgs/lend/noimage.jpg" class="card-img-top"></a>
+											</c:otherwise>
+										</c:choose>
+										
 										<h5 class="card-title">
 											<a href="/lendBoard/lendView?id=${i.writer}&seq=${i.seq}">${i.title}</a>
 										</h5>
 										<div class="card-price ">${i.price}상추</div>
 										<div class="card-region-name">${i.address}</div>
-										<div class="card-counts">
-										</div>
+										<div class="card-counts"></div>
 									</div>
 								</div>
 							</div>

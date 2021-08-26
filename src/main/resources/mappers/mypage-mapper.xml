@@ -83,7 +83,7 @@
 		lf on lb.SEQ=lf.PARENTSEQ 
 		join payment on(lb.seq = payment.parentseq)
 		join person on (person.id=payment.buyer)
-		where payment.seller=#{id} and payment.boardtype=#{product} and payment.paymentable=#{y}
+		where payment.seller=#{id} and payment.boardtype=#{product} and payment.paymentable=#{y} order by 1 desc
 	</select>
 
 
@@ -95,7 +95,7 @@
 		lf on lb.SEQ=lf.PARENTSEQ 
 		join payment on(lb.seq = payment.parentseq)
 		join person on(person.id=payment.buyer)     
-		where payment.seller=#{id} and payment.boardtype=#{product}
+		where payment.seller=#{id} and payment.boardtype=#{product} order by 1 desc
 	</select>
 
 	
@@ -118,7 +118,7 @@
 		lf on lb.SEQ=lf.PARENTSEQ 
 		join payment on(lb.seq = payment.parentseq)
 		join person on (person.id=payment.seller)     
-		where payment.buyer=#{id} and payment.boardtype=#{product} and payment.paymentable=#{y}
+		where payment.buyer=#{id} and payment.boardtype=#{product} and payment.paymentable=#{y} order by 1 desc
 	</select>
 	
 	<select id="dealEndProductBuyList2" resultMap="dealEndlist" resultType="HashMap">
@@ -129,7 +129,7 @@
 		join payment on(lb.seq = payment.parentseq)
 		join person on (person.id=payment.seller)
 		join review on (review.reviewer =payment.buyer and review.recipient = payment.seller and review.parentseq = payment.parentseq )
-		where payment.buyer=#{id} and payment.boardtype=#{product} and payment.paymentable=#{y}
+		where payment.buyer=#{id} and payment.boardtype=#{product} and payment.paymentable=#{y} order by 1 desc
 	</select>
 	
 

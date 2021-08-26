@@ -317,30 +317,38 @@ li {
 	margin-left: 10px;
 }
 
-#com{
-font-size:18px;
-font-weight:800;}
+#com {
+	font-size: 18px;
+	font-weight: 800;
+}
 </style>
 
 <script>
-	           $(document).ready(function(){
-	        		let address = "${myInfo.address1}";
-	        		let addressReg = /^[가-힣]*\s+[가-힣]*/g;
-	        		let myaddress = address.match(addressReg);
-	        		console.log(myaddress);
-	        		if(myaddress != null){
-	        			$("#region_name").text(myaddress);
-	        		}
-	        	})
-            
-              $(function() {
-		$("#search").keyup(function(e) {
-			if (e.keyCode == 13) {
-				location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
-			}
+	$(document).ready(function() {
+		let address = "${myInfo.address1}";
+		let addressReg = /^[가-힣]*\s+[가-힣]*/g;
+		let myaddress = address.match(addressReg);
+		console.log(myaddress);
+		if (myaddress != null) {
+			$("#region_name").text(myaddress);
+		}
+	})
+
+	$(function() {
+		$("#search")
+				.keyup(
+						function(e) {
+							if (e.keyCode == 13) {
+								location.href = "/AllBoardList/lendList?choice=Allchoice&search="
+										+ $("#search").val() + "&cpage=1";
+							}
+						})
+
+		$("#chat").on("click", function() {
+			location.href = "/chat/waitingroom";
 		})
 	});
-            </script>
+</script>
 </head>
 
 <body>

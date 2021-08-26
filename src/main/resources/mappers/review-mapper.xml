@@ -54,6 +54,24 @@ select reviewer from review where recipient=#{value}
 select count(*) from review where parentseq=#{value}
 </select>
 
+<resultMap type="HashMap" id="reviewed">
+    <result column="contents" property="contents"/>
+    </resultMap>
+
+
+<select id ="reviewedBySeller" resultMap="reviewed" resultType="HashMap" >
+	 select distinct name,address1,review.contents,payment.item,payment.buyer,payment.seller,payment.parentseq,price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype,review.reviewable
+		from payment join person on
+		(person.id=payment.buyer)join review on (review.reviewer =payment.seller and review.recipient = payment.buyer and review.parentseq = payment.parentseq
+        )where payment.seller=#{id}
+</select>
+
+<select id ="reviewedByBuyer" resultMap="reviewed" resultType="HashMap" >
+	select distinct name,address1,contents,payment.item,payment.buyer,payment.seller,payment.parentseq,price,to_char(payment.paymentdate,'yyyy-mm-dd hh24:mi')as paymentdate,payment.boardtype,review.reviewable
+		from payment join person on
+		(person.id=payment.seller)join review on (review.reviewer =payment.buyer and review.recipient = payment.seller and review.parentseq = payment.parentseq
+        )where payment.buyer=#{id}
+</select>
 
 
 </mapper>

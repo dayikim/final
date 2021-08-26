@@ -305,13 +305,27 @@ style>body {
 	         	for (var i = 0; i < fileList.length; i++) {
 	         		formData.append("file",fileList[i]);
 	         	}
-	         	let seq=0;
 		         $.ajax({
 		        	 url:"/sns/write",
 		        	 method:"get",
-		        	 data:{"contents":$("#contents").val(),"category":$("#category").val()}
+		        	 data:{"contents":$("#contents").val(),"category":$("#category").val()},
+		        	 dataType:"TEXT"
 		         }).done(function(resp){
-		        	 location.reload();
+		        	 console.log(resp);
+		        	 if(fileList.length !=0){
+		        		 formData.append("seq",resp);
+			        	 $.ajax({
+			        		  	url:"/sns/file",
+			        		  	enctype: 'multipart/form-data',
+			                  	method: 'post',
+			                  	data: formData,
+			                  	dataType: 'TEXT',
+			                  	processData: false,
+			                  	contentType: false
+							}).done(function(){
+								location.reload();
+							})
+		        	 }
 		         })
 	         	         
         	 	$.ajax({
@@ -330,7 +344,7 @@ style>body {
 		
 		//댓글버튼눌렀을때
 		$(document).on("click","#commenticon",function(){
-			let hidden_comment = $(this).parent().siblings("#hiddencomment");
+			let hidden_comment = $(this).parent().siblings("#hiddencomment").children(".comment-contain");
 			if($(this).parent().siblings("#hiddencomment").css("display")=="none"){
 				$(this).parent().siblings("#hiddencomment").show();
 				$.ajax({
@@ -421,59 +435,77 @@ style>body {
 		
 		//댓글작성
 		$(document).on("click","#sendcomment",function(){
-			let hidden_comment = $(this).parents("#hiddencomment");
+			let hidden_comment =$(this).closest(".input-group").siblings(".comment-contain");
 			if(${loginID == null}){
 	            alert('로그인 후 이용해주세요')
 	         }else{
 	            $.ajax({
 	               url : "/snscomm/write",
 	               type : "GET",
-	               data : {"contents":$(this).parent().siblings("#comment").val(),"seq":$(this).parent().siblings("#hidden").val()}               
+	               data : {"contents":$(this).parent().siblings("#comment").val(),"seq":$(this).parent().siblings("#hidden").val()} ,             
+	            	dataType:'json'
 	            }).done(function(resp){
-	               if(resp == 1){
-	                  alert('댓글작성완료!')
-	                  $(this).parents("#hiddencomment").load(window.location.href + $(this).parents("#hiddencomment"));
-//	                  let ul = $("<ul>")
-//					ul.attr("class","comment-list");
-//						ul.attr("id", "commentList");
-//						
-//						let body_div = $("<div>");
-//						body_div.attr("class","comment-body");
-//						
-//						let comment_head = $("<div>");
-//						comment_head.attr("class","comment-heading");
-//												
-//						let comment_writer = $("<h6>");
-//						comment_writer.text($("#session").val());
-//						
-//						let delete_tag = $("<a>");
-//						delete_tag.attr("href","/snscomm/delete?seq="+$(this).parent().siblings("#hidden").val());
-//						delete_tag.attr("id","delcomm");
-//						delete_tag.text("삭제");
-//						
-//						let modify_tag = $("<a>");
-//						modify_tag.attr("href","/snscomm/modify?seq="+$(this).parent().siblings("#hidden").val());
-//						modify_tag.attr("id","modicomm");
-//						modify_tag.text("수정");						
-//						
-//						let input = $("<input type=hidden id=commentseq>");
-//						input.text(resp[i].seq);
-//						
-//						let comment = $("<div>");
-//						comment.text($(this).parent().siblings("#comment").val());
-//									
-//						comment_writer.append(delete_tag);
-//						comment_writer.append(modify_tag);						
-//						
-//						comment_head.append(comment_writer);
-//						comment_head.append(input);					
-//						
-//						body_div.append(comment_head);
-//						body_div.append(comment);												
-//						
-//						ul.append(body_div);					
-//						$(#hidden_comment).prepend(ul);     
+	            	console.log(resp);
+	               if(resp != null){
+	                  /* alert('댓글작성완료!')
+	                  console.log(resp);
+	                   let ul = $("<ul>")
+						ul.attr("class","comment-list");
+						ul.attr("id", "commentList");
 						
+						let body_div = $("<div>");
+						body_div.attr("class","comment-body");
+						
+						let comment_head = $("<div>");
+						comment_head.attr("class","comment-heading");
+												
+						let comment_writer = $("<h6>");
+						comment_writer.text(resp.id);
+						
+						let delete_tag = $("<a>");
+						delete_tag.attr("href","/snscomm/delete?seq="+resp.seq);
+						delete_tag.attr("id","delcomm");
+						delete_tag.text("삭제");
+						
+						let modify_tag = $("<a>");
+						modify_tag.attr("href","/snscomm/modify?seq="+resp.seq);
+						modify_tag.attr("id","modicomm");
+						modify_tag.text("수정");						
+						
+						let input = $("<input type=hidden id=commentseq>");
+						input.text(resp.seq);
+						
+						let comment = $("<div>");
+						comment.text(resp.contents);
+									
+						comment_writer.append(delete_tag);
+						comment_writer.append(modify_tag);						
+						
+						comment_head.append(comment_writer);
+						comment_head.append(input);					
+						
+						body_div.append(comment_head);
+						body_div.append(comment);												
+						
+						ul.append(body_div);		
+						
+						*/
+						let node = "";
+						node += "<ul class=comment-list id=commentList>"
+						node += "<div class=comment-body>"
+							node += "<div class=comment-heading>"
+								node += "<h6>"+resp.id+"<a href=/snscomm/delete?seq="+resp.seq+ "id=delcomm>삭제</a>"
+								node += "<a href=\"#\" id=modicomm>수정</a></h6>"
+
+								node +="<input type=hidden id=commentseq>" +resp.seq +"</input>"
+
+							node += "</div>"
+								node += "<div id=comment>"+resp.contents+"</div>"
+						node +="</div>"
+					node += "</ul>"
+						
+						$(hidden_comment).prepend(node);     
+				
 	               }else{
 	                  alert('작성실패')
 	               }
@@ -667,6 +699,12 @@ style>body {
 									<input type=hidden id=hidden value=${item.seq }> <input
 										type=hidden id=lovecount value=${item.love }>
 								</div>
+								
+								<div class = comment-contain>
+									
+								
+								</div>
+								
 							</div>
 						</div>
 					</c:forEach>

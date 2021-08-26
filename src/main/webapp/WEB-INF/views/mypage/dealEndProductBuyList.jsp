@@ -80,7 +80,6 @@ img {
 	margin-top: 5%;
 }
 
-
 /* 네비바 */
 .navi>div {
 	float: left;
@@ -98,7 +97,8 @@ img {
 	overflow: hidden;
 }
 
-.requestBuyProduct { /* 대여요청 네비 */
+.requestBuyProduct {
+	/* 대여요청 네비 */
 	height: 100%;
 	background-color: #334257;
 }
@@ -119,7 +119,6 @@ img {
 	line-height: 60px;
 }
 
-
 /* 시작 */
 .container2 {
 	margin: auto;
@@ -136,11 +135,6 @@ img {
 	border-radius: 10px;
 }
 
-.completImg>a>img{
-	width:100%;
-	height:100%;
-}
-
 /* 상품 이미지 부분 */
 .completImg {
 	width: 200px;
@@ -150,6 +144,10 @@ img {
 	overflow: hidden;
 	margin-left: 32px;
 	margin-top: 15px;
+}
+.completImg>a>img{
+	width:100%;
+	height:100%;
 }
 
 /* 상품 정보 부분 */
@@ -236,129 +234,123 @@ form {
 }
 </style>
 <script>
-	$(function() { // 게시물 검색
-		$("#search")
-				.keyup(
-						function(e) {
-							if (e.keyCode == 13) {
-								location.href = "/AllBoardList/lendList?category=AllCategory&search="
-										+ $("#search").val() + "&cpage=1";
-							}
-						})
-		// 채팅
-		$("#chat").on("click", function() {
-			location.href = "/chat";
-		})
-		// person
-		// 후기
-		$(".send")
-				.on(
-						"click",
-						function() {
-							let message = $("#message-text");
-							if (message.val() == "") {
-								alert("메세지를 입력해주세요.");
-								message.focus();
-								return false;
+$(function() { 
+	// 게시물 검색
+	$("#search").keyup(function(e) {
+		if (e.keyCode == 13) {
+			location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
+		}
+	})
+
+	// 채팅
+	$("#chat").on("click", function() {
+		location.href = "/chat/waitingroom";
+	})
+	// person
+	// 후기
+	$(".send")
+			.on(
+					"click",
+					function() {
+						let message = $("#message-text");
+						if (message.val() == "") {
+							alert("메세지를 입력해주세요.");
+							message.focus();
+							return false;
+						} else {
+							let check = confirm("거래 후기를 보내시겠습니까?");
+							let recipient = $("#recipient").val();
+							let reviewer = $("#reviewer").val();
+							let boardtype = $("#boardtype").val();
+							let reviewable = $("#reviewable").val();
+							let contents = $(".contents").val();
+							let parentseq = $("#parentseq").val();
+							if (check) {
+								$
+										.ajax({
+											url : "/profile/checkReview",
+											data : {
+												parentseq : parentseq
+											}
+										})
+										.done(
+												function(resp) {
+													console.log(resp);
+													if (resp == 0) {
+														$
+																.ajax(
+																		{
+																			url : "/profile/review",
+																			data : {
+																				recipient : recipient,
+																				parentseq : parentseq,
+																				reviewer : reviewer,
+																				reviewable : reviewable,
+																				contents : contents,
+																				boardtype : boardtype
+																			}
+																		})
+																.done(
+																		function(
+																				resp) {
+																			console
+																					.log(resp);
+																			if (resp == 1) {
+																				alert("거래 후기 작성 완료!! \n마이페이지에서 거래완료 내역을 확인하세요.")
+																				location.href = "${pageContext.request.contextPath}/my/mypageProc"
+																			} else {
+																				alert("작성 실패!!")
+																			}
+																		})
+													} else {
+														alert("이미 후기를 작성하였습니다.\n마이페이지에서 거래완료 내역을 확인하세요.")
+														location.href = "${pageContext.request.contextPath}/my/mypageProc"
+														return;
+													}
+												})
 							} else {
-								let check = confirm("거래 후기를 보내시겠습니까?");
-								let recipient = $("#recipient").val();
-								let reviewer = $("#reviewer").val();
-								let boardtype = $("#boardtype").val();
-								let reviewable = $("#reviewable").val();
-								let contents = $(".contents").val();
-								let parentseq = $("#parentseq").val();
-								if (check) {
-									$
-											.ajax({
-												url : "/profile/checkReview",
-												data : {
-													parentseq : parentseq
-												}
-											})
-											.done(
-													function(resp) {
-														console.log(resp);
-														if (resp == 0) {
-															$
-																	.ajax(
-																			{
-																				url : "/profile/review",
-																				data : {
-																					recipient : recipient,
-																					parentseq : parentseq,
-																					reviewer : reviewer,
-																					reviewable : reviewable,
-																					contents : contents,
-																					boardtype : boardtype
-																				}
-																			})
-																	.done(
-																			function(
-																					resp) {
-																				console
-																						.log(resp);
-																				if (resp == 1) {
-																					alert("거래 후기 작성 완료!! \n마이페이지에서 거래완료 내역을 확인하세요.")
-																					location.href = "${pageContext.request.contextPath}/my/mypageProc"
-																				} else {
-																					alert("작성 실패!!")
-																				}
-																			})
-														} else {
-															alert("이미 후기를 작성하였습니다.\n마이페이지에서 거래완료 내역을 확인하세요.")
-															location.href = "${pageContext.request.contextPath}/my/mypageProc"
-															return;
-														}
-													})
-								} else {
-									alert("거래 후기 작성 취소!")
-									return;
-								}
+								alert("거래 후기 작성 취소!")
+								return;
 							}
+						}
+					})
+							$.ajax({
+						url: '/my/reviewedByBuyer',
+						method: 'get',
+						dataType: 'json'
+					}).done(function (result) {
+
+						let arr = [];
+
+						for (let i = 0; i < result.length; i++) {
+							arr.push(result[i].parentseq);
+						}
+						console.log(arr);
+							for (let j = 0; j < $(".parentseq").length; j++) {
+								let node = "";
+								console.log($($(".parentseq")[j]).val());
+								if (arr.indexOf(Number($($(".parentseq")[j]).val())) == -1) {
+
+									node += "<div class=review>"
+									node +=	"<a data-toggle=modal href=#sendModal id=openReview>작성한 후기 보기</a>"
+									node += "</div>"
+
+									$($(".parentseq")[j]).parent().append(node);
+
+								}else{
+									node += "<div class=review>"
+									node += "<a data-toggle=modal href=#writeModal id=payment>거래 후기 보내기</a>";
+										
+									$($(".parentseq")[j]).parent().append(node);
+								}
+
+
+							}
+
 						})
-						
-		/* 	$.ajax({
-			url:'/my/reviewed',
-			method:'get',
-			dataType:'json'
-		}).done(function(result){
-			
-			let arr =[];
-			
-			for(let i=0; i<result.length; i++){
-				arr.push(result[i].parentseq);
-			}
-			console.log(arr);
-			
-			for(let j=0; j<$(".parentseq").length; j++){
-					let node = "";
-					console.log($($(".parentseq")[j]).val());
-				if(arr.indexOf(Number($($(".parentseq")[j]).val()))==-1){
-					
-					node += "<div class=review>"
-					
-					node +=	"<a href="" data-toggle=modal data-target=#sendModal${vs.index} id=openReview>작성한 후기 보기</a>
-					node += "</div>"
-					$($(".parentseq")[j]).parent().append(node);
-					
-				}
-				
-				
-			}
-			
-		}) */			
-						
-						
-						
-						
-	});
-</script>
+				});
+			</script>
 </head>
-
-
-</head>
-
 <body>
 	<!-- Top Bar Start -->
 	<div class="top-bar d-none d-md-block">
@@ -392,7 +384,9 @@ form {
 	<!-- Nav Bar Start -->
 	<div class="navbar navbar-expand-lg bg-dark navbar-dark">
 		<div class="container-fluid">
-			<a href="/" class="navbar-brand"><p id=titlename>돈-다</a>
+			<a href="/" class="navbar-brand">
+				<p id=titlename>돈-다
+			</a>
 			</p>
 			<button type="button" class="navbar-toggler" data-toggle="collapse"
 				data-target="#navbarCollapse">
@@ -445,8 +439,8 @@ form {
 
 		</div>
 	</div>
-	
-		<!-- 네비바 -->
+
+	<!-- 네비바 -->
 	<div class="navi">
 		<div class="requestSellProduct">
 			<a href="/my/dealEndProductSellList"> <b>물품 대여</b>
@@ -458,7 +452,7 @@ form {
 		</div>
 
 	</div>
-	
+
 	<br>
 
 	<div class="container2">
@@ -466,7 +460,6 @@ form {
 		<div class="margin">
 			<div>물품 > 물품빌리기 완료</div>
 		</div>
-
 		<!---------forEach 사용 구간------------------------------------------------------------------------------>
 
 		<!-- 빌림 완료 출력 -->
@@ -474,10 +467,19 @@ form {
 			<div class="completDiv">
 				<div class="row complet">
 					<div class="col-12 col-md-4 col-sm-4 completImgDiv">
-						<div class="completImg">
-							<!-- lendboard 링크 수정!!!! -->
-							<a href="/lendBoard/lendView?id=${i.seller}&seq=${i.parentseq}"><img src="/imgs/lend/${i.sysName }"></a>
-						</div>
+						<c:choose>
+							<c:when test="${i.sysName != null }">
+								<div class="completImg">
+									<a href="/lendBoard/lendView?id=${i.seller}&seq=${i.parentseq}"><img src="/imgs/lend/${i.sysName }"></a>
+								</div>	
+							</c:when>
+							<c:otherwise>
+								<div class="completImg">
+									<a href="/lendBoard/lendView?id=${i.seller}&seq=${i.parentseq}"><img src="/imgs/noimage.jpg"></a>
+								</div>
+							</c:otherwise>
+						</c:choose>
+						
 					</div>
 					<div class="col-12 col-md-8 col-sm-8 information">
 						<div>
@@ -501,20 +503,10 @@ form {
 					</div>
 				</div>
 				<hr>
-                   <input type=hidden value="${i.parentseq}" class="parentseq">
 				<!-- 거래 후기 링크 걸기 -->
 				<div class="review">
-					<c:choose>
-						<c:when test="${i.reviewable =='y'}">
-							<a href="" data-toggle="modal"
-								data-target="#sendModal${vs.index}" id="openReview">작성한 후기
-								보기</a>
-						</c:when>
-						<c:otherwise>
-							<a href="" data-toggle="modal"
-								data-target="#writeModal${vs.index}" id="other">거래 후기 보내기</a>
-						</c:otherwise>
-					</c:choose>
+							<input type=hidden value="${i.parentseq}" class="parentseq">
+			
 					<div class="modal fade modal_box" id="writeModal${vs.index}"
 						tabindex="-1" aria-labelledby="exampleModalLabel"
 						aria-hidden="true">
@@ -537,12 +529,12 @@ form {
 										</div>
 									</div>
 									<input type="hidden" name="reviewer" value="${loginID}"
-										id="reviewer"> 
-										<input type="hidden" name="recipient" value="${i.seller}" id="recipient"> 
-										<input 	type="hidden" name="boardtype" value="${i.boardtype}"
+										id="reviewer"> <input type="hidden" name="recipient"
+										value="${i.seller}" id="recipient"> <input
+										type="hidden" name="boardtype" value="${i.boardtype}"
 										id="boardtype"> <input type="hidden" name="seq"
-										value="${i.parentseq}" id="parentseq"> 
-										<input type="hidden" name="reviewable" value="y" id="reviewable">
+										value="${i.parentseq}" id="parentseq"> <input
+										type="hidden" name="reviewable" value="y" id="reviewable">
 									<button type="button" class="btn btn-dark modalBtn"
 										data-dismiss="modal">취소</button>
 									<button type="button"
@@ -551,9 +543,8 @@ form {
 							</div>
 						</div>
 					</div>
-					<div class="modal fade modal_box" id="sendModal${vs.index}"
-						tabindex="-1" aria-labelledby="exampleModalLabel"
-						aria-hidden="true">
+					<div class="modal fade modal_box" id="sendModal" tabindex="-1"
+						aria-labelledby="exampleModalLabel" aria-hidden="true">
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">

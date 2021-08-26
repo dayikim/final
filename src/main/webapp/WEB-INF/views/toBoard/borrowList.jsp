@@ -76,7 +76,7 @@
 			})
 			
 			$("#chat").on("click",function(){
-				location.href = "/chat";
+				location.href = "/chat/waitingroom";
 			})
 		})
 		
@@ -168,7 +168,7 @@
                         		<a href="/person/logout" class="nav-item nav-link active">Logout</a> <!-- Logout -->
                         		 <div class="collapse navbar-collapse" id="navbarNavDropdown">
 	                        		 <ul class="navbar-nav">
-	                        			<li class="nav-item dropdown">
+	                        			<li class="nav-item dropdown" style ="margin:0px;">
 									        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									         Menu
 									        </a>
@@ -333,9 +333,7 @@
         <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 
         <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-        <script src="/lib/easing/easing.min.js"></script>
+     
         
         <!-- Template Javascript -->
         <script src="/js/main.js"></script>

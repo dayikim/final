@@ -203,9 +203,9 @@ function doNotReload(){
 }
 document.onkeydown = doNotReload;
 /* http://175.116.7.99/ */
+ /* http://192.168.35.97/ */
 let ws = new WebSocket("ws://192.168.35.97/chat"); 
 $(function(){
-	
 	let loginID;
 	let time;
 	let isfile;
@@ -214,10 +214,9 @@ $(function(){
 	let drag_uploadfiles=[];
 	let input_uploadfiles=[];
 	
-	ws.onopen = function(event) {
-		updateScroll();
-	};
-	
+	$(document).ready(function(){
+		$('#chat-container').scrollTop($('#chat-container')[0].scrollHeight);
+		})
 	
 	ws.onmessage = function(event){
 			
@@ -225,12 +224,9 @@ $(function(){
 		
 		
 		if(text.isCheck != "true"){
-			
-			if(text.unreadcount != null){
-				window.parent.postMessage(text.unreadcount+
-						":"+text.roomid,'http://192.168.35.97/chat/waitingroom');
-			}
-			
+			console.log(text.message);
+			console.log(text.message);
+			window.parent.postMessage(text.unreadcount+":"+text.roomid+text.message,'http://192.168.35.97/chat/waitingroom');
 			if(text.isNaver == "true"){
 				let hashimage = JSON.parse(text.HashImage);
 				let hashblog = JSON.parse(text.HashBlog);
@@ -544,8 +540,9 @@ $(function(){
 	}
 	
 	function updateScroll(){
-		var element = document.getElementById("chat-container");
-		element.scrollTop = element.scrollHeight+400;
+		/* var element = document.getElementById("chat-container");
+		element.scrollTop = element.scrollHeight+400; */
+		$('#chat-container').scrollTop($('#chat-container')[0].scrollHeight);
 	}
 	
 /* 	$("#send").on("click", function(){
@@ -685,6 +682,7 @@ $(function(){
 		            url: "/file/upload",
 		            enctype: 'multipart/form-data',
 		            method: 'post',
+		            async: false,
 		            data: formData,
 		            dataType: 'TEXT',
 		            processData: false,

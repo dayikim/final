@@ -334,6 +334,10 @@
 			<script>
 				$(function () {
 
+					$("#chat").on("click",function(){
+						location.href = "/chat/waitingroom";
+					})
+
 					//사용 가능 포인트 체크
 					$("#insertBtn").on("click", function () {
 						let check = $(".amount")

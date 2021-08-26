@@ -48,4 +48,8 @@ public class MessageDao {
 		return mybatis.selectOne("Message.unreadCountnotme", temp);
 	}
 	
+	public String lastestMessage(String roomid) {
+		return mybatis.selectOne("Message.lastestMessage", roomid);
+	}
+		
 }

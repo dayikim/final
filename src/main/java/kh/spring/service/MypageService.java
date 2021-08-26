@@ -374,8 +374,17 @@ public class MypageService {
 		return bdao.bookingDelete(param);
 	}
 
-	public List<ReviewDTO> reviewd(String id) {
+	public List<HashMap<String, Object>> reviewd(String id) {
 		return rdao.reveiwed(id);
+	}
+	
+	//판매자-> 구매자
+	public List<HashMap<String, Object>> reviewedBySeller(String id) {
+		return rdao.reviewedBySeller(id);
+	}
+	//구매자-> 판매자
+	public List<HashMap<String, Object>> reviewedByBuyer(String id) {
+		return rdao.reviewedByBuyer(id);
 	}
 
 	
