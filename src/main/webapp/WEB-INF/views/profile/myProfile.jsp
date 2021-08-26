@@ -398,8 +398,15 @@ li {
 								<div class="card">
 									<div class="card-body">
 										<div class="card-category">[${i.category}]</div>
-										<a href="/lendBoard/lendView?id=${i.writer}&seq=${i.seq}"><img
-											src="/imgs/lend/${i.sysName}" class="card-img-top"></a>
+										<c:choose>
+											<c:when test="${i.sysName != null }">
+												<a href="/lendBoard/lendView?id=${i.writer}&seq=${i.seq}"><img src="/imgs/lend/${i.sysName}" class="card-img-top"></a>	
+											</c:when>
+											<c:otherwise>
+												<a href="/lendBoard/lendView?id=${i.writer}&seq=${i.seq}"><img src="/imgs/lend/noimage.jpg" class="card-img-top"></a>
+											</c:otherwise>
+										</c:choose>
+										
 										<h5 class="card-title">
 											<a href="/lendBoard/lendView?id=${i.writer}&seq=${i.seq}">${i.title}</a>
 										</h5>

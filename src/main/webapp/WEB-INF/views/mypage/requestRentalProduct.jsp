@@ -216,7 +216,7 @@ img {
 					let node = "";
 					node +="<div class=under>"
 						node += "<button type=button id=cancel class=cnum-btn1>거래 취소</button>" 
-						node += "<button type=button id=approval class=cnum-btn2 disabled=disabled>거래 완료(대여중)</button>"
+						node += "<button type=button id=approval class=cnum-btn2 disabled=disabled>거래 완료</button>"
 					node += "</div>"
 					$($(".parent")[z]).parent().append(node)
 				}else{
@@ -293,7 +293,7 @@ img {
 						$(button).attr("id","dealComplete")
 						$(button).attr("class","dComplete")
 						$(button).attr("disabled","false")
-						$(button).text("거래 완료(대여중)")
+						$(button).text("거래 완료")
 						
 						// 거래 취소 버튼으로 바꾸기
 						$(button).siblings("#cancel").attr("id","dealCancel")
@@ -445,9 +445,19 @@ img {
 
 					</div>
 					<div class="col-4">
-						<div class="image">
-							<a href="/lendBoard/lendView?seq=${i.parentseq}&id=${i.writer}"><img src="/imgs/lend/${i.sysName }"></a>
-						</div>
+						<c:choose>
+							<c:when test="${i.sysName != null }">
+								<div class="image">
+									<a href="/lendBoard/lendView?seq=${i.parentseq}&id=${i.writer}"><img src="/imgs/lend/${i.sysName }"></a>
+								</div>	
+							</c:when>
+							<c:otherwise>
+								<div class="image">
+									<a href="/lendBoard/lendView?seq=${i.parentseq}&id=${i.writer}"><img src="/imgs/noimage.jpg"></a>
+								</div>
+							</c:otherwise>
+						</c:choose>
+						
 
 					</div>
 				</div> 

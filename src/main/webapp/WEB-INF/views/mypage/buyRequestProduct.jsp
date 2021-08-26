@@ -235,14 +235,11 @@ img {
 			
 		})
 		// 게시물 검색
-		$("#search")
-				.keyup(
-						function(e) {
-							if (e.keyCode == 13) {
-								location.href = "/AllBoardList/lendList?category=AllCategory&search="
-										+ $("#search").val() + "&cpage=1";
-							}
-						})
+		$("#search").keyup(function(e) {
+			if (e.keyCode == 13) {
+				location.href = "/AllBoardList/lendList?choice=Allchoice&search="+$("#search").val()+"&cpage=1";
+			}
+		})
 
 		// 채팅
 		$("#chat").on("click", function() {
@@ -415,9 +412,18 @@ img {
 						<input type=hidden value=${i.parentseq } name="parent" class="parentseq" id=parentseq>
 					</div>
 					<div class="col-4">
-						<div class="image">
-							<a href="/lendBoard/lendView?seq=${i.parentseq}&id=${i.writer}"><img src="/imgs/lend/${i.sysName }"></a>
-						</div>
+						<c:choose>
+							<c:when test="${i.sysName != null }">
+								<div class="image">
+									<a href="/lendBoard/lendView?seq=${i.parentseq}&id=${i.writer}"><img src="/imgs/lend/${i.sysName }"></a>
+								</div>	
+							</c:when>
+							<c:otherwise>
+								<div class="image">
+									<a href="/lendBoard/lendView?seq=${i.parentseq}&id=${i.writer}"><img src="/imgs/noimage.jpg"></a>
+								</div>
+							</c:otherwise>
+						</c:choose>
 
 					</div>
 				</div>

@@ -44,7 +44,7 @@
 	from lendboard lb left join (select SYSNAME, PARENTSEQ, REGDATE from (
 	select ROW_NUMBER() over (PARTITION BY lendfiles.PARENTSEQ order by lendfiles.REGDATE asc ) AS RNUM, lendfiles.* from lendfiles ) TB where RNUM=1 ) 
 	lf on lb.SEQ=lf.PARENTSEQ join booking on(lb.seq = booking.parentseq)
-	where booking.bookable=#{y} and booking.seller=#{id} and booking.boardtype=#{able}
+	where booking.bookable=#{y} and booking.seller=#{id} and booking.boardtype=#{able} order by 1 desc
 </select>
 
 <!-- 판매자에게 들어온 예약 요청 취소(물품) -->
@@ -72,7 +72,7 @@
 	select ROW_NUMBER() over (PARTITION BY lendfiles.PARENTSEQ order by lendfiles.REGDATE asc ) AS RNUM, lendfiles.* from lendfiles ) TB where RNUM=1 ) 
 	lf on lb.SEQ=lf.PARENTSEQ 
 	join booking on (lb.seq = booking.parentseq) 
-	where booking.bookable=#{y} and booking.booker=#{id} and booking.boardtype=#{product}
+	where booking.bookable=#{y} and booking.booker=#{id} and booking.boardtype=#{product} order by 1 desc
 </select>
 
 <!-- 구매자가 대여 예약 내역 출력 (결제하기 버튼 생성)-->
@@ -82,14 +82,14 @@
 	select ROW_NUMBER() over (PARTITION BY lendfiles.PARENTSEQ order by lendfiles.REGDATE asc ) AS RNUM, lendfiles.* from lendfiles ) TB where RNUM=1 ) 
 	lf on lb.SEQ=lf.PARENTSEQ 
 	join booking on (lb.seq = booking.parentseq) join approval on (approval.parentseq =booking.parentseq)
-	where booking.bookable=#{y} and booking.booker=#{id} and booking.boardtype=#{product}
+	where booking.bookable=#{y} and booking.booker=#{id} and booking.boardtype=#{product} order by 1 desc
 </select>
 
 <!-- 구매자가 대여 예약 내역 출력 (결제완료 버튼 생성)-->
 <select id="paymentcomplete" resultMap="booking2" resultType="HashMap">
  select distinct lendboard.writer,booking.booker,lendboard.price,lendboard.title,booking.parentseq,approval.approval,payment.paymentable
 	from lendboard join booking on (lendboard.seq = booking.parentseq) join approval on (approval.parentseq =booking.parentseq) join payment on(payment.parentseq = booking.parentseq)
-	where payment.paymentable=#{y} and booking.bookable=#{y} and payment.buyer=#{id} and payment.boardtype=#{product};
+	where payment.paymentable=#{y} and booking.bookable=#{y} and payment.buyer=#{id} and payment.boardtype=#{product} order by 1 desc
 </select>
 
 
