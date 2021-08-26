@@ -29,7 +29,7 @@
 select lb.*, lf.SYSNAME from lendboard lb left join (
 select SYSNAME, PARENTSEQ, REGDATE from (
 select ROW_NUMBER() over (PARTITION BY lendfiles.PARENTSEQ order by lendfiles.REGDATE asc ) AS RNUM, lendfiles.* from lendfiles ) TB
-where RNUM=1 ) lf on lb.SEQ=lf.PARENTSEQ  where writer =#{writer}
+where RNUM=1 ) lf on lb.SEQ=lf.PARENTSEQ  where lb.writer =#{writer}
 </select>
 
 <select id="sellingView" resultMap="sellingView" resultType="HashMap">
