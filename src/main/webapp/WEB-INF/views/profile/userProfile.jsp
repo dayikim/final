@@ -379,7 +379,7 @@ li {
 					<ul class="nav justify-content-center list">
 						<li class="nav-item"><a class="nav-link active" id="selling"
 							aria-current="page" href="/profile/userSelling?id=${writer}">
-								대여 목록<span class="badge badge-pill badge-dark">
+								대여 물품 목록<span class="badge badge-pill badge-dark">
 									${sellingCount}</span>
 						</a></li>
 						<li class="nav-item"><a class="nav-link" id="review"
