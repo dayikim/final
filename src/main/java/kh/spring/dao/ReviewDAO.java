@@ -2,6 +2,7 @@ package kh.spring.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +47,8 @@ public class ReviewDAO {
 		return mybatis.selectList("Review.sysName",id);
 	}
 
-	public int checkReview(int seq) {
-		return mybatis.selectOne("Review.checkReview",seq);
+	public int checkReview(Map<Object, Object> param) {
+		return mybatis.selectOne("Review.checkReview",param);
 	}
 
 	public List<HashMap<String, Object>> reveiwed(String id) {

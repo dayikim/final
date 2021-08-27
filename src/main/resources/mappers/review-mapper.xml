@@ -30,7 +30,7 @@ select
 from person p 
     left join review rv on rv.reviewer = p.id 
     left join PROFILEFILES pf on pf.parentseq = p.id
-where rv.recipient =#{value}
+where rv.recipient =#{value} order by regdate desc
 </select>
 
 <resultMap type="HashMap" id="sysName">
@@ -51,7 +51,7 @@ select reviewer from review where recipient=#{value}
 
 
 <select id="checkReview" resultType="int">
-select count(*) from review where parentseq=#{value}
+select count(*) from review where parentseq=#{seq}and reviewer=#{id}
 </select>
 
 <resultMap type="HashMap" id="reviewed">

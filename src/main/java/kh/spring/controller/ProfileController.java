@@ -315,7 +315,7 @@ public class ProfileController {
 	@RequestMapping("checkReview")//거래 후기 작성유무
 	public String checkReview(int parentseq,Model model) {
 		String id = (String) session.getAttribute("loginID");
-		int checkReview =RService.checkReview(parentseq);
+		int checkReview =RService.checkReview(parentseq,id);
 		if(checkReview>0){
 			System.out.println("이미 작성되어 있음!");
 		}

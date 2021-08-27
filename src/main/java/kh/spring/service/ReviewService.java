@@ -2,6 +2,7 @@ package kh.spring.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,9 +51,13 @@ public class ReviewService {
 	}
 	
 	//거래 후기 작성유무
-	public int checkReview(int seq) {
-		return dao.checkReview(seq);
+	public int checkReview(int seq,String id) {
+		Map<Object, Object> param = new HashMap<>();
+		param.put("seq",seq);
+		param.put("id", id);
+		return dao.checkReview(param);
 	}
+
 
 
 	
